@@ -4,7 +4,7 @@
   <subtitle><![CDATA[I love a lot of things, JS is my favorite.]]></subtitle>
   <link href="/blog/atom.xml" rel="self"/>
   <link href="http://taoalpha.me/blog/"/>
-  <updated>2015-12-26T16:31:34.000Z</updated>
+  <updated>2015-12-26T22:04:28.000Z</updated>
   <id>http://taoalpha.me/blog/</id>
   
   <author>
@@ -13,6 +13,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Summary of the year]]></title>
+    <link href="http://taoalpha.me/blog/2015/12/26/Summary-of-the-year/"/>
+    <id>http://taoalpha.me/blog/2015/12/26/Summary-of-the-year/</id>
+    <published>2015-12-26T18:57:40.000Z</published>
+    <updated>2015-12-26T22:04:28.000Z</updated>
+    <content type="html"><![CDATA[<p>2015 年也慢慢过去了. 这一年似乎发生了不少变化, 也做了不少的改变, 今天做个简单的总结.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>15年, 我从大清毕业2年了, 14年的时候我工作了大半年,多数时间都在准备出国和锻炼学习相关的技能, , 当然参军训练 以及成功申请 WHV绝对是我人生浓重的一笔. 今年前半年我一直在新西兰游荡, 走遍了南北岛绝大多数的城市, 认识了不少有趣的新朋友, 看到了无数完全不同, 但各有各的精彩的人生, 回国后就一直在家里陪父母等待出国, 算是过了难得的一段悠闲日子. </p>
+<p>下半年则基本以学业为主线, 找工作为副线. 说实话, 2年了, 重回象牙塔的感觉还是相当复杂的, 因为本科算是标准学渣一枚, 在大清更是绝对的生物链底层哈哈, 所以这一次回归学校, 也算是比较珍惜这一机会, 虽然不奢望做一个学霸, 但是还是希望能够过一把好学生的瘾, 哈哈, 当然, 潜意识也是希望能够通过好的成绩来证明自己转专业的选择并没有错..哈哈</p>
+<p>因为计划一年毕业, 所以找工作也算是重点关注事宜之一, 按照来美之前的计划, 先从小公司开始着手, 积累面试经验, 所以在学期中下旬的时候投了几家公司的简历, 目前面了3家, 2家 offer, 一家准备第二轮的面试. 也算是不错的结果了. 下面则主要针对这一年的经历简单列举下一些重要的项:</p>
+<h3 id="Accomplishment_List"><a href="#Accomplishment_List" class="headerlink" title="Accomplishment List"></a>Accomplishment List</h3><p>人总是从成功的事情中收获成就感, 我很开心过去一年的所有经历, 基本完成了去年的计划, 无论是新西兰的 WHV 还是来 Cornell 读书, 都让我收获良多.</p>
+<p>下面简单列举了下个人觉得值得记录的一些事情:</p>
+<ul>
+<li>刷新离家最远记录: 新西兰, 美国;</li>
+<li>独一无二体验: Working Holiday @ New Zealand, 半年;</li>
+<li>返校: 毕业两年, 回归象牙塔;</li>
+<li>工作: 拿到两家小公司的offer, 一家纽约, 一家加州;</li>
+<li>学业: 过去一学期选了 ML,DB,Statistical Method,SE, MPS, 最后成绩4A,1A-, GPA:3.93, 算是成功的过了一把好学生的瘾 :);</li>
+<li>小火一把的作品: 沾学弟的关, 也算有一个小作品登山小众软件,36Kr 等一直关注的媒体;</li>
+<li>Hackathon: 来美第一个 hackthon, 项目 BRT(Big Red Transit);</li>
+<li>Skills: 准备专注在 JS 上, 开始学习 AngularJS, ReactJS, NodeJS 等;</li>
+</ul>
+<h3 id="Regret_List"><a href="#Regret_List" class="headerlink" title="Regret List"></a>Regret List</h3><p>世间事难两全, 虽然每个人都希望活的无悔. 但人生难免会有很多遗憾, 希望以后能够有机会弥补那些还可以弥补的…</p>
+<ul>
+<li>极限运动: 新西兰算是极限运动之国, 有着很多享誉世界的极限运动存在, 可惜在新西兰半年的时间, 并没有玩太多的好玩的运动, 有机会一定要回去再体验下那最高的 skydive 和各种蹦极, 冲浪, 滑翔伞…哈哈</li>
+<li>健身: 虽然一直想要坚持健身的习惯, 但还是没有养成这个习惯, 来美半年也就去过1,2次gym… 希望下学期能够坚持;</li>
+<li>BIG NAME: 目前还没有面过大公司, 下学期会去试一下;</li>
+<li><p>中国: 离家才知家好, 走了几个国家才发现原来我连自己祖国都还没走完, 看完.</p>
+<p>虽然有些遗憾, 但总的来说还是很好的, 整体经历极佳, 不是吗?^_^</p>
+</li>
+</ul>
+<h2 id="Future"><a href="#Future" class="headerlink" title="Future"></a>Future</h2><p>说完了今年, 就可以扯扯16年的计划喽. 16年的主线是找工作, 副线则是学习和最后的疯狂哈哈哈. </p>
+<p>基本计划如下:</p>
+<ul>
+<li>GPA 保持在3.9, 努力争取4.0;</li>
+<li>大公司搞一波;</li>
+<li>毕业旅行去阿拉斯加;</li>
+<li>考驾照;</li>
+<li>加拿大;</li>
+<li>3月回国;</li>
+</ul>
+<p>Good Luck to Everyone!</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[The summary of the year of 2015.]]>
+    
+    </summary>
+    
+      <category term="Summary" scheme="http://taoalpha.me/blog/tags/Summary/"/>
+    
+      <category term="年终总结" scheme="http://taoalpha.me/blog/tags/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
+    
+      <category term="blog" scheme="http://taoalpha.me/blog/categories/blog/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Blog Migration from jekyll to hexo]]></title>
@@ -416,62 +472,6 @@
   </entry>
   
   <entry>
-    <title><![CDATA[Sorting Algorithm in JavaScript - Bubble Sort and Merge Sort]]></title>
-    <link href="http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/"/>
-    <id>http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/</id>
-    <published>2015-10-29T08:00:00.000Z</published>
-    <updated>2015-12-26T08:21:36.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Bubble sort is really cool but not so useful, it seems that you will never use it… But merge sort is really cool since it is really fast.</p>
-<h2 id="Bubble_Sort"><a href="#Bubble_Sort" class="headerlink" title="Bubble Sort"></a>Bubble Sort</h2><p>So what is bubble sort, according to wikipedia:</p>
-<blockquote>
-<p>Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted. </p>
-</blockquote>
-<p>The whole process of sorting is like the bigger element “bubble” to the end of the list.</p>
-<ul>
-<li><strong>Input:</strong> A list of numbers with random order</li>
-<li><strong>Procedures:</strong><ul>
-<li>Start from the head of the list, and compare every two adjacent numbers and swap them if they are in wrong order;</li>
-<li>Record whether you did any swaps or not, if no, your list has been sorted, otherwise, you need to step 1 again;</li>
-</ul>
-</li>
-<li><strong>Output:</strong> A sorted list</li>
-</ul>
-<p>If you like, you can do a small optimization to the procedures above: since every iteration we will make sure the bigger element will “bubble” to the end of the list, so everytime we don’t need to check the last elements(they are already in ordered), and we will reduce the length for each iteration.</p>
-<p>Here is a nice gif from wikipedia: <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="bubble sort"></p>
-<p>The time complexity for bubble sort would be : O(n^2) for worst case, O(n) for best case, and O(n^2) on average.</p>
-<p>The space complexity for bubble sort would be O(1) since we only need one space used to do the swap.</p>
-<p>Now lets do the code:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bubbleSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> swapped</span><br><span class="line">  <span class="keyword">var</span> len = list.length</span><br><span class="line">  <span class="keyword">do</span>&#123;</span><br><span class="line">    swapped = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>;j&lt; len-<span class="number">1</span>;j++)&#123;</span><br><span class="line">      reads += <span class="number">2</span></span><br><span class="line">      <span class="keyword">if</span>(list[j]&gt;list[j+<span class="number">1</span>])&#123;</span><br><span class="line">        <span class="keyword">this</span>.swap(list,j,j+<span class="number">1</span>)</span><br><span class="line">        swapped = <span class="literal">true</span></span><br><span class="line">        writes += <span class="number">2</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    len = len - <span class="number">1</span></span><br><span class="line">    <span class="comment">// since everytime we will move the largest element to the end of the list, we can reduce the number of iteration without considering the last element every iteration</span></span><br><span class="line">  &#125;<span class="keyword">while</span>(swapped)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Merge_Sort"><a href="#Merge_Sort" class="headerlink" title="Merge Sort"></a>Merge Sort</h2><p>Now we met all three different kinds of sorting, all of them have a O(n^2) of time complexity on average.</p>
-<p>Lets do something faster: Merge Sort.</p>
-<p>Imagine you separate your list into several really small lists with only one element or zero element in each of them. Then you merge every two small lists into one sorted list, and keep doing it repeatly.(it’s easy because you are merging two sorted lists)</p>
-<p>The whole procedures will be:</p>
-<ul>
-<li>Split the list recursively;</li>
-<li>Merge the small lists until you merge them all;</li>
-</ul>
-<p>Since we always split by half, the number of small lists we will have would be log(n), and the total cost would be close to (n / 2 * log(n)) on average(since we have at least 1 element list to merge with zero one, at most n/2 elements list to merge with n/2 elements). So the time complexity would be O(nlog(n)) all the time, and the space complexity would be O(n) since we will save origin input list with n small lists.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// mergeSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(list.length &lt;= <span class="number">1</span>) <span class="keyword">return</span> list</span><br><span class="line">  <span class="keyword">var</span> mid = <span class="built_in">Math</span>.floor(list.length / <span class="number">2</span>)</span><br><span class="line">  <span class="keyword">return</span> merge(mergeSort(list.slice(<span class="number">0</span>,mid)),mergeSort(list.slice(mid)))</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left,right</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> nl = []</span><br><span class="line">  <span class="keyword">var</span> il = <span class="number">0</span>, ir = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span>(il&lt;left.length &amp;&amp; ir&lt;right.length)&#123;</span><br><span class="line">    <span class="keyword">if</span>(left[il] &lt; right[ir])&#123;</span><br><span class="line">      nl.push(left[il++])</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      nl.push(right[ir++])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// don't use shift because shift will actually cause a lot I/Os </span></span><br><span class="line">  &#125;</span><br><span class="line">  nl = nl.concat(left.slice(il)).concat(right.slice(ir))</span><br><span class="line">  <span class="keyword">return</span> nl</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Merge sort is kind useful, and if we don’t have quick sort which I will talk about next post, it would be a really good choice to do sorting. And even we have quick sort, merge sort still exists in many languages as part of their default sorting algorithm.</p>
-<p>And also there are several optimizations for merge sort, if you are interested in, you can search it on google.</p>
-<p>That’s all for today. Good night!</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[Two more sorting algorithms.]]>
-    
-    </summary>
-    
-      <category term="Algorithm" scheme="http://taoalpha.me/blog/tags/Algorithm/"/>
-    
-      <category term="JS" scheme="http://taoalpha.me/blog/tags/JS/"/>
-    
-      <category term="Sorting" scheme="http://taoalpha.me/blog/tags/Sorting/"/>
-    
-      <category term="tech" scheme="http://taoalpha.me/blog/categories/tech/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[Sorting Algorithm in JavaScript - Insertion Sort and Selection Sort]]></title>
     <link href="http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-1/"/>
     <id>http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-1/</id>
@@ -534,6 +534,62 @@
 ]]></content>
     <summary type="html">
     <![CDATA[Sorting Alogorithm is one of the most frequently used algorithms and we have many different kinds of sorting algorithms. In order to understand javascript better and do more practice, I will implement several famous sorting algorithms in JavaScript.]]>
+    
+    </summary>
+    
+      <category term="Algorithm" scheme="http://taoalpha.me/blog/tags/Algorithm/"/>
+    
+      <category term="JS" scheme="http://taoalpha.me/blog/tags/JS/"/>
+    
+      <category term="Sorting" scheme="http://taoalpha.me/blog/tags/Sorting/"/>
+    
+      <category term="tech" scheme="http://taoalpha.me/blog/categories/tech/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Sorting Algorithm in JavaScript - Bubble Sort and Merge Sort]]></title>
+    <link href="http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/"/>
+    <id>http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/</id>
+    <published>2015-10-29T08:00:00.000Z</published>
+    <updated>2015-12-26T08:21:36.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Bubble sort is really cool but not so useful, it seems that you will never use it… But merge sort is really cool since it is really fast.</p>
+<h2 id="Bubble_Sort"><a href="#Bubble_Sort" class="headerlink" title="Bubble Sort"></a>Bubble Sort</h2><p>So what is bubble sort, according to wikipedia:</p>
+<blockquote>
+<p>Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted. </p>
+</blockquote>
+<p>The whole process of sorting is like the bigger element “bubble” to the end of the list.</p>
+<ul>
+<li><strong>Input:</strong> A list of numbers with random order</li>
+<li><strong>Procedures:</strong><ul>
+<li>Start from the head of the list, and compare every two adjacent numbers and swap them if they are in wrong order;</li>
+<li>Record whether you did any swaps or not, if no, your list has been sorted, otherwise, you need to step 1 again;</li>
+</ul>
+</li>
+<li><strong>Output:</strong> A sorted list</li>
+</ul>
+<p>If you like, you can do a small optimization to the procedures above: since every iteration we will make sure the bigger element will “bubble” to the end of the list, so everytime we don’t need to check the last elements(they are already in ordered), and we will reduce the length for each iteration.</p>
+<p>Here is a nice gif from wikipedia: <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="bubble sort"></p>
+<p>The time complexity for bubble sort would be : O(n^2) for worst case, O(n) for best case, and O(n^2) on average.</p>
+<p>The space complexity for bubble sort would be O(1) since we only need one space used to do the swap.</p>
+<p>Now lets do the code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bubbleSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> swapped</span><br><span class="line">  <span class="keyword">var</span> len = list.length</span><br><span class="line">  <span class="keyword">do</span>&#123;</span><br><span class="line">    swapped = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>;j&lt; len-<span class="number">1</span>;j++)&#123;</span><br><span class="line">      reads += <span class="number">2</span></span><br><span class="line">      <span class="keyword">if</span>(list[j]&gt;list[j+<span class="number">1</span>])&#123;</span><br><span class="line">        <span class="keyword">this</span>.swap(list,j,j+<span class="number">1</span>)</span><br><span class="line">        swapped = <span class="literal">true</span></span><br><span class="line">        writes += <span class="number">2</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    len = len - <span class="number">1</span></span><br><span class="line">    <span class="comment">// since everytime we will move the largest element to the end of the list, we can reduce the number of iteration without considering the last element every iteration</span></span><br><span class="line">  &#125;<span class="keyword">while</span>(swapped)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Merge_Sort"><a href="#Merge_Sort" class="headerlink" title="Merge Sort"></a>Merge Sort</h2><p>Now we met all three different kinds of sorting, all of them have a O(n^2) of time complexity on average.</p>
+<p>Lets do something faster: Merge Sort.</p>
+<p>Imagine you separate your list into several really small lists with only one element or zero element in each of them. Then you merge every two small lists into one sorted list, and keep doing it repeatly.(it’s easy because you are merging two sorted lists)</p>
+<p>The whole procedures will be:</p>
+<ul>
+<li>Split the list recursively;</li>
+<li>Merge the small lists until you merge them all;</li>
+</ul>
+<p>Since we always split by half, the number of small lists we will have would be log(n), and the total cost would be close to (n / 2 * log(n)) on average(since we have at least 1 element list to merge with zero one, at most n/2 elements list to merge with n/2 elements). So the time complexity would be O(nlog(n)) all the time, and the space complexity would be O(n) since we will save origin input list with n small lists.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// mergeSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(list.length &lt;= <span class="number">1</span>) <span class="keyword">return</span> list</span><br><span class="line">  <span class="keyword">var</span> mid = <span class="built_in">Math</span>.floor(list.length / <span class="number">2</span>)</span><br><span class="line">  <span class="keyword">return</span> merge(mergeSort(list.slice(<span class="number">0</span>,mid)),mergeSort(list.slice(mid)))</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left,right</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> nl = []</span><br><span class="line">  <span class="keyword">var</span> il = <span class="number">0</span>, ir = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span>(il&lt;left.length &amp;&amp; ir&lt;right.length)&#123;</span><br><span class="line">    <span class="keyword">if</span>(left[il] &lt; right[ir])&#123;</span><br><span class="line">      nl.push(left[il++])</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      nl.push(right[ir++])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// don't use shift because shift will actually cause a lot I/Os </span></span><br><span class="line">  &#125;</span><br><span class="line">  nl = nl.concat(left.slice(il)).concat(right.slice(ir))</span><br><span class="line">  <span class="keyword">return</span> nl</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Merge sort is kind useful, and if we don’t have quick sort which I will talk about next post, it would be a really good choice to do sorting. And even we have quick sort, merge sort still exists in many languages as part of their default sorting algorithm.</p>
+<p>And also there are several optimizations for merge sort, if you are interested in, you can search it on google.</p>
+<p>That’s all for today. Good night!</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[Two more sorting algorithms.]]>
     
     </summary>
     
@@ -1058,38 +1114,6 @@
       <category term="swiftype" scheme="http://taoalpha.me/blog/tags/swiftype/"/>
     
       <category term="内置搜索" scheme="http://taoalpha.me/blog/tags/%E5%86%85%E7%BD%AE%E6%90%9C%E7%B4%A2/"/>
-    
-      <category term="tech" scheme="http://taoalpha.me/blog/categories/tech/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[给你的 Jekyll 博客添加日志汇总展示页面]]></title>
-    <link href="http://taoalpha.me/blog/2015/07/09/tech-add-goaccess-like-log-page-for-your-jekyll/"/>
-    <id>http://taoalpha.me/blog/2015/07/09/tech-add-goaccess-like-log-page-for-your-jekyll/</id>
-    <published>2015-07-09T07:00:00.000Z</published>
-    <updated>2015-12-26T08:21:36.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="u7B80_u4ECB"><a href="#u7B80_u4ECB" class="headerlink" title="简介"></a>简介</h2><p><a href="http://goaccess.io" target="_blank" rel="external">Goaccess</a> 是一个非常简单而有齐全的日志分析工具, 其<a href="http://goaccess.io/goaccess_html_report.html?201507052200" target="_blank" rel="external">生成的html页面</a>非常精细全面, 可以让你更好的查看日志, 今天就利用上次获取PV的方法来介绍下如何给 Jekyll 添加一个类似goaccess的日志页面.</p>
-<h2 id="u51C6_u5907_u5DE5_u4F5C"><a href="#u51C6_u5907_u5DE5_u4F5C" class="headerlink" title="准备工作"></a>准备工作</h2><p>如果你了解<a href="https://github.com/googleanalytics/google-analytics-super-proxy" target="_blank" rel="external"> google-analytics-super-proxy </a> 或者你看过我之前写的 <a href="/blog/2015/06/07/tech-add-google-analytics-pageviews-to-jekyll-blog/">如何给jekyll博文添加阅读数</a>, 那么你就可以进行下面的准备工作了, 如果没有的话, 请先阅读相关内容后再继续 ^_^</p>
-<ul>
-<li>在<a href="https://ga-dev-tools.appspot.com/query-explorer" target="_blank" rel="external">GA Query Explorer</a>中测试构建你需要的Query API, 比如我根据Goaccess的日志内容和GA本身的统计情况选取了: <code>ga:fullReferrer</code>,<code>ga:browser</code>,<code>ga:operatingSystem</code>,<code>ga:country</code>,<code>ga:pagePath</code>作为我的dimensions, 然后将<code>ga:pageviews</code>和<code>ga:uniquePageviews</code>作为我的metrics, 而且因为之前测试没有关闭ga, 所以存在一些干扰数据, 可以通过filters中设置<code>ga:hostname!~127*</code>来过滤掉;</li>
-<li>在我们建立好的GAE上添加一个新的Query, 并设定其更新频率;</li>
-</ul>
-<h2 id="u89E3_u6790_u548C_u5C55_u793A"><a href="#u89E3_u6790_u548C_u5C55_u793A" class="headerlink" title="解析和展示"></a>解析和展示</h2><h3 id="u83B7_u53D6json"><a href="#u83B7_u53D6json" class="headerlink" title="获取json"></a>获取json</h3><p>这一步和 <a href="/blog/2015/06/07/tech-add-google-analytics-pageviews-to-jekyll-blog/">如何给jekyll博文添加阅读数</a>基本一样, 区别的就在于我们这次不是直接处理<code>responseData.rows</code>了, 我们直接把<code>responseData</code>传给解析函数, 因为我们需要除了rows以外的一些属性.</p>
-<h3 id="u89E3_u6790_u5C55_u793A"><a href="#u89E3_u6790_u5C55_u793A" class="headerlink" title="解析展示"></a>解析展示</h3><p>主要的目的是模拟Goaccess的形式展示访客在浏览器, refer, 国家, 系统以及访问页面几个纬度的分布情况; 主要思路就是通过解析返回的数据, 然后根据各个纬度的属性将对应的pv,uv加以统计后展示出来即可.</p>
-<p>js解析部分的代码如下(展示部分我主要参照了goaccess自身的样式设计, 这里就直接略过了~ 有兴趣的可以<a href="!--￼3--&gt;/galog/">点此查看效果</a>):</p>
-<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="property">@parseGALog</span> = <span class="function"><span class="params">(data)</span> -&gt;</span></span><br><span class="line">  overalldata = &#123;&#125;</span><br><span class="line">  overalldata.tpv = data[<span class="string">"totalsForAllResults"</span>][<span class="string">"ga:pageviews"</span>]</span><br><span class="line">  overalldata.tuv = data[<span class="string">"totalsForAllResults"</span>][<span class="string">"ga:uniquePageviews"</span>]</span><br><span class="line">  overalldata.datasize = parseFloat(JSON.stringify(data).length/<span class="number">16</span>/<span class="number">1024</span>).toFixed(<span class="number">2</span>)</span><br><span class="line">  overalldata.referer = []</span><br><span class="line">  overalldata[<span class="string">'404'</span>] = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  requestdata = &#123;&#125;</span><br><span class="line">  refererdata = &#123;&#125;</span><br><span class="line">  osdata = &#123;&#125;</span><br><span class="line">  browserdata = &#123;&#125;</span><br><span class="line">  countrydata = &#123;&#125;</span><br><span class="line"></span><br><span class="line">  temp_data = data.rows</span><br><span class="line">  $.each temp_data,<span class="function"><span class="params">(k,v)</span> -&gt;</span></span><br><span class="line">    overalldata.referer.push(v[<span class="number">0</span>]) <span class="keyword">if</span> v[<span class="number">0</span>] <span class="keyword">not</span> <span class="keyword">in</span> overalldata.referer</span><br><span class="line">    overalldata[<span class="string">'404'</span>] += parseInt(v[<span class="number">7</span>]) <span class="keyword">if</span> v[<span class="number">5</span>] == <span class="string">"/blog/404"</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !requestdata[v[<span class="number">5</span>]]</span><br><span class="line">      requestdata[v[<span class="number">5</span>]] = &#123;&#125;</span><br><span class="line">      requestdata[v[<span class="number">5</span>]][<span class="string">"pv"</span>] = parseInt(v[<span class="number">7</span>])</span><br><span class="line">      requestdata[v[<span class="number">5</span>]][<span class="string">"uv"</span>] = parseInt v[<span class="number">8</span>]</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      requestdata[v[<span class="number">5</span>]][<span class="string">"pv"</span>] += parseInt v[<span class="number">7</span>]</span><br><span class="line">      requestdata[v[<span class="number">5</span>]][<span class="string">"uv"</span>] += parseInt v[<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !countrydata[v[<span class="number">3</span>]]</span><br><span class="line">      countrydata[v[<span class="number">3</span>]] = &#123;&#125;</span><br><span class="line">      countrydata[v[<span class="number">3</span>]][<span class="string">"pv"</span>] = parseInt v[<span class="number">7</span>]</span><br><span class="line">      countrydata[v[<span class="number">3</span>]][<span class="string">"uv"</span>] = parseInt v[<span class="number">8</span>]</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      countrydata[v[<span class="number">3</span>]][<span class="string">"pv"</span>] += parseInt v[<span class="number">7</span>]</span><br><span class="line">      countrydata[v[<span class="number">3</span>]][<span class="string">"uv"</span>] += parseInt v[<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !refererdata[v[<span class="number">0</span>]]</span><br><span class="line">      refererdata[v[<span class="number">0</span>]] = &#123;&#125;</span><br><span class="line">      refererdata[v[<span class="number">0</span>]][<span class="string">"pv"</span>] = parseInt v[<span class="number">7</span>]</span><br><span class="line">      refererdata[v[<span class="number">0</span>]][<span class="string">"uv"</span>] = parseInt v[<span class="number">8</span>]</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      refererdata[v[<span class="number">0</span>]][<span class="string">"pv"</span>] += parseInt v[<span class="number">7</span>]</span><br><span class="line">      refererdata[v[<span class="number">0</span>]][<span class="string">"uv"</span>] += parseInt v[<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !osdata[v[<span class="number">2</span>]]</span><br><span class="line">      osdata[v[<span class="number">2</span>]] = &#123;&#125;</span><br><span class="line">      osdata[v[<span class="number">2</span>]][<span class="string">"pv"</span>] = parseInt v[<span class="number">7</span>]</span><br><span class="line">      osdata[v[<span class="number">2</span>]][<span class="string">"uv"</span>] = parseInt v[<span class="number">8</span>]</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      osdata[v[<span class="number">2</span>]][<span class="string">"pv"</span>] += parseInt v[<span class="number">7</span>]</span><br><span class="line">      osdata[v[<span class="number">2</span>]][<span class="string">"uv"</span>] += parseInt v[<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !browserdata[v[<span class="number">1</span>]]</span><br><span class="line">      browserdata[v[<span class="number">1</span>]] = &#123;&#125;</span><br><span class="line">      browserdata[v[<span class="number">1</span>]][<span class="string">"pv"</span>] = parseInt v[<span class="number">7</span>]</span><br><span class="line">      browserdata[v[<span class="number">1</span>]][<span class="string">"uv"</span>] = parseInt v[<span class="number">8</span>]</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">      browserdata[v[<span class="number">1</span>]][<span class="string">"pv"</span>] += parseInt v[<span class="number">7</span>]</span><br><span class="line">      browserdata[v[<span class="number">1</span>]][<span class="string">"uv"</span>] += parseInt v[<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">  <span class="comment"># render overall part</span></span><br><span class="line">  $(<span class="string">'li.overall'</span>).find(<span class="string">'summary'</span>).html <span class="string">"&lt;ul&gt;&lt;li&gt;&lt;span class='itemname'&gt;&lt;i class='fa fa-bar-chart'&gt;&lt;/i&gt;total pageviews&lt;/span&gt; &lt;span class='count'&gt;<span class="subst">#&#123;overalldata.tpv&#125;</span>&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span class='itemname'&gt;&lt;i class='fa fa-bar-chart'&gt;&lt;/i&gt;total unique visitors&lt;/span&gt; &lt;span class='count'&gt;<span class="subst">#&#123;overalldata.tuv&#125;</span>&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span class='itemname'&gt;&lt;i class='fa fa-bar-chart'&gt;&lt;/i&gt;referrers&lt;/span&gt; &lt;span class='count'&gt;<span class="subst">#&#123;overalldata.referer.length&#125;</span>&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span class='itemname'&gt;&lt;i class='fa fa-bar-chart'&gt;&lt;/i&gt;total 404&lt;/span&gt; &lt;span class='count'&gt;<span class="subst">#&#123;overalldata[<span class="string">'404'</span>]&#125;</span>&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span class='itemname'&gt;&lt;i class='fa fa-bar-chart'&gt;&lt;/i&gt;log size&lt;/span&gt; &lt;span class='count'&gt;<span class="subst">#&#123;overalldata.datasize&#125;</span>kb&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span class='itemname'&gt;&lt;i class='fa fa-bar-chart'&gt;&lt;/i&gt;log source&lt;/span&gt; &lt;span class='count'&gt;ga&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;"</span></span><br><span class="line"></span><br><span class="line">  showLogData(requestdata,parseInt(overalldata.tpv),parseInt(overalldata.tuv),<span class="string">'Path'</span>)</span><br><span class="line">  showLogData(refererdata,parseInt(overalldata.tpv),parseInt(overalldata.tuv),<span class="string">'Referer'</span>)</span><br><span class="line">  showLogData(osdata,parseInt(overalldata.tpv),parseInt(overalldata.tuv),<span class="string">'OS'</span>)</span><br><span class="line">  showLogData(browserdata,parseInt(overalldata.tpv),parseInt(overalldata.tuv),<span class="string">'Browser'</span>)</span><br><span class="line">  showLogData(countrydata,parseInt(overalldata.tpv),parseInt(overalldata.tuv),<span class="string">'Country'</span>)</span><br><span class="line"></span><br><span class="line"><span class="property">@showLogData</span> = <span class="function"><span class="params">(rq,ptotal,utotal,id)</span> -&gt;</span></span><br><span class="line">  thead = <span class="string">"&lt;tr&gt;&lt;th&gt;PageViews&lt;/th&gt;&lt;th&gt;%&lt;/th&gt;&lt;th&gt;Unique PageViews&lt;/th&gt;&lt;th&gt;%&lt;/th&gt;&lt;th class=''&gt;__title__&lt;span onclick='if($(this).hasClass('expanded'))&#123;$(this).removeClass('expanded').closest('thead').next('tbody').find('tr:nth-of-type(n+10)').hide();&#125;else&#123;$(this).addClass('expanded').closest('thead').next('tbody').find('tr').show()&#125;'&gt;&lt;i class='fa fa-expand'&gt;&lt;/i&gt;&lt;/span&gt;&lt;/th&gt;&lt;/tr&gt;"</span></span><br><span class="line">  tbodyitem = <span class="string">"&lt;tr class='root'&gt;&lt;td class='num'&gt;__value_1__&lt;/td&gt;&lt;td&gt;__value_2__&lt;/td&gt;&lt;td class='num'&gt;__value_3__&lt;/td&gt;&lt;td&gt;__value_4__&lt;/td&gt;&lt;td&gt;__value_5__&lt;/td&gt;&lt;/tr&gt;"</span></span><br><span class="line">  tbody = <span class="string">''</span></span><br><span class="line"></span><br><span class="line">  $.each rq, <span class="function"><span class="params">(k,v)</span> -&gt;</span></span><br><span class="line">    tbody += tbodyitem.replace(<span class="string">'__value_1__'</span>,v[<span class="string">'pv'</span>]).replace(<span class="string">'__value_2__'</span>,(v[<span class="string">'pv'</span>]/ptotal*<span class="number">100</span>).toFixed(<span class="number">2</span>)).replace(<span class="string">'__value_3__'</span>,v[<span class="string">'uv'</span>]).replace(<span class="string">'__value_4__'</span>,(v[<span class="string">'uv'</span>]/utotal*<span class="number">100</span>).toFixed(<span class="number">2</span>)).replace(<span class="string">'__value_5__'</span>,k)</span><br><span class="line"></span><br><span class="line">  $(<span class="string">'li.'</span>+id).find(<span class="string">'thead'</span>).html thead.replace(<span class="string">'__title__'</span>,id)</span><br><span class="line">  $(<span class="string">'li.'</span>+id).find(<span class="string">'tbody'</span>).html tbody</span><br></pre></td></tr></table></figure>
-<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>可能有人会说既然数据都是从GA获取的, 干嘛不直接去GA查看不就得了.. 何必多此一举呢?</p>
-<p>恩… 其实确实是如此的… 只是一来我是熟悉下GA的接口和工具, 做出来练练手; 二来呢, 也是这样可以更好的聚合我想要看的数据, 方便我个人定制~ (当然, GA本身也有定制report并发送邮箱的功能~)</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[Goaccess 是一个非常简单而有齐全的日志分析工具, 其生成的html页面非常精细全面, 可以让你更好的查看日志, 今天就利用上次获取PV的方法来介绍下如何给 Jekyll 添加一个类似goaccess的日志页面.]]>
-    
-    </summary>
-    
-      <category term="Google Analytics" scheme="http://taoalpha.me/blog/tags/Google-Analytics/"/>
-    
-      <category term="log" scheme="http://taoalpha.me/blog/tags/log/"/>
     
       <category term="tech" scheme="http://taoalpha.me/blog/categories/tech/"/>
     

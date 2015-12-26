@@ -2,8 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://taoalpha.me/blog//puzzle/index.html</loc>
+    <lastmod>2015-12-26T22:06:42.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://taoalpha.me/blog/2015/12/26/Summary-of-the-year/</loc>
+    <lastmod>2015-12-26T22:04:28.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://taoalpha.me/blog//404.html</loc>
-    <lastmod>2015-12-26T17:31:28.000Z</lastmod>
+    <lastmod>2015-12-26T18:38:33.000Z</lastmod>
   </url>
   
   <url>
@@ -12,17 +22,7 @@
   </url>
   
   <url>
-    <loc>http://taoalpha.me/blog/2014/08/15/read-yi-10-tips-to-get-you-started-with-responsive-design/</loc>
-    <lastmod>2015-12-26T08:21:36.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://taoalpha.me/blog/2015/06/05/tech-temporary-alias-shell-scrip/</loc>
-    <lastmod>2015-12-26T08:21:36.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://taoalpha.me/blog/2015/05/06/tech-startss-invitation-code/</loc>
+    <loc>http://taoalpha.me/blog/2015/03/08/read-what-is-pythonic/</loc>
     <lastmod>2015-12-26T08:21:36.000Z</lastmod>
   </url>
   
@@ -327,12 +327,12 @@
   </url>
   
   <url>
-    <loc>http://taoalpha.me/blog/2015/05/29/tech-use-jekyll-plugin-with-github-page/</loc>
+    <loc>http://taoalpha.me/blog/2014/08/15/read-yi-10-tips-to-get-you-started-with-responsive-design/</loc>
     <lastmod>2015-12-26T08:21:36.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://taoalpha.me/blog/2015/03/08/read-what-is-pythonic/</loc>
+    <loc>http://taoalpha.me/blog/2015/05/29/tech-use-jekyll-plugin-with-github-page/</loc>
     <lastmod>2015-12-26T08:21:36.000Z</lastmod>
   </url>
   
@@ -592,6 +592,11 @@
   </url>
   
   <url>
+    <loc>http://taoalpha.me/blog/2015/09/30/tech-use-javascript-to-send-email/</loc>
+    <lastmod>2015-12-26T08:21:36.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://taoalpha.me/blog/2015/11/27/thanksgiving/</loc>
     <lastmod>2015-12-26T08:21:36.000Z</lastmod>
   </url>
@@ -632,7 +637,7 @@
   </url>
   
   <url>
-    <loc>http://taoalpha.me/blog/2015/09/30/tech-use-javascript-to-send-email/</loc>
+    <loc>http://taoalpha.me/blog/2015/06/05/tech-temporary-alias-shell-scrip/</loc>
     <lastmod>2015-12-26T08:21:36.000Z</lastmod>
   </url>
   
@@ -642,7 +647,7 @@
   </url>
   
   <url>
-    <loc>http://taoalpha.me/blog//puzzle/index.html</loc>
+    <loc>http://taoalpha.me/blog/2015/05/06/tech-startss-invitation-code/</loc>
     <lastmod>2015-12-26T08:21:36.000Z</lastmod>
   </url>
   
