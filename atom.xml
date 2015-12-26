@@ -68,7 +68,7 @@
     <link href="http://taoalpha.me/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/"/>
     <id>http://taoalpha.me/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/</id>
     <published>2015-12-07T06:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Briefly speaking, NodeJS is like using JS on back-end stuff. Its really cooooooool and exctied for every JS developer !!!</p>
 <p>I just started to learn Node, and in order to learn it better, I made a small cli tool for myself, it’s quit helpful actually.</p>
 <h2 id="Meet_Baby"><a href="#Meet_Baby" class="headerlink" title="Meet Baby"></a>Meet Baby</h2><p>I named this tool as ‘baby’ with a lot of reasons… :)</p>
@@ -107,7 +107,7 @@
     <link href="http://taoalpha.me/blog/2015/11/27/thanksgiving/"/>
     <id>http://taoalpha.me/blog/2015/11/27/thanksgiving/</id>
     <published>2015-11-27T05:00:00.000Z</published>
-    <updated>2015-12-26T01:22:33.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<p>我不知道感恩节的历史, 也并没有探究的欲望. 但还是以此为名, 随便写写.</p>
 <p>我很感谢我的父母, 他们给了我生命, 而这是让我得以体验这个世界的根本缘由. 还有两个月我满24岁, 至此已来人世两个小轮回, 我庆幸自己始终活着, 走着…</p>
 <p>我很感谢我的父亲, 他是我人生最大的偶像, 虽然我从未这么说过. 身为农民的孩子, 他有着坎坷的童年, 那是身在我这个时代, 绝大多数人无法想象的苦楚, 而作为军人, 他有着极为精彩的过去, 有着极为强大的精神世界和军人所有的品质, 而这些, 一直都是我所向往的, 崇拜的, 更是我面对任何困难都不会放弃, 妥协的支柱.</p>
@@ -132,7 +132,7 @@
     <link href="http://taoalpha.me/blog/2015/11/19/tech-preventDefault-and-stopPropagation-in-JS/"/>
     <id>http://taoalpha.me/blog/2015/11/19/tech-preventDefault-and-stopPropagation-in-JS/</id>
     <published>2015-11-19T09:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>When we deal with event on DOM, jQuery always very helpful. But javascript has this mechanic called event bubbling is quite annoying. So be careful when you deal with them.</p>
 <h2 id="Event_Bubbling"><a href="#Event_Bubbling" class="headerlink" title="Event Bubbling"></a>Event Bubbling</h2><p>We all know DOM elements can be nested inside each other which is great for structure. But it causes some troubles when you want to deal with the event on the children and parent separately. Because if we do nothing with that, the event like ‘click’ happened on children will trigger the same event for parents too, which is event bubbling.</p>
 <h2 id="Event_Capturing"><a href="#Event_Capturing" class="headerlink" title="Event Capturing"></a>Event Capturing</h2><p>All browsers except IE&lt;9, there are two stages of event processing, one is event bubbling, another is event capturing. Opposite with event bubbling, the event capturing will go down along the html structure and trigger the corresponding event. And by default: All methods of event handling ignore the caputiring phase. Using addEventListener with last argument true is only the way to catch the event at capturing.</p>
@@ -160,7 +160,7 @@
     <link href="http://taoalpha.me/blog/2015/11/11/tech-use-strict-in-js/"/>
     <id>http://taoalpha.me/blog/2015/11/11/tech-use-strict-in-js/</id>
     <published>2015-11-11T08:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><code>&#39;use strict&#39;</code> is a new feature introduced from ECMAScript 5, it is not a subset of js, it has some different semantics from normal code. So be careful to use it.</p>
 <h2 id="What_is_the_difference_3F"><a href="#What_is_the_difference_3F" class="headerlink" title="What is the difference?"></a>What is the difference?</h2><p>After you insert the <code>&#39;use strict&#39;</code> into the head of your entire code or in the beginning of the function code.</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// Whole-script strict mode syntax</span></span><br><span class="line"><span class="pi">"use strict"</span>;</span><br><span class="line"><span class="keyword">var</span> v = <span class="string">"Hi!  I'm a strict mode script!"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// function-level</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">strict</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">// Function-level strict mode syntax</span></span><br><span class="line"><span class="pi">  'use strict'</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">nested</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="string">"And so am I!"</span>; &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"Hi!  I'm a strict mode function!  "</span> + nested();</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">notStrict</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="string">"I'm not strict."</span>; &#125;</span><br></pre></td></tr></table></figure>
@@ -217,7 +217,7 @@
     <link href="http://taoalpha.me/blog/2015/11/06/tech-es6-general-summary/"/>
     <id>http://taoalpha.me/blog/2015/11/06/tech-es6-general-summary/</id>
     <published>2015-11-06T05:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p>This post is a copy of <a href="https://github.com/lukehoban/es6features" target="_blank" rel="external">Luke Hoban - ES6Features repo</a></p>
 </blockquote>
@@ -308,7 +308,7 @@
     <link href="http://taoalpha.me/blog/2015/11/03/tech-javascript-lru-cache/"/>
     <id>http://taoalpha.me/blog/2015/11/03/tech-javascript-lru-cache/</id>
     <published>2015-11-03T05:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>LRU which is short for least recently used is a popular algorithm in cache. The basic idea is always put your items in order of used time, and when you insert new item into the fullfilled chache,remove the least recently used item in your memory.</p>
 <h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><h3 id="O_28n_29"><a href="#O_28n_29" class="headerlink" title="O(n)"></a>O(n)</h3><p>At first, I plan to use a hashtable and a list with all keys to achieve it, and I did, but the time cost apparently too large: O(n) since I have to search the list to get the key and then get the value from the hashtable.</p>
 <p>Here is the code:</p>
@@ -343,7 +343,7 @@
     <link href="http://taoalpha.me/blog/2015/10/30/tech-javascript-array-operation-cost/"/>
     <id>http://taoalpha.me/blog/2015/10/30/tech-javascript-array-operation-cost/</id>
     <published>2015-10-30T11:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><code>concat()</code>,<code>splice()</code>,<code>slice()</code>,<code>push()</code>,<code>pop()</code>,<code>shift()</code>,<code>unshift()</code>… all these handy functions belong to Array. We are using them everyday, but do you really know about them ? Time cost of a function in language like JavaScript is not easy to measurement, since different browsers use different javascript engine which will cause different implementation on same functions. But, normally, the basic operations will be the same.</p>
 <p>So today, I will test some basic array operations on NodeJS and compare the time cost between these operations.</p>
 <p><strong>TEST ENVIRONMENT:</strong> Mac Air, iTerm, NodeJS v4.1.1</p>
@@ -416,11 +416,67 @@
   </entry>
   
   <entry>
+    <title><![CDATA[Sorting Algorithm in JavaScript - Bubble Sort and Merge Sort]]></title>
+    <link href="http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/"/>
+    <id>http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/</id>
+    <published>2015-10-29T08:00:00.000Z</published>
+    <updated>2015-12-26T08:21:36.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Bubble sort is really cool but not so useful, it seems that you will never use it… But merge sort is really cool since it is really fast.</p>
+<h2 id="Bubble_Sort"><a href="#Bubble_Sort" class="headerlink" title="Bubble Sort"></a>Bubble Sort</h2><p>So what is bubble sort, according to wikipedia:</p>
+<blockquote>
+<p>Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted. </p>
+</blockquote>
+<p>The whole process of sorting is like the bigger element “bubble” to the end of the list.</p>
+<ul>
+<li><strong>Input:</strong> A list of numbers with random order</li>
+<li><strong>Procedures:</strong><ul>
+<li>Start from the head of the list, and compare every two adjacent numbers and swap them if they are in wrong order;</li>
+<li>Record whether you did any swaps or not, if no, your list has been sorted, otherwise, you need to step 1 again;</li>
+</ul>
+</li>
+<li><strong>Output:</strong> A sorted list</li>
+</ul>
+<p>If you like, you can do a small optimization to the procedures above: since every iteration we will make sure the bigger element will “bubble” to the end of the list, so everytime we don’t need to check the last elements(they are already in ordered), and we will reduce the length for each iteration.</p>
+<p>Here is a nice gif from wikipedia: <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="bubble sort"></p>
+<p>The time complexity for bubble sort would be : O(n^2) for worst case, O(n) for best case, and O(n^2) on average.</p>
+<p>The space complexity for bubble sort would be O(1) since we only need one space used to do the swap.</p>
+<p>Now lets do the code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bubbleSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> swapped</span><br><span class="line">  <span class="keyword">var</span> len = list.length</span><br><span class="line">  <span class="keyword">do</span>&#123;</span><br><span class="line">    swapped = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>;j&lt; len-<span class="number">1</span>;j++)&#123;</span><br><span class="line">      reads += <span class="number">2</span></span><br><span class="line">      <span class="keyword">if</span>(list[j]&gt;list[j+<span class="number">1</span>])&#123;</span><br><span class="line">        <span class="keyword">this</span>.swap(list,j,j+<span class="number">1</span>)</span><br><span class="line">        swapped = <span class="literal">true</span></span><br><span class="line">        writes += <span class="number">2</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    len = len - <span class="number">1</span></span><br><span class="line">    <span class="comment">// since everytime we will move the largest element to the end of the list, we can reduce the number of iteration without considering the last element every iteration</span></span><br><span class="line">  &#125;<span class="keyword">while</span>(swapped)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Merge_Sort"><a href="#Merge_Sort" class="headerlink" title="Merge Sort"></a>Merge Sort</h2><p>Now we met all three different kinds of sorting, all of them have a O(n^2) of time complexity on average.</p>
+<p>Lets do something faster: Merge Sort.</p>
+<p>Imagine you separate your list into several really small lists with only one element or zero element in each of them. Then you merge every two small lists into one sorted list, and keep doing it repeatly.(it’s easy because you are merging two sorted lists)</p>
+<p>The whole procedures will be:</p>
+<ul>
+<li>Split the list recursively;</li>
+<li>Merge the small lists until you merge them all;</li>
+</ul>
+<p>Since we always split by half, the number of small lists we will have would be log(n), and the total cost would be close to (n / 2 * log(n)) on average(since we have at least 1 element list to merge with zero one, at most n/2 elements list to merge with n/2 elements). So the time complexity would be O(nlog(n)) all the time, and the space complexity would be O(n) since we will save origin input list with n small lists.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// mergeSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(list.length &lt;= <span class="number">1</span>) <span class="keyword">return</span> list</span><br><span class="line">  <span class="keyword">var</span> mid = <span class="built_in">Math</span>.floor(list.length / <span class="number">2</span>)</span><br><span class="line">  <span class="keyword">return</span> merge(mergeSort(list.slice(<span class="number">0</span>,mid)),mergeSort(list.slice(mid)))</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left,right</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> nl = []</span><br><span class="line">  <span class="keyword">var</span> il = <span class="number">0</span>, ir = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span>(il&lt;left.length &amp;&amp; ir&lt;right.length)&#123;</span><br><span class="line">    <span class="keyword">if</span>(left[il] &lt; right[ir])&#123;</span><br><span class="line">      nl.push(left[il++])</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      nl.push(right[ir++])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// don't use shift because shift will actually cause a lot I/Os </span></span><br><span class="line">  &#125;</span><br><span class="line">  nl = nl.concat(left.slice(il)).concat(right.slice(ir))</span><br><span class="line">  <span class="keyword">return</span> nl</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Merge sort is kind useful, and if we don’t have quick sort which I will talk about next post, it would be a really good choice to do sorting. And even we have quick sort, merge sort still exists in many languages as part of their default sorting algorithm.</p>
+<p>And also there are several optimizations for merge sort, if you are interested in, you can search it on google.</p>
+<p>That’s all for today. Good night!</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[Two more sorting algorithms.]]>
+    
+    </summary>
+    
+      <category term="Algorithm" scheme="http://taoalpha.me/blog/tags/Algorithm/"/>
+    
+      <category term="JS" scheme="http://taoalpha.me/blog/tags/JS/"/>
+    
+      <category term="Sorting" scheme="http://taoalpha.me/blog/tags/Sorting/"/>
+    
+      <category term="tech" scheme="http://taoalpha.me/blog/categories/tech/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Sorting Algorithm in JavaScript - Insertion Sort and Selection Sort]]></title>
     <link href="http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-1/"/>
     <id>http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-1/</id>
     <published>2015-10-29T08:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Sorting_Algorithm"><a href="#Sorting_Algorithm" class="headerlink" title="Sorting Algorithm"></a>Sorting Algorithm</h2><p>As the most important and fundamental algorithm, sorting algorithm is always the best start to learn algorithm.</p>
 <p>Among all the different sorting algorithms, we have 10 algorithms which are used a lot in practice, and I will introduce all these ten algorithms one by one. </p>
 <p>Today we will talk about: Selection Sort and Insertion Sort.</p>
@@ -492,67 +548,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[Sorting Algorithm in JavaScript - Bubble Sort and Merge Sort]]></title>
-    <link href="http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/"/>
-    <id>http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/</id>
-    <published>2015-10-29T08:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Bubble sort is really cool but not so useful, it seems that you will never use it… But merge sort is really cool since it is really fast.</p>
-<h2 id="Bubble_Sort"><a href="#Bubble_Sort" class="headerlink" title="Bubble Sort"></a>Bubble Sort</h2><p>So what is bubble sort, according to wikipedia:</p>
-<blockquote>
-<p>Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted. </p>
-</blockquote>
-<p>The whole process of sorting is like the bigger element “bubble” to the end of the list.</p>
-<ul>
-<li><strong>Input:</strong> A list of numbers with random order</li>
-<li><strong>Procedures:</strong><ul>
-<li>Start from the head of the list, and compare every two adjacent numbers and swap them if they are in wrong order;</li>
-<li>Record whether you did any swaps or not, if no, your list has been sorted, otherwise, you need to step 1 again;</li>
-</ul>
-</li>
-<li><strong>Output:</strong> A sorted list</li>
-</ul>
-<p>If you like, you can do a small optimization to the procedures above: since every iteration we will make sure the bigger element will “bubble” to the end of the list, so everytime we don’t need to check the last elements(they are already in ordered), and we will reduce the length for each iteration.</p>
-<p>Here is a nice gif from wikipedia: <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="bubble sort"></p>
-<p>The time complexity for bubble sort would be : O(n^2) for worst case, O(n) for best case, and O(n^2) on average.</p>
-<p>The space complexity for bubble sort would be O(1) since we only need one space used to do the swap.</p>
-<p>Now lets do the code:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bubbleSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> swapped</span><br><span class="line">  <span class="keyword">var</span> len = list.length</span><br><span class="line">  <span class="keyword">do</span>&#123;</span><br><span class="line">    swapped = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>;j&lt; len-<span class="number">1</span>;j++)&#123;</span><br><span class="line">      reads += <span class="number">2</span></span><br><span class="line">      <span class="keyword">if</span>(list[j]&gt;list[j+<span class="number">1</span>])&#123;</span><br><span class="line">        <span class="keyword">this</span>.swap(list,j,j+<span class="number">1</span>)</span><br><span class="line">        swapped = <span class="literal">true</span></span><br><span class="line">        writes += <span class="number">2</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    len = len - <span class="number">1</span></span><br><span class="line">    <span class="comment">// since everytime we will move the largest element to the end of the list, we can reduce the number of iteration without considering the last element every iteration</span></span><br><span class="line">  &#125;<span class="keyword">while</span>(swapped)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Merge_Sort"><a href="#Merge_Sort" class="headerlink" title="Merge Sort"></a>Merge Sort</h2><p>Now we met all three different kinds of sorting, all of them have a O(n^2) of time complexity on average.</p>
-<p>Lets do something faster: Merge Sort.</p>
-<p>Imagine you separate your list into several really small lists with only one element or zero element in each of them. Then you merge every two small lists into one sorted list, and keep doing it repeatly.(it’s easy because you are merging two sorted lists)</p>
-<p>The whole procedures will be:</p>
-<ul>
-<li>Split the list recursively;</li>
-<li>Merge the small lists until you merge them all;</li>
-</ul>
-<p>Since we always split by half, the number of small lists we will have would be log(n), and the total cost would be close to (n / 2 * log(n)) on average(since we have at least 1 element list to merge with zero one, at most n/2 elements list to merge with n/2 elements). So the time complexity would be O(nlog(n)) all the time, and the space complexity would be O(n) since we will save origin input list with n small lists.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// mergeSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(list.length &lt;= <span class="number">1</span>) <span class="keyword">return</span> list</span><br><span class="line">  <span class="keyword">var</span> mid = <span class="built_in">Math</span>.floor(list.length / <span class="number">2</span>)</span><br><span class="line">  <span class="keyword">return</span> merge(mergeSort(list.slice(<span class="number">0</span>,mid)),mergeSort(list.slice(mid)))</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left,right</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> nl = []</span><br><span class="line">  <span class="keyword">var</span> il = <span class="number">0</span>, ir = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span>(il&lt;left.length &amp;&amp; ir&lt;right.length)&#123;</span><br><span class="line">    <span class="keyword">if</span>(left[il] &lt; right[ir])&#123;</span><br><span class="line">      nl.push(left[il++])</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      nl.push(right[ir++])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// don't use shift because shift will actually cause a lot I/Os </span></span><br><span class="line">  &#125;</span><br><span class="line">  nl = nl.concat(left.slice(il)).concat(right.slice(ir))</span><br><span class="line">  <span class="keyword">return</span> nl</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Merge sort is kind useful, and if we don’t have quick sort which I will talk about next post, it would be a really good choice to do sorting. And even we have quick sort, merge sort still exists in many languages as part of their default sorting algorithm.</p>
-<p>And also there are several optimizations for merge sort, if you are interested in, you can search it on google.</p>
-<p>That’s all for today. Good night!</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[Two more sorting algorithms.]]>
-    
-    </summary>
-    
-      <category term="Algorithm" scheme="http://taoalpha.me/blog/tags/Algorithm/"/>
-    
-      <category term="JS" scheme="http://taoalpha.me/blog/tags/JS/"/>
-    
-      <category term="Sorting" scheme="http://taoalpha.me/blog/tags/Sorting/"/>
-    
-      <category term="tech" scheme="http://taoalpha.me/blog/categories/tech/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[Restore your database in Raspberry Pi from kernel panic error]]></title>
     <link href="http://taoalpha.me/blog/2015/10/14/tech-raspberry-pi-kernel-panic-data-restore/"/>
     <id>http://taoalpha.me/blog/2015/10/14/tech-raspberry-pi-kernel-panic-data-restore/</id>
     <published>2015-10-14T13:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>My Raspberry Pi suddenly stopped running(connection lost when I was connecting with my pi through ssh) when I was doing something really normal(like modifying a file…) And then I tried to connect my pi with a screen and it showed the mysterious Kernel Panic error…</p>
 <h2 id="Possible_Solutions"><a href="#Possible_Solutions" class="headerlink" title="Possible Solutions"></a>Possible Solutions</h2><h3 id="From_the_community"><a href="#From_the_community" class="headerlink" title="From the community"></a>From the community</h3><p>I did some search on google and found some people already met this problem before. And there was some answers mentioned about using <code>fsck</code> to repaire the boot partition.</p>
 <p>You need run the fsck in a linux environment which means you need another linux system and load your Pi system sd-card as an external USB and run the command as follow:</p>
@@ -611,7 +611,7 @@
     <link href="http://taoalpha.me/blog/2015/09/30/tech-use-javascript-to-send-email/"/>
     <id>http://taoalpha.me/blog/2015/09/30/tech-use-javascript-to-send-email/</id>
     <published>2015-09-30T04:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<p>Want to send an email in your static website without any server languages support? Seems impossible. But now you can do that using only JavaScript. Wonderful? I will show you how to do that.</p>
 <h2 id="Tools_we_need"><a href="#Tools_we_need" class="headerlink" title="Tools we need"></a>Tools we need</h2><ul>
 <li><strong>Mandrill</strong>: they provide the mail service that you can call using javascript;</li>
@@ -646,7 +646,7 @@
     <link href="http://taoalpha.me/blog/2015/09/07/tech-django-with-bower-and-pipeline/"/>
     <id>http://taoalpha.me/blog/2015/09/07/tech-django-with-bower-and-pipeline/</id>
     <published>2015-09-07T08:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>Since I decided to focus on python and JS, I started to dig into these two babies.</p>
 <p>I use django as my web framework in python, so how to build a website easier is what I most concerned. I used yeoman for a while, pretty amazing and convenient, especially the bower and compressor, compiler.</p>
 <p>So I did some search and study, trying to integrate the bower and compressor, compiler into django since I am getting used to the yeoman workflow.</p>
@@ -702,7 +702,7 @@
     <link href="http://taoalpha.me/blog/2015/08/20/tech-raspberry-pi-as-nas-and-crawlers/"/>
     <id>http://taoalpha.me/blog/2015/08/20/tech-raspberry-pi-as-nas-and-crawlers/</id>
     <published>2015-08-20T10:00:00.000Z</published>
-    <updated>2015-12-26T03:33:39.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u5F15_u5B50"><a href="#u5F15_u5B50" class="headerlink" title="引子"></a>引子</h2><p>在之前<br><a href="/blog/2015/07/05/tech-raspberry-pi-setup/">Raspberry Pi Setup</a>一文中介绍了树莓派的初始配置. 这几天乘着还没开学, 就赶紧把树莓派重新跑起来, 虽然悲催的因为网络设定导致我的树莓派无法联网只能强制重刷了… 好在之前在家里就一直用 samba 把重要的脚本都存在了外置盘上, 而已抓取的数据也有早起的备份, 丢失的数据就没办法了..</p>
 <p>所以正好相当于重新设定了一遍 NAS 和 diango , 本文做简单介绍, 方便后续查看.</p>
 <h2 id="NAS"><a href="#NAS" class="headerlink" title="NAS"></a>NAS</h2><p>NAS 全称是: Network-attached Storage. 简单说就是在一个网络组中用来存储数据的地方, 而在这个网路组的所有用户都可以在相应的权限下查看, 编辑.</p>
@@ -769,7 +769,7 @@
     <link href="http://taoalpha.me/blog/2015/08/18/back-to-school-after-2-years/"/>
     <id>http://taoalpha.me/blog/2015/08/18/back-to-school-after-2-years/</id>
     <published>2015-08-18T04:00:00.000Z</published>
-    <updated>2015-12-26T01:25:19.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u5F15_u5B50"><a href="#u5F15_u5B50" class="headerlink" title="引子"></a>引子</h2><p>随着加州之行的结束, 我阔别两年之久的校园生活正式回归. 换了一个新的园子, 开启一段新的生活, 作为体验性人生的坚定支持者, 我对重返校园的期待自然是获得一份和本科截然不同的经历.</p>
 <h2 id="u672C_u79D1"><a href="#u672C_u79D1" class="headerlink" title="本科"></a>本科</h2><p>虽然我荣幸进入国内顶尖的园子里学习, 但我真的只是个学渣. 我讨厌自己的专业, 而身为兴趣唯一驱动力的人, 一旦讨厌, 就绝不可能做好. 我花了两年多时间, 修了很多专业的基础课, 尝试找出自己喜欢的东西. 而很幸运我找到了, 也很不幸出于种种原因我无法转系(成绩啊,时间啊,朋友啊等等), 也担心一旦兴趣变成任务就会失去动力了…</p>
 <p>于是, 做了四年的学渣, 我的 GPA 仅仅3出头, 虽然能够推研, 但是最终还是选择了走出园子. 想去看看真实的社会与工作. 父母一度认为这是我不求上进的表现. 于是几次不欢而散的电话后, 我承诺父母: 当我确定自己的目标后, 我会申请自己喜欢的方向, 出国深造. 我不是不求上进, 我只是想在上进的过程中目标更明确些.</p>
@@ -806,7 +806,7 @@
     <link href="http://taoalpha.me/blog/2015/07/28/landing-in-usa/"/>
     <id>http://taoalpha.me/blog/2015/07/28/landing-in-usa/</id>
     <published>2015-07-28T04:00:00.000Z</published>
-    <updated>2015-12-26T01:26:21.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u7740_u9646"><a href="#u7740_u9646" class="headerlink" title="着陆"></a>着陆</h2><p>在经过了首都倾盆大雨的送行后, 历时近12小时, 我终于成功抵达LA, 非常轻松愉快的通过了入境安检后终于踏上了这个神奇的国度. 2年未见的室友C除了更帅气了几份外倒也没啥变化~ 非常省心的被安顿好后就要开始痛苦的时差调整了… 当然, 手机电话卡以及银行卡自然是首要任务之一, 本文顺带介绍下博主的办卡经历分享给大家~</p>
 <h2 id="u5DF2_u5B8C_u6210_u4E8B_u9879_u6E05_u5355"><a href="#u5DF2_u5B8C_u6210_u4E8B_u9879_u6E05_u5355" class="headerlink" title="已完成事项清单"></a>已完成事项清单</h2><h3 id="u7535_u8BDD_u5361"><a href="#u7535_u8BDD_u5361" class="headerlink" title="电话卡"></a>电话卡</h3><p>  博主入的AT&amp;T, 主要原因是朋友的family plan是AT&amp;T的, 直接加入省心省力~</p>
 <ul>
@@ -887,7 +887,7 @@
     <link href="http://taoalpha.me/blog/2015/07/12/tech-javascript-closure/"/>
     <id>http://taoalpha.me/blog/2015/07/12/tech-javascript-closure/</id>
     <published>2015-07-12T07:00:00.000Z</published>
-    <updated>2015-12-26T03:09:27.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u7F18_u8D77"><a href="#u7F18_u8D77" class="headerlink" title="缘起"></a>缘起</h2><p> 在上篇重载的介绍中提到了Closure的概念, 正好今天看到Ninja中介绍Closure的这部分, 所以今天梳理记录下. Closure作为JS的高级用法之一, 对于JS开发而言有着极为重要的作用.</p>
 <h2 id="Closure"><a href="#Closure" class="headerlink" title="Closure"></a>Closure</h2><h3 id="Closure_u7684_u7ED3_u6784"><a href="#Closure_u7684_u7ED3_u6784" class="headerlink" title="Closure的结构"></a>Closure的结构</h3><p>什么是Closure? 更精确的说: 什么是JavaScript里面的Closure? </p>
 <blockquote>
@@ -954,7 +954,7 @@
     <link href="http://taoalpha.me/blog/2015/07/11/tech-javascript-overload/"/>
     <id>http://taoalpha.me/blog/2015/07/11/tech-javascript-overload/</id>
     <published>2015-07-11T04:00:00.000Z</published>
-    <updated>2015-12-26T03:36:49.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u7F18_u8D77"><a href="#u7F18_u8D77" class="headerlink" title="缘起"></a>缘起</h2><p>今天看<a href="http://book.douban.com/subject/3176860/" title="Secrets of the JavaScript Ninja" target="_blank" rel="external">Secrets of the JavaScript Ninja</a>看到js中如何实现重载函数的部分, 然后对着一个只有7,8行代码的函数范例研究了2个多小时… 掩面羞愧难当ing… 为了让记忆更加深刻些, 特意记录下心得以防止以后再次跌在同一个坑里…</p>
 <h2 id="JS_u7684_u91CD_u8F7D"><a href="#JS_u7684_u91CD_u8F7D" class="headerlink" title="JS的重载"></a>JS的重载</h2><h3 id="u91CD_u8F7D_u51FD_u6570"><a href="#u91CD_u8F7D_u51FD_u6570" class="headerlink" title="重载函数"></a>重载函数</h3><p>重载函数的概念在很多OOP(面向对象的编程), 尤其是C系的语言中是很基本的, 其允许在同一范围中声明几个功能类似的同名函数，但是这些同名函数的形式参数（指参数的个数、类型或者顺序）必须不同，从而实现同一个函数可以执行不同的逻辑.</p>
 <p>但是, javascript中是不存在重载函数这个概念的, 不过其松散的函数(比如参数传递的数量和类型等限制), 变量尤其是其变量类型的自动判断的特点都让我们通常选择在函数的主体逻辑上实现根据参数的不同而执行不同的逻辑. 但是js中能模拟出真正的重载函数吗?</p>
@@ -1009,7 +1009,7 @@
     <link href="http://taoalpha.me/blog/2015/07/09/tech-change-internal-search-to-swiftype/"/>
     <id>http://taoalpha.me/blog/2015/07/09/tech-change-internal-search-to-swiftype/</id>
     <published>2015-07-09T13:00:00.000Z</published>
-    <updated>2015-12-26T03:36:04.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Since I imported some old articles from my old blog, <a href="/blog/2015/06/21/tech-add-internal-search-to-jekyll-blog/">the internal search I built using javascript and json datas</a> last time got slower and slower. So I decided to add a third-part search engine for my blog. Like I recommended in my <a href="/blog/2015/06/21/tech-add-internal-search-to-jekyll-blog/">last post</a>, <a href="https://swiftype.com" target="_blank" rel="external">swiftype</a> is a really nice choice.</p>
 <h2 id="How_to_add_swiftype_in_your_blog"><a href="#How_to_add_swiftype_in_your_blog" class="headerlink" title="How to add swiftype in your blog"></a>How to add swiftype in your blog</h2><h3 id="Before_Sign_Up"><a href="#Before_Sign_Up" class="headerlink" title="Before Sign Up"></a>Before Sign Up</h3><p>Before you open the <a href="https://swiftype.com" target="_blank" rel="external">swiftype website</a> and sign up, you should do some work to check whether your website is friendly to search engine.</p>
 <h4 id="robots-txt"><a href="#robots-txt" class="headerlink" title="robots.txt"></a>robots.txt</h4><p>If you have some subdirectories or subdomains you don’t want to be crawled by some search engines, you need to set the rules in robots.txt.</p>
@@ -1068,7 +1068,7 @@
     <link href="http://taoalpha.me/blog/2015/07/09/tech-add-goaccess-like-log-page-for-your-jekyll/"/>
     <id>http://taoalpha.me/blog/2015/07/09/tech-add-goaccess-like-log-page-for-your-jekyll/</id>
     <published>2015-07-09T07:00:00.000Z</published>
-    <updated>2015-12-26T03:41:18.000Z</updated>
+    <updated>2015-12-26T08:21:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u7B80_u4ECB"><a href="#u7B80_u4ECB" class="headerlink" title="简介"></a>简介</h2><p><a href="http://goaccess.io" target="_blank" rel="external">Goaccess</a> 是一个非常简单而有齐全的日志分析工具, 其<a href="http://goaccess.io/goaccess_html_report.html?201507052200" target="_blank" rel="external">生成的html页面</a>非常精细全面, 可以让你更好的查看日志, 今天就利用上次获取PV的方法来介绍下如何给 Jekyll 添加一个类似goaccess的日志页面.</p>
 <h2 id="u51C6_u5907_u5DE5_u4F5C"><a href="#u51C6_u5907_u5DE5_u4F5C" class="headerlink" title="准备工作"></a>准备工作</h2><p>如果你了解<a href="https://github.com/googleanalytics/google-analytics-super-proxy" target="_blank" rel="external"> google-analytics-super-proxy </a> 或者你看过我之前写的 <a href="/blog/2015/06/07/tech-add-google-analytics-pageviews-to-jekyll-blog/">如何给jekyll博文添加阅读数</a>, 那么你就可以进行下面的准备工作了, 如果没有的话, 请先阅读相关内容后再继续 ^_^</p>
 <ul>
