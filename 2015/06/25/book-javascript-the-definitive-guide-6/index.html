@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> TaoAlpha's Blog</title><meta name="description" content="Here is my new blog based on hexo."><meta name="viewport" content="width=device-width, initial-scale=1"><!-- open graph part--><meta property="og:image" content="http://taoalpha.me/images/newblog.jpg"><meta property="og:description" content="TaoAlpha's hexo Blog"><meta property="og:type" content="website"><link rel="short icon" href="/blog/favicon.png"><link rel="stylesheet" href="/blog/css/default.css"></head><body class="blogpost"><aside class="home-menu"><nav class="home-icon-con upside"></nav><a href="/blog/" class="home-menu-icon brand active">涛</a><a href="/blog/mylinks" class="home-menu-icon"><i class="fa fa-1x fa-anchor"></i></a><a href="/blog/tipme" class="home-menu-icon"><i class="fa fa-1x fa-gratipay"></i></a><a href="javascript:$('.searchbox').focus().css('border', '4px dashed #666');setTimeout(function(){$('.searchbox').focus().css('border', 'none').css('border-bottom', '1px solid #ccc')},1000);" class="home-menu-icon"><i class="fa fa-1x fa-search"></i></a><a href="/blog/puzzle" class="home-menu-icon"><i class="fa fa-1x fa-puzzle-piece"></i></a><a href="javascript:;" title="Contact Me" class="home-menu-icon follow">+</a><div class="home-contact"><a href="http://facebook.com/zzgary/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/facebook-32.png" alt="facebook"></a><a href="http://github.com/taoalpha/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/github-32.png" alt="github"></a><a href="http://taoalpha.me" target="something"><img src="https://cdn3.iconfinder.com/data/icons/colore-sociale/32/mewally_32x32.png" alt="portfolio"></a><a href="http://douban.com/people/129154019" target="something"><img src="http://img3.douban.com/favicon.ico" alt="douban"></a></div><nav class="home-icon-con downside"><a href="#contribution" class="home-menu-icon makecontribution"><i class="fa fa-pencil fa-1x"></i></a><a id="togglemusic" href="javascript:;" class="home-menu-icon"><i class="fa fa-music fa-1x"></i></a></nav><div id="musicbar"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="40" src=""></iframe></div></aside><div id="contribution" class="hide"><span class="close"></span><input id="sender_mail" type="email" placeholder="Give me your email"><textarea id="contributionContent" name="contribution" cols="30" rows="10" placeholder="Thanks for your contribution!  Now tell me what you want to say: feedback ? advice ? contributions ? Whatever you want ^_^.  I will look at it as soon as I receive it and reply you asap.  "></textarea><input id="sendToMe" type="submit"></div><article id="content"><section class="entry"><h1 class="entry-title"><a href="http://taoalpha.me/blog/2015/06/25/book-javascript-the-definitive-guide-6/" title="JavaScript the Definitive Guide (6)">JavaScript the Definitive Guide (6)</a></h1><div class="meta-top"><a href="/blog/user/TaoAlpha"><div style="display:inline-block;" class="avatar"><img src="https://avatars3.githubusercontent.com/u/4335753?v=3&amp;s=40" alt="100"></div><span>TaoAlpha</span></a><span>2015-06-25</span><span class="wordage">3817字</span><span class="readspeed">11 分钟读完</span></div><h2 id="u6982_u8FF0"><a href="#u6982_u8FF0" class="headerlink" title="概述"></a>概述</h2><p>正式进入本书第二部分的内容, 核心主要围绕在浏览器内的js. 包含了最基本的使用方式, 方法, 因浏览器而增加的各种属性方法, 操作css, dom的方法, 以及常用的一些js框架, 库等, 同时还包含了目前浏览器大热的安全领域.</p>
+<h2 id="u9605_u8BFB_u7B14_u8BB0"><a href="#u9605_u8BFB_u7B14_u8BB0" class="headerlink" title="阅读笔记"></a>阅读笔记</h2><h3 id="Chapter_13_-_JavaScript_in_Web_Browsers"><a href="#Chapter_13_-_JavaScript_in_Web_Browsers" class="headerlink" title="Chapter 13 - JavaScript in Web Browsers"></a>Chapter 13 - JavaScript in Web Browsers</h3><ul>
+<li>异步:<ul>
+<li><code>defer</code>: 使浏览器在解析并加载渲染完HTML的DOM后加载此js脚本;</li>
+<li><code>async</code>: 使浏览器在尽快执行js脚本, 但在下载js脚本时不停止DOM的解析, 优先级高于<code>defer</code>;</li>
+<li>使用方式为在script中增加关键字即可: <code>&lt;script defer src=&quot;deferred.js&quot;&gt;&lt;/script&gt;</code>;</li>
+<li>注意在使用<code>defer/async</code>的时候, js中不能使用<code>document.write()</code>;</li>
+<li><code>document.readyState</code>的变化过程: <code>loading(async downloading, normal executing) =&gt; interactive (defer/async executing) =&gt; complete(defer/async done, event handlers invoked)</code>;</li>
+</ul>
+</li>
+<li><code>Compatibility Check</code>:<ul>
+<li>按照目前的浏览器格局, 基本上一个浏览器就有着一种js的版本, 除了标准版本的基础功能之外, 所有的扩展功能, 各家与各家的实现方式都略有不同, 所以在使用过程中, 就需要我们考虑到兼容性的问题;</li>
+<li><a href="http://caniuse.com/" target="_blank" rel="external">Can I Use…</a>, 这是一个非常优秀的检测某个属性, 方法的浏览器支持度, 拿不准的都可以在这里进行查询确认, 其还支持css和html5的检测;</li>
+<li>IE5的时候引入了一个<code>Conditional Comments</code>的技巧, 是通过特殊的html注释从而让浏览器识别其IE版本, 比如<code>&lt;!--[if lte IE 7]&gt;&lt;![endif]--&gt;</code>就代表IE7及以下, 而写在这个if里面的内容就会在IE7及以下的浏览器中被识别并作为页面html的一部分而提取出来(仅限IE浏览器), 其他的浏览器都会自动当做注释不理会此部分;</li>
+<li>IE的JS也支持<code>Conditional Comments</code>, 比如<code>/*@cc_on @if (@_jscript)...@end @*/</code>, 这里面<code>@cc_on...@*/</code>是整个<code>Conditional Comments</code>, 而里面的<code>@if (@_jscript)...@end</code>则是判断部分, 其中<code>@_jscript</code>是IE自身js编译器的名称;</li>
+</ul>
+</li>
+<li><code>Accessibility</code>:<ul>
+<li>对于身体原因而有不便的人, js的支持效果会大打折扣, 所以根据这部分人的情况而优化自身的网页结构, 目前也是网页设计的一大核心之一;</li>
+</ul>
+</li>
+<li><code>Security</code>:<ul>
+<li>随着js的发展使用, 其危害性也日益提升;</li>
+<li>目前的保障安全手段主要有:<code>限制其功能</code>,<code>限制其使用范围和情景</code>,<code>敏感权限默认关闭虚人工开启</code>;</li>
+<li><code>The Same-Origin Policy</code>: js只允许读取与<strong>当前执行环境</strong>域名相同域名下的windows属性, 那么怎么界定相同域名呢:<ul>
+<li>来自不同的网络服务器;</li>
+<li>来自相同的网络服务器, 不同的端口;</li>
+<li>同一网络服务器, 同一端口, 不同的http协议(http,https);</li>
+<li>以上, 都认为是不同域名;</li>
+</ul>
+</li>
+<li>如何舒缓此规则:<ul>
+<li><code>document.domain</code>: 考虑到同级子域名也会被禁止, 那么通过设定<code>document.domain</code>为同一母域名即可实现同级子域名的跨域;</li>
+<li><code>Cross-Origin Resource Sharing</code>: 通过http请求新增的<code>Access-Control-Allow-Origin</code>头部, 服务器就可以指定其允许跨域的程度了;</li>
+<li><code>cross-document messaging</code>: HTML5新增了一些很强大的API,<code>cross-document messaging API</code>就是其中之一, 它允许不同的document之间的js进行通讯;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Chapter_14_-_The_Window_Object"><a href="#Chapter_14_-_The_Window_Object" class="headerlink" title="Chapter 14 - The Window Object"></a>Chapter 14 - The Window Object</h3><ul>
+<li>Timers:<ul>
+<li><code>setTimeout()</code>: 延时触发;</li>
+<li><code>setInterval()</code>: 定时循环执行;</li>
+<li><code>clearTimeout()</code>: 清除延时触发;</li>
+<li><code>clearInterval()</code>: 清除定时循环;</li>
+</ul>
+</li>
+<li>Location:<ul>
+<li><code>window.location === document.location</code> 两者皆为当前页面url, 并随页面url变化而更新;</li>
+<li><code>document.URL</code> 也是指代加载后的当前页面, 但不随页面内动态变化引起的url变化而变化;</li>
+<li><code>Location</code>这个对象本身包含了多个属性分别指代url的不同部分:<code>protocol</code>表示网络协议, <code>host, hostname</code>通常都指示域名,前者包含端口, <code>port</code>表示端口, <code>pathname</code>表示以域名根目录为<code>/</code>的相对路径, <code>search</code>表示url中<code>?</code>以后的部分但不包含<code>hash</code>部分, <code>hash</code>则是表示url<code>#</code>以后的部分;</li>
+<li><code>Location</code>还包含了三个常用的函数:<code>assign()</code>,<code>replace()</code>,<code>reload()</code>, 其中前两者功能都一样, 都是用以加载新页面的, 不过<code>replace()</code>加载的同时将当前页面从<code>history</code>中去除了(就是不能后退后之前页面了), 而<code>assign()</code>还保留着; <code>reload()</code>就更不用说了, 只是单纯的重载页面;</li>
+</ul>
+</li>
+<li>History:<ul>
+<li><code>back()</code>,<code>forward()</code>: 等价于浏览器的后退,前进按钮;</li>
+<li><code>go(n)</code>: 接受数字作为参数, 表示向前或者后退n个页面;</li>
+<li>如果页面中有<code>iframe</code>, 那么其history会自动合并到主界面的history中;</li>
+</ul>
+</li>
+<li>Navigator:<ul>
+<li><code>appName</code>: 浏览器的名称;</li>
+<li><code>appVersion</code>: 浏览器版本号;</li>
+<li><code>userAgent</code>: 用户代理, 对应HTTP的<code>USER-AGENT</code>;</li>
+<li><code>platform</code>: 操作系统;</li>
+<li><code>onLine</code>: 是否连通网络, HTML5支持;</li>
+<li><code>geolocation</code>: 用户地理位置信息, HTML5支持;</li>
+<li><code>javaEnabled()</code>: 对Java扩展的支持, 非标准;</li>
+<li><code>cookiesEnabled()</code>: 能够设置cookie, 非标准;</li>
+</ul>
+</li>
+<li>Screen:<ul>
+<li><code>width</code>,<code>height</code>: 当前屏幕的长宽尺寸;</li>
+<li><code>availWidth</code>,<code>availHeight</code>: 去除功能区等部分之后的实际展现内容的屏幕尺寸;</li>
+<li><code>colorDepth</code>: 显示屏幕的bits-per-pixel;</li>
+</ul>
+</li>
+<li>Dialog Boxes:<ul>
+<li><code>alert()</code>: 弹出对话框, 展示传入的信息;</li>
+<li><code>confirm()</code>: 自带<code>OK</code>,<code>Cancel</code>按钮的对话框, 返回对应的boolean值;</li>
+<li><code>prompt()</code>: 附带输入框, 返回输入的值;</li>
+<li>上述三个类型的对话框的样式结构都无法调整, 是浏览器默认设定的;</li>
+<li><code>showModalDialog()</code>: 则更加复杂, 它可以支持弹出一个页面, 其接受的第一个参数即为页面的url, 后面的参数则是弹出窗口的属性; <em>在chromium中已经被禁止了</em></li>
+</ul>
+</li>
+<li>onerror handler:<ul>
+<li>用于处理错误信息的, 你完全可以定制这个函数来更好的显示js中的错误信息;</li>
+</ul>
+</li>
+<li>Document Elements As Window Properties:<ul>
+<li>当一个html元素被赋予了id时, 其id对应名称的全局变量不存在时, 其自动转为全局变量, 属性名称即为id名, 但如果id名已经被使用, 则不生效;</li>
+<li>对于<code>&lt;a&gt; &lt;applet&gt; &lt;area&gt; &lt;embed&gt; &lt;form&gt; &lt;frame&gt; &lt;frameset&gt; &lt;iframe&gt; &lt;img&gt; &lt;object&gt;</code>这样的元素, 其name值和id效果是一样的, 且name值支持多个元素相同, 会自动生成类array形式, 对于<code>iframe</code>, 对应的属性会指向其内嵌窗口的window对象;</li>
+</ul>
+</li>
+<li>Multiple Windows and Frames:<ul>
+<li>通过js打开的新窗口都可以被js获取到, 并进行操作, 但是需要符合<code>same-origin</code>的原则;</li>
+<li><code>frame</code>嵌入的窗口可以通过<code>parent.frames</code>属性来获取, 也可以通过其自带的<code>contentWindow</code>来获取;</li>
+</ul>
+</li>
+</ul>
+<h2 id="u8C1C_u9898"><a href="#u8C1C_u9898" class="headerlink" title="谜题"></a>谜题</h2><ul>
+<li>Q: 在测试<code>same-origin</code>的时候, 发现有些网站可以设定子域名的<code>document.domain</code>为母域名, 有些不能? 比如在google的搜索结果页, 就可以, 但是在github pages中想要设置为<code>github.io</code>就不可以, 会出现<code>&#39;github.io&#39; is a top-level domain.</code>这样的错误?</li>
+</ul>
+<h2 id="u53C2_u8003_u8D44_u6599"><a href="#u53C2_u8003_u8D44_u6599" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="http://book.douban.com/subject/5303032/" target="_blank" rel="external">JavaScript the Definitive Guide 6th edition</a></li>
+<li><a href="http://caniuse.com/" target="_blank" rel="external">Can I Use …</a></li>
+<li><a href="http://stackoverflow.com/questions/6725890/location-host-vs-location-hostname-and-cross-browser-compatibility" target="_blank" rel="external">host and hostname</a></li>
+</ul>
+<aside class="tipme special"><a href="/blog/tipme" class="tipme">If you like my work, buy me a soda or send me a book ! ^_^</a></aside></section><aside class="sidenav"><input type="text" placeholder="Enter to search" class="st-default-search-input searchbox"></aside><!--include partial/series--><aside class="sidenav"><div class="recentposts"><h2>Recent Posts:</h2><ul class="article-list"></ul><li><a href="http://taoalpha.me/blog/2015/12/26/blog-migration/">Blog Migration from jekyll to hexo</a></li><li><a href="http://taoalpha.me/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/">First CLI tool with NodeJS</a></li><li><a href="http://taoalpha.me/blog/2015/11/27/thanksgiving/">感恩</a></li><li><a href="http://taoalpha.me/blog/2015/11/19/tech-preventDefault-and-stopPropagation-in-JS/">preventDefault and stopPropagation in JS</a></li><li><a href="http://taoalpha.me/blog/2015/11/11/tech-use-strict-in-js/">Strict Mode in JavaScript</a></li><li><a href="http://taoalpha.me/blog/2015/11/06/tech-es6-general-summary/">ES6 General Summary</a></li></div></aside><div class="comments"><div data-thread-key="2015/06/25/book-javascript-the-definitive-guide-6/" data-title="JavaScript the Definitive Guide (6)" data-url="http://taoalpha.me/blog/2015/06/25/book-javascript-the-definitive-guide-6/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"taoalpha"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+   || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script></div></article><div class="notification fail hidden"></div><!-- jquery--><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-46725017-2",'auto');ga('send','pageview');</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- main functions--><script src="/blog/js/functions.js"></script><script src="/blog/js/default.js"></script><script src="/blog/js/post.js"></script></body></html>

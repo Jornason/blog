@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> TaoAlpha's Blog</title><meta name="description" content="Here is my new blog based on hexo."><meta name="viewport" content="width=device-width, initial-scale=1"><!-- open graph part--><meta property="og:image" content="http://taoalpha.me/images/newblog.jpg"><meta property="og:description" content="TaoAlpha's hexo Blog"><meta property="og:type" content="website"><link rel="short icon" href="/blog/favicon.png"><link rel="stylesheet" href="/blog/css/default.css"></head><body class="blogpost"><aside class="home-menu"><nav class="home-icon-con upside"></nav><a href="/blog/" class="home-menu-icon brand active">涛</a><a href="/blog/mylinks" class="home-menu-icon"><i class="fa fa-1x fa-anchor"></i></a><a href="/blog/tipme" class="home-menu-icon"><i class="fa fa-1x fa-gratipay"></i></a><a href="javascript:$('.searchbox').focus().css('border', '4px dashed #666');setTimeout(function(){$('.searchbox').focus().css('border', 'none').css('border-bottom', '1px solid #ccc')},1000);" class="home-menu-icon"><i class="fa fa-1x fa-search"></i></a><a href="/blog/puzzle" class="home-menu-icon"><i class="fa fa-1x fa-puzzle-piece"></i></a><a href="javascript:;" title="Contact Me" class="home-menu-icon follow">+</a><div class="home-contact"><a href="http://facebook.com/zzgary/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/facebook-32.png" alt="facebook"></a><a href="http://github.com/taoalpha/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/github-32.png" alt="github"></a><a href="http://taoalpha.me" target="something"><img src="https://cdn3.iconfinder.com/data/icons/colore-sociale/32/mewally_32x32.png" alt="portfolio"></a><a href="http://douban.com/people/129154019" target="something"><img src="http://img3.douban.com/favicon.ico" alt="douban"></a></div><nav class="home-icon-con downside"><a href="#contribution" class="home-menu-icon makecontribution"><i class="fa fa-pencil fa-1x"></i></a><a id="togglemusic" href="javascript:;" class="home-menu-icon"><i class="fa fa-music fa-1x"></i></a></nav><div id="musicbar"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="40" src=""></iframe></div></aside><div id="contribution" class="hide"><span class="close"></span><input id="sender_mail" type="email" placeholder="Give me your email"><textarea id="contributionContent" name="contribution" cols="30" rows="10" placeholder="Thanks for your contribution!  Now tell me what you want to say: feedback ? advice ? contributions ? Whatever you want ^_^.  I will look at it as soon as I receive it and reply you asap.  "></textarea><input id="sendToMe" type="submit"></div><article id="content"><section class="entry"><h1 class="entry-title"><a href="http://taoalpha.me/blog/2015/07/01/tech-rendering-a-web-page-step-by-step/" title="网页渲染过程简介">网页渲染过程简介</a></h1><div class="meta-top"><a href="/blog/user/TaoAlpha"><div style="display:inline-block;" class="avatar"><img src="https://avatars3.githubusercontent.com/u/4335753?v=3&amp;s=40" alt="100"></div><span>TaoAlpha</span></a><span>2015-07-01</span><span class="wordage">2467字</span><span class="readspeed">8 分钟读完</span></div><h2 id="u6982_u8FF0"><a href="#u6982_u8FF0" class="headerlink" title="概述"></a>概述</h2><p>做web开发尤其是性能优化, 首先要明了的就是web渲染逻辑. 只有知道了浏览器是如何渲染页面的, 你才能更有针对性的去优化你的网页. 今天就来详细的说一下web的渲染步骤.</p>
+<h2 id="u6D4F_u89C8_u5668_u7684_u7EC4_u6210"><a href="#u6D4F_u89C8_u5668_u7684_u7EC4_u6210" class="headerlink" title="浏览器的组成"></a>浏览器的组成</h2><ol>
+<li>UI: 指浏览器的外在表现样式;</li>
+<li>Browser Engine: 连接UI和渲染引擎;</li>
+<li>Rendering Engine: 渲染引擎, 根据请求内容的不同进行不同的渲染, 比如html的话就是渲染HTML和CSS(使用的就是HTML和CSS的Parser) (我们常说的webkit就是rendering engine);</li>
+<li>Networking: 网络, 用以处理网络请求, 比如HTTP请求的;</li>
+<li>UI backend: 用来生成一些基础控件的, 比如窗口等, 这些控件都是跨平台的, 其会调用系统本身的界面方法来生成对应的控件;</li>
+<li>JavaScript Interpreter: 用以解析以及执行JS代码的;</li>
+<li>Data Storage: 用以存储数据, 包含存储本地的cookies以及类似localstorage等这种存储机制;</li>
+</ol>
+<ul>
+<li>Webkit redering engine main flow<img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/webkitflow.png" title="title=Figure : WebKit main flow alt=Figure : WebKit main flow"></li>
+<li>Gecko redering engine main flow<img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image008.jpg" title="title=Figure : Mozilla" alt="s Gecko rendering engine main flow alt=Figure : Mozilla"></li>
+<li>Parser Compilation Flow<img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image013.png" title="title=figure: Parser Compilation Flow alt=figure:Parser Compilation Flow"></li>
+<li>CSS Parser Flow<img src="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/image023.png" title="title=Figure : parsing CSS alt=Figure : parsing CSS">
+</li>
+</ul>
+<h2 id="u5982_u4F55_u6E32_u67D3_u4E00_u4E2A_u7F51_u9875"><a href="#u5982_u4F55_u6E32_u67D3_u4E00_u4E2A_u7F51_u9875" class="headerlink" title="如何渲染一个网页"></a>如何渲染一个网页</h2><ol>
+<li>在浏览器中输入要访问网页的url;</li>
+<li>浏览器开始解析url, 找寻其所属的协议, 主机所在, 所用端口以及对应的路径;</li>
+<li>浏览器通过进行DNS查询将域名转为IP地址;</li>
+<li>浏览器开启对应的通信端口并与解析出来的IP地址相连(通常会使用80端口);</li>
+<li>当建立链接后, 就会向主机地址发送一个HTTP请求, 包含了一些浏览器的基本属性和网页参数等;</li>
+<li>主机将请求接收并转发给监听对应端口的服务器, 比如Apache或者Nginx等;</li>
+<li>服务器解析请求路径, 并根据设定的配置将其转交给对应的处理器处理(具体会因不同语言而有所区别: PHP, Pyhton等);</li>
+<li>处理器接收请求, 并着手准备回应请求;</li>
+<li>根据具体情况, 处理器可能会需要链接数据库获取数据来构建回应内容(链接数据库-&gt;执行查询-&gt;获取并解析数据-&gt;关闭数据库链接);</li>
+<li>将所有数据整合构成回应主体(对于网页而言多数是html字符串), 加上必须要的元信息(HTTP的Header), 以同样的协议返回给用户的浏览器;</li>
+<li>浏览器接收回应内容, 根据回应的状态, 如果有错误则进行错误处理, 若无则进行解析;</li>
+<li>浏览器首先根据获得的内容(多数情况下为HTML)生成一个DOM树;</li>
+<li>然后针对其内引用的外部资源逐个发起请求获取, 比如图片, 样式, js等, 此刻重复上述请求步骤;</li>
+<li>浏览器获得返回的样式后开始解析其内容, 将css构建CSSOM, 而根据具体的属性来执行js的解析和执行;</li>
+<li>针对更新后的DOM和CSSOM, 生成render tree, 即包含了视觉展现信息的树, 浏览器根据render tree来进行渲染, 即你看到的页面;</li>
+<li>根据css来对render tree进行layout - 定位, 然后再对定位好的部分进行Painting, 然后你就看到了呈现在你眼前的页面;</li>
+</ol>
+<h3 id="css_u548Cjs_u7684_u52A0_u8F7D_u987A_u5E8F"><a href="#css_u548Cjs_u7684_u52A0_u8F7D_u987A_u5E8F" class="headerlink" title="css和js的加载顺序"></a>css和js的加载顺序</h3><h4 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h4><ul>
+<li>默认下, js的加载是同步的, 即遇到<code>&lt;script&gt;</code>标签后立刻就会开始解析js, 如果js本身是外部资源, 则还会先去请求获取后再解析, 同时Dom的解析也会因此而暂停,一直等待js解析执行后才会继续;</li>
+<li>对于外部引用的js(不是直接写到html里的),开发者可以通过给script标签增加<code>defer</code>属性来使js滞后加载, 这样就不会影响到Dom的解析了, 其也会在Dom解析后执行, 但这种情况下, 务必要保证js中不会用到<code>document.write()</code>这种直接创建Dom Node的语句;</li>
+<li>除了<code>defer</code>,H5中新引入了<code>async</code>属性, 可以让js保持异步加载, 如此js的解析执行就是在另一个线程中进行的了, 就和Dom的解析互不影响了, 当然同样的, 这种情况下, js中也不能有类似<code>document.write()</code>的函数;</li>
+<li>同时引擎方面目前也有一定的优化, 一般来说, webkit或者firefox所用的引擎都会在执行某个脚本的同时, 开启另一个线程继续处理下面的文档并请求所需的外部资源(images,css,js);</li>
+</ul>
+<p>用一张图总结<code>defer</code>和<code>async</code>的区别就是:</p>
+<img src="http://khan4019.github.io/MakeWebFaster/images/asyncVsDefer.jpg" title="title=Async Vs Defer alt=Async Vs Defer">
+<p>通常来说, 对于互不依赖的模块而言, 用async比较好, 因为不会占据整体的时间, 而如果js之间互相有所依赖, 则需要根据具体情况来看, 这个时候很不推荐滥用<code>async</code>, 因为无法保证模块的执行先后顺序;</p>
+<p><strong><code>async</code>依然会block掉Dom的ready事件, 即<code>async</code>的js执行完之前dom是不会变为<code>complete</code>的</strong></p>
+<h4 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h4><p>虽然css不会影响Dom的结构, 但是因为js对css有获取权限, 所以css的加载也会因为js的不同而有所不同.</p>
+<ul>
+<li>Firefox会在保证css加载后才会加载js;</li>
+<li>Webkit则智能一些, 它只会延缓加载那些会因为css未加载而受到影响的js;</li>
+</ul>
+<p>即css的执行要优先于js</p>
+<h2 id="u7ED3_u8BED"><a href="#u7ED3_u8BED" class="headerlink" title="结语"></a>结语</h2><p>在<a href="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork" target="_blank" rel="external">How Browsers Work</a>中, 作者详细描述了很多<code>parse</code>,<code>render</code>,<code>layout</code>,和<code>painting</code>的细节, 如果有兴趣的话, 可移步详细阅读.</p>
+<p>浏览器可以说是人类21世纪最伟大的发明之一, 其蕴藏了很多技术细节, 也正是其不断的优化, 才能让我们今天看到如此绚丽多彩的网页. 而WebKit的出现则让浏览器赤裸的展现在了开发者的面前, 也为前端开发带来了性能优化的领域.</p>
+<p>有兴趣了解更多WebKit的技术, 可以阅读<a href="http://book.douban.com/subject/25910556/" target="_blank" rel="external">WebKit技术内幕</a>一书.</p>
+<h2 id="u53C2_u8003_u8D44_u6599"><a href="#u53C2_u8003_u8D44_u6599" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://friendlybit.com/css/rendering-a-web-page-step-by-step/" target="_blank" rel="external">rendering a web page - step by step</a></li>
+<li><a href="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork" target="_blank" rel="external">How Browsers Work</a></li>
+</ul>
+<aside class="tipme special"><a href="/blog/tipme" class="tipme">If you like my work, buy me a soda or send me a book ! ^_^</a></aside></section><aside class="sidenav"><input type="text" placeholder="Enter to search" class="st-default-search-input searchbox"></aside><!--include partial/series--><aside class="sidenav"><div class="recentposts"><h2>Recent Posts:</h2><ul class="article-list"></ul><li><a href="http://taoalpha.me/blog/2015/12/26/blog-migration/">Blog Migration from jekyll to hexo</a></li><li><a href="http://taoalpha.me/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/">First CLI tool with NodeJS</a></li><li><a href="http://taoalpha.me/blog/2015/11/27/thanksgiving/">感恩</a></li><li><a href="http://taoalpha.me/blog/2015/11/19/tech-preventDefault-and-stopPropagation-in-JS/">preventDefault and stopPropagation in JS</a></li><li><a href="http://taoalpha.me/blog/2015/11/11/tech-use-strict-in-js/">Strict Mode in JavaScript</a></li><li><a href="http://taoalpha.me/blog/2015/11/06/tech-es6-general-summary/">ES6 General Summary</a></li></div></aside><div class="comments"><div data-thread-key="2015/07/01/tech-rendering-a-web-page-step-by-step/" data-title="网页渲染过程简介" data-url="http://taoalpha.me/blog/2015/07/01/tech-rendering-a-web-page-step-by-step/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"taoalpha"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+   || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script></div></article><div class="notification fail hidden"></div><!-- jquery--><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-46725017-2",'auto');ga('send','pageview');</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- main functions--><script src="/blog/js/functions.js"></script><script src="/blog/js/default.js"></script><script src="/blog/js/post.js"></script></body></html>

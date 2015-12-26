@@ -1,0 +1,82 @@
+<h1 id="lazyload"><a href="#lazyload" class="headerlink" title="lazyload"></a>lazyload <a href="https://david-dm.org/vvo/lazyload"><img src="http://img.shields.io/david/vvo/lazyload.svg?style=flat-square" alt="Dependency Status"></a> <a href="https://david-dm.org/vvo/lazyload#info=devDependencies"><img src="http://img.shields.io/david/dev/vvo/lazyload.svg?style=flat-square" alt="devDependency Status"></a></h1><p>Lazyload images, iframes or any src* element until they are visible in the viewport.</p>
+<p><a href="https://saucelabs.com/u/lazyloadvvo"><img src="https://saucelabs.com/browser-matrix/lazyloadvvo.svg" alt="Selenium Test Status"></a></p>
+<h2 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h2><pre><code class="shell">npm install lazyloadjs --save
+</code></pre>
+<h2 id="Simple_example"><a href="#Simple_example" class="headerlink" title="Simple example"></a>Simple example</h2><p>See more <a href="examples/">examples</a>.</p>
+<pre><code class="html"><span class="meta">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;<span class="name">html</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">head</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">title</span>&gt;</span>lazyload<span class="tag">&lt;/<span class="name">title</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">body</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"lazyload.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>
+
+    <span class="comment">&lt;!-- A lot of content --&gt;</span>
+    <span class="comment">&lt;!-- A lot of content --&gt;</span>
+
+    <span class="tag">&lt;<span class="name">img</span>
+      <span class="attr">data-src</span>=<span class="string">"real/image/src.jpg"</span>
+      <span class="attr">src</span>=<span class="string">"data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="</span>
+      <span class="attr">onload</span>=<span class="string">"lzld(this)"</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">html</span>&gt;</span>
+</code></pre>
+<p>Make sure your webpage is in <a href="http://en.wikipedia.org/wiki/Document_Type_Declaration#HTML5_DTD-less_DOCTYPE">standards mode</a>.</p>
+<p>Viewport computing is badly handled by browsers when in <a href="http://en.wikipedia.org/wiki/Quirks_mode">quirksmode</a>.</p>
+<p>If you do not want to use a data-uri as your src, you can also use the provided <a href="b.gif">b.gif</a> which is<br>the <a href="http://probablyprogramming.com/2009/03/15/the-tiniest-gif-ever">tiniest gif ever</a>.</p>
+<p>On most websites, you better let the first top images not bound to lzld method.<br>So that they shows really fast.</p>
+<h2 id="Advanced_example"><a href="#Advanced_example" class="headerlink" title="Advanced example"></a>Advanced example</h2><p><code>lazyloadjs</code> is an npm module and is compatible with browserify.</p>
+<pre><code class="js">global.myLazyload = <span class="built_in">require</span>(<span class="string">'lazyloadjs'</span>)();
+</code></pre>
+<pre><code class="html"><span class="tag">&lt;<span class="name">img</span>
+  <span class="attr">data-src</span>=<span class="string">"real/image/src.jpg"</span>
+  <span class="attr">src</span>=<span class="string">"data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="</span>
+  <span class="attr">onload</span>=<span class="string">"myLazyload(this)"</span>&gt;</span>
+</code></pre>
+<p>Per default, <code>lazyloadjs</code> exposes the <code>lzld</code> instance on the global<br>object. So that in most cases, you just need to require it in your webpage.</p>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><h2 id="var_lzld__3D_lazyload_28_5Bopts_5D_29"><a href="#var_lzld__3D_lazyload_28_5Bopts_5D_29" class="headerlink" title="var lzld = lazyload([opts])"></a>var lzld = lazyload([opts])</h2><p><code>opts</code> is an object with these defaults:</p>
+<pre><code class="js">{
+  container: <span class="built_in">document</span>.body,
+  offset: <span class="number">333</span>,
+  src: <span class="string">'data-src'</span> <span class="comment">// or function(elt) { return customSrc }</span>
+}
+</code></pre>
+<p><code>opts.container</code> is the referencing container, it’s the viewport, defaults to <code>document.body</code></p>
+<p><code>opts.offset</code> is a length in pixels used to compute when an element will<br>soon be visible. So that you load it just before it becomes visible.</p>
+<p><code>src</code> is the attribute name storing the real src of the element to load.</p>
+<p><code>src</code> can also be a <code>function</code>, so that you can have your custom <code>src</code> computing algorithm.<br>You can use it to <a href="examples/hidpi.html">lazyload High DPI/retina images</a>.</p>
+<h2 id="Launching_the_examples"><a href="#Launching_the_examples" class="headerlink" title="Launching the examples"></a>Launching the examples</h2><pre><code class="shell">npm run examples
+</code></pre>
+<h2 id="Developing"><a href="#Developing" class="headerlink" title="Developing"></a>Developing</h2><p>Launch the dev server:</p>
+<pre><code class="shell">npm run dev
+</code></pre>
+<p>Browse to <a href="http://localhost:8080/__zuul">http://localhost:8080/__zuul</a>.</p>
+<p><a href="test/">Tests</a> are written with <a href="https://github.com/visionmedia/mocha">mocha</a>.</p>
+<h2 id="Building"><a href="#Building" class="headerlink" title="Building"></a>Building</h2><p>We provide a pre-built version of <code>lazyloadjs</code> in <code>build/lazyload.min.js</code>.</p>
+<p>But you can build your own:</p>
+<pre><code class="shell">npm run build
+</code></pre>
+<p>You get the build in <code>build/lazyload.min.js</code>.</p>
+<p>Please consider using <a href="https://github.com/substack/node-browserify">browserify</a>.</p>
+<h2 id="Sites_using_lazyload"><a href="#Sites_using_lazyload" class="headerlink" title="Sites using lazyload"></a>Sites using lazyload</h2><p>Tens of millions of pageviews are served each month using this project:</p>
+<ul>
+<li><a href="http://fasterize.com">fasterize.com</a> <code>lazyload</code> was first developed at fasterize (WPO solution)</li>
+<li><a href="http://www.lemonde.fr">lemonde.fr</a></li>
+<li><a href="http://pluzz.francetv.fr">pluzz.francetv.fr</a></li>
+<li><a href="http://www.pcinpact.com">pcinpact.com</a></li>
+<li><a href="http://www.elpais.com">elpais.com</a></li>
+<li><a href="http://playtv.fr">playtv.fr</a></li>
+<li><a href="http://www.voyages-sncf.com">voyages-sncf.com</a></li>
+<li><a href="http://www.rue89.com">rue89.com</a></li>
+<li><a href="http://www.flipkart.com/">flipkart.com</a></li>
+<li><a href="http://clubic.com">clubic.com</a></li>
+<li><a href="http://www.achetezfacile.com/">achetezfacile.com</a></li>
+<li><a href="http://www.mapado.com/">mapado.com</a></li>
+</ul>
+<p>.. And many unlisted websites, <a href="https://github.com/vvo/lazyload/edit/master/README.md">add yours</a>!</p>
+<h2 id="Licence"><a href="#Licence" class="headerlink" title="Licence"></a>Licence</h2><p>Also see <a href="LICENCE.fasterize">LICENCE.fasterize</a></p>
+<p>(The MIT Licence)</p>
+<p>Copyright (c) Vincent Voyer</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining<br>a copy of this software and associated documentation files (the<br>“Software”), to deal in the Software without restriction, including<br>without limitation the rights to use, copy, modify, merge, publish,<br>distribute, sublicense, and/or sell copies of the Software, and to<br>permit persons to whom the Software is furnished to do so, subject to<br>the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be<br>included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,<br>EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF<br>MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND<br>NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE<br>LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION<br>OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION<br>WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>

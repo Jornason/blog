@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> TaoAlpha's Blog</title><meta name="description" content="Here is my new blog based on hexo."><meta name="viewport" content="width=device-width, initial-scale=1"><!-- open graph part--><meta property="og:image" content="http://taoalpha.me/images/newblog.jpg"><meta property="og:description" content="TaoAlpha's hexo Blog"><meta property="og:type" content="website"><link rel="short icon" href="/blog/favicon.png"><link rel="stylesheet" href="/blog/css/default.css"></head><body class="blogpost"><aside class="home-menu"><nav class="home-icon-con upside"></nav><a href="/blog/" class="home-menu-icon brand active">涛</a><a href="/blog/mylinks" class="home-menu-icon"><i class="fa fa-1x fa-anchor"></i></a><a href="/blog/tipme" class="home-menu-icon"><i class="fa fa-1x fa-gratipay"></i></a><a href="javascript:$('.searchbox').focus().css('border', '4px dashed #666');setTimeout(function(){$('.searchbox').focus().css('border', 'none').css('border-bottom', '1px solid #ccc')},1000);" class="home-menu-icon"><i class="fa fa-1x fa-search"></i></a><a href="/blog/puzzle" class="home-menu-icon"><i class="fa fa-1x fa-puzzle-piece"></i></a><a href="javascript:;" title="Contact Me" class="home-menu-icon follow">+</a><div class="home-contact"><a href="http://facebook.com/zzgary/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/facebook-32.png" alt="facebook"></a><a href="http://github.com/taoalpha/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/github-32.png" alt="github"></a><a href="http://taoalpha.me" target="something"><img src="https://cdn3.iconfinder.com/data/icons/colore-sociale/32/mewally_32x32.png" alt="portfolio"></a><a href="http://douban.com/people/129154019" target="something"><img src="http://img3.douban.com/favicon.ico" alt="douban"></a></div><nav class="home-icon-con downside"><a href="#contribution" class="home-menu-icon makecontribution"><i class="fa fa-pencil fa-1x"></i></a><a id="togglemusic" href="javascript:;" class="home-menu-icon"><i class="fa fa-music fa-1x"></i></a></nav><div id="musicbar"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="40" src=""></iframe></div></aside><div id="contribution" class="hide"><span class="close"></span><input id="sender_mail" type="email" placeholder="Give me your email"><textarea id="contributionContent" name="contribution" cols="30" rows="10" placeholder="Thanks for your contribution!  Now tell me what you want to say: feedback ? advice ? contributions ? Whatever you want ^_^.  I will look at it as soon as I receive it and reply you asap.  "></textarea><input id="sendToMe" type="submit"></div><article id="content"><section class="entry"><h1 class="entry-title"><a href="http://taoalpha.me/blog/2015/05/26/filesystem-recovery-from-time-machine/" title="利用TM进行系统二进制文件恢复">利用TM进行系统二进制文件恢复</a></h1><div class="meta-top"><a href="/blog/user/TaoAlpha"><div style="display:inline-block;" class="avatar"><img src="https://avatars3.githubusercontent.com/u/4335753?v=3&amp;s=40" alt="100"></div><span>TaoAlpha</span></a><span>2015-05-26</span><span class="wordage">1978字</span><span class="readspeed">6 分钟读完</span></div><p>对于很多喜欢折腾电脑而又刚接触命令行的人而言, 经常会犯的的一个错误就是误删重要文件… 比如类似<code>/usr/bin/</code>啊,’/usr/local/bin’之类的, 一不小心, 一激动, 就sudo rm -rf了… </p>
+<p>在mac下, 通常用户级别的二进制文件, 也就是那些你在命令行下输入的各类指令的源文件, 都是存在于系统环境变量之中的<code>$PATH = /usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin</code>(冒号分割路径).</p>
+<p>那么一旦删除这些文件夹, 那么对应的常用指令就会失效, 比如你要是误删了<code>/bin</code>路径, 那么你在bash下输入<code>ls</code>等命令时就会提示你 <code>ls: command not found</code>了. 当然, 出现这一错误的另一种可能就是你无意中修改了$PATH变量, 导致系统没有进入到正确的路径中. 这种情况一般还是比较好解决的, 只需要重新设定以下环境变量, 通常设置为上述的即可.</p>
+<p>那么, 如果你真是不幸误删了(或者像我一样莫名其妙的就丢失了…), 那么你可以有以下三种选择:</p>
+<ul>
+<li>重装系统恢复;</li>
+<li>从友军同版本电脑中copy;</li>
+<li>从time machine中尝试恢复;</li>
+</ul>
+<p>这里主要介绍第三种方法, 比较适用于有经常性备份习惯的人, 或者是丢失操作发生在不久之前的(根据TM的自动备份设定时间间隔而定).</p>
+<ul>
+<li>一旦找到丢失的路径后, 那么就可以进入到相应的丢失路径下(一直打开到最近路径), 比如我丢失的<code>/usr/bin</code>, 我就进入到<code>/usr</code>路径下;</li>
+<li>唤出TM, 回滚到未丢失前的时间节点(或者希望恢复的节点), 比如我确定自己上午时还是正常的, 所以就直接恢复到早上的一个时间节点;</li>
+<li>恢复即可;</li>
+</ul>
+<p>通过上述操作, 基本上绝大多数时候问题都能够得到解决. 但是对于有一些有特殊权限的文件而言, 上述操作也会遇到新的问题. 还是以<code>/usr/bin</code>为例: 其中的<code>sudo</code>二进制文件就是一个有着特殊读写权限的文件, 以我目前admin的用户权限也是无法还原这一文件的. 这个时候就需要更换root账户来解决问题了:</p>
+<ul>
+<li>首先通过系统设定中的users &amp; groups -&gt; login options -&gt; join -&gt; disk utility -&gt; 开启root账户 -&gt; 设定账户密码;</li>
+<li>开启root账户后, 就可以通过切换账户, 登录到root账户之中, 重新上述恢复的操作了, 这一次, 就不会提示你有权限问题了;</li>
+</ul>
+<p>详细的开启root账户的方法可以参考stackExchange的一个回答:</p>
+<pre><code>From the Apple menu choose System Preferences....
+From the View menu choose Users &amp; Groups.
+Click the lock and authenticate as an administrator account.
+Click Login Options....
+Click the &quot;Edit...&quot; or &quot;Join...&quot; button at the bottom right.
+Click the &quot;Open Directory Utility...&quot; button.
+Click the lock in the Directory Utility window.
+Enter an administrator account name and password, then click OK.
+Choose Enable Root User from the Edit menu.
+Enter the root password you wish to use in both the Password and Verify fields, then click OK.
+
+Or from Terminal when logged in as an admin user -
+dsenableroot to enable,
+dsenableroot -d to disable
+</code></pre><p>虽然问题已经解决, 不过到现在我都不知道我是如何把<code>/usr/bin</code>路径搞丢的… 我记忆中丢失前的操作如下:</p>
+<ul>
+<li>删除了iphoto等一些应用;</li>
+<li>利用gem装了guard和guard-jekyll-plus来实现jekyll和livereload的链接;</li>
+<li>试了几次jekyll import模块来试图导入wordpress的数据, 以及rss的导入;</li>
+</ul>
+<p>但感觉都和<code>/usr/bin</code>八杆子打不着啊… 奇怪… 如有人知晓求务必告知! 提前拜谢!</p>
+<aside class="tipme special"><a href="/blog/tipme" class="tipme">If you like my work, buy me a soda or send me a book ! ^_^</a></aside></section><aside class="sidenav"><input type="text" placeholder="Enter to search" class="st-default-search-input searchbox"></aside><!--include partial/series--><aside class="sidenav"><div class="recentposts"><h2>Recent Posts:</h2><ul class="article-list"></ul><li><a href="http://taoalpha.me/blog/2015/12/26/blog-migration/">Blog Migration from jekyll to hexo</a></li><li><a href="http://taoalpha.me/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/">First CLI tool with NodeJS</a></li><li><a href="http://taoalpha.me/blog/2015/11/27/thanksgiving/">感恩</a></li><li><a href="http://taoalpha.me/blog/2015/11/19/tech-preventDefault-and-stopPropagation-in-JS/">preventDefault and stopPropagation in JS</a></li><li><a href="http://taoalpha.me/blog/2015/11/11/tech-use-strict-in-js/">Strict Mode in JavaScript</a></li><li><a href="http://taoalpha.me/blog/2015/11/06/tech-es6-general-summary/">ES6 General Summary</a></li></div></aside><div class="comments"><div data-thread-key="2015/05/26/filesystem-recovery-from-time-machine/" data-title="利用TM进行系统二进制文件恢复" data-url="http://taoalpha.me/blog/2015/05/26/filesystem-recovery-from-time-machine/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"taoalpha"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+   || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script></div></article><div class="notification fail hidden"></div><!-- jquery--><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-46725017-2",'auto');ga('send','pageview');</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- main functions--><script src="/blog/js/functions.js"></script><script src="/blog/js/default.js"></script><script src="/blog/js/post.js"></script></body></html>

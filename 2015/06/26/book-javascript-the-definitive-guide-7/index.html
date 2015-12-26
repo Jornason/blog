@@ -1,0 +1,135 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> TaoAlpha's Blog</title><meta name="description" content="Here is my new blog based on hexo."><meta name="viewport" content="width=device-width, initial-scale=1"><!-- open graph part--><meta property="og:image" content="http://taoalpha.me/images/newblog.jpg"><meta property="og:description" content="TaoAlpha's hexo Blog"><meta property="og:type" content="website"><link rel="short icon" href="/blog/favicon.png"><link rel="stylesheet" href="/blog/css/default.css"></head><body class="blogpost"><aside class="home-menu"><nav class="home-icon-con upside"></nav><a href="/blog/" class="home-menu-icon brand active">涛</a><a href="/blog/mylinks" class="home-menu-icon"><i class="fa fa-1x fa-anchor"></i></a><a href="/blog/tipme" class="home-menu-icon"><i class="fa fa-1x fa-gratipay"></i></a><a href="javascript:$('.searchbox').focus().css('border', '4px dashed #666');setTimeout(function(){$('.searchbox').focus().css('border', 'none').css('border-bottom', '1px solid #ccc')},1000);" class="home-menu-icon"><i class="fa fa-1x fa-search"></i></a><a href="/blog/puzzle" class="home-menu-icon"><i class="fa fa-1x fa-puzzle-piece"></i></a><a href="javascript:;" title="Contact Me" class="home-menu-icon follow">+</a><div class="home-contact"><a href="http://facebook.com/zzgary/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/facebook-32.png" alt="facebook"></a><a href="http://github.com/taoalpha/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/github-32.png" alt="github"></a><a href="http://taoalpha.me" target="something"><img src="https://cdn3.iconfinder.com/data/icons/colore-sociale/32/mewally_32x32.png" alt="portfolio"></a><a href="http://douban.com/people/129154019" target="something"><img src="http://img3.douban.com/favicon.ico" alt="douban"></a></div><nav class="home-icon-con downside"><a href="#contribution" class="home-menu-icon makecontribution"><i class="fa fa-pencil fa-1x"></i></a><a id="togglemusic" href="javascript:;" class="home-menu-icon"><i class="fa fa-music fa-1x"></i></a></nav><div id="musicbar"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="40" src=""></iframe></div></aside><div id="contribution" class="hide"><span class="close"></span><input id="sender_mail" type="email" placeholder="Give me your email"><textarea id="contributionContent" name="contribution" cols="30" rows="10" placeholder="Thanks for your contribution!  Now tell me what you want to say: feedback ? advice ? contributions ? Whatever you want ^_^.  I will look at it as soon as I receive it and reply you asap.  "></textarea><input id="sendToMe" type="submit"></div><article id="content"><section class="entry"><h1 class="entry-title"><a href="http://taoalpha.me/blog/2015/06/26/book-javascript-the-definitive-guide-7/" title="JavaScript the Definitive Guide (7)">JavaScript the Definitive Guide (7)</a></h1><div class="meta-top"><a href="/blog/user/TaoAlpha"><div style="display:inline-block;" class="avatar"><img src="https://avatars3.githubusercontent.com/u/4335753?v=3&amp;s=40" alt="100"></div><span>TaoAlpha</span></a><span>2015-06-26</span><span class="wordage">4852字</span><span class="readspeed">14 分钟读完</span></div><h2 id="u6982_u8FF0"><a href="#u6982_u8FF0" class="headerlink" title="概述"></a>概述</h2><h2 id="u9605_u8BFB_u7B14_u8BB0"><a href="#u9605_u8BFB_u7B14_u8BB0" class="headerlink" title="阅读笔记"></a>阅读笔记</h2><h3 id="Chapter_15_-_Scripting_Documents"><a href="#Chapter_15_-_Scripting_Documents" class="headerlink" title="Chapter 15 - Scripting Documents"></a>Chapter 15 - Scripting Documents</h3><ul>
+<li>Selecting:<ul>
+<li><code>document.getElementById(id)</code>: 通过id, 一个id对应一个元素;</li>
+<li><code>document.getElementsByName(name)</code>: 通过name, 可多个;</li>
+<li><code>document.getElementsByTagName(tagname)</code>: 通过标签名;</li>
+<li><code>document.getElementsByClassName(class_name)</code>: 通过类名;</li>
+<li><code>querySelectorAll(css_selector)</code>: 通过css的选择器, 返回所有匹配;</li>
+<li><code>querySelector(css_selector)</code>: 返回首个匹配;</li>
+</ul>
+</li>
+<li>Trees of Nodes:<ul>
+<li><code>parentNode</code>: 父节点;</li>
+<li><code>childNodes</code>: 子节点;</li>
+<li><code>firstChild, lastChild</code>: 首个或者最后一个子节点;</li>
+<li><code>nextSibling, previousSibling</code>: 下一或者上一兄弟姐妹节点;</li>
+<li><code>nodeType</code>: 节点类型, Document 节点返回9, 元素节点返回1, 文本节点返回3,注释节点返回8, DocumentFragment节点返回11;</li>
+<li><code>nodeValue</code>: 当前节点的文本内容;</li>
+<li><code>nodeName</code>: 标签名, 大写;</li>
+</ul>
+</li>
+<li>Trees of Elements: 忽略所有的文本节点和注释节点;<ul>
+<li><code>firstElementChild, lastElementChild</code>: 返回首个或者最后一个元素节点;</li>
+<li><code>nextElementSibling, previousElementSibling</code></li>
+<li><code>childElementCount</code>: 返回子元素节点的个数;</li>
+</ul>
+</li>
+<li>Attributes of Elements:<ul>
+<li><code>getAttribute()</code></li>
+<li><code>setAttribute()</code></li>
+<li><code>hasAttribute()</code></li>
+<li><code>removeAttribute()</code></li>
+</ul>
+</li>
+<li>Dataset Attributes: 由HTML5引入, 所有带<code>data-</code>前缀的属性都算是合法的html元素属性.</li>
+<li>Element Content:<ul>
+<li><code>innerHTML</code></li>
+<li><code>outerHTML</code>: 包含匹配元素自身标签;</li>
+<li><code>insertAdjacentHTML()</code>: 允许指定插入位置<code>beforebegin, afterbegin, beforeend or afterend</code>;</li>
+<li><code>textContent</code>: IE不支持</li>
+<li><code>innerText</code>: IE支持, 功能同上;</li>
+</ul>
+</li>
+<li>Creating,Inserting, and Deleting Nodes<ul>
+<li><code>document.createElement(tag_name)</code></li>
+<li><code>document.createTextNode(text)</code>: 创建文本节点;</li>
+<li><code>document.createComment(text)</code>: 创建注释节点;</li>
+<li><code>document.createDocumentFragment()</code>: 创建孤立节点;</li>
+<li><code>node_name.cloneNode()</code>: 复制当前节点;</li>
+<li><code>element_node.appendChild(element_node_2)</code>: 由后插入;</li>
+<li><code>element_node.insertBefore(element_node_2)</code>: 由前插入;</li>
+<li><code>removeChild()</code>: 移除当前节点<code>n.parentNode.removeChild(n);</code>;</li>
+<li><code>replaceChild()</code>: 替换</li>
+</ul>
+</li>
+<li>DocumentFragment: 孤立节点, 其没有母节点(null), 当<code>appendChild()</code>等操作针对其时, 操作执行对象自动变为其所有子节点, 且操作完成后, 其自身为空;</li>
+<li>viewport: 表示实际展示内容的窗口, 在顶层网页中为去除浏览器菜单等等之外的部分, 而在<code>iframe</code>中则为<code>iframe</code>定义的frame大小;</li>
+<li>document: 表示页面内容的窗口, 通常都大于viewport;</li>
+<li><code>getBoundingClientRect()</code>: 返回节点的长宽,上下左右边界属性<code>width,height,top,left,bottom,right</code>, <strong>返回的结果是基于viewport的</strong>;</li>
+<li><code>document.elementFromPoint()</code>: 返回x,y处的元素节点 - 根据z-index, 从外到内的返回;</li>
+<li><code>scroll(), scrollTo(), scrollBy()</code>: 窗口滚动控制, 最后的<code>scrollBy()</code>传入的x,y表示在原有的基础上的增加值;</li>
+<li><code>scrollIntoView()</code>: 滚动到某个节点;</li>
+<li><code>document.forms</code>: 获取页面中所有form元素;</li>
+<li>其他document属性:<ul>
+<li><code>cookie</code></li>
+<li><code>domain</code></li>
+<li><code>lastModified</code>: 修改时间;</li>
+<li><code>location</code>: 等同于<code>window.location</code></li>
+<li><code>referrer</code></li>
+<li><code>title</code></li>
+<li><code>URL</code>: 之前提到过, 其只保存打开时的当前链接, 不随页面内的动态变化而变化;</li>
+</ul>
+</li>
+</ul>
+<h3 id="Chapter_16_-_Scripting_CSS"><a href="#Chapter_16_-_Scripting_CSS" class="headerlink" title="Chapter 16 - Scripting CSS"></a>Chapter 16 - Scripting CSS</h3><ul>
+<li>js可以通过<code>node.style</code>来访问元素样式属性, 可以获取, 赋予; 而通过更加复杂的函数变化, 就可以创造出一些很棒的动效来, 在css3之前, 所有的非gif或者flash动效基本都是通过js实现的.</li>
+<li><code>window.getComputedStyle(element,&quot;null or :first-line etc&quot;)</code>则可以获取某个元素(或者某个元素的伪类)的所有样式属性, 同时获取的值都会自动转为标准的绝对值(比如设定的百分比也会自动计算出来返回),但是其不能赋予;</li>
+<li><code>disableStylesheet()</code>可以禁止某个元素的所有样式, 如果传入的是数字, 那么会按照<code>document.styleSheets</code>的顺序查找, 如果是string, 则作为css selector查询对应的元素;</li>
+<li><code>insertRule(rules,insert_index), deleteRule(rules)</code> 即插入整条的结构化的css语句, IE下对应的函数为<code>addRule(),removeRule()</code>;</li>
+<li><code>document.createStyleSheet</code>则可以创建一个新的样式表, 等价于在head里面创建一个<code>style</code>标签;</li>
+</ul>
+<h3 id="Chapter_17_-_Handling_Events"><a href="#Chapter_17_-_Handling_Events" class="headerlink" title="Chapter 17 - Handling Events"></a>Chapter 17 - Handling Events</h3><ul>
+<li>Events的类型<ul>
+<li>Device-dependent input events:<code>mousedown</code>, <code>mousemove</code>, <code>mouseup</code>, <code>keydown</code>, <code>keypress</code>, <code>keyup</code>, <code>touchmove</code>, <code>gesturechange</code>;</li>
+<li>Device-independent input events: <code>click</code></li>
+<li>User interface events: <code>focus</code>, <code>change</code></li>
+<li>State-change events: <code>loadstart</code>, <code>progress</code>, <code>loadend</code></li>
+<li>API-specific events: <code>dragstart</code>, <code>dragenter</code>, <code>dragover</code>, <code>drop</code>, <code>waiting</code>, <code>playing</code>, <code>seeking</code>, <code>volumechange</code> etc</li>
+<li>Timers and error handlers;</li>
+</ul>
+</li>
+<li>Handlers:<ul>
+<li><code>Event Handler Attributes</code>: <code>onclick=&quot;&quot;</code>,<code>window.onload = f()</code>;</li>
+<li><code>addEventListener(event_name,function,[capturing event handler])</code>: 添加事件, 最后的<code>capturing</code>通常为false;</li>
+<li><code>removeEventListener()</code>: 和上面的add相反;</li>
+<li><code>stopPropagation()</code>: js的事件触发是沿着DOM树向上传递的, 而通过<code>stopPropagation()</code>就能抑制这一环节;</li>
+<li><code>preventDefault()</code>: 很多元素有其自身的事件属性, 比如a标签的跳转, form元素的提交, 当我们想要取消其默认事件的发生时, 可以使用此函数来阻止其发生;</li>
+</ul>
+</li>
+</ul>
+<p>总的来说, 这一章内容其实很丰富, 但是其内容多数都是建立在之前的基本内容之上的. 着重需要知道的就是各种不同的事件, 其支持的元素, 类型以及触发的方式即可. 此类用法主要还是多用多练, 可以试试不同的event都包含那些属性~哈哈</p>
+<h3 id="Chapter_18_-_Scripted_HTTP"><a href="#Chapter_18_-_Scripted_HTTP" class="headerlink" title="Chapter 18 - Scripted HTTP"></a>Chapter 18 - Scripted HTTP</h3><ul>
+<li>XMLHttpRequest:<ul>
+<li>Ajax: 由js端发起, 通过http请求和服务端交互;</li>
+<li>Comet: 由服务端发起, js如果需要反应则使用Ajax回应, 通常由<code>EventSource</code>对象处理;</li>
+<li>标准流程:<code>new XMLHttpRequest()</code>=&gt;<code>open(&#39;type of request&#39;, url,[],[username],[userpassword])</code>=&gt;<code>setRequestHeader()</code>=&gt;<code>send([content_body])</code>&lt;=<code>onreadystatechange</code>&lt;=<code>customized handler</code></li>
+<li>通常<code>GET</code>类型的请求我们会通过<code>encodeURIComponent</code>来进行url拼接, 直接在url中体现, <code>send()</code>的时候就不用传值了;</li>
+<li><code>POST</code>类型的请求通常以json格式传递, 我们需要在<code>send()</code>中传入<code>JSON.stringify()</code>的数据, 当然如果是XML的POST, 那么直接传入对应的doc即可, 而像file这类的文件实体, 也是直接传入对应的实体即可;</li>
+<li>起中<code>Header</code>部分我们只能自行设定部分, 而<code>Content-Length</code>,<code>Date</code>,<code>Referer</code>,<code>User-Agent</code>等等都由浏览器自动帮我们填上了;</li>
+<li><code>readyState</code>: UNSENT 0(<code>open()</code>还没执行); OPENED 1(<code>open()已经执行</code>);HEADERS_RECEIVED 2(headers已被接收),LOADING 3(正在接受返回),DONE 4(完毕).</li>
+<li>XMLHttpRequest对象有一个<code>onprogress</code>的属性可以用来检测其执行进度, 它对应的属性值中包含了<code>lengthComputable</code>, <code>loaded</code>,<code>total</code>, 通过这三个就可以做一个简单的进度条跟踪请求的进度了;</li>
+<li>如果是上传行为, 其<code>onprogress</code>属性存在于<code>XMLHttpRequest_Object.upload.onprogress</code>之中;</li>
+<li><code>abort()</code>: 用来取消请求;</li>
+</ul>
+</li>
+<li>EventSource:<ul>
+<li>标准流程: <code>new EventSource(&quot;url_to_server_file&quot;)</code> =&gt; <code>onmessage</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Chapter_19_-_The_jQuery_Library"><a href="#Chapter_19_-_The_jQuery_Library" class="headerlink" title="Chapter 19 - The jQuery Library"></a>Chapter 19 - The jQuery Library</h3><p>jQuery流行度的一大证据之一! 哈哈 我计划抽时间好好读一下jQuery的源码, 所以这里只是大概扫了一遍, 基本也都是应用层面的, 多数我差不多都使用过~哈哈</p>
+<h3 id="Chapter_20_-_Client-Side_Storage"><a href="#Chapter_20_-_Client-Side_Storage" class="headerlink" title="Chapter 20 - Client-Side Storage"></a>Chapter 20 - Client-Side Storage</h3><p>我在早先做chrome插件<a href="zzgary.info">详见我的portfolio</a>的时候, <a href="http://callmet.zzgary.info/2014/02/04/data-storage-patch-day40-web-app-in/" target="_blank" rel="external">写过一篇专门介绍web存储的文章</a>. 恩, 当时写了不少<code>patch</code>系列, 哈哈, 改天写个脚本全部导出来转移过来.</p>
+<p>恩</p>
+<h2 id="u53C2_u8003_u8D44_u6599"><a href="#u53C2_u8003_u8D44_u6599" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="http://book.douban.com/subject/5303032/" target="_blank" rel="external">JavaScript the Definitive Guide 6th edition</a> 我现在就去写导入工具… 今天就到这里吧, 明天算是最后一篇就能完结本书啦~</li>
+</ul>
+<aside class="tipme special"><a href="/blog/tipme" class="tipme">If you like my work, buy me a soda or send me a book ! ^_^</a></aside></section><aside class="sidenav"><input type="text" placeholder="Enter to search" class="st-default-search-input searchbox"></aside><!--include partial/series--><aside class="sidenav"><div class="recentposts"><h2>Recent Posts:</h2><ul class="article-list"></ul><li><a href="http://taoalpha.me/blog/2015/12/26/blog-migration/">Blog Migration from jekyll to hexo</a></li><li><a href="http://taoalpha.me/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/">First CLI tool with NodeJS</a></li><li><a href="http://taoalpha.me/blog/2015/11/27/thanksgiving/">感恩</a></li><li><a href="http://taoalpha.me/blog/2015/11/19/tech-preventDefault-and-stopPropagation-in-JS/">preventDefault and stopPropagation in JS</a></li><li><a href="http://taoalpha.me/blog/2015/11/11/tech-use-strict-in-js/">Strict Mode in JavaScript</a></li><li><a href="http://taoalpha.me/blog/2015/11/06/tech-es6-general-summary/">ES6 General Summary</a></li></div></aside><div class="comments"><div data-thread-key="2015/06/26/book-javascript-the-definitive-guide-7/" data-title="JavaScript the Definitive Guide (7)" data-url="http://taoalpha.me/blog/2015/06/26/book-javascript-the-definitive-guide-7/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"taoalpha"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+   || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script></div></article><div class="notification fail hidden"></div><!-- jquery--><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-46725017-2",'auto');ga('send','pageview');</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- main functions--><script src="/blog/js/functions.js"></script><script src="/blog/js/default.js"></script><script src="/blog/js/post.js"></script></body></html>

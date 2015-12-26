@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> TaoAlpha's Blog</title><meta name="description" content="Here is my new blog based on hexo."><meta name="viewport" content="width=device-width, initial-scale=1"><!-- open graph part--><meta property="og:image" content="http://taoalpha.me/images/newblog.jpg"><meta property="og:description" content="TaoAlpha's hexo Blog"><meta property="og:type" content="website"><link rel="short icon" href="/blog/favicon.png"><link rel="stylesheet" href="/blog/css/default.css"></head><body class="blogpost"><aside class="home-menu"><nav class="home-icon-con upside"></nav><a href="/blog/" class="home-menu-icon brand active">涛</a><a href="/blog/mylinks" class="home-menu-icon"><i class="fa fa-1x fa-anchor"></i></a><a href="/blog/tipme" class="home-menu-icon"><i class="fa fa-1x fa-gratipay"></i></a><a href="javascript:$('.searchbox').focus().css('border', '4px dashed #666');setTimeout(function(){$('.searchbox').focus().css('border', 'none').css('border-bottom', '1px solid #ccc')},1000);" class="home-menu-icon"><i class="fa fa-1x fa-search"></i></a><a href="/blog/puzzle" class="home-menu-icon"><i class="fa fa-1x fa-puzzle-piece"></i></a><a href="javascript:;" title="Contact Me" class="home-menu-icon follow">+</a><div class="home-contact"><a href="http://facebook.com/zzgary/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/facebook-32.png" alt="facebook"></a><a href="http://github.com/taoalpha/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/github-32.png" alt="github"></a><a href="http://taoalpha.me" target="something"><img src="https://cdn3.iconfinder.com/data/icons/colore-sociale/32/mewally_32x32.png" alt="portfolio"></a><a href="http://douban.com/people/129154019" target="something"><img src="http://img3.douban.com/favicon.ico" alt="douban"></a></div><nav class="home-icon-con downside"><a href="#contribution" class="home-menu-icon makecontribution"><i class="fa fa-pencil fa-1x"></i></a><a id="togglemusic" href="javascript:;" class="home-menu-icon"><i class="fa fa-music fa-1x"></i></a></nav><div id="musicbar"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="40" src=""></iframe></div></aside><div id="contribution" class="hide"><span class="close"></span><input id="sender_mail" type="email" placeholder="Give me your email"><textarea id="contributionContent" name="contribution" cols="30" rows="10" placeholder="Thanks for your contribution!  Now tell me what you want to say: feedback ? advice ? contributions ? Whatever you want ^_^.  I will look at it as soon as I receive it and reply you asap.  "></textarea><input id="sendToMe" type="submit"></div><article id="content"><section class="entry"><h1 class="entry-title"><a href="http://taoalpha.me/blog/2015/06/24/book-javascript-the-definitive-guide-5/" title="JavaScript the Definitive Guide (5)">JavaScript the Definitive Guide (5)</a></h1><div class="meta-top"><a href="/blog/user/TaoAlpha"><div style="display:inline-block;" class="avatar"><img src="https://avatars3.githubusercontent.com/u/4335753?v=3&amp;s=40" alt="100"></div><span>TaoAlpha</span></a><span>2015-06-24</span><span class="wordage">3201字</span><span class="readspeed">10 分钟读完</span></div><h2 id="u6982_u8FF0"><a href="#u6982_u8FF0" class="headerlink" title="概述"></a>概述</h2><p>在十到十二章中, 第十章的正则表达式内容最为丰富, 也是目前应用即为广泛的内容之一. 不过这里也主要是结合js的应用, 实际上正则表达式本身就是一个很值得研究的话题, 有不少书都在谈这个话题, 我后面要读的书目中恰巧就有这么一本, 后面会更加详细的学习以下正则表达式的方方面面.</p>
+<p>十一章算是非常前沿, 高端或者说冷门的点了, 随着浏览器的盛行以及技术的进步, 安全问题始终都是一个很重视的点, 而在这种攻防演练中也促进了js本身的进步, 而主流浏览器本身更是走在了js的最前沿. 各种新的属性都是由他们引入而逐渐成为标准的;</p>
+<p>十二章主要是对走出浏览器的JS做了一个简单的介绍, 而NodeJS的大名在近几年在前后端, 全端领域都可谓是人尽皆知. 我也会在之后阅读相关书籍的时候做更详细的笔记记录.</p>
+<h2 id="u9605_u8BFB_u7B14_u8BB0"><a href="#u9605_u8BFB_u7B14_u8BB0" class="headerlink" title="阅读笔记"></a>阅读笔记</h2><h3 id="Chapter_10_-_Pattern_Matching_Regular_Expressions"><a href="#Chapter_10_-_Pattern_Matching_Regular_Expressions" class="headerlink" title="Chapter 10 - Pattern Matching Regular Expressions"></a>Chapter 10 - Pattern Matching Regular Expressions</h3><ul>
+<li><code>normal repetition characters</code>:<ul>
+<li><code>{m,n}</code> 匹配m-n次;</li>
+<li><code>{m,}</code> 匹配至少m次;</li>
+<li><code>{m}</code> 匹配恰好m次;</li>
+<li><code>?</code> 匹配0或1次;</li>
+<li><code>+</code> 匹配1或多次;</li>
+<li><code>*</code> 匹配0或多次;</li>
+</ul>
+</li>
+<li><code>Nongreedy repetition</code>:<ul>
+<li><code>??</code>, <code>+?</code>, <code>*?</code> 在常规的匹配后加上<code>?</code>就能让匹配尽可能发生的短, 它会在允许范围内, 找到尽可能短的匹配;</li>
+</ul>
+</li>
+<li><code>Alternation, Grouping, Reference</code>:<ul>
+<li><code>|</code> 表示匹配前者或者后者;</li>
+<li><code>(...)</code> 成组, 以组的形式来使用<code>*,+,?</code>等, 同时会记录组的匹配以用于<code>Reference</code>;</li>
+<li><code>(?:...)</code> 只是成组, 不记录匹配, 不能用于<code>reference</code>, 也不算做<code>reference</code>的序号中去;</li>
+<li><code>\n</code> 引用, n表示序号, 从1开始, 代表之前第几个group的匹配, 用于匹配开头结尾相同且多样的有奇效:<code>/([&#39;&quot;])[^&#39;&quot;]*\1/</code> 匹配单引号或者双引号内的内容;</li>
+<li>需要注意的就是, <code>reference</code>不能用于<code>[]</code>的<code>character class</code>之中!</li>
+</ul>
+</li>
+<li><code>anchor characters</code>:<ul>
+<li><code>^</code>: 匹配开头;</li>
+<li><code>$</code>: 匹配结尾;</li>
+<li><code>\b</code>: 匹配词边界, <code>/\bJava\b/</code> =&gt; <code>Java</code></li>
+<li><code>\B</code>: 匹配非词边界, <code>/\B[Ss]cript\B/</code> =&gt; <code>JavaScript, postscript...</code></li>
+<li><code>?=p</code>: 表示内容需要匹配p规则,但是返回的命中中不包含这部分;</li>
+<li><code>?!p</code>: 表示内容不匹配p规则;</li>
+</ul>
+</li>
+<li><code>flags</code>:<ul>
+<li><code>i</code>: 大小写敏感, 即区分大小写;</li>
+<li><code>g</code>: 全局匹配, 默认是匹配首个;</li>
+<li><code>m</code>: 多行匹配;</li>
+</ul>
+</li>
+<li><code>String Methods for Pattern Matching</code>:<ul>
+<li><code>search()</code>: 返回匹配词的位置或者-1代表无返回;</li>
+<li><code>replace()</code>: 支持正则匹配替换, 同时支持替换时使用<code>$n</code>代表是正则匹配的引用, 比如<code>text.replace(/&quot;([^&quot;]*)&quot;/g, &#39;“$1”&#39;);</code>即替换<code>&quot;&quot;</code>为<code>“”</code>;</li>
+<li><code>match()</code>: 返回包含了匹配的结果, 返回结构为数组格式;</li>
+<li><code>split()</code>: 接受正则匹配作为其分隔符, 比如: <code>&quot;1, 2, 3&quot;.split(/\s*,\s*/); =&gt; [&quot;1&quot;,&quot;2&quot;,&quot;3&quot;]</code>, 就去掉了本来直接<code>split()</code>多余的空格;</li>
+</ul>
+</li>
+<li><code>RegExp prototype method</code>:<ul>
+<li><code>exec()</code>: 基本等同<code>match()</code>, 不过接受的是string类型去匹配, 而由正则去调用, 当表达式加了全局flag后, <code>exec()</code>每次执行会记录其上次匹配的位置并从此开始新的匹配, 比如:<code>var pattern = /Java/g;pattern.exec(&quot;JavaScript is more fun than Java!&quot;).indexpattern.exec(&quot;JavaScript is more fun than Java!&quot;).index</code>就会相继输出<code>0,28</code>两个位置;</li>
+<li><code>test()</code>: 用以检测表达式是否匹配了传入的string, 其执行逻辑(g模式下记录上次匹配位置)和<code>exec()</code>一样;</li>
+</ul>
+</li>
+</ul>
+<h3 id="Chapter_11_-_JavaScript_Subsets_and_Extensions"><a href="#Chapter_11_-_JavaScript_Subsets_and_Extensions" class="headerlink" title="Chapter 11 - JavaScript Subsets and Extensions"></a>Chapter 11 - JavaScript Subsets and Extensions</h3><p>本章主要介绍一些目前主流浏览器支持但是还没有写入JavaScript官方版本中的一些js语言的子集(非官方版本)和扩展属性:</p>
+<ul>
+<li><code>subsets</code>: 通常是为了确保不确定安全性的代码能够安全的运行而出现的(除了Crockford’s JavaScript: The Good Parts);<ul>
+<li><a href="http://adsafe.org" target="_blank" rel="external">ADsafe</a>, 最早一个因为安全因素设计的子集语言, 会禁止对绝大多数全局变量的访问;</li>
+<li><a href="http://www.sitepen.com/blog/2008/08/01/secure-mashups -with-dojoxsecure/" target="_blank" rel="external">dojox.secure</a>: 算是<a href="http://dojotoolkit.org" target="_blank" rel="external">Dojo toolkit</a>的一个扩展;</li>
+<li><a href="http://code.google.com/p/google-caja/" target="_blank" rel="external">Caja</a>: 其包含了两个子集, 一个是<code>Cajita</code>, 比较严格, 类似ADsafe 和 dojox.secure; 还有个是<code>Valija</code>, 则比较接近如今ECMAScript 5的<code>strict mode</code>了;</li>
+<li><a href="http://websandbox.livelabs.com/" target="_blank" rel="external">Microsoft Web Sandbox</a>;</li>
+<li><a href="http://facebook.com" target="_blank" rel="external">FBJS</a>: facebook使用的一个自己;<br>通常子集都需要对应一个<code>verifier</code>, 来确保代码符合其要求;</li>
+</ul>
+</li>
+<li><code>extensions</code>:<ul>
+<li><code>const</code>: 声明常量, 比如: <code>const pi = 3.14;</code>;</li>
+<li><code>let</code>: 块变量声明, 相当于缩小版的var, 作用域仅存活在最近的一个块结构里, 你可以用<code>{}</code>来自行创建一个block;</li>
+<li><code>destructing</code>: 允许多变量结构化赋值: <code>let [x,y] = [1,2];let [r,theta] = polar(1.0, 1.0); function polar(x,y){...};</code>甚至这种<code>all = [first,second] = [1,2,3,4];</code> 或者这种<code>let transparent = {r:0.0, g:0.0, b:0.0, a:1.0}; let {r:red, g:green, b:blue} = transparent;</code>;</li>
+<li><code>for/each</code>: 和<code>for/in</code>循环不同, <code>for/each</code>遍历对象的属性值而不是属性名, 且可操作类array对象;</li>
+<li><code>for/in</code>: 从js 1.7(mozilla的js引擎版本号)开始, <code>for/in</code>也不局限在array和常规object了, 只要是可循环的元素都可以使用了;</li>
+<li><code>yield</code>: 从python中引入的;</li>
+<li><code>Array Comprehensions</code>:  还是从Python中借用的, <code>let evensquares = [x*x for (x in range(0,10)) if (x % 2 === 0)]</code>;</li>
+<li><code>try/catch</code>: 支持多<code>catch</code>;</li>
+</ul>
+</li>
+</ul>
+<h3 id="Chapter_12_-_Server-Side_JavaScript"><a href="#Chapter_12_-_Server-Side_JavaScript" class="headerlink" title="Chapter 12 - Server-Side JavaScript"></a>Chapter 12 - Server-Side JavaScript</h3><p>随着js的发展, 慢慢的超出了其本身的作用域: 浏览器. 随着Google V8引擎为js包入了unix的常用API: files,processes,streams,sockets等, js开始走出浏览器进入server端了. 正式命名为Node.JS. 想来很多人可能都听过, 因为后面我的数目中也包含了相关的书, 且本章内容也没见过太多, 所以就一起留到以后吧~</p>
+<h2 id="u53C2_u8003_u6587_u732E_3A"><a href="#u53C2_u8003_u6587_u732E_3A" class="headerlink" title="参考文献:"></a>参考文献:</h2><ul>
+<li><a href="http://book.douban.com/subject/5303032/" target="_blank" rel="external">JavaScript the Definitive Guide 6th edition</a></li>
+</ul>
+<aside class="tipme special"><a href="/blog/tipme" class="tipme">If you like my work, buy me a soda or send me a book ! ^_^</a></aside></section><aside class="sidenav"><input type="text" placeholder="Enter to search" class="st-default-search-input searchbox"></aside><!--include partial/series--><aside class="sidenav"><div class="recentposts"><h2>Recent Posts:</h2><ul class="article-list"></ul><li><a href="http://taoalpha.me/blog/2015/12/26/blog-migration/">Blog Migration from jekyll to hexo</a></li><li><a href="http://taoalpha.me/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/">First CLI tool with NodeJS</a></li><li><a href="http://taoalpha.me/blog/2015/11/27/thanksgiving/">感恩</a></li><li><a href="http://taoalpha.me/blog/2015/11/19/tech-preventDefault-and-stopPropagation-in-JS/">preventDefault and stopPropagation in JS</a></li><li><a href="http://taoalpha.me/blog/2015/11/11/tech-use-strict-in-js/">Strict Mode in JavaScript</a></li><li><a href="http://taoalpha.me/blog/2015/11/06/tech-es6-general-summary/">ES6 General Summary</a></li></div></aside><div class="comments"><div data-thread-key="2015/06/24/book-javascript-the-definitive-guide-5/" data-title="JavaScript the Definitive Guide (5)" data-url="http://taoalpha.me/blog/2015/06/24/book-javascript-the-definitive-guide-5/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"taoalpha"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+   || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script></div></article><div class="notification fail hidden"></div><!-- jquery--><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-46725017-2",'auto');ga('send','pageview');</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- main functions--><script src="/blog/js/functions.js"></script><script src="/blog/js/default.js"></script><script src="/blog/js/post.js"></script></body></html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> TaoAlpha's Blog</title><meta name="description" content="Here is my new blog based on hexo."><meta name="viewport" content="width=device-width, initial-scale=1"><!-- open graph part--><meta property="og:image" content="http://taoalpha.me/images/newblog.jpg"><meta property="og:description" content="TaoAlpha's hexo Blog"><meta property="og:type" content="website"><link rel="short icon" href="/blog/favicon.png"><link rel="stylesheet" href="/blog/css/default.css"></head><body class="blogpost"><aside class="home-menu"><nav class="home-icon-con upside"></nav><a href="/blog/" class="home-menu-icon brand active">涛</a><a href="/blog/mylinks" class="home-menu-icon"><i class="fa fa-1x fa-anchor"></i></a><a href="/blog/tipme" class="home-menu-icon"><i class="fa fa-1x fa-gratipay"></i></a><a href="javascript:$('.searchbox').focus().css('border', '4px dashed #666');setTimeout(function(){$('.searchbox').focus().css('border', 'none').css('border-bottom', '1px solid #ccc')},1000);" class="home-menu-icon"><i class="fa fa-1x fa-search"></i></a><a href="/blog/puzzle" class="home-menu-icon"><i class="fa fa-1x fa-puzzle-piece"></i></a><a href="javascript:;" title="Contact Me" class="home-menu-icon follow">+</a><div class="home-contact"><a href="http://facebook.com/zzgary/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/facebook-32.png" alt="facebook"></a><a href="http://github.com/taoalpha/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/github-32.png" alt="github"></a><a href="http://taoalpha.me" target="something"><img src="https://cdn3.iconfinder.com/data/icons/colore-sociale/32/mewally_32x32.png" alt="portfolio"></a><a href="http://douban.com/people/129154019" target="something"><img src="http://img3.douban.com/favicon.ico" alt="douban"></a></div><nav class="home-icon-con downside"><a href="#contribution" class="home-menu-icon makecontribution"><i class="fa fa-pencil fa-1x"></i></a><a id="togglemusic" href="javascript:;" class="home-menu-icon"><i class="fa fa-music fa-1x"></i></a></nav><div id="musicbar"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="40" src=""></iframe></div></aside><div id="contribution" class="hide"><span class="close"></span><input id="sender_mail" type="email" placeholder="Give me your email"><textarea id="contributionContent" name="contribution" cols="30" rows="10" placeholder="Thanks for your contribution!  Now tell me what you want to say: feedback ? advice ? contributions ? Whatever you want ^_^.  I will look at it as soon as I receive it and reply you asap.  "></textarea><input id="sendToMe" type="submit"></div><article id="content"><section class="entry"><h1 class="entry-title"><a href="http://taoalpha.me/blog/2015/05/20/tech-automated-script-for-whv/" title="自动化WHV申请工具">自动化WHV申请工具</a></h1><div class="meta-top"><a href="/blog/user/TaoAlpha"><div style="display:inline-block;" class="avatar"><img src="https://avatars3.githubusercontent.com/u/4335753?v=3&amp;s=40" alt="100"></div><span>TaoAlpha</span></a><span>2015-05-20</span><span class="wordage">2935字</span><span class="readspeed">9 分钟读完</span></div><h2 id="u5927_u4F53_u601D_u8DEF"><a href="#u5927_u4F53_u601D_u8DEF" class="headerlink" title="大体思路"></a>大体思路</h2><p>对于WHV新西兰的申请官网而言, 想要试图利用程序来实现自动申请的话, 主要需要攻克几个问题, 分步如下:</p>
+<h4 id="u767B_u5F55"><a href="#u767B_u5F55" class="headerlink" title="登录"></a>登录</h4><p>我曾经试过很多种登录方式来试图登录whv的申请官网, 比如用常规的post请求, 以及后来使用mechanize, 甚至尝试过selenium+chrome的组合. 但最终都因为各种原因或失败或放弃了… </p>
+<ul>
+<li><p>常规的post解包分析法:</p>
+<p>  这个的主要难点在于登录. 因为不知道是不是因为asp的原因, 每次通过模拟post获取的cookie都是无效的… 无法用于登录;</p>
+</li>
+<li><p>mechanize:</p>
+<p>  mechanize是个很不错的python module, 对于常规的网站而言绝对足够, 其对表格提交的天然支持更是很多人脚本登录的最佳选择之一. 可惜此次依然不试用… 因为官网的form提交会经过一个js的函数验证, 而mechanize最悲剧的一点就是不支持js…ಥ_ಥ</p>
+</li>
+<li><p>selenium + chrome:</p>
+<p>  可行. 但是非常慢! 不得不说, selenium和chrome的组合不愧是网页产品的自动化脚本测试神器啊. 写好运行然后就可以端碗饭在电脑前面坐等了哈哈</p>
+</li>
+<li><p>selenium + phantomjs:</p>
+<p>  考虑到chrome在天朝的情况, 以及速度本身的恶心.. 我在了解selenium的时候发现了phantomjs, 这个没有界面的浏览器后台模拟器. 而selenium和phantomjs的合并就让我看到了突破登录的希望.</p>
+</li>
+</ul>
+<h4 id="u53D6cookie"><a href="#u53D6cookie" class="headerlink" title="取cookie"></a>取cookie</h4><p>如上所说, 我通过selenium和phantomjs的结合, 利用其自带的webdriver的<code>get_cookies()</code>函数成功的将登录后的cookie提取出来保存到了文件之中.  而通过这样”真实”的访问获取到的cookie也如愿以偿的让我成功实现了后来的环节.</p>
+<p>这里的大体思路很简单, 就是通过phantomjs来模拟浏览器行为, 修改其自带的headers为chrome的标准headers来增加混淆程度. 因为selenium和phantomjs的易上手性, 基本这里也就5行代码搞定的节奏…</p>
+<h4 id="u5E26cookie_u586B_u8868_u53D1post"><a href="#u5E26cookie_u586B_u8868_u53D1post" class="headerlink" title="带cookie填表发post"></a>带cookie填表发post</h4><p>获取到cookie后, 为了节省时间, 我并没有继续选用selenium和phantomjs的组合来填表. 毕竟他们真的太慢了… 而是换用了带cookie直接post的方式. 主要思路和步骤如下:</p>
+<ul>
+<li>利用urllib2,cookielib来制作opener并装上cookie;</li>
+<li>首先进行一次试探性访问, 获取到页面状态值:viewstate,viewstategenerator,eventvalidation; 有些页面存在只有两个或者更多个的情况, 可以根据页面进行修正;</li>
+<li>组合页面状态参数以及需要post的信息数据, 进行post;</li>
+</ul>
+<p>基本来说, 只要确保post的时候key-value对好,那么, 在cookie有效期内是不会有啥问题的. 而想要做的更好更流畅, 在面对各种错误的情况下更抗压, 就得看容错这一步的做法了.</p>
+<h4 id="u5BB9_u9519"><a href="#u5BB9_u9519" class="headerlink" title="容错"></a>容错</h4><p>一旦实现了cookie的获取和post, 那么想让工具正式能够使用就基本靠细心的容错了. 毕竟无论是页面超时, post失败, 是否已经有表格, 表格完整性验证等等, 都需要根据具体情况逐步完善, 下面也主要介绍下我的思路.</p>
+<ul>
+<li>cookie有无以及是否失效问题;</li>
+<li>登录失败重试问题;</li>
+<li>流畅填表和中断单表填写(区分了正常情况下一张张表填和单独填某张表的情况, whv一共6个信息表要填写的);</li>
+<li>有无表格(无表格创建表格, 有表格获取表格id);</li>
+<li>表格完整性检验;</li>
+<li>表格所处状态检验(提交以及付款状态);</li>
+<li>表格post失败重试问题;</li>
+<li>超时问题;</li>
+</ul>
+<p>基本以上就构成了一个基本完整, 有着自动重试功能的自动化whv脚本了. </p>
+<h2 id="u6D4B_u8BD5_u60C5_u51B5"><a href="#u6D4B_u8BD5_u60C5_u51B5" class="headerlink" title="测试情况"></a>测试情况</h2><p>在名额开放前使用ireland名额测试情况如下:</p>
+<ul>
+<li><p>无cookie文件:</p>
+<p>  登录获取cookie耗时: normal: 20s, min:13s, max: time-out;<br>  填表时间: normal: 5s-10s/表, min: 5s/表, max: time-out;<br>  全程时间: normal: 100s, min: 90s, max: time-out;</p>
+</li>
+<li><p>有cookie文件:</p>
+<p>  登录获取cookie耗时: normal: 0.000003s;<br>  填表时间: normal: 5s-10s/表, min: 5s/表, max: time-out;<br>  全程时间: normal: 80, min: 60s, max: time-out;</p>
+</li>
+</ul>
+<h2 id="u7EC6_u8282_u8865_u5145"><a href="#u7EC6_u8282_u8865_u5145" class="headerlink" title="细节补充"></a>细节补充</h2><p>看起来还是很简单的, 不过真的写起来挺恶心的… 尤其是你在测试中会遇到各种奇葩问题… </p>
+<p>因为本文本来是10号写的, 但是后来一直拖到了20号才写完.. 昨天用脚本实况演练了下.. 发现真正开放名额这一天, 还是太恐怖… 登录都无法登录不上去… 一直处于不断重试的过程中… 居然还没我浏览器手动来的快… 最后把浏览器登录后的cookie放进去试了下,<br>因为本文本来是10号写的, 但是后来一直拖到了20号才写完.. 昨天用脚本实况演练了下.. 发现真正开放名额这一天, 还是太恐怖… 登录都无法登录不上去… 一直处于不断重试的过程中… 居然还没我浏览器手动来的快… 最后把浏览器登录后的cookie放进去试了下, 发现后面,<br>因为本文本来是10号写的, 但是后来一直拖到了20号才写完.. 昨天用脚本实况演练了下.. 发现真正开放名额这一天, 还是太恐怖… 登录都无法登录不上去… 一直处于不断重试的过程中… 居然还没我浏览器手动来的快… 最后把浏览器登录后的cookie放进去试了下<br>看起来还是很简单的, 不过真的写起来挺恶心的… 尤其是你在测试中会遇到各种奇葩问题… </p>
+<p>看起来还是很简单的, 不过真的写起来挺恶心的… 尤其是你在测试中会遇到各种奇葩问题…<br>,<br>因为本文本来是10号写的, 但是后来一直拖到了20号才写完.. 昨天用脚本实况演练了下.. 发现真正开放名额这一天, 还是太恐怖… 登录都无法登录不上去… 一直处于不断重试的过程中… 居然还没我浏览器手动来的快… 最后把浏览器登录后的cookie放进去试了下, 发现后面的容错做的还算可以, 基本能保证程序不会意外退出… 不过因为体检的原因, 我也没等到程序跑完就走了…</p>
+<p>和朋友讨论说到似乎cookie是可以计算出来的, 而计算方法在页面的js里面可以看到, 以后有时间可以去看看.</p>
+<h2 id="Module_u5217_u8868"><a href="#Module_u5217_u8868" class="headerlink" title="Module列表"></a>Module列表</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> cookielib</span><br></pre></td></tr></table></figure>
+<p>以及需要把phantomjs的二进制文件放入到合适的路径中去, 为了便于移植, 我是放到了当前路径下…</p>
+<h2 id="u7ED3_u8BED"><a href="#u7ED3_u8BED" class="headerlink" title="结语"></a>结语</h2><p>如上, 基本就能实现一个较为完整的自动脚本了~ 不过不解决cookie问题的话, 实际使用不会有多大帮助的… 毕竟那一天的网络太可怕…</p>
+<aside class="tipme special"><a href="/blog/tipme" class="tipme">If you like my work, buy me a soda or send me a book ! ^_^</a></aside></section><aside class="sidenav"><input type="text" placeholder="Enter to search" class="st-default-search-input searchbox"></aside><!--include partial/series--><aside class="sidenav"><div class="recentposts"><h2>Recent Posts:</h2><ul class="article-list"></ul><li><a href="http://taoalpha.me/blog/2015/12/26/blog-migration/">Blog Migration from jekyll to hexo</a></li><li><a href="http://taoalpha.me/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/">First CLI tool with NodeJS</a></li><li><a href="http://taoalpha.me/blog/2015/11/27/thanksgiving/">感恩</a></li><li><a href="http://taoalpha.me/blog/2015/11/19/tech-preventDefault-and-stopPropagation-in-JS/">preventDefault and stopPropagation in JS</a></li><li><a href="http://taoalpha.me/blog/2015/11/11/tech-use-strict-in-js/">Strict Mode in JavaScript</a></li><li><a href="http://taoalpha.me/blog/2015/11/06/tech-es6-general-summary/">ES6 General Summary</a></li></div></aside><div class="comments"><div data-thread-key="2015/05/20/tech-automated-script-for-whv/" data-title="自动化WHV申请工具" data-url="http://taoalpha.me/blog/2015/05/20/tech-automated-script-for-whv/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"taoalpha"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+   || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script></div></article><div class="notification fail hidden"></div><!-- jquery--><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-46725017-2",'auto');ga('send','pageview');</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- main functions--><script src="/blog/js/functions.js"></script><script src="/blog/js/default.js"></script><script src="/blog/js/post.js"></script></body></html>

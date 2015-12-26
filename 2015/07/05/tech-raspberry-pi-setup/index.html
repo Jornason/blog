@@ -1,0 +1,105 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> TaoAlpha's Blog</title><meta name="description" content="Here is my new blog based on hexo."><meta name="viewport" content="width=device-width, initial-scale=1"><!-- open graph part--><meta property="og:image" content="http://taoalpha.me/images/newblog.jpg"><meta property="og:description" content="TaoAlpha's hexo Blog"><meta property="og:type" content="website"><link rel="short icon" href="/blog/favicon.png"><link rel="stylesheet" href="/blog/css/default.css"></head><body class="blogpost"><aside class="home-menu"><nav class="home-icon-con upside"></nav><a href="/blog/" class="home-menu-icon brand active">涛</a><a href="/blog/mylinks" class="home-menu-icon"><i class="fa fa-1x fa-anchor"></i></a><a href="/blog/tipme" class="home-menu-icon"><i class="fa fa-1x fa-gratipay"></i></a><a href="javascript:$('.searchbox').focus().css('border', '4px dashed #666');setTimeout(function(){$('.searchbox').focus().css('border', 'none').css('border-bottom', '1px solid #ccc')},1000);" class="home-menu-icon"><i class="fa fa-1x fa-search"></i></a><a href="/blog/puzzle" class="home-menu-icon"><i class="fa fa-1x fa-puzzle-piece"></i></a><a href="javascript:;" title="Contact Me" class="home-menu-icon follow">+</a><div class="home-contact"><a href="http://facebook.com/zzgary/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/facebook-32.png" alt="facebook"></a><a href="http://github.com/taoalpha/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/github-32.png" alt="github"></a><a href="http://taoalpha.me" target="something"><img src="https://cdn3.iconfinder.com/data/icons/colore-sociale/32/mewally_32x32.png" alt="portfolio"></a><a href="http://douban.com/people/129154019" target="something"><img src="http://img3.douban.com/favicon.ico" alt="douban"></a></div><nav class="home-icon-con downside"><a href="#contribution" class="home-menu-icon makecontribution"><i class="fa fa-pencil fa-1x"></i></a><a id="togglemusic" href="javascript:;" class="home-menu-icon"><i class="fa fa-music fa-1x"></i></a></nav><div id="musicbar"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="40" src=""></iframe></div></aside><div id="contribution" class="hide"><span class="close"></span><input id="sender_mail" type="email" placeholder="Give me your email"><textarea id="contributionContent" name="contribution" cols="30" rows="10" placeholder="Thanks for your contribution!  Now tell me what you want to say: feedback ? advice ? contributions ? Whatever you want ^_^.  I will look at it as soon as I receive it and reply you asap.  "></textarea><input id="sendToMe" type="submit"></div><article id="content"><section class="entry"><h1 class="entry-title"><a href="http://taoalpha.me/blog/2015/07/05/tech-raspberry-pi-setup/" title="Raspberry Pi Setup">Raspberry Pi Setup</a></h1><div class="meta-top"><a href="/blog/user/TaoAlpha"><div style="display:inline-block;" class="avatar"><img src="https://avatars3.githubusercontent.com/u/4335753?v=3&amp;s=40" alt="100"></div><span>TaoAlpha</span></a><span>2015-07-05</span><span class="wordage">3995字</span><span class="readspeed">12 分钟读完</span></div><h2 id="u6982_u8FF0"><a href="#u6982_u8FF0" class="headerlink" title="概述"></a>概述</h2><p>今天介绍下如何配置一个树莓派, 主要是一些树莓派的基本配置, 多数大家google以下也是可以找到的, 这里算是汇总了一下.</p>
+<p>内容主要包括:</p>
+<ul>
+<li>树莓派系统安装;</li>
+<li>初始化配置;</li>
+<li>nodejs环境配置;</li>
+<li>python环境配置;</li>
+<li>wifi环境配置;</li>
+</ul>
+<h2 id="u6811_u8393_u6D3E_u7684_u57FA_u7840_u8BBE_u5B9A"><a href="#u6811_u8393_u6D3E_u7684_u57FA_u7840_u8BBE_u5B9A" class="headerlink" title="树莓派的基础设定"></a>树莓派的基础设定</h2><h3 id="u6811_u8393_u6D3E_u7CFB_u7EDF_u5B89_u88C5"><a href="#u6811_u8393_u6D3E_u7CFB_u7EDF_u5B89_u88C5" class="headerlink" title="树莓派系统安装"></a>树莓派系统安装</h3><p>目前在<a href="https://www.raspberrypi.org/downloads/" target="_blank" rel="external">树莓派的官网</a>主要提供了两种安装系统的方式, 一种是直接烧制, 通过将已下载的img文件利用对应的工具烧制到格式化好的SD卡中, 制作出直接可用的启动盘; 另一种则是通过官方发布的<a href="https://www.raspberrypi.org/help/noobs-setup/" target="_blank" rel="external">NOOBS</a>来进行启动安装.</p>
+<ul>
+<li><p>直接制作法:</p>
+<p>有过制作系统经验的朋友都应该了解这种方法, 不同平台也有不同的工具可以用以制作, 这里就没啥好说的了. mac下可以按照<a href="https://www.raspberrypi.org/documentation/installation/installing-images/mac.md" target="_blank" rel="external">官网的Guide</a>逐步操作即可.</p>
+</li>
+<li><p>NOOBS法:</p>
+<p>NOOBS法其实并不是直接烧制一个好的系统进去, 而是一个类似winpe, 而且更简易的启动程序. NOOBS法分为2个版本, 一个是包含了十个左右的预装系统, 另一个则是单纯的NOOBS, 需要联网下载选择的系统进行安装; 通常做启动化设定的话, 用离线版的肯定比较省事~</p>
+<p>下载完NOOBS后, 直接将NOOBS压缩包解压到你已经格式化好的SD卡上, 然后插入树莓派启动就能进入下面的就界面了:</p>
+<img src="https://camo.githubusercontent.com/07e4a6e82b21e1acefb69b6058af7b4f0dec17e9/687474703a2f2f646f776e6c6f6164732e72617370626572727970692e6f72672f4e4f4f42532f73637265656e73686f74732f6f735f73656c65637465642e706e67">
+<p>选择你想要安装的系统, 选择install即可(此处可以选择多系统, 根据你的SD卡等具体情况即可).</p>
+</li>
+</ul>
+<p>那么如何选择呢? 对我而言, 很简单, 第一次安装的时候, 手头没有HDMI线, 那么没有屏幕的话, 用NOOBS的话无法操作, 所以就直接烧的系统, 这样就可以直接启动, 然后通过ssh配置即可; 后来因为玩坏了python, 怎么改都没改好,于是就决定重装, 而手头正好有HDMI线了, 所以这次就试用了下NOOBS, 觉得也很省事, 尤其是可以直接装多系统(我装了标准R和Arch)~</p>
+<h3 id="u521D_u59CB_u5316_u914D_u7F6E"><a href="#u521D_u59CB_u5316_u914D_u7F6E" class="headerlink" title="初始化配置"></a>初始化配置</h3><p>一旦你安装好系统后, 就可以开始启动系统了. 插上电源, 插上SD卡即可. 因为无屏的情况居多, 所以下面就以无屏作为基本环境, 目前pi基本都默认开启了SSH, 所以我们可以直接通过ssh登录设定.</p>
+<ul>
+<li>首先的首先, 你需要一个网线… 可以直接链接你的树莓派和路由器或者你的电脑;</li>
+<li>首先, 你需要你pi的ip, 如此才能进行ssh登录: 这个很简单, 登录到你的路由器管理页面, 通过客户端列表查看你的树莓派被分配到的ip地址(如果你是直连笔记本的话, 记得设定你的笔记本网络分享,然后通过<code>arp -a</code>, windows下, 扫描出你的树莓派的分配ip即可);</li>
+<li>连接, 找到ip后, 就可以通过ssh登录了, 默认的初始用户名和密码是: pi -&gt; raspberry;</li>
+<li>基本配置: 通过<code>raspi-config</code>命令就可以对树莓派做一些基本的配置, 比如内存分配啊, 超频啊, 修改密码,设定主机名啊等等, 其中超频(overclock)这部分大家要谨慎一些处理, 可以从低到高的逐步超频, 目前亲测B+下超频到turbo 1000的话基本还是毫无压力的, 而如果你不需要图形界面的话, 那么可以把GUI的内存分配到最低: 16;</li>
+</ul>
+<h3 id="nodejs_u4EE5_u53CApython_u73AF_u5883_u914D_u7F6E"><a href="#nodejs_u4EE5_u53CApython_u73AF_u5883_u914D_u7F6E" class="headerlink" title="nodejs以及python环境配置"></a>nodejs以及python环境配置</h3><p>因为个人属性, 所以还是比较集中在node和python中, 像java等环境我就基本不管了. 下面介绍下node和Python在pi里面的配置:</p>
+<ul>
+<li><p>nodejs</p>
+<p>目前RASPBIAN 3.18下node还是不默认支持的, 需要我们手动安装, 主要有下面几个安装方式:</p>
+<ul>
+<li><p>源码编译:</p>
+<p>这种方法最为简单, 而且通常可以直接安装到最新版本, 从<a href="https://nodejs.org/" target="_blank" rel="external">官网</a>下载到源码包解压后自己<code>./configure``make``make install</code>就是漫长的等待了…至少半天吧… 毫不夸张..</p>
+</li>
+<li><p>预编译安装:</p>
+<p>主要是因为node的编译时间太长…所以有人发布了编译好的版本可以直接下载使用, 具体可以<a href="http://conoroneill.net/download-compiled-version-of-nodejs-0120-stable-for-raspberry-pi-here" target="_blank" rel="external">参考此文: Download compiled version of Node.js 0.12.0 Stable for Raspberry Pi here</a>.</p>
+</li>
+<li><p>包管理安装:</p>
+<p><a href="https://nodejs.org" target="_blank" rel="external">node官网</a>还提供了如何通过包管理的方式来安装node, 详细的区分不同系统的可以看<a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager" target="_blank" rel="external">Installing Node.js via package manager</a>~ RASPBIAN是基于debian的, 所以我们参考 debian 的话即可;</p>
+</li>
+<li><p>通过deb包安装:</p>
+<p>此种方法也是个人比较推荐的, 简单易行. 目前<a href="http://node-arm.herokuapp.com/" target="_blank" rel="external">node-arm</a>中更新的最新deb包是0.12.1的版本. 基本也够用了~ 下载deb包后直接<code>dpkg -i 包</code>即可;</p>
+</li>
+</ul>
+<p>可能会出现的问题:</p>
+<ul>
+<li>版本过低: 默认通过apt-get获取的node版本似乎只到0.6吧, 记不清了, 反正最多不过0.10, 此种情况下, 可以先执行<code>apt-get update &amp; apt-get upgrade</code>等或者通过<a href="https://github.com/nodesource/distributions" target="_blank" rel="external">nodesource</a>更新以下源;</li>
+<li><code>illegal instruction</code>: 有时候你安装了node之后, 可能会发现输入<code>node</code>命令都会提示<code>illegal instruction</code>, 此种问题主要是因为树莓派的cpu所致, 而且是V8的问题, 并非nodejs的问题, 具体的细节大家可以google了解下, 具体的解决办法呢, 我也不确定, 只知道我<code>apt-get upgrade</code>了以下后重启了下就ok了…</li>
+</ul>
+</li>
+<li><p>python</p>
+<p>RASPBIAN 目前的python版本是多版本的, 包含了2.7.3和3.2, 而因为我通常的开发环境是2.7.6, 所以这里介绍下如何替换python的方法.</p>
+<ul>
+<li><p>源码编译:</p>
+<p>python相比nodejs而言要省时很多… 不过也很慢… 不推荐;</p>
+</li>
+<li><p>pythonbrew:</p>
+<p>这里介绍一个很赞的办法: pythonbrew. 这是一个python管理工具, 它可以帮助你在多版本python下进行转换. 安装方法很简单: <a href="https://github.com/utahta/pythonbrew" target="_blank" rel="external">pythonbrew Github</a>.</p>
+<p>其中可能出现环境配置问题导致找不到<code>bin/pythonbrew</code>文件, 你可以通过手动将<code>/usr/local/pythonbrew</code>拷贝一份到<code>~/.pythonbrew</code>中即可解决;</p>
+<p>安装后的使用非常便捷, 只需要利用<code>pythonbrew install 版本号</code>以及<code>pythonbrew switch 版本号</code>就能切换python版本了~</p>
+</li>
+</ul>
+<blockquote>
+<p>Tip: 除非迫不得已, 不要乱动系统的python版本;</p>
+</blockquote>
+<p>结合virtualenv和pythonbrew, 你就可以实现独立的版本环境了~哈哈</p>
+</li>
+</ul>
+<h3 id="wifi_u73AF_u5883_u914D_u7F6E"><a href="#wifi_u73AF_u5883_u914D_u7F6E" class="headerlink" title="wifi环境配置"></a>wifi环境配置</h3><p>树莓派本身是没有无线网卡的, 所以如果想要让其支持无线上网的话, 你需要自己购买一个无线网卡接入, 并且安装对应的驱动.本人用的是realtek的无线网卡, 插入后通过<code>lsusb</code>查看到已经检测到设备后, 就可以通过<code>apt-get install firmware-realtek</code>安装配套的驱动.</p>
+<p>当你通过<code>ifconfig</code>查看到<code>wlan0</code>的时候, 就证明你的无线网络支持已经可以了, 接下来就需要配置对应的无线属性了:</p>
+<p>打开<code>/etc/network/interfaces</code>, 如果你喜欢<code>vim</code>, 可以通过<code>apt-get install vim</code>安装vim, 打开根据你的需要修改对应的属性: 比如<code>wlan</code>的ip分配是<code>manual</code>or<code>dhcp</code>或者是<code>static</code>. 然后在对应wpa-conf的设定文件中添加对应的network即可:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">network=&#123;&#10;    ssid=&#34;SCHOOLS NETWORK NAME&#34;&#10;    psk=&#34;SCHOOLS PASSWORD&#34;&#10;    id_str=&#34;school&#34;&#10;&#125;&#10;&#10;network=&#123;&#10;    ssid=&#34;HOME NETWORK NAME&#34;&#10;    psk=&#34;HOME PASSWORD&#34;&#10;    id_str=&#34;home&#34;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你有多个无线网需要支持的话, 可以在其中添加多个network块即可;</p>
+<h3 id="u5F00_u542Froot"><a href="#u5F00_u542Froot" class="headerlink" title="开启root"></a>开启root</h3><p>在上述命令中你会发现很多都需要<code>sodu</code>执行, 这是因为你默认使用的是pi账户, 而非root. 默认情况下root账户是关闭的, 需要你重新开启:</p>
+<p>很简单, 给root设定一个密码即可:<code>sudo passwd root</code>, 同时如果你需要用root登录ssh的话, 请确保<code>/etc/ssh/sshd_config</code>中的<code>PermitRootLogin yes</code>.</p>
+<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>树莓派可谓是极佳的学习硬件的工具, 其开放性极强, 扩展性极强, 它能做什么完全由你决定. 这里分享国内外几个不错的社区给大家:</p>
+<ul>
+<li><a href="http://www.geekfan.net/" target="_blank" rel="external">极客范儿</a></li>
+<li><a href="http://piweekly.net/" target="_blank" rel="external">PiWeekly</a></li>
+<li><a href="http://raspi.tv/" target="_blank" rel="external">RasPi Tv</a></li>
+<li><a href="https://www.youtube.com/user/RaspberryPiBeginners" target="_blank" rel="external">Raspberry Pi Beginner - Youtube Channel</a></li>
+</ul>
+<h2 id="u53C2_u8003_u8D44_u6599"><a href="#u53C2_u8003_u8D44_u6599" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://www.raspberrypi.org/downloads/" target="_blank" rel="external">树莓派的官网</a></li>
+<li><a href="https://www.raspberrypi.org/help/noobs-setup/" target="_blank" rel="external">NOOBS GUIDE</a></li>
+<li><a href="https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager" target="_blank" rel="external">Installing Node.js via package manager</a></li>
+<li><a href="http://conoroneill.net/download-compiled-version-of-nodejs-0120-stable-for-raspberry-pi-here" target="_blank" rel="external">Download compiled version of Node.js 0.12.0 Stable for Raspberry Pi here</a></li>
+<li><a href="http://node-arm.herokuapp.com/" target="_blank" rel="external">node-arm</a></li>
+<li><a href="https://github.com/utahta/pythonbrew" target="_blank" rel="external">pythonbrew Github</a></li>
+<li><a href="http://weworkweplay.com/play/automatically-connect-a-raspberry-pi-to-a-wifi-network/" target="_blank" rel="external">Automatically connect a Raspberry Pi to a Wifi network</a></li>
+<li><a href="https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md" target="_blank" rel="external">SETTING WIFI UP VIA THE COMMAND LINE</a></li>
+</ul>
+<aside class="tipme special"><a href="/blog/tipme" class="tipme">If you like my work, buy me a soda or send me a book ! ^_^</a></aside></section><aside class="sidenav"><input type="text" placeholder="Enter to search" class="st-default-search-input searchbox"></aside><!--include partial/series--><aside class="sidenav"><div class="recentposts"><h2>Recent Posts:</h2><ul class="article-list"></ul><li><a href="http://taoalpha.me/blog/2015/12/26/blog-migration/">Blog Migration from jekyll to hexo</a></li><li><a href="http://taoalpha.me/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/">First CLI tool with NodeJS</a></li><li><a href="http://taoalpha.me/blog/2015/11/27/thanksgiving/">感恩</a></li><li><a href="http://taoalpha.me/blog/2015/11/19/tech-preventDefault-and-stopPropagation-in-JS/">preventDefault and stopPropagation in JS</a></li><li><a href="http://taoalpha.me/blog/2015/11/11/tech-use-strict-in-js/">Strict Mode in JavaScript</a></li><li><a href="http://taoalpha.me/blog/2015/11/06/tech-es6-general-summary/">ES6 General Summary</a></li></div></aside><div class="comments"><div data-thread-key="2015/07/05/tech-raspberry-pi-setup/" data-title="Raspberry Pi Setup" data-url="http://taoalpha.me/blog/2015/07/05/tech-raspberry-pi-setup/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"taoalpha"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+   || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script></div></article><div class="notification fail hidden"></div><!-- jquery--><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-46725017-2",'auto');ga('send','pageview');</script><script src="https://cdn.bootcss.com/mathjax/2.5.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- main functions--><script src="/blog/js/functions.js"></script><script src="/blog/js/default.js"></script><script src="/blog/js/post.js"></script></body></html>
