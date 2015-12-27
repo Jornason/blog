@@ -4,7 +4,7 @@
   <subtitle><![CDATA[I love a lot of things, JS is my favorite.]]></subtitle>
   <link href="/blog/atom.xml" rel="self"/>
   <link href="http://taoalpha.me/blog/"/>
-  <updated>2015-12-26T22:04:28.000Z</updated>
+  <updated>2015-12-27T02:02:30.000Z</updated>
   <id>http://taoalpha.me/blog/</id>
   
   <author>
@@ -13,6 +13,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Close old website and related services]]></title>
+    <link href="http://taoalpha.me/blog/2015/12/26/Close-old-website-and-related-services/"/>
+    <id>http://taoalpha.me/blog/2015/12/26/Close-old-website-and-related-services/</id>
+    <published>2015-12-27T01:49:20.000Z</published>
+    <updated>2015-12-27T02:02:30.000Z</updated>
+    <content type="html"><![CDATA[<p><strong>Hi all:</strong></p>
+<p>  Since I have one month winter break, so I decide to rebuild some old projects with some fancy stuff. And also to save some money, I just closed the server that supported them for nearly two years… I am sad and sorry if that causes any trouble… I have sent an email to all the active users about this … Thanks for your understanding.</p>
+<p>  The major influence would be caused by the shutdown of feedpusher and wordcard since they have most users… Truly sorry about that. I will try my best to build a new and better one in this month, look forward to it!! :)</p>
+<p>  The ipromise would be fine since they are just a plain web application without any need for server things, actually I host it on the github, so please continue using it :)</p>
+<p>  All the updates about my new feedpusher would be pushed to the github repo: <a href="https://github.com/taoalpha/feedpusher" target="_blank" rel="external">feedpusher</a>, any issues you have or features you want, just open an issue under this repo :)</p>
+<p>  Same for wordcard, I will recover it in next week, maybe will remove the user authentication and use plain web application. :)</p>
+<p>  And also I will keep updating my first CLI nodejs app: <a href="https://github.com/taoalpha/baby" target="_blank" rel="external">baby</a>, feel free to use it and give me any suggestions you have.</p>
+<p>  Seem I have a very busy break :)</p>
+<p>  Have a wonderful new year!!!</p>
+<p>Tao@Home</p>
+<p>2015-12-26</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><strong>Hi all:</strong></p>
+<p>  Since I have one month winter break, so I decide to rebuild some old projects with some fancy stuff. An]]>
+    </summary>
+    
+      <category term="Clean up" scheme="http://taoalpha.me/blog/tags/Clean-up/"/>
+    
+      <category term="News" scheme="http://taoalpha.me/blog/tags/News/"/>
+    
+      <category term="blog" scheme="http://taoalpha.me/blog/categories/blog/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Summary of the year]]></title>
@@ -472,6 +503,62 @@
   </entry>
   
   <entry>
+    <title><![CDATA[Sorting Algorithm in JavaScript - Bubble Sort and Merge Sort]]></title>
+    <link href="http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/"/>
+    <id>http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/</id>
+    <published>2015-10-29T08:00:00.000Z</published>
+    <updated>2015-12-26T08:21:36.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Bubble sort is really cool but not so useful, it seems that you will never use it… But merge sort is really cool since it is really fast.</p>
+<h2 id="Bubble_Sort"><a href="#Bubble_Sort" class="headerlink" title="Bubble Sort"></a>Bubble Sort</h2><p>So what is bubble sort, according to wikipedia:</p>
+<blockquote>
+<p>Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted. </p>
+</blockquote>
+<p>The whole process of sorting is like the bigger element “bubble” to the end of the list.</p>
+<ul>
+<li><strong>Input:</strong> A list of numbers with random order</li>
+<li><strong>Procedures:</strong><ul>
+<li>Start from the head of the list, and compare every two adjacent numbers and swap them if they are in wrong order;</li>
+<li>Record whether you did any swaps or not, if no, your list has been sorted, otherwise, you need to step 1 again;</li>
+</ul>
+</li>
+<li><strong>Output:</strong> A sorted list</li>
+</ul>
+<p>If you like, you can do a small optimization to the procedures above: since every iteration we will make sure the bigger element will “bubble” to the end of the list, so everytime we don’t need to check the last elements(they are already in ordered), and we will reduce the length for each iteration.</p>
+<p>Here is a nice gif from wikipedia: <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="bubble sort"></p>
+<p>The time complexity for bubble sort would be : O(n^2) for worst case, O(n) for best case, and O(n^2) on average.</p>
+<p>The space complexity for bubble sort would be O(1) since we only need one space used to do the swap.</p>
+<p>Now lets do the code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bubbleSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> swapped</span><br><span class="line">  <span class="keyword">var</span> len = list.length</span><br><span class="line">  <span class="keyword">do</span>&#123;</span><br><span class="line">    swapped = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>;j&lt; len-<span class="number">1</span>;j++)&#123;</span><br><span class="line">      reads += <span class="number">2</span></span><br><span class="line">      <span class="keyword">if</span>(list[j]&gt;list[j+<span class="number">1</span>])&#123;</span><br><span class="line">        <span class="keyword">this</span>.swap(list,j,j+<span class="number">1</span>)</span><br><span class="line">        swapped = <span class="literal">true</span></span><br><span class="line">        writes += <span class="number">2</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    len = len - <span class="number">1</span></span><br><span class="line">    <span class="comment">// since everytime we will move the largest element to the end of the list, we can reduce the number of iteration without considering the last element every iteration</span></span><br><span class="line">  &#125;<span class="keyword">while</span>(swapped)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Merge_Sort"><a href="#Merge_Sort" class="headerlink" title="Merge Sort"></a>Merge Sort</h2><p>Now we met all three different kinds of sorting, all of them have a O(n^2) of time complexity on average.</p>
+<p>Lets do something faster: Merge Sort.</p>
+<p>Imagine you separate your list into several really small lists with only one element or zero element in each of them. Then you merge every two small lists into one sorted list, and keep doing it repeatly.(it’s easy because you are merging two sorted lists)</p>
+<p>The whole procedures will be:</p>
+<ul>
+<li>Split the list recursively;</li>
+<li>Merge the small lists until you merge them all;</li>
+</ul>
+<p>Since we always split by half, the number of small lists we will have would be log(n), and the total cost would be close to (n / 2 * log(n)) on average(since we have at least 1 element list to merge with zero one, at most n/2 elements list to merge with n/2 elements). So the time complexity would be O(nlog(n)) all the time, and the space complexity would be O(n) since we will save origin input list with n small lists.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// mergeSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(list.length &lt;= <span class="number">1</span>) <span class="keyword">return</span> list</span><br><span class="line">  <span class="keyword">var</span> mid = <span class="built_in">Math</span>.floor(list.length / <span class="number">2</span>)</span><br><span class="line">  <span class="keyword">return</span> merge(mergeSort(list.slice(<span class="number">0</span>,mid)),mergeSort(list.slice(mid)))</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left,right</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> nl = []</span><br><span class="line">  <span class="keyword">var</span> il = <span class="number">0</span>, ir = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span>(il&lt;left.length &amp;&amp; ir&lt;right.length)&#123;</span><br><span class="line">    <span class="keyword">if</span>(left[il] &lt; right[ir])&#123;</span><br><span class="line">      nl.push(left[il++])</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      nl.push(right[ir++])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// don't use shift because shift will actually cause a lot I/Os </span></span><br><span class="line">  &#125;</span><br><span class="line">  nl = nl.concat(left.slice(il)).concat(right.slice(ir))</span><br><span class="line">  <span class="keyword">return</span> nl</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Merge sort is kind useful, and if we don’t have quick sort which I will talk about next post, it would be a really good choice to do sorting. And even we have quick sort, merge sort still exists in many languages as part of their default sorting algorithm.</p>
+<p>And also there are several optimizations for merge sort, if you are interested in, you can search it on google.</p>
+<p>That’s all for today. Good night!</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[Two more sorting algorithms.]]>
+    
+    </summary>
+    
+      <category term="Algorithm" scheme="http://taoalpha.me/blog/tags/Algorithm/"/>
+    
+      <category term="JS" scheme="http://taoalpha.me/blog/tags/JS/"/>
+    
+      <category term="Sorting" scheme="http://taoalpha.me/blog/tags/Sorting/"/>
+    
+      <category term="tech" scheme="http://taoalpha.me/blog/categories/tech/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Sorting Algorithm in JavaScript - Insertion Sort and Selection Sort]]></title>
     <link href="http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-1/"/>
     <id>http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-1/</id>
@@ -534,62 +621,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[Sorting Alogorithm is one of the most frequently used algorithms and we have many different kinds of sorting algorithms. In order to understand javascript better and do more practice, I will implement several famous sorting algorithms in JavaScript.]]>
-    
-    </summary>
-    
-      <category term="Algorithm" scheme="http://taoalpha.me/blog/tags/Algorithm/"/>
-    
-      <category term="JS" scheme="http://taoalpha.me/blog/tags/JS/"/>
-    
-      <category term="Sorting" scheme="http://taoalpha.me/blog/tags/Sorting/"/>
-    
-      <category term="tech" scheme="http://taoalpha.me/blog/categories/tech/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Sorting Algorithm in JavaScript - Bubble Sort and Merge Sort]]></title>
-    <link href="http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/"/>
-    <id>http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-2/</id>
-    <published>2015-10-29T08:00:00.000Z</published>
-    <updated>2015-12-26T08:21:36.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Bubble sort is really cool but not so useful, it seems that you will never use it… But merge sort is really cool since it is really fast.</p>
-<h2 id="Bubble_Sort"><a href="#Bubble_Sort" class="headerlink" title="Bubble Sort"></a>Bubble Sort</h2><p>So what is bubble sort, according to wikipedia:</p>
-<blockquote>
-<p>Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted. </p>
-</blockquote>
-<p>The whole process of sorting is like the bigger element “bubble” to the end of the list.</p>
-<ul>
-<li><strong>Input:</strong> A list of numbers with random order</li>
-<li><strong>Procedures:</strong><ul>
-<li>Start from the head of the list, and compare every two adjacent numbers and swap them if they are in wrong order;</li>
-<li>Record whether you did any swaps or not, if no, your list has been sorted, otherwise, you need to step 1 again;</li>
-</ul>
-</li>
-<li><strong>Output:</strong> A sorted list</li>
-</ul>
-<p>If you like, you can do a small optimization to the procedures above: since every iteration we will make sure the bigger element will “bubble” to the end of the list, so everytime we don’t need to check the last elements(they are already in ordered), and we will reduce the length for each iteration.</p>
-<p>Here is a nice gif from wikipedia: <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif" alt="bubble sort"></p>
-<p>The time complexity for bubble sort would be : O(n^2) for worst case, O(n) for best case, and O(n^2) on average.</p>
-<p>The space complexity for bubble sort would be O(1) since we only need one space used to do the swap.</p>
-<p>Now lets do the code:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bubbleSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bubbleSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> swapped</span><br><span class="line">  <span class="keyword">var</span> len = list.length</span><br><span class="line">  <span class="keyword">do</span>&#123;</span><br><span class="line">    swapped = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>;j&lt; len-<span class="number">1</span>;j++)&#123;</span><br><span class="line">      reads += <span class="number">2</span></span><br><span class="line">      <span class="keyword">if</span>(list[j]&gt;list[j+<span class="number">1</span>])&#123;</span><br><span class="line">        <span class="keyword">this</span>.swap(list,j,j+<span class="number">1</span>)</span><br><span class="line">        swapped = <span class="literal">true</span></span><br><span class="line">        writes += <span class="number">2</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    len = len - <span class="number">1</span></span><br><span class="line">    <span class="comment">// since everytime we will move the largest element to the end of the list, we can reduce the number of iteration without considering the last element every iteration</span></span><br><span class="line">  &#125;<span class="keyword">while</span>(swapped)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> list</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Merge_Sort"><a href="#Merge_Sort" class="headerlink" title="Merge Sort"></a>Merge Sort</h2><p>Now we met all three different kinds of sorting, all of them have a O(n^2) of time complexity on average.</p>
-<p>Lets do something faster: Merge Sort.</p>
-<p>Imagine you separate your list into several really small lists with only one element or zero element in each of them. Then you merge every two small lists into one sorted list, and keep doing it repeatly.(it’s easy because you are merging two sorted lists)</p>
-<p>The whole procedures will be:</p>
-<ul>
-<li>Split the list recursively;</li>
-<li>Merge the small lists until you merge them all;</li>
-</ul>
-<p>Since we always split by half, the number of small lists we will have would be log(n), and the total cost would be close to (n / 2 * log(n)) on average(since we have at least 1 element list to merge with zero one, at most n/2 elements list to merge with n/2 elements). So the time complexity would be O(nlog(n)) all the time, and the space complexity would be O(n) since we will save origin input list with n small lists.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// mergeSort</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">list</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(list.length &lt;= <span class="number">1</span>) <span class="keyword">return</span> list</span><br><span class="line">  <span class="keyword">var</span> mid = <span class="built_in">Math</span>.floor(list.length / <span class="number">2</span>)</span><br><span class="line">  <span class="keyword">return</span> merge(mergeSort(list.slice(<span class="number">0</span>,mid)),mergeSort(list.slice(mid)))</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">left,right</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> nl = []</span><br><span class="line">  <span class="keyword">var</span> il = <span class="number">0</span>, ir = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span>(il&lt;left.length &amp;&amp; ir&lt;right.length)&#123;</span><br><span class="line">    <span class="keyword">if</span>(left[il] &lt; right[ir])&#123;</span><br><span class="line">      nl.push(left[il++])</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      nl.push(right[ir++])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// don't use shift because shift will actually cause a lot I/Os </span></span><br><span class="line">  &#125;</span><br><span class="line">  nl = nl.concat(left.slice(il)).concat(right.slice(ir))</span><br><span class="line">  <span class="keyword">return</span> nl</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Merge sort is kind useful, and if we don’t have quick sort which I will talk about next post, it would be a really good choice to do sorting. And even we have quick sort, merge sort still exists in many languages as part of their default sorting algorithm.</p>
-<p>And also there are several optimizations for merge sort, if you are interested in, you can search it on google.</p>
-<p>That’s all for today. Good night!</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[Two more sorting algorithms.]]>
     
     </summary>
     
@@ -1055,65 +1086,6 @@
       <category term="javascript" scheme="http://taoalpha.me/blog/tags/javascript/"/>
     
       <category term="overload" scheme="http://taoalpha.me/blog/tags/overload/"/>
-    
-      <category term="tech" scheme="http://taoalpha.me/blog/categories/tech/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Add Swiftype as my default internal search engine]]></title>
-    <link href="http://taoalpha.me/blog/2015/07/09/tech-change-internal-search-to-swiftype/"/>
-    <id>http://taoalpha.me/blog/2015/07/09/tech-change-internal-search-to-swiftype/</id>
-    <published>2015-07-09T13:00:00.000Z</published>
-    <updated>2015-12-26T08:21:36.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Since I imported some old articles from my old blog, <a href="/blog/2015/06/21/tech-add-internal-search-to-jekyll-blog/">the internal search I built using javascript and json datas</a> last time got slower and slower. So I decided to add a third-part search engine for my blog. Like I recommended in my <a href="/blog/2015/06/21/tech-add-internal-search-to-jekyll-blog/">last post</a>, <a href="https://swiftype.com" target="_blank" rel="external">swiftype</a> is a really nice choice.</p>
-<h2 id="How_to_add_swiftype_in_your_blog"><a href="#How_to_add_swiftype_in_your_blog" class="headerlink" title="How to add swiftype in your blog"></a>How to add swiftype in your blog</h2><h3 id="Before_Sign_Up"><a href="#Before_Sign_Up" class="headerlink" title="Before Sign Up"></a>Before Sign Up</h3><p>Before you open the <a href="https://swiftype.com" target="_blank" rel="external">swiftype website</a> and sign up, you should do some work to check whether your website is friendly to search engine.</p>
-<h4 id="robots-txt"><a href="#robots-txt" class="headerlink" title="robots.txt"></a>robots.txt</h4><p>If you have some subdirectories or subdomains you don’t want to be crawled by some search engines, you need to set the rules in robots.txt.</p>
-<p>As an example, I want to hide all my <code>api/</code> pages to all search engines, I can add this line into my robots.txt:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-agent: *&#10;Disallow: /api/</span><br></pre></td></tr></table></figure>
-<p>You can just put the robots.txt in the root directory of your domain and it will work.</p>
-<h4 id="sitemap-xml"><a href="#sitemap-xml" class="headerlink" title="sitemap.xml"></a>sitemap.xml</h4><blockquote>
-<p>A site map (or sitemap) is a list of pages of a web site accessible to crawlers or users. It can be either a document in any form used as a planning tool for Web design, or a Web page that lists the pages on a Web site, typically organized in hierarchical fashion. – from wikipedia</p>
-</blockquote>
-<p>So if you have a sitemap, it can help search engines like google crawl your site better.</p>
-<p>You can just put the sitemap.xml in your root directory with robots.txt, or you can specify it in your robots.txt using this one line code: <code>Sitemap: http://taoalpha.me/blog/sitemap.xml</code>.</p>
-<p>You can have multiple sitemap.xml files, of course.</p>
-<p>Don’t know how to create a sitemap.xml ? <a href="https://www.xml-sitemaps.com" target="_blank" rel="external">Check this!</a></p>
-<h3 id="Sign_Up_and_Build_your_engine"><a href="#Sign_Up_and_Build_your_engine" class="headerlink" title="Sign Up and Build your engine"></a>Sign Up and Build your engine</h3><p>After you finished optimizing your site for search engines. Now you can sign up on the <a href="https://swiftype.com" target="_blank" rel="external">swiftype website</a> and build your engine.</p>
-<p>The free plan of swiftype has some limits for using:</p>
-<ul>
-<li>Total Documents    500</li>
-<li>Monthly Queries    1,000</li>
-</ul>
-<p>So if your blog is really big and you have a lot of users using your search, you may need to change to a pro plan~</p>
-<p>Just find a nice plan for yourself on the swiftype.</p>
-<h3 id="Add_your_domain_and_rules"><a href="#Add_your_domain_and_rules" class="headerlink" title="Add your domain and rules"></a>Add your domain and rules</h3><p>After you build your search engine. Now you can add your domain into your engine. Or if you start with the tutorial on the homepage of swiftype, maybe you have already done this.</p>
-<p>You can go to <code>your dashboard -&gt; manage -&gt; domain</code> to check the domain you have added into your engine. And also you can set the rules for you domain.</p>
-<h4 id="WHITELIST_RULES"><a href="#WHITELIST_RULES" class="headerlink" title="WHITELIST RULES"></a>WHITELIST RULES</h4><p>Only pages matching these rules will be included in your index.</p>
-<h4 id="BLACKLIST_RULES"><a href="#BLACKLIST_RULES" class="headerlink" title="BLACKLIST RULES"></a>BLACKLIST RULES</h4><p>All Pages matching any of these rules will be excluded. So like my blog, I want to remove all the tag pages and category pages from my index in order to empty the room for the real post page. I can just add <code>/blog/tag/</code>,<code>/blog/user/</code>,<code>/blog/page</code> into my BLACKLIST rules.</p>
-<h3 id="Install_the_Search_into_your_site"><a href="#Install_the_Search_into_your_site" class="headerlink" title="Install the Search into your site"></a>Install the Search into your site</h3><p>Swiftype has a real good instruction to help you install the search into your website. You can just follow the integrate instruction step by step and customize the color and style of your result-page.</p>
-<p>After all settings, you will get a javascript code and you just need to add this code into all the page you want  your search box to be viewed by your users.</p>
-<p>And according to your settings for the input field for searching, you will need do a little work to add the input into your website with the default class.</p>
-<p>Just remember to activate the search after that.</p>
-<h3 id="After_installed"><a href="#After_installed" class="headerlink" title="After installed"></a>After installed</h3><h4 id="Manage_your_content"><a href="#Manage_your_content" class="headerlink" title="Manage your content"></a>Manage your content</h4><p>Besides domains and the rules, you can also view the details of the pages crawled by the swiftype in <code>your dashboard -&gt; manage -&gt; content</code>.</p>
-<p>Here list all the pages included in your search engine, and even better, it will also record some click-data and referring-suggest-data to help you optimize your posts.</p>
-<h4 id="Customize_the_engine"><a href="#Customize_the_engine" class="headerlink" title="Customize the engine"></a>Customize the engine</h4><p>Besides all the normal functions, you can also customize your swiftype engine, like re-order the search results customize your relevance algorithm, define your Synonym list…etc.</p>
-<p>Of course, it has some limits for free plan.</p>
-<h4 id="Analytics"><a href="#Analytics" class="headerlink" title="Analytics"></a>Analytics</h4><p>Swiftype will record some information related to the search part, like top queries,top auto-completions, top searches with no result…etc</p>
-<h2 id="Tips_3A"><a href="#Tips_3A" class="headerlink" title="Tips:"></a>Tips:</h2><ul>
-<li>Be patient. You need to wait a while before any pages included in your engine;</li>
-<li>Remember to activate your engine. If you have added the js code and input field into your website, and still can not use the engine, maybe that’s because you forget to activate your engine;</li>
-<li>Customize. If you want the search box fit into your content more naturally , you should customize the style for it;</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[Show you how to add the swiftype search engine into your website.]]>
-    
-    </summary>
-    
-      <category term="swiftype" scheme="http://taoalpha.me/blog/tags/swiftype/"/>
-    
-      <category term="内置搜索" scheme="http://taoalpha.me/blog/tags/%E5%86%85%E7%BD%AE%E6%90%9C%E7%B4%A2/"/>
     
       <category term="tech" scheme="http://taoalpha.me/blog/categories/tech/"/>
     

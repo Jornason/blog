@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://taoalpha.me/blog/2015/12/26/Close-old-website-and-related-services/</loc>
+    <lastmod>2015-12-27T02:02:30.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://taoalpha.me/blog//puzzle/index.html</loc>
     <lastmod>2015-12-26T22:06:42.000Z</lastmod>
   </url>
@@ -23,11 +28,6 @@
   
   <url>
     <loc>http://taoalpha.me/blog/2015/03/08/read-what-is-pythonic/</loc>
-    <lastmod>2015-12-26T08:21:36.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://taoalpha.me/blog/2015/07/01/tech-rendering-a-web-page-step-by-step/</loc>
     <lastmod>2015-12-26T08:21:36.000Z</lastmod>
   </url>
   
@@ -597,6 +597,11 @@
   </url>
   
   <url>
+    <loc>http://taoalpha.me/blog/2015/06/05/tech-temporary-alias-shell-scrip/</loc>
+    <lastmod>2015-12-26T08:21:36.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://taoalpha.me/blog/2015/11/27/thanksgiving/</loc>
     <lastmod>2015-12-26T08:21:36.000Z</lastmod>
   </url>
@@ -637,7 +642,7 @@
   </url>
   
   <url>
-    <loc>http://taoalpha.me/blog/2015/06/05/tech-temporary-alias-shell-scrip/</loc>
+    <loc>http://taoalpha.me/blog/2015/05/06/tech-startss-invitation-code/</loc>
     <lastmod>2015-12-26T08:21:36.000Z</lastmod>
   </url>
   
@@ -647,7 +652,7 @@
   </url>
   
   <url>
-    <loc>http://taoalpha.me/blog/2015/05/06/tech-startss-invitation-code/</loc>
+    <loc>http://taoalpha.me/blog/2015/07/01/tech-rendering-a-web-page-step-by-step/</loc>
     <lastmod>2015-12-26T08:21:36.000Z</lastmod>
   </url>
   
