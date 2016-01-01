@@ -1,4 +1,132 @@
-<?xml version="1.0" encoding="utf-8" ?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><title>Blur on Background</title><loc>http://taoalpha.me/blog/2015/12/31/tech-blur-on-background/</loc><publish>2015-12-31T08:09:10.000Z</publish><summary>&lt;p&gt;Today I finally made my first angularJS app which is a simple todo app connected with my &lt;a href=&quot;/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/&quot;&gt;First nodejs cli tool: baby&lt;/a&gt;. They share the same data set, so you can think it as the UI for baby todo part (I will build the UI for other nice features, one by one).&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" ?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><title>All Puzzles Confuse me!</title><loc>http://taoalpha.me/blog/puzzle/index.html</loc><publish>2016-01-01T19:41:53.000Z</publish><summary>&lt;div class=&quot;puzzle-top&quot;&gt;&lt;br&gt;  &lt;div class=&quot;namespace&quot;&gt;&lt;br&gt;    &lt;h1&gt;MY PUZZLES&lt;/h1&gt;&lt;br&gt;    &lt;span class=&quot;check&quot;&gt;&lt;i class=&quot;fa fa-check fa-1x&quot;&gt;0&lt;/i&gt;&lt;/span&gt;&lt;br&gt;    &lt;span class=&quot;ongoing&quot;&gt;&lt;i class=&quot;fa fa-hourglass-half fa-1x&quot;&gt;0&lt;/i&gt;&lt;/span&gt;&lt;br&gt;  &lt;/div&gt;&lt;br&gt;  &lt;div class=&quot;newbutton&quot;&gt;+&lt;/div&gt;&lt;br&gt;&lt;/div&gt;&lt;br&gt;&lt;div id=&quot;timeline&quot; class=&quot;timeline-container&quot;&gt;&lt;/div&gt;
+</summary></url><url><title>GA Log Analytic</title><loc>http://taoalpha.me/blog/galog/index.html</loc><publish>2016-01-01T19:41:47.000Z</publish><summary>&lt;style&gt;
+/************** GA log page ************/
+article.galog ul {
+  padding-left: 0px;
+}
+
+article.galog li.post.overall {
+  height: 210px;
+}
+
+article.galog summary{
+  margin-bottom: 20px;
+}
+
+article.galog li.overall summary ul li {
+  width: 28%;
+  float: left;
+  margin: 0 20px 20px 0px;
+  background-color: #F1F1F1;
+  border-top: 4px solid #9E9E9E;
+  color: #242424;
+  font-weight: normal;
+  padding: 7px;
+}
+
+article.galog li.overall summary span.itemname {
+  font-size: 10px;
+}
+
+article.galog li.overall summary span.itemname i {
+  margin-left: 5px;
+}
+
+article.galog li.overall summary span.count {
+  font-size: 19px;
+  text-shadow: 1px 1px 0 #FFF;
+  padding: 8px 0px;
+  display: block;
+  font-weight: 700;
+}
+.pure-table {
+    animation: float 5s infinite;
+    border: 1px solid #cbcbcb;
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    empty-cells: show;
+    border-radius: 3px;
+}
+.pure-table a {
+    color: #242424;
+    outline: 0;
+    text-decoration: none;
+}
+.pure-table td {
+    border-left: 1px solid #cbcbcb;
+}
+.pure-table td,
+.pure-table th {
+    font-size: inherit;
+    margin: 0;
+    overflow: visible;
+    padding: 6px 12px;
+}
+.pure-table th:last-child {
+    padding-right: 0;
+}
+.pure-table th:last-child span {
+    margin: 1px 15px 0 15px;
+    float:right;
+}
+.pure-table thead th {
+    border-bottom: 4px solid #9ea7af;
+    border-right: 1px solid #343a45;
+}
+.pure-table tbody th {
+    background: rgb(242, 242, 242);
+    border-left: 1px solid rgb(203, 203, 203);
+}
+.pure-table td:first-child,
+.pure-table th:first-child {
+    border-left-width: 0
+}
+.pure-table td:last-child {
+    white-space: normal;
+    width: auto;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.pure-table thead {
+    background: #242424;
+    color: #FFF;
+    text-align: left;
+    text-shadow: 0px -1px 0px #000;
+    vertical-align: bottom;
+}
+.pure-table td {
+    background-color: #FFF
+}
+.pure-table td.num {
+    text-align: right
+}
+.pure-table .sub td {
+    background-color: #F2F2F2;
+}
+.pure-table tbody{
+  color: #777;
+  font-size:12px;
+}
+.pure-table tbody tr:nth-of-type(n+10){
+  display:none;
+}
+.pure-table tbody tr:hover,
+.pure-table-striped tr:nth-child(2n-1) td {
+    background-color: #f4f4f4
+}
+.pure-table tr {
+    border-bottom: 1px solid #ddd;
+}
+.pure-table thead tr {
+    border: 1px solid rgb(52, 58, 69);
+} 
+
+&lt;/style&gt;
+
+&lt;p&gt;&lt;nav id=&quot;bread&quot;&gt;&lt;br&gt;  &lt;h2&gt;Site Logs for last 30 days:&lt;/h2&gt;&lt;br&gt;&lt;/nav&gt;&lt;/p&gt;
+&lt;article class=&quot;galog&quot;&gt;&lt;br&gt;  &lt;ul class=&quot;article-list&quot;&gt;&lt;br&gt;    &lt;li class=&quot;post overall&quot;&gt;&lt;br&gt;      &lt;h4&gt;overall analyzed requests&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;      &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;    &lt;li class=&quot;post Path&quot;&gt;&lt;br&gt;      &lt;h4&gt;Top requests&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;      &lt;table class=&quot;pure-table&quot;&gt;&lt;br&gt;        &lt;thead&gt;&lt;br&gt;        &lt;/thead&gt;&lt;br&gt;        &lt;tbody&gt;&lt;br&gt;        &lt;/tbody&gt;&lt;br&gt;      &lt;/table&gt;&lt;br&gt;     &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;&lt;br&gt;    &lt;li class=&quot;post Referer&quot;&gt;&lt;br&gt;      &lt;h4&gt;Top referers&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;        &lt;table class=&quot;pure-table&quot;&gt;&lt;br&gt;          &lt;thead&gt;&lt;br&gt;          &lt;/thead&gt;&lt;br&gt;          &lt;tbody&gt;&lt;br&gt;          &lt;/tbody&gt;&lt;br&gt;        &lt;/table&gt;&lt;br&gt;     &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;&lt;br&gt;    &lt;li class=&quot;post OS&quot;&gt;&lt;br&gt;      &lt;h4&gt;Top Operating Systems&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;        &lt;table class=&quot;pure-table&quot;&gt;&lt;br&gt;          &lt;thead&gt;&lt;br&gt;          &lt;/thead&gt;&lt;br&gt;          &lt;tbody&gt;&lt;br&gt;          &lt;/tbody&gt;&lt;br&gt;        &lt;/table&gt;&lt;br&gt;     &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;&lt;br&gt;    &lt;li class=&quot;post Browser&quot;&gt;&lt;br&gt;      &lt;h4&gt;Top Browsers&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;        &lt;table class=&quot;pure-table&quot;&gt;&lt;br&gt;          &lt;thead&gt;&lt;br&gt;          &lt;/thead&gt;&lt;br&gt;          &lt;tbody&gt;&lt;br&gt;          &lt;/tbody&gt;&lt;br&gt;        &lt;/table&gt;&lt;br&gt;     &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;&lt;br&gt;    &lt;li class=&quot;post Country&quot;&gt;&lt;br&gt;      &lt;h4&gt;Top Countries&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;        &lt;table class=&quot;pure-table&quot;&gt;&lt;br&gt;          &lt;thead&gt;&lt;br&gt;          &lt;/thead&gt;&lt;br&gt;          &lt;tbody&gt;&lt;br&gt;          &lt;/tbody&gt;&lt;br&gt;        &lt;/table&gt;&lt;br&gt;     &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;  &lt;/ul&gt;&lt;br&gt;&lt;/article&gt;
+</summary></url><url><title>Blur on Background</title><loc>http://taoalpha.me/blog/2015/12/31/tech-blur-on-background/</loc><publish>2015-12-31T08:09:10.000Z</publish><summary>&lt;p&gt;Today I finally made my first angularJS app which is a simple todo app connected with my &lt;a href=&quot;/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/&quot;&gt;First nodejs cli tool: baby&lt;/a&gt;. They share the same data set, so you can think it as the UI for baby todo part (I will build the UI for other nice features, one by one).&lt;/p&gt;
 &lt;p&gt;I really like the interface of the &lt;a href=&quot;https://papaly.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Papaly&lt;/a&gt;, especially the speed dial dashboard !! So I also use a large image and the crystal blur block on my design, here I just want to share something with you :)&lt;/p&gt;
 &lt;h2 id=&quot;Blur&quot;&gt;&lt;a href=&quot;#Blur&quot; class=&quot;headerlink&quot; title=&quot;Blur&quot;&gt;&lt;/a&gt;Blur&lt;/h2&gt;&lt;p&gt;Blur is quite popular in Web Design, you can see them all the time. But how we do that from the point of coding part ? Before CSS3 introduced the filter, people just modify the images manually and make them blur before actually use them in the design, and now we have CSS3, we can just use filter.&lt;/p&gt;
 &lt;p&gt;We all know make a image blur is pretty simple, but how we make part of image blur, and even more, how we make part of image blur be dynamic ? This is what I gonna talk about today :)&lt;/p&gt;
@@ -30,80 +158,6 @@
 &lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// this is the ./lib/generator.js&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; jade = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;'jade'&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; pathFn = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;'path'&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;'fs'&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// main functions, current only deal with the latest posts if it is a json file task :)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// if it is xml task, then it will render the default template ( sitemap.jade, feed.jade)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;module&lt;/span&gt;.exports = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;item,config,locals&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; api = config.api&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(api[item].path.endsWith(&lt;span class=&quot;string&quot;&gt;&quot;json&quot;&lt;/span&gt;))&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; posts = locals.posts.toArray()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      .sort(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;a, b&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; b.updated - a.updated;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; data = [],count = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    posts.forEach( (post) =&amp;gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(count &amp;gt; (api[item].limit || &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;))&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; temp = &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      post.date = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Date&lt;/span&gt;(post.date).toLocaleDateString()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      api[item].attr.forEach( (v)=&amp;gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(v == &lt;span class=&quot;string&quot;&gt;&quot;summary&quot;&lt;/span&gt;)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          temp[v] = post.content.replace(&lt;span class=&quot;regexp&quot;&gt;/(&amp;lt;([^&amp;gt;]+)&amp;gt;)/ig&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;''&lt;/span&gt;).slice(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          temp[v] = post[v]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      count ++&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      data.push(temp)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    data = &lt;span class=&quot;built_in&quot;&gt;JSON&lt;/span&gt;.stringify(data)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// for xml(now only support sitemap, feed since I only these two templates :)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; templateSrc= pathFn.join(__dirname, &lt;span class=&quot;string&quot;&gt;'../'&lt;/span&gt;+api[item].src);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; tmpl = jade.compile(fs.readFileSync(templateSrc, &lt;span class=&quot;string&quot;&gt;'utf8'&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; posts = [].concat(locals.posts.toArray(), locals.pages.toArray())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      .filter(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;post&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; post.sitemap !== &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      .sort(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;a, b&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; b.updated - a.updated;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; data= tmpl(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      config: config,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      posts: posts&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    path: api[item].path,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    data: data&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;That’s it.&lt;/p&gt;
 &lt;p&gt;I love hexo!! I love JS!!! :)&lt;/p&gt;
-</summary></url><url><title>What is Pythonic?</title><loc>http://taoalpha.me/blog/2015/03/08/read-what-is-pythonic/</loc><publish>2015-03-08T08:00:00.000Z</publish><summary>&lt;p&gt;[缘起] python算是我最常用的语言之一了, 随着最近对自身定位的思考以及抉择, 我也开始逐渐加深自己对知识领域的纵深了解了. 所以开始有意识的去更加全面, 深入的了解一些喜欢的东西, 正如福尔摩斯所言: 人类的大脑是有限的, 我们应该尽量装入更多的有价值的东西, 而不能让无意义的东西占据有限的空间. 又扯远了… Pythonic是最近看到的一个名词, 于是简单做了下搜索, 查到了一个05年的定义, 考虑到虽然时间有点久远, 但是本身pythonic的基本没有多少变化, 所以还能勉强拿来借鉴的.&lt;/p&gt;
-
-&lt;p&gt;作者写文本是回答一个在EuroPython会议邮件中的同一个问题. 考虑到这是个很有趣的问题, 而且作者本身也已经见过多次pythonic这个词语, 却一直没怎么看到过一篇很详细的解释, 所以作者写本文总结了自己以及其他人对这一名词的理解.&lt;/p&gt;
-
-&lt;p&gt;[正文]  pythonic是一个很模糊的概念, 但又不至于像”智慧”或者”生命”那种你完全无法准确定义的模糊. 但是无法被定义不代表他们就是无用的, 尤其是人类本身对于这种模糊定义的事情非常擅长. Pythonic 的意思是”易读易于人类理解的Python”,  下面我们则针对它的意思进行简单的介绍.&lt;/p&gt;
-
-&lt;p&gt;随着时间, Python在逐渐的发展, Python社区也在逐渐的成长, 于是出现了很多关于如何正确的使用python的想法. 而python本身也非常鼓励用多样的风格方法来实现各种任务. 而新的风格方法也会反过来帮助python社区以及python语言的发展. 举个简单的例子就是dictionary对象的&lt;code&gt;.get()&lt;/code&gt;方法, 它结合了对象的读取和&lt;code&gt;has_key()&lt;/code&gt;函数的调用这本来需要两步完成的操作.&lt;/p&gt;
-
-&lt;p&gt;很多时候有些风格方法也不完全是直接从其他的语言中借用来的. 以C语言中的列表元素循环为例, 下面是在C语言中的写法:&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;for (i=0; i &amp;amp;lt; mylist_length; i++) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    do_something(mylist[i]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;而直接转换到Python中会是如下写法:&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;i = 0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;while i &amp;amp;lt; mylist_length:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   do_something(mylist[i])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   i += 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;虽然这样写也没有错, 但是通常我们不认为它符合Pythonic的原则. 这绝不是python语言所鼓励的风格. 我们可以进行一些修正. 通常来说, python中建议用内置的&lt;code&gt;range()&lt;/code&gt;函数来生成一个纯数字的列表:&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;for i in range(mylist_length):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     do_something(mylist[i])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;但是这样也不能算是pythonic. 那么符合pythonic的方式是如何写呢? 如下所示:&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;for element in mylist:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    do_something(element)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;在comp.lang.python 上有一个常见的问题是如何传递以及直接修改引用, 而这本身在python中是不能实现的, Python中只有assignment(类似import, class以及def这类). 很多时候, 我们会希望在自己写的函数中返回多个值. 那么在C语言或者其他很多语言中推荐的方式都是传递指针或者引用到函数中去:&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;void foo(int* a, float* b)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    *a = 3;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    *b = 3.5;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int alpha;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int beta;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;foo(&amp;amp;amp;alpha, &amp;amp;amp;beta);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;在Python中也确实可以利用一些策略实现把函数返回结果赋值给变量 , 比如:&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;def foo(a, b):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    a[0] = 3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    b[0] = 5.5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;alpha = [0]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;beta = [0]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;foo(alpha, beta)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;alpha = alpha[0]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;beta = beta[0]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;但是这种用法就相当的不pythonic了, 我们通常可以直接使用更好的方法, 利用数组:&lt;/p&gt;
-
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;def foo():&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return 3, 5.5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;alpha, beta = foo()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;对于那些不那么pythonic的代码, 那些有经验的python程序员是很容易可以看出来的, 因为这样的代码往往会比较奇怪或者粗糙笨重. 往往还会感觉非常冗余, 难以理解, 尤其是和使用正常的, 推荐的, 简介的方法相比.  而且语言本身也是为了支持正确的风格方法,  所以那些不好的方法执行速度也会很慢.&lt;/p&gt;
-
-&lt;p&gt;那么如何做到pythonic呢? 简单说就是要保证结构和数据结构都简介, 高可读性. 只在需要时为实例生成动态的类型而不是到处定义冗余的变量. 而遵循pythonic的优势之一也是为了不给那些有经验的python程序员带来因为陌生代码而引起的不必要的麻烦…&lt;/p&gt;
-
-&lt;p&gt;pythonic除了在这种低效风格上外, 还有很多别的用处. 比如对于一个library或者框架而言, pythonic就意味着简洁自然, 能够让一个python程序员很容易的使用. 通常一个用python写的library或者框架,  如果不能有效的帮助程序员写出优质的python代码也会被认为不算是pythonic.  可能是因为它没有使用python提供的一些结构, 比如类啊, 虽然有时候这样做能够让library更加便捷或者更加容易理解.  有时候利用类似可以把函数作为参数传递给函数的方法也能够带来很多帮助的.  在一个library的类中, 有时候你可能会像在Java中那样去隐藏一些信息, 但是在Python中则相对更为宽松, 属性默认是开放的但是程序员可以通过前置下划线来声明其私有属性.&lt;/p&gt;
-
-&lt;p&gt;当然, 当你达到使用libraries和框架的境界前,  有时候判断是否符合pythonic会更加困难或者界限模糊. 但是我们依然有一些原则可以借鉴. &lt;strong&gt;其中之一就是尽量简洁, 避免废话&lt;/strong&gt;: Python的接口跟倾向于小而轻, 尤其是和Java的相比起来. Python中那些有着非常详尽的复杂的API通常被认为不那么的Pythonic. 比如W3C XML DOM API就是个典型的例子. 有一些人认为它很像JAVA的风格, 但是实际上就我所了解的, 很多JAVA的程序员也并不是很认同这是JAVA风格的.&lt;/p&gt;
-
-&lt;p&gt;一个基于Python的框架只要不是在重造轮子的话倒是可以被认为是pythonic的, 当然它也要符合python的一些通用方法. &lt;/p&gt;
-
-&lt;p&gt;当然问题在于框架既然被称为框架, 不可避免的会引入一些模式或者方法是那些习惯小型应用的所不熟悉的. 这也是你发挥一个框架的为例的途径. 比如我比较熟悉的一个Zope 2的框架, 就是一个典型的例子, 它引入了很多你平时不会经常使用的方法. Acquisition就是一个典型例子, 但这样的结果就是Zope 2在很多有经验的python程序员眼中是不符合Pythonic的.&lt;/p&gt;
-
-&lt;p&gt;想要创造一个pythonic的框架是很困难的. 这一点和如今Python本身越发完善, 优秀无关. 有一些诸如generator, set, unicode string和datetime的功能都已经被认为算是pythonic的了. Zope 2则是一个过于年轻的框架, 所以一定程度上到也不能责怪它, 毕竟它是97年才创造的. 考虑到这一点, 它已经很不容易啦.&lt;/p&gt;
-
-&lt;p&gt;近些年来通过我自己的观察, 是可以找到一些pythonic下的新趋势的. 尤其是基于一些标准的常用python库的发展来看. 比如Twisted, Zope 3, 以及PyPy他们都或多或少的遵循这下面这一模式:&lt;/p&gt;
-
-&lt;ul&gt;&lt;br&gt;&lt;li&gt;模块名称简洁, 基本使用小写, 单数形式;&lt;/li&gt;&lt;br&gt;&lt;li&gt;包名称通常只是包名, 基本都有一个空的&lt;strong&gt;init&lt;/strong&gt;.py文件.&lt;/li&gt;&lt;br&gt;&lt;/ul&gt;
-
-&lt;p&gt;我也沿用了同样的方式在我写的lxml库中.&lt;/p&gt;
-
-&lt;p&gt;有时候我认为把一个软件直接谴责其不够pythonic是一件不公平的事情, 因为有时候会影响人们看到它更有价值的一面. 一个功能不那么强大的框架往往更加容易去学习和使用, 而那些符合pythonic的框架有时候往往反而需要花费更多的时间.&lt;/p&gt;
-</summary></url><url><title>通过 shell 脚本设定临时 alias</title><loc>http://taoalpha.me/blog/2015/06/05/tech-temporary-alias-shell-scrip/</loc><publish>2015-06-05T10:00:00.000Z</publish><summary>&lt;h2 id=&quot;u7F18_u8D77&quot;&gt;&lt;a href=&quot;#u7F18_u8D77&quot; class=&quot;headerlink&quot; title=&quot;缘起&quot;&gt;&lt;/a&gt;缘起&lt;/h2&gt;&lt;p&gt;对于习惯在命令行下工作的人, 设定方便好用的aliases是必备工作之一. &lt;a href=&quot;https://github.com/search?q=aliases&amp;amp;ref=opensearch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt;上就有很多人分享自己设定的aliases,这里就不多说设定aliases的事情了.&lt;/p&gt;
-&lt;p&gt;由于最近修改blog, 需要经常在各个路径下跳转, 每次cd的痛不欲生… 于是就捣鼓了下临时alias的问题.&lt;/p&gt;
-&lt;h2 id=&quot;u5982_u4F55_u8BBE_u7F6E_u4E34_u65F6aliases&quot;&gt;&lt;a href=&quot;#u5982_u4F55_u8BBE_u7F6E_u4E34_u65F6aliases&quot; class=&quot;headerlink&quot; title=&quot;如何设置临时aliases&quot;&gt;&lt;/a&gt;如何设置临时aliases&lt;/h2&gt;&lt;p&gt;首先, 这里的&lt;strong&gt;临时&lt;/strong&gt;的意思是指在当前session内生效的意思. 也就是说我关了当前的terminal或者iterm的tab, 新开一个这些aliases就不会继续生效了. 其生命周期只存在于当前session内. 这样就不会污染了. 方法有两种, 分别介绍如下:&lt;/p&gt;
-&lt;h3 id=&quot;u5229_u7528alias_u547D_u4EE4&quot;&gt;&lt;a href=&quot;#u5229_u7528alias_u547D_u4EE4&quot; class=&quot;headerlink&quot; title=&quot;利用alias命令&quot;&gt;&lt;/a&gt;利用alias命令&lt;/h3&gt;&lt;p&gt;linux 或者 mac os本身都是自带有alias命令的, 支持你在命令中设定临时别名. &lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt; blog=&lt;span class=&quot;string&quot;&gt;'cd ~/github/blog'&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;如此设定的aliases就是临时别名, 只在当前session内有效. 但是如果你要设定的别名比较多, 或者说你需要在一段时间内都用的话, 这样每次输入就不方便了.&lt;/p&gt;
-&lt;h3 id=&quot;u5199shell_u811A_u672C&quot;&gt;&lt;a href=&quot;#u5199shell_u811A_u672C&quot; class=&quot;headerlink&quot; title=&quot;写shell脚本&quot;&gt;&lt;/a&gt;写shell脚本&lt;/h3&gt;&lt;p&gt;所有直接在命令行里执行的命令都可以写在&lt;code&gt;.sh&lt;/code&gt;文件里, 然后通过相应的命令来执行. 比如 alias:&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# temp_alias.sh&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt; blog=&lt;span class=&quot;string&quot;&gt;'cd ~/github/blog'&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt; css=&lt;span class=&quot;string&quot;&gt;'cd ~/github/blog/_assets/stylesheets'&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt; js=&lt;span class=&quot;string&quot;&gt;'cd ~/github/blog/_assets/javascripts'&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;如此写好这个&lt;code&gt;temp_alias.sh&lt;/code&gt;文件后, 我们就可以执行了.&lt;/p&gt;
-&lt;p&gt;通常来说, shell脚本的执行都是通过&lt;code&gt;sh path_to_shell/xxx.sh&lt;/code&gt;来执行的; 但是, 对于alias而言, 因为我们是设定的是&lt;strong&gt;临时&lt;/strong&gt;的别名, 而每次&lt;code&gt;sh&lt;/code&gt;命令的执行都是新开一个session执行对应的命令, 这样的话, 我们的alias都是在那个隐藏的看不见的新开的session中生效, 而不会在当前session中生效, 这样就无法达到我们的目的了. 那么怎么做呢?&lt;/p&gt;
-&lt;p&gt;如果使用&lt;code&gt;zsh&lt;/code&gt;或者类似的bash替换程序的人, 看过其&lt;code&gt;.zshrc&lt;/code&gt;就应该很熟悉&lt;code&gt;source&lt;/code&gt;这么一个命令了. &lt;code&gt;source&lt;/code&gt;的含义就是&lt;strong&gt;在当前bash环境下读取并执行文件中的命令&lt;/strong&gt;.&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# temp_alias.sh&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt; blog=&lt;span class=&quot;string&quot;&gt;'cd ~/github/blog'&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# command&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;source&lt;/span&gt; temp_alias.sh&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 通常source和.是等价的, 所以上述命令也可以写为:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# .&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;. ./temp_alias.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;Reference&quot;&gt;&lt;a href=&quot;#Reference&quot; class=&quot;headerlink&quot; title=&quot;Reference&quot;&gt;&lt;/a&gt;Reference&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/2197461/how-to-set-an-alias-inside-a-bash-shell-script&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;How to set an alias inside a bash shell script&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://bash.cyberciti.biz/guide/Source_command&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;shell:source&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;恩~ shell其实真的有很多东西值得研究的~ 哈哈&lt;/p&gt;
 </summary></url><url><title>Start SS邀请码抢码活动</title><loc>http://taoalpha.me/blog/2015/05/06/tech-startss-invitation-code/</loc><publish>2015-05-06T12:00:39.000Z</publish><summary>&lt;p&gt;五一回来后面临的一大问题就是翻墙… 好久不翻的结果是发现了不少新的翻墙服务… &lt;/p&gt;
 &lt;p&gt;无论是依然坚挺的&lt;a href=&quot;http://www.hongxingchajian.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;红杏&lt;/a&gt;还是后来出现颇有好名的&lt;a href=&quot;http://www.hongxingchajian.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;曲径&lt;/a&gt;(update:已停止接受新用户), 以后最近出现的&lt;a href=&quot;https://tuxingsun.net&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;土行孙&lt;/a&gt;都算是不错的选择, 你要是觉得这些方法都不够高达上, 不够体现你的逼格, 你也可以搜索shadowsocks+vps自建一个翻墙代理, 自己一人享受~ 当然你要是觉得自己实在经济困难, 也可以用一些最近出现的Shadowsocks免费服务, 其中startss就是其中很不错的一个~&lt;br&gt;(其前辈同SSnode已经被墙…恭喜…).&lt;/p&gt;
 &lt;p&gt;startss目前采用邀请码注册的方式, 新用户会自动分配5G的流量, 基本上上网页, 一个月还是够用的~ 但是想要看看视频啥的… 那就铁定不够了.. 那么, 怎么获得更多的流量呢? startss目前开展的一个邀请码加油活动就是很好的渠道, 它有个独立的页面每隔30分钟就会放出一个邀请码(update: 这里的码已经不能用于注册了, 纯加油), 输入这个码到加油页面即可. 当然, 一个码只有一次加油机会, 所以一定要眼明手快哦~&lt;/p&gt;
@@ -5084,134 +5138,80 @@ Other(随笔): 主要是一些杂记, 包罗万象...
 &lt;p&gt;当然, 如果您更愿意给我物质上的打赏, 可以送我以下书目中的任意一本, 让我不断的提升自我, 写出更好的文章! 哈哈&lt;/p&gt;
 &lt;div class=&quot;wishbooks&quot;&gt;&lt;br&gt;  &lt;ul class=&quot;books&quot;&gt;&lt;/ul&gt;&lt;br&gt;&lt;/div&gt;
 
-</summary></url><url><title>All Puzzles Confuse me!</title><loc>http://taoalpha.me/blog/puzzle.html</loc><publish>2015-12-27T18:36:00.000Z</publish><summary>&lt;div class=&quot;puzzle-top&quot;&gt;&lt;br&gt;  &lt;div class=&quot;namespace&quot;&gt;&lt;br&gt;    &lt;h1&gt;MY PUZZLES&lt;/h1&gt;&lt;br&gt;    &lt;span class=&quot;check&quot;&gt;&lt;i class=&quot;fa fa-check fa-1x&quot;&gt;0&lt;/i&gt;&lt;/span&gt;&lt;br&gt;    &lt;span class=&quot;ongoing&quot;&gt;&lt;i class=&quot;fa fa-hourglass-half fa-1x&quot;&gt;0&lt;/i&gt;&lt;/span&gt;&lt;br&gt;  &lt;/div&gt;&lt;br&gt;  &lt;div class=&quot;newbutton&quot;&gt;+&lt;/div&gt;&lt;br&gt;&lt;/div&gt;&lt;br&gt;&lt;div id=&quot;timeline&quot; class=&quot;timeline-container&quot;&gt;&lt;/div&gt;
+</summary></url><url><title>通过 shell 脚本设定临时 alias</title><loc>http://taoalpha.me/blog/2015/06/05/tech-temporary-alias-shell-scrip/</loc><publish>2015-06-05T10:00:00.000Z</publish><summary>&lt;h2 id=&quot;u7F18_u8D77&quot;&gt;&lt;a href=&quot;#u7F18_u8D77&quot; class=&quot;headerlink&quot; title=&quot;缘起&quot;&gt;&lt;/a&gt;缘起&lt;/h2&gt;&lt;p&gt;对于习惯在命令行下工作的人, 设定方便好用的aliases是必备工作之一. &lt;a href=&quot;https://github.com/search?q=aliases&amp;amp;ref=opensearch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt;上就有很多人分享自己设定的aliases,这里就不多说设定aliases的事情了.&lt;/p&gt;
+&lt;p&gt;由于最近修改blog, 需要经常在各个路径下跳转, 每次cd的痛不欲生… 于是就捣鼓了下临时alias的问题.&lt;/p&gt;
+&lt;h2 id=&quot;u5982_u4F55_u8BBE_u7F6E_u4E34_u65F6aliases&quot;&gt;&lt;a href=&quot;#u5982_u4F55_u8BBE_u7F6E_u4E34_u65F6aliases&quot; class=&quot;headerlink&quot; title=&quot;如何设置临时aliases&quot;&gt;&lt;/a&gt;如何设置临时aliases&lt;/h2&gt;&lt;p&gt;首先, 这里的&lt;strong&gt;临时&lt;/strong&gt;的意思是指在当前session内生效的意思. 也就是说我关了当前的terminal或者iterm的tab, 新开一个这些aliases就不会继续生效了. 其生命周期只存在于当前session内. 这样就不会污染了. 方法有两种, 分别介绍如下:&lt;/p&gt;
+&lt;h3 id=&quot;u5229_u7528alias_u547D_u4EE4&quot;&gt;&lt;a href=&quot;#u5229_u7528alias_u547D_u4EE4&quot; class=&quot;headerlink&quot; title=&quot;利用alias命令&quot;&gt;&lt;/a&gt;利用alias命令&lt;/h3&gt;&lt;p&gt;linux 或者 mac os本身都是自带有alias命令的, 支持你在命令中设定临时别名. &lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt; blog=&lt;span class=&quot;string&quot;&gt;'cd ~/github/blog'&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如此设定的aliases就是临时别名, 只在当前session内有效. 但是如果你要设定的别名比较多, 或者说你需要在一段时间内都用的话, 这样每次输入就不方便了.&lt;/p&gt;
+&lt;h3 id=&quot;u5199shell_u811A_u672C&quot;&gt;&lt;a href=&quot;#u5199shell_u811A_u672C&quot; class=&quot;headerlink&quot; title=&quot;写shell脚本&quot;&gt;&lt;/a&gt;写shell脚本&lt;/h3&gt;&lt;p&gt;所有直接在命令行里执行的命令都可以写在&lt;code&gt;.sh&lt;/code&gt;文件里, 然后通过相应的命令来执行. 比如 alias:&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# temp_alias.sh&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt; blog=&lt;span class=&quot;string&quot;&gt;'cd ~/github/blog'&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt; css=&lt;span class=&quot;string&quot;&gt;'cd ~/github/blog/_assets/stylesheets'&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt; js=&lt;span class=&quot;string&quot;&gt;'cd ~/github/blog/_assets/javascripts'&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如此写好这个&lt;code&gt;temp_alias.sh&lt;/code&gt;文件后, 我们就可以执行了.&lt;/p&gt;
+&lt;p&gt;通常来说, shell脚本的执行都是通过&lt;code&gt;sh path_to_shell/xxx.sh&lt;/code&gt;来执行的; 但是, 对于alias而言, 因为我们是设定的是&lt;strong&gt;临时&lt;/strong&gt;的别名, 而每次&lt;code&gt;sh&lt;/code&gt;命令的执行都是新开一个session执行对应的命令, 这样的话, 我们的alias都是在那个隐藏的看不见的新开的session中生效, 而不会在当前session中生效, 这样就无法达到我们的目的了. 那么怎么做呢?&lt;/p&gt;
+&lt;p&gt;如果使用&lt;code&gt;zsh&lt;/code&gt;或者类似的bash替换程序的人, 看过其&lt;code&gt;.zshrc&lt;/code&gt;就应该很熟悉&lt;code&gt;source&lt;/code&gt;这么一个命令了. &lt;code&gt;source&lt;/code&gt;的含义就是&lt;strong&gt;在当前bash环境下读取并执行文件中的命令&lt;/strong&gt;.&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# temp_alias.sh&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;alias&lt;/span&gt; blog=&lt;span class=&quot;string&quot;&gt;'cd ~/github/blog'&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# command&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;source&lt;/span&gt; temp_alias.sh&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 通常source和.是等价的, 所以上述命令也可以写为:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# .&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;. ./temp_alias.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;Reference&quot;&gt;&lt;a href=&quot;#Reference&quot; class=&quot;headerlink&quot; title=&quot;Reference&quot;&gt;&lt;/a&gt;Reference&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/2197461/how-to-set-an-alias-inside-a-bash-shell-script&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;How to set an alias inside a bash shell script&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://bash.cyberciti.biz/guide/Source_command&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;shell:source&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;恩~ shell其实真的有很多东西值得研究的~ 哈哈&lt;/p&gt;
 </summary></url><url><title></title><loc>http://taoalpha.me/blog/mylinks/index.html</loc><publish>2015-12-27T18:36:00.000Z</publish><summary>&lt;p&gt;&lt;style&gt;&lt;br&gt;.aside{display:none;}&lt;br&gt;iframe{&lt;br&gt;  width:100%;&lt;br&gt;  height:100%;&lt;br&gt;  background-color:white;&lt;br&gt;}&lt;br&gt;&lt;/style&gt;&lt;/p&gt;
 &lt;iframe src=&quot;http://fun.zzgary.info/mylinks/share.php?shareuser=zzgary&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
-</summary></url><url><title>GA Log Analytic</title><loc>http://taoalpha.me/blog/galog.html</loc><publish>2015-12-27T18:36:00.000Z</publish><summary>&lt;style&gt;
-/************** GA log page ************/
-article.galog ul {
-  padding-left: 0px;
-}
+</summary></url><url><title>What is Pythonic?</title><loc>http://taoalpha.me/blog/2015/03/08/read-what-is-pythonic/</loc><publish>2015-03-08T08:00:00.000Z</publish><summary>&lt;p&gt;[缘起] python算是我最常用的语言之一了, 随着最近对自身定位的思考以及抉择, 我也开始逐渐加深自己对知识领域的纵深了解了. 所以开始有意识的去更加全面, 深入的了解一些喜欢的东西, 正如福尔摩斯所言: 人类的大脑是有限的, 我们应该尽量装入更多的有价值的东西, 而不能让无意义的东西占据有限的空间. 又扯远了… Pythonic是最近看到的一个名词, 于是简单做了下搜索, 查到了一个05年的定义, 考虑到虽然时间有点久远, 但是本身pythonic的基本没有多少变化, 所以还能勉强拿来借鉴的.&lt;/p&gt;
 
-article.galog li.post.overall {
-  height: 210px;
-}
+&lt;p&gt;作者写文本是回答一个在EuroPython会议邮件中的同一个问题. 考虑到这是个很有趣的问题, 而且作者本身也已经见过多次pythonic这个词语, 却一直没怎么看到过一篇很详细的解释, 所以作者写本文总结了自己以及其他人对这一名词的理解.&lt;/p&gt;
 
-article.galog summary{
-  margin-bottom: 20px;
-}
+&lt;p&gt;[正文]  pythonic是一个很模糊的概念, 但又不至于像”智慧”或者”生命”那种你完全无法准确定义的模糊. 但是无法被定义不代表他们就是无用的, 尤其是人类本身对于这种模糊定义的事情非常擅长. Pythonic 的意思是”易读易于人类理解的Python”,  下面我们则针对它的意思进行简单的介绍.&lt;/p&gt;
 
-article.galog li.overall summary ul li {
-  width: 28%;
-  float: left;
-  margin: 0 20px 20px 0px;
-  background-color: #F1F1F1;
-  border-top: 4px solid #9E9E9E;
-  color: #242424;
-  font-weight: normal;
-  padding: 7px;
-}
+&lt;p&gt;随着时间, Python在逐渐的发展, Python社区也在逐渐的成长, 于是出现了很多关于如何正确的使用python的想法. 而python本身也非常鼓励用多样的风格方法来实现各种任务. 而新的风格方法也会反过来帮助python社区以及python语言的发展. 举个简单的例子就是dictionary对象的&lt;code&gt;.get()&lt;/code&gt;方法, 它结合了对象的读取和&lt;code&gt;has_key()&lt;/code&gt;函数的调用这本来需要两步完成的操作.&lt;/p&gt;
 
-article.galog li.overall summary span.itemname {
-  font-size: 10px;
-}
+&lt;p&gt;很多时候有些风格方法也不完全是直接从其他的语言中借用来的. 以C语言中的列表元素循环为例, 下面是在C语言中的写法:&lt;/p&gt;
 
-article.galog li.overall summary span.itemname i {
-  margin-left: 5px;
-}
 
-article.galog li.overall summary span.count {
-  font-size: 19px;
-  text-shadow: 1px 1px 0 #FFF;
-  padding: 8px 0px;
-  display: block;
-  font-weight: 700;
-}
-.pure-table {
-    animation: float 5s infinite;
-    border: 1px solid #cbcbcb;
-    border-collapse: collapse;
-    border-spacing: 0;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    empty-cells: show;
-    border-radius: 3px;
-}
-.pure-table a {
-    color: #242424;
-    outline: 0;
-    text-decoration: none;
-}
-.pure-table td {
-    border-left: 1px solid #cbcbcb;
-}
-.pure-table td,
-.pure-table th {
-    font-size: inherit;
-    margin: 0;
-    overflow: visible;
-    padding: 6px 12px;
-}
-.pure-table th:last-child {
-    padding-right: 0;
-}
-.pure-table th:last-child span {
-    margin: 1px 15px 0 15px;
-    float:right;
-}
-.pure-table thead th {
-    border-bottom: 4px solid #9ea7af;
-    border-right: 1px solid #343a45;
-}
-.pure-table tbody th {
-    background: rgb(242, 242, 242);
-    border-left: 1px solid rgb(203, 203, 203);
-}
-.pure-table td:first-child,
-.pure-table th:first-child {
-    border-left-width: 0
-}
-.pure-table td:last-child {
-    white-space: normal;
-    width: auto;
-    word-break: break-all;
-    word-wrap: break-word;
-}
-.pure-table thead {
-    background: #242424;
-    color: #FFF;
-    text-align: left;
-    text-shadow: 0px -1px 0px #000;
-    vertical-align: bottom;
-}
-.pure-table td {
-    background-color: #FFF
-}
-.pure-table td.num {
-    text-align: right
-}
-.pure-table .sub td {
-    background-color: #F2F2F2;
-}
-.pure-table tbody{
-  color: #777;
-  font-size:12px;
-}
-.pure-table tbody tr:nth-of-type(n+10){
-  display:none;
-}
-.pure-table tbody tr:hover,
-.pure-table-striped tr:nth-child(2n-1) td {
-    background-color: #f4f4f4
-}
-.pure-table tr {
-    border-bottom: 1px solid #ddd;
-}
-.pure-table thead tr {
-    border: 1px solid rgb(52, 58, 69);
-} 
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;for (i=0; i &amp;amp;lt; mylist_length; i++) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    do_something(mylist[i]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;而直接转换到Python中会是如下写法:&lt;/p&gt;
 
-&lt;/style&gt;
 
-&lt;p&gt;&lt;nav id=&quot;bread&quot;&gt;&lt;br&gt;  &lt;h2&gt;Site Logs for last 30 days:&lt;/h2&gt;&lt;br&gt;&lt;/nav&gt;&lt;/p&gt;
-&lt;article class=&quot;galog&quot;&gt;&lt;br&gt;  &lt;ul class=&quot;article-list&quot;&gt;&lt;br&gt;    &lt;li class=&quot;post overall&quot;&gt;&lt;br&gt;      &lt;h4&gt;overall analyzed requests&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;      &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;    &lt;li class=&quot;post Path&quot;&gt;&lt;br&gt;      &lt;h4&gt;Top requests&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;      &lt;table class=&quot;pure-table&quot;&gt;&lt;br&gt;        &lt;thead&gt;&lt;br&gt;        &lt;/thead&gt;&lt;br&gt;        &lt;tbody&gt;&lt;br&gt;        &lt;/tbody&gt;&lt;br&gt;      &lt;/table&gt;&lt;br&gt;     &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;&lt;br&gt;    &lt;li class=&quot;post Referer&quot;&gt;&lt;br&gt;      &lt;h4&gt;Top referers&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;        &lt;table class=&quot;pure-table&quot;&gt;&lt;br&gt;          &lt;thead&gt;&lt;br&gt;          &lt;/thead&gt;&lt;br&gt;          &lt;tbody&gt;&lt;br&gt;          &lt;/tbody&gt;&lt;br&gt;        &lt;/table&gt;&lt;br&gt;     &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;&lt;br&gt;    &lt;li class=&quot;post OS&quot;&gt;&lt;br&gt;      &lt;h4&gt;Top Operating Systems&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;        &lt;table class=&quot;pure-table&quot;&gt;&lt;br&gt;          &lt;thead&gt;&lt;br&gt;          &lt;/thead&gt;&lt;br&gt;          &lt;tbody&gt;&lt;br&gt;          &lt;/tbody&gt;&lt;br&gt;        &lt;/table&gt;&lt;br&gt;     &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;&lt;br&gt;    &lt;li class=&quot;post Browser&quot;&gt;&lt;br&gt;      &lt;h4&gt;Top Browsers&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;        &lt;table class=&quot;pure-table&quot;&gt;&lt;br&gt;          &lt;thead&gt;&lt;br&gt;          &lt;/thead&gt;&lt;br&gt;          &lt;tbody&gt;&lt;br&gt;          &lt;/tbody&gt;&lt;br&gt;        &lt;/table&gt;&lt;br&gt;     &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;&lt;br&gt;    &lt;li class=&quot;post Country&quot;&gt;&lt;br&gt;      &lt;h4&gt;Top Countries&lt;/h4&gt;&lt;br&gt;      &lt;summary&gt;&lt;br&gt;        &lt;table class=&quot;pure-table&quot;&gt;&lt;br&gt;          &lt;thead&gt;&lt;br&gt;          &lt;/thead&gt;&lt;br&gt;          &lt;tbody&gt;&lt;br&gt;          &lt;/tbody&gt;&lt;br&gt;        &lt;/table&gt;&lt;br&gt;     &lt;/summary&gt;&lt;br&gt;    &lt;/li&gt;&lt;br&gt;  &lt;/ul&gt;&lt;br&gt;&lt;/article&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;i = 0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;while i &amp;amp;lt; mylist_length:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   do_something(mylist[i])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   i += 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;虽然这样写也没有错, 但是通常我们不认为它符合Pythonic的原则. 这绝不是python语言所鼓励的风格. 我们可以进行一些修正. 通常来说, python中建议用内置的&lt;code&gt;range()&lt;/code&gt;函数来生成一个纯数字的列表:&lt;/p&gt;
+
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;for i in range(mylist_length):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     do_something(mylist[i])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;但是这样也不能算是pythonic. 那么符合pythonic的方式是如何写呢? 如下所示:&lt;/p&gt;
+
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;for element in mylist:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    do_something(element)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在comp.lang.python 上有一个常见的问题是如何传递以及直接修改引用, 而这本身在python中是不能实现的, Python中只有assignment(类似import, class以及def这类). 很多时候, 我们会希望在自己写的函数中返回多个值. 那么在C语言或者其他很多语言中推荐的方式都是传递指针或者引用到函数中去:&lt;/p&gt;
+
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;void foo(int* a, float* b)&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    *a = 3;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    *b = 3.5;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int alpha;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int beta;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;foo(&amp;amp;amp;alpha, &amp;amp;amp;beta);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在Python中也确实可以利用一些策略实现把函数返回结果赋值给变量 , 比如:&lt;/p&gt;
+
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;def foo(a, b):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    a[0] = 3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    b[0] = 5.5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;alpha = [0]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;beta = [0]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;foo(alpha, beta)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;alpha = alpha[0]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;beta = beta[0]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;但是这种用法就相当的不pythonic了, 我们通常可以直接使用更好的方法, 利用数组:&lt;/p&gt;
+
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;def foo():&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return 3, 5.5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;alpha, beta = foo()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/code&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;对于那些不那么pythonic的代码, 那些有经验的python程序员是很容易可以看出来的, 因为这样的代码往往会比较奇怪或者粗糙笨重. 往往还会感觉非常冗余, 难以理解, 尤其是和使用正常的, 推荐的, 简介的方法相比.  而且语言本身也是为了支持正确的风格方法,  所以那些不好的方法执行速度也会很慢.&lt;/p&gt;
+
+&lt;p&gt;那么如何做到pythonic呢? 简单说就是要保证结构和数据结构都简介, 高可读性. 只在需要时为实例生成动态的类型而不是到处定义冗余的变量. 而遵循pythonic的优势之一也是为了不给那些有经验的python程序员带来因为陌生代码而引起的不必要的麻烦…&lt;/p&gt;
+
+&lt;p&gt;pythonic除了在这种低效风格上外, 还有很多别的用处. 比如对于一个library或者框架而言, pythonic就意味着简洁自然, 能够让一个python程序员很容易的使用. 通常一个用python写的library或者框架,  如果不能有效的帮助程序员写出优质的python代码也会被认为不算是pythonic.  可能是因为它没有使用python提供的一些结构, 比如类啊, 虽然有时候这样做能够让library更加便捷或者更加容易理解.  有时候利用类似可以把函数作为参数传递给函数的方法也能够带来很多帮助的.  在一个library的类中, 有时候你可能会像在Java中那样去隐藏一些信息, 但是在Python中则相对更为宽松, 属性默认是开放的但是程序员可以通过前置下划线来声明其私有属性.&lt;/p&gt;
+
+&lt;p&gt;当然, 当你达到使用libraries和框架的境界前,  有时候判断是否符合pythonic会更加困难或者界限模糊. 但是我们依然有一些原则可以借鉴. &lt;strong&gt;其中之一就是尽量简洁, 避免废话&lt;/strong&gt;: Python的接口跟倾向于小而轻, 尤其是和Java的相比起来. Python中那些有着非常详尽的复杂的API通常被认为不那么的Pythonic. 比如W3C XML DOM API就是个典型的例子. 有一些人认为它很像JAVA的风格, 但是实际上就我所了解的, 很多JAVA的程序员也并不是很认同这是JAVA风格的.&lt;/p&gt;
+
+&lt;p&gt;一个基于Python的框架只要不是在重造轮子的话倒是可以被认为是pythonic的, 当然它也要符合python的一些通用方法. &lt;/p&gt;
+
+&lt;p&gt;当然问题在于框架既然被称为框架, 不可避免的会引入一些模式或者方法是那些习惯小型应用的所不熟悉的. 这也是你发挥一个框架的为例的途径. 比如我比较熟悉的一个Zope 2的框架, 就是一个典型的例子, 它引入了很多你平时不会经常使用的方法. Acquisition就是一个典型例子, 但这样的结果就是Zope 2在很多有经验的python程序员眼中是不符合Pythonic的.&lt;/p&gt;
+
+&lt;p&gt;想要创造一个pythonic的框架是很困难的. 这一点和如今Python本身越发完善, 优秀无关. 有一些诸如generator, set, unicode string和datetime的功能都已经被认为算是pythonic的了. Zope 2则是一个过于年轻的框架, 所以一定程度上到也不能责怪它, 毕竟它是97年才创造的. 考虑到这一点, 它已经很不容易啦.&lt;/p&gt;
+
+&lt;p&gt;近些年来通过我自己的观察, 是可以找到一些pythonic下的新趋势的. 尤其是基于一些标准的常用python库的发展来看. 比如Twisted, Zope 3, 以及PyPy他们都或多或少的遵循这下面这一模式:&lt;/p&gt;
+
+&lt;ul&gt;&lt;br&gt;&lt;li&gt;模块名称简洁, 基本使用小写, 单数形式;&lt;/li&gt;&lt;br&gt;&lt;li&gt;包名称通常只是包名, 基本都有一个空的&lt;strong&gt;init&lt;/strong&gt;.py文件.&lt;/li&gt;&lt;br&gt;&lt;/ul&gt;
+
+&lt;p&gt;我也沿用了同样的方式在我写的lxml库中.&lt;/p&gt;
+
+&lt;p&gt;有时候我认为把一个软件直接谴责其不够pythonic是一件不公平的事情, 因为有时候会影响人们看到它更有价值的一面. 一个功能不那么强大的框架往往更加容易去学习和使用, 而那些符合pythonic的框架有时候往往反而需要花费更多的时间.&lt;/p&gt;
 </summary></url></urlset>
