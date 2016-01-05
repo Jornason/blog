@@ -1,11 +1,43 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-05T03:37:32.596Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ LeetCode Sort 1</title><link>http://taoalpha.me/blog/2016/01/04/oj-oj-leetcode-sort-1/</link><category>OJ</category><tag>LeetCode,OJ,Sort</tag><pubDate>2016-01-04T08:42:13.000Z</pubDate><description>AsideThis is a new category special for coding practice. I will use this category record all the coding problems I met and solved or unsolved.
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-05T20:29:58.915Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ LeetCode Sort 2</title><link>http://taoalpha.me/blog/2016/01/05/oj-oj-leetcode-sort-2/</link><category>OJ</category><tag>LeetCode,OJ,Sort</tag><pubDate>2016-01-05T21:29:58.000Z</pubDate><description>147. Insertion Sort ListQuestionSort a linked list using insertion sort.
+LeetCode147. Insertion Sort List
+Tag: sort,medium
+AnswerInsertion sort as required.
+12345678910111213141516171819202122232425262728293031323334/** * Definition for singly-linked list. * function ListNode(val) &amp;#123; *     this.val = val; *     this.next = null; * &amp;#125; *//** * @param &amp;#123;ListNode&amp;#125; head * @return &amp;#123;ListNode&amp;#125; */var insertionSortList = function(head) &amp;#123;  if(head == null || head.next == null)&amp;#123;return head&amp;#125;  var helper = new ListNode(-1) // need a helper node to insert the smallest node into the head of the listNode  var outer = head // outer loop, the node that would be inserted into proper position  var inner = helper // inner loop, the node that outer node should be inserted after  var next = head // next loop node  while(outer)&amp;#123;    // store the next node of the outer =&amp;gt; for next loop    next = outer.next    // find the proper position that the outer node should inserted into    while(inner.next &amp;amp;&amp;amp; inner.next.val &amp;lt; outer.val)&amp;#123;      inner = inner.next    &amp;#125;    // insert    outer.next = inner.next    inner.next = outer    // start over every outer loop    inner = helper    // loop for next    outer = next  &amp;#125;  return helper.next&amp;#125;;
+Runtime: 236 ms
+274. H-IndexQuestionGiven an array of citations (each citation is a non-negative integer) of a researcher, write a function to compute the researcher’s h-index.
+According to the definition of h-index on Wikipedia: “A scientist has index h if h of his/her N papers have at least h citations each, and the other N − h papers have no more than h citations each.”
+For example, given citations = [3, 0, 6, 1, 5], which means the researcher has 5 papers in total and each of them had received 3, 0, 6, 1, 5 citations respectively. Since the researcher has 3 papers with at least 3 citations each and the remaining two with no more than 3 citations each, his h-index is 3.
+Note: If there are several possible values for h, the maximum one is taken as the h-index.
+LeetCode274. H-Index
+Tag: sort,medium
+AnswersSort firstFirst, we need know that the return value would be one between 0 and the length of the list.
+Then, according to the definition of h-index, what we need is the max h that has at least h papers has a referrence number greater than h.
+So we sort the list first, and then loop the list reversely, try to find the max fit value that let the number of papers left in the list = length - index &amp;lt;= citations[index]
+1234567891011121314151617/** * @param &amp;#123;number[]&amp;#125; citations * @return &amp;#123;number&amp;#125; */var hIndex = function(citations) &amp;#123;  if(citations.length&amp;lt;=0)&amp;#123;return 0&amp;#125;  var sorted = citations.sort((a,b)=&amp;gt;&amp;#123;return a - b&amp;#125;)  // sort in javascript is a in-place function, you don't need use another array  // default sort function compare everything as a string  var h_index = 0  for(var i = sorted.length;i&amp;gt;=0;i--)&amp;#123;    if(sorted.length - i &amp;lt;= sorted[i])&amp;#123;      h_index = Math.max(h_index,sorted.length-i)    &amp;#125;  &amp;#125;  return h_index&amp;#125;;
+Runtime: 152 ms
+HashtableSince we use sort, the time comlexity would be O(nlogn) or even worse. We can use hashtable to speed up.
+We store all the citations into one table as a ‘value-count’ pair, and store all value greater that length of the list into one place, since the h-index could only be the value between 0 to the length.
+Now we have all possible h-indexs, what we need is to find the max fit one, the only fit rule is that the number of papers that have a referrence greater than h is greater or equal to h.
+123456789101112131415161718192021222324/** * @param &amp;#123;number[]&amp;#125; citations * @return &amp;#123;number&amp;#125; */var hIndex = function(citations) &amp;#123;  if(citations.length&amp;lt;=0)&amp;#123;return 0&amp;#125;  var countTable = &amp;#123;&amp;#125;  for(var i = 0;i&amp;lt;citations.length;i++)&amp;#123;    var key = citations[i]    if(citations[i] &amp;gt;= citations.length)&amp;#123;      key = citations.length    &amp;#125;    countTable[key] = countTable[key] || 0    countTable[key] ++   &amp;#125;  var sum = 0  for(h = citations.length;h&amp;gt;=0;h--)&amp;#123;    sum += countTable[h] || 0    if(sum &amp;gt;=h)&amp;#123;      return h    &amp;#125;  &amp;#125;  return 0&amp;#125;;
+Runtime: 152 ms
+179. Largest NumberQuestionGiven a list of non negative integers, arrange them such that they form the largest number.
+For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
+Note: The result may be very large, so you need to return a string instead of an integer.
+LeetCode179. Largest Number
+Tag: sort,medium
+AnswerConsider all elements as string instead of number would solve this problem, can not use the default sort, because default sort would compare the each character, so ‘9’ would be smaller that ‘96’, we need to define the sort function by ourselves.
+Also need to consider about some corner cases: start with 0.
+123456789/** * @param &amp;#123;number[]&amp;#125; nums * @return &amp;#123;string&amp;#125; */var largestNumber = function(nums) &amp;#123;  return nums.sort( (a,b)=&amp;gt;&amp;#123;return (b + '' + a) - (a + '' + b)&amp;#125;).join(&quot;&quot;).startsWith(&quot;0&quot;) ? &quot;0&quot; : nums.sort( (a,b)=&amp;gt;&amp;#123;return (b + '' + a) - (a + '' + b)&amp;#125;).join(&quot;&quot;)  // return nums.sort( (a,b)=&amp;gt;&amp;#123;return (b + '' + a) - (a + '' + b)&amp;#125;).join(&quot;&quot;).replace(/^0*/g,'') || &quot;0&quot;  // also we can remove all the leading 0s and it will be empty string then we can just return 0&amp;#125;
+Runtime: 176 ms
+You can also use radix sort, and combine each bucket before other buckets, but the code would be very complex.
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>OJ LeetCode Sort 1</title><link>http://taoalpha.me/blog/2016/01/04/oj-oj-leetcode-sort-1/</link><category>OJ</category><tag>LeetCode,OJ,Sort</tag><pubDate>2016-01-04T08:42:13.000Z</pubDate><description>AsideThis is a new category special for coding practice. I will use this category record all the coding problems I met and solved or unsolved.
 And of course, all answers I list will be written in JavaScript :)
 242. Valid Anagramtag: sort, easy
 QuestionGiven two strings s and t, write a function to determine if t is an anagram of s.
 For example,s = “anagram”, t = “nagaram”, return true.s = “rat”, t = “car”, return false.
 Note:You may assume the string contains only lowercase alphabets.
 Follow up:What if the inputs contain unicode characters? How would you adapt your solution to such case?
-Valid Anagramleetcode.com/problems/valid-anagram
+LeetCode242. Valid Anagram
 AnswersHashTable1234567891011121314151617181920212223/** * @param &amp;#123;string&amp;#125; s * @param &amp;#123;string&amp;#125; t * @return &amp;#123;boolean&amp;#125; */var isAnagram = function(s, t) &amp;#123;  var letterMap = &amp;#123;&amp;#125;  s.split('').forEach( (v) =&amp;gt;&amp;#123;    letterMap[v] = letterMap[v] || 0    letterMap[v] ++  &amp;#125;  t.split('').forEach( (v) =&amp;gt;&amp;#123;    letterMap[v] = letterMap[v] || 0    letterMap[v] --  &amp;#125;  for(var i in letterMap)&amp;#123;    if(letterMap[i] != 0)&amp;#123;      return false    &amp;#125;  &amp;#125;  return true&amp;#125;// should be O(n) both for time complexisity and space complexity
 Pass the online judge, Runtime: 212 ms.
 sort12345678/** * @param &amp;#123;string&amp;#125; s * @param &amp;#123;string&amp;#125; t * @return &amp;#123;boolean&amp;#125; */var isAnagram = function(s, t) &amp;#123;  return s.split('').sort().join(&quot;&quot;) == t.split(&quot;&quot;).sort().join(&quot;&quot;)&amp;#125;
@@ -19,7 +51,7 @@ Here, we will use the integers 0, 1, and 2 to represent the color red, white, an
 Note:You are not suppose to use the library’s sort function for this problem.Modify the nums in-place.
 Follow up:A rather straight forward solution is a two-pass algorithm using counting sort.First, iterate the array counting number of 0’s, 1’s, and 2’s, then overwrite array with total number of 0’s, then 1’s and followed by 2’s.
 Could you come up with an one-pass algorithm using only constant space?
-Valid Anagramleetcode.com/problems/sort-colors
+LeetCode75. Sort Colors
 AnswersSort123456789101112131415161718/** * @param &amp;#123;number[]&amp;#125; nums * @return &amp;#123;void&amp;#125; Do not return anything, modify nums in-place instead. */var sortColors = function(nums) &amp;#123;  // insertion sort  for(var i = 1;i&amp;lt;nums.length;i++)&amp;#123;    var temp = nums[i]    for(var j=i-1; j&amp;gt;=0;j--)&amp;#123;      if(temp&amp;lt; nums[j])&amp;#123;        nums[j+1] = nums[j]      &amp;#125;else&amp;#123;        break      &amp;#125;    &amp;#125;    nums[j+1] = temp  &amp;#125;&amp;#125;;
 Runtime: 152 ms
 123456789101112131415161718/** * @param &amp;#123;number[]&amp;#125; nums * @return &amp;#123;void&amp;#125; Do not return anything, modify nums in-place instead. */var sortColors = function(nums) &amp;#123;  // counting sort  var bucket = [0,0,0]  nums.forEach( (v) =&amp;gt; &amp;#123;    v == 0?bucket[0]++ : v == 1 ? bucket[1]++ : bucket[2] ++  &amp;#125;)  var j = 0  bucket.forEach( (v,i) =&amp;gt;&amp;#123;    while(v&amp;gt;0)&amp;#123;      nums[j++] = i      v--    &amp;#125;  &amp;#125;)&amp;#125;;
@@ -32,7 +64,7 @@ Same idea but using swap instead of unshift() and push().
 Runtime : 156ms
 148. Sort Listtag: sort, medium
 QuestionSort a linked list in O(n log n) time using constant space complexity.
-Valid Anagramleetcode.com/problems/sort-list
+LeetCode148. Sort List
 Answersconstant space =&amp;gt; in-placeO(nlogn) =&amp;gt; quick-sort(worst O(n^2)),merge-sort
 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162/** * Definition for singly-linked list. * function ListNode(val) &amp;#123; *     this.val = val; *     this.next = null; * &amp;#125; *//** * @param &amp;#123;ListNode&amp;#125; head * @return &amp;#123;ListNode&amp;#125; */var sortList = function(head) &amp;#123;   // merge sort    // deal with the one node situation   if(head == null || head.next == null)&amp;#123;return head&amp;#125;   return mergeSort(head, null);&amp;#125;;var mergeSort = (head,tail) =&amp;gt; &amp;#123;  if(head.next == tail)&amp;#123;    head.next = null    return head  &amp;#125;  var middle = findMiddle(head,tail)  var left = mergeSort(head,middle)  var right = mergeSort(middle,tail)  return merge(left,right)&amp;#125;var merge = (left,right) =&amp;gt;&amp;#123;  var head = new ListNode(-1), node = head  while(left != null &amp;amp;&amp;amp; right != null)&amp;#123;    if(left.val &amp;lt; right.val)&amp;#123;      node.next = left      node = left      left = left.next    &amp;#125;else&amp;#123;      node.next = right       node = right      right = right.next    &amp;#125;  &amp;#125;  var remail = null  if(left == null &amp;amp;&amp;amp; right != null)&amp;#123;    remail = right  &amp;#125;else if(left != null &amp;amp;&amp;amp; right == null)&amp;#123;    remail = left  &amp;#125;  node.next = remail  return head.next&amp;#125;var findMiddle = (head,tail) =&amp;gt;&amp;#123;  // find the middle node given the head and tail  var slow = head,fast = head  tail = tail || null  while(fast != tail)&amp;#123;    fast = fast.next    if(fast != tail)&amp;#123;      fast = fast.next    &amp;#125;    slow = slow.next  &amp;#125;  return slow&amp;#125;
 Runtime: 252 ms
@@ -70,64 +102,6 @@ Here it is:
 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455// this is the ./lib/generator.jsvar jade = require('jade');var pathFn = require('path');var fs = require('fs');// main functions, current only deal with the latest posts if it is a json file task :)// if it is xml task, then it will render the default template ( sitemap.jade, feed.jade)module.exports = function(item,config,locals)&amp;#123;  var api = config.api  if(api[item].path.endsWith(&quot;json&quot;))&amp;#123;    var posts = locals.posts.toArray()      .sort(function(a, b)&amp;#123;        return b.updated - a.updated;      &amp;#125;);    var data = [],count = 0    posts.forEach( (post) =&amp;gt; &amp;#123;      if(count &amp;gt; (api[item].limit || 10))&amp;#123;        return      &amp;#125;      var temp = &amp;#123;&amp;#125;      post.date = new Date(post.date).toLocaleDateString()      api[item].attr.forEach( (v)=&amp;gt;&amp;#123;        if(v == &quot;summary&quot;)&amp;#123;          temp[v] = post.content.replace(/(&amp;lt;([^&amp;gt;]+)&amp;gt;)/ig,'').slice(0,200)        &amp;#125;else&amp;#123;          temp[v] = post[v]        &amp;#125;      &amp;#125;)      count ++      data.push(temp)    &amp;#125;)    data = JSON.stringify(data)  &amp;#125;else&amp;#123;    // for xml(now only support sitemap, feed since I only these two templates :)    var templateSrc= pathFn.join(__dirname, '../'+api[item].src);    var tmpl = jade.compile(fs.readFileSync(templateSrc, 'utf8'));    var posts = [].concat(locals.posts.toArray(), locals.pages.toArray())      .filter(function(post)&amp;#123;        return post.sitemap !== false;      &amp;#125;)      .sort(function(a, b)&amp;#123;        return b.updated - a.updated;      &amp;#125;);    var data= tmpl(&amp;#123;      config: config,      posts: posts    &amp;#125;);  &amp;#125;  return &amp;#123;    path: api[item].path,    data: data  &amp;#125;&amp;#125;
 That’s it.
 I love hexo!! I love JS!!! :)
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>网页渲染过程简介</title><link>http://taoalpha.me/blog/2015/07/01/tech-rendering-a-web-page-step-by-step/</link><category>tech</category><tag>浏览器,渲染</tag><pubDate>2015-07-01T04:00:00.000Z</pubDate><description>概述做web开发尤其是性能优化, 首先要明了的就是web渲染逻辑. 只有知道了浏览器是如何渲染页面的, 你才能更有针对性的去优化你的网页. 今天就来详细的说一下web的渲染步骤.
-浏览器的组成
-UI: 指浏览器的外在表现样式;
-Browser Engine: 连接UI和渲染引擎;
-Rendering Engine: 渲染引擎, 根据请求内容的不同进行不同的渲染, 比如html的话就是渲染HTML和CSS(使用的就是HTML和CSS的Parser) (我们常说的webkit就是rendering engine);
-Networking: 网络, 用以处理网络请求, 比如HTTP请求的;
-UI backend: 用来生成一些基础控件的, 比如窗口等, 这些控件都是跨平台的, 其会调用系统本身的界面方法来生成对应的控件;
-JavaScript Interpreter: 用以解析以及执行JS代码的;
-Data Storage: 用以存储数据, 包含存储本地的cookies以及类似localstorage等这种存储机制;
-
-
-Webkit redering engine main flow
-Gecko redering engine main flow
-Parser Compilation Flow
-CSS Parser Flow
-
-
-如何渲染一个网页
-在浏览器中输入要访问网页的url;
-浏览器开始解析url, 找寻其所属的协议, 主机所在, 所用端口以及对应的路径;
-浏览器通过进行DNS查询将域名转为IP地址;
-浏览器开启对应的通信端口并与解析出来的IP地址相连(通常会使用80端口);
-当建立链接后, 就会向主机地址发送一个HTTP请求, 包含了一些浏览器的基本属性和网页参数等;
-主机将请求接收并转发给监听对应端口的服务器, 比如Apache或者Nginx等;
-服务器解析请求路径, 并根据设定的配置将其转交给对应的处理器处理(具体会因不同语言而有所区别: PHP, Pyhton等);
-处理器接收请求, 并着手准备回应请求;
-根据具体情况, 处理器可能会需要链接数据库获取数据来构建回应内容(链接数据库-&amp;gt;执行查询-&amp;gt;获取并解析数据-&amp;gt;关闭数据库链接);
-将所有数据整合构成回应主体(对于网页而言多数是html字符串), 加上必须要的元信息(HTTP的Header), 以同样的协议返回给用户的浏览器;
-浏览器接收回应内容, 根据回应的状态, 如果有错误则进行错误处理, 若无则进行解析;
-浏览器首先根据获得的内容(多数情况下为HTML)生成一个DOM树;
-然后针对其内引用的外部资源逐个发起请求获取, 比如图片, 样式, js等, 此刻重复上述请求步骤;
-浏览器获得返回的样式后开始解析其内容, 将css构建CSSOM, 而根据具体的属性来执行js的解析和执行;
-针对更新后的DOM和CSSOM, 生成render tree, 即包含了视觉展现信息的树, 浏览器根据render tree来进行渲染, 即你看到的页面;
-根据css来对render tree进行layout - 定位, 然后再对定位好的部分进行Painting, 然后你就看到了呈现在你眼前的页面;
-
-css和js的加载顺序JS
-默认下, js的加载是同步的, 即遇到&amp;lt;script&amp;gt;标签后立刻就会开始解析js, 如果js本身是外部资源, 则还会先去请求获取后再解析, 同时Dom的解析也会因此而暂停,一直等待js解析执行后才会继续;
-对于外部引用的js(不是直接写到html里的),开发者可以通过给script标签增加defer属性来使js滞后加载, 这样就不会影响到Dom的解析了, 其也会在Dom解析后执行, 但这种情况下, 务必要保证js中不会用到document.write()这种直接创建Dom Node的语句;
-除了defer,H5中新引入了async属性, 可以让js保持异步加载, 如此js的解析执行就是在另一个线程中进行的了, 就和Dom的解析互不影响了, 当然同样的, 这种情况下, js中也不能有类似document.write()的函数;
-同时引擎方面目前也有一定的优化, 一般来说, webkit或者firefox所用的引擎都会在执行某个脚本的同时, 开启另一个线程继续处理下面的文档并请求所需的外部资源(images,css,js);
-
-用一张图总结defer和async的区别就是:
-
-通常来说, 对于互不依赖的模块而言, 用async比较好, 因为不会占据整体的时间, 而如果js之间互相有所依赖, 则需要根据具体情况来看, 这个时候很不推荐滥用async, 因为无法保证模块的执行先后顺序;
-async依然会block掉Dom的ready事件, 即async的js执行完之前dom是不会变为complete的
-CSS虽然css不会影响Dom的结构, 但是因为js对css有获取权限, 所以css的加载也会因为js的不同而有所不同.
-
-Firefox会在保证css加载后才会加载js;
-Webkit则智能一些, 它只会延缓加载那些会因为css未加载而受到影响的js;
-
-即css的执行要优先于js
-结语在How Browsers Work中, 作者详细描述了很多parse,render,layout,和painting的细节, 如果有兴趣的话, 可移步详细阅读.
-浏览器可以说是人类21世纪最伟大的发明之一, 其蕴藏了很多技术细节, 也正是其不断的优化, 才能让我们今天看到如此绚丽多彩的网页. 而WebKit的出现则让浏览器赤裸的展现在了开发者的面前, 也为前端开发带来了性能优化的领域.
-有兴趣了解更多WebKit的技术, 可以阅读WebKit技术内幕一书.
-参考资料
-rendering a web page - step by step
-How Browsers Work
-
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Strict Mode in JavaScript</title><link>http://taoalpha.me/blog/2015/11/11/tech-use-strict-in-js/</link><category>tech</category><tag>JS</tag><pubDate>2015-11-11T08:00:00.000Z</pubDate><description>Introduction&amp;#39;use strict&amp;#39; is a new feature introduced from ECMAScript 5, it is not a subset of js, it has some different semantics from normal code. So be careful to use it.
 What is the difference?After you insert the &amp;#39;use strict&amp;#39; into the head of your entire code or in the beginning of the function code.
 12345678910111213// Whole-script strict mode syntax&quot;use strict&quot;;var v = &quot;Hi!  I'm a strict mode script!&quot;;// function-levelfunction strict()&amp;#123;  // Function-level strict mode syntax  'use strict';  function nested() &amp;#123; return &quot;And so am I!&quot;; &amp;#125;  return &quot;Hi!  I'm a strict mode function!  &quot; + nested();&amp;#125;function notStrict() &amp;#123; return &quot;I'm not strict.&quot;; &amp;#125;
