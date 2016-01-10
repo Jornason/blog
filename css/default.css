@@ -2471,6 +2471,8 @@ pre span {
   font-size: 14px;
   border-left: 10px solid #4aab5e;
   background-color: #59D574; }
+  .entry blockquote footer strong, .entry .special footer strong {
+    margin-right: 20px; }
 
 .entry pre > code:before {
   content: attr(data-lang) " code";
