@@ -1,4 +1,201 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-10T23:10:54.703Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>Scalable and Modular Architecture for CSS</title><link>http://taoalpha.me/blog/2016/01/10/read-smacss-scalable-and-modular-architecture-for-css/</link><category>read</category><tag>CSS,Modularity,SMACSS</tag><pubDate>2016-01-11T00:13:50.000Z</pubDate><description>Modularity of Web DevAs your project becomes more complex, its more difficult to maintain the code, no matter what kind of language you are using. That’s why we use OOP for most of the projects, by doing that, it saves you a lot of time and energy. Since web development becomes more popular, more and more people start focusing on this area and come up with some fantastic ideas about how to apply modularity or OOP on web development.
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-11T03:23:39.746Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>ES6 Quiz With Answer</title><link>http://taoalpha.me/blog/2016/01/11/tech-es6-quiz-with-answer/</link><category>tech</category><tag>ES6,JS,Quiz</tag><pubDate>2016-01-11T08:15:24.000Z</pubDate><description>Origin Post
+@kangax’s ES6 quiz, explained@kangax created a new interesting quiz, this time devoted to ES6 (aka ES2015). I found this quiz very interesting and quite hard (made myself 3 mistakes on first pass).
+Here we go with the explanations:
+Question 1:123456(function(x, f = () =&amp;gt; x) &amp;#123;  var x;  var y = x;  x = 2;  return [x, y, f()];&amp;#125;)(1)
+
+[2, 1, 1]
+[2, undefined, 1]
+[2, 1, 2]
+[2, undefined, 2]
+
+The most complex question for me in this quiz. I didn’t get it right initially until read the spec and clarified with @kangax. First I answered [2, undefined, 1], which is “almost correct”, except one subtle thing. The correct answer here is the first one, [2, 1, 1], and let’s see why.
+As we know, parameters create extra scope in case of using default values.
+Parameter f is always the function (the default value, since it’s not passed), and it captures x exactly from the parameters scope, that is 1.
+Local variable x shadows the parameter with the same name, var x;. It’s hoisted, and is assigned default value… undefined? Yes, usually it would be assigned value undefined, but not in this case, and this is the subtle thing we mentioned. If there is a parameter with the same name, then the local binding is initialized not with undefined, but with the value (including default) of that parameter, that is 1.
+So the variable y gets the value 1 as well, var y = x;.
+Next assignment to local variable x happens, x = 2, and it gets value 2.
+By the time of the return, we have x is 2, y is 1, and f() is also 1. It’s also a tricky part: since f was created in the scope of parameters, its x refers to the parameter x, which is still 1.
+And the final return value is: [2, 1, 1].
+
+Question 2:123456(function() &amp;#123;  return [    (() =&amp;gt; this.x).bind(&amp;#123; x: 'inner' &amp;#125;)(),    (() =&amp;gt; this.x)()  ]&amp;#125;).call(&amp;#123; x: 'outer' &amp;#125;);
+
+[‘inner’, ‘outer’]
+[‘outer’, ‘outer’]
+[undefined, undefined]
+Error
+
+Arrow functions have lexical this value. This means, they inherit this value from the context they are defined. And later it stays unchangeable, even if explicitly bound or called in a different context.
+In this case both arrow functions are created within the context of {x: &amp;#39;outer&amp;#39;}, and .bind({ x: &amp;#39;inner&amp;#39; }) applied on the first function doesn’t make difference.
+So the answer is: [&amp;#39;outer&amp;#39;, &amp;#39;outer&amp;#39;].
+
+Question 3:1let x, &amp;#123; x: y = 1 &amp;#125; = &amp;#123; x &amp;#125;; y;
+
+undefined
+1
+{ x: 1 }
+Error
+
+Variable y will eventually have value 1 since:
+First, let x defines x with the value undefined.
+Then, destructuring assignment { x: y = 1 } = { x } on the right hand side has a short notation for an object literal: the {x} is equivalent to {x: x}, that is an object {x: undefined}.
+Once it’s destructured the pattern { x: y = 1 }, we extract variable y, that corresponds to the property x. However, since property x is undefined, the default value 1 is assigned to it.
+So the answer is: 1.
+
+Question 4:1234567(function() &amp;#123;  let f = this ? class g &amp;#123; &amp;#125; : class h &amp;#123; &amp;#125;;  return [    typeof f,    typeof h  ];&amp;#125;)();
+
+[“function”, “undefined”]
+[“function”, “function”]
+[“undefined”, “undefined”]
+Error
+
+This IIFE is executed with no explicit this value. In ES6 it means it will be undefined (the same as in strict mode in ES5).
+So the variable f is bound to the class h {}. Its typeof is a &amp;quot;function&amp;quot;, since classes in ES6 is a syntactic sugar on top of the constructor functions.
+However, the class h {} itself is created in the expression position, that means its name h is not added to the environment. And testing the typeof h should return &amp;quot;undefined&amp;quot;.
+And the answer is: [&amp;quot;function&amp;quot;, &amp;quot;undefined&amp;quot;].
+
+Question 5:1(typeof (new (class &amp;#123; class () &amp;#123;&amp;#125; &amp;#125;)))
+
+“function”
+“object”
+“undefined”
+Error
+
+This is an obfuscated syntax playing, but let’s try to figure it out :)
+First of all, since ES5 era, keywords are allowed as property names. So on a simple object example, it can look like:
+123let foo = &amp;#123;  class: function() &amp;#123;&amp;#125;&amp;#125;;
+And ES6 standardized concise method definitions, that allows dropping the : function part, so we get the:
+123let foo = &amp;#123;  class() &amp;#123;&amp;#125;&amp;#125;;
+This is exactly what corresponds to the inner class () {} – it’s a method inside a class.
+The class itself is anonymous, so we can rewrite the example:
+12345let c = class &amp;#123;  class() &amp;#123;&amp;#125;&amp;#125;;new c();
+Now, instead of assigning to the varialbe c, we can instantiate it directly:
+123new class &amp;#123;  class() &amp;#123;&amp;#125;&amp;#125;;
+The result of a default class is always a simple object. And its typeof should return &amp;quot;object&amp;quot;:
+123typeof (new class &amp;#123;  class() &amp;#123;&amp;#125;&amp;#125;);
+And the answer is: &amp;quot;object&amp;quot;.
+
+Quetion 6:1typeof (new (class F extends (String, Array) &amp;#123; &amp;#125;)).substring
+
+“function”
+“object”
+“undefined”
+Error
+
+Here we have a similar obfuscated example (but we already figured out this inlined typeof, new, and class thing above ;)), though the interesting part is the value of the extends clause. It’s the: (String, Array).
+The grouping operator always returns its last argument, so the (String, Array) is actually just Array.
+So what we’ve got here is:
+12345class F extends Array &amp;#123;&amp;#125;let f = new F();typeof f.substring; // &quot;undefined&quot;
+Since array instances do not have substring method, and our extended class F didn’t provide it either, the answer is &amp;quot;undefined&amp;quot;.
+
+Question 7:1[...[...'...']].length
+
+1
+3
+6
+Error
+
+Here we deal with the spread operator. It allows to spread all the elements to the array. It can work with any iterable object.
+Strings are iterable, meaning that we can iterate over their chars (in this case char by char). So the inner [...&amp;#39;...&amp;#39;] results to an array: [&amp;#39;.&amp;#39;, &amp;#39;.&amp;#39;, &amp;#39;.&amp;#39;]:
+12345let s = '...';let a = [...s];console.log(a); // ['.', '.', '.']
+Array are iterable as well. So the outer spread is applied on our new array:
+1234let result = [...a];console.log(result); // ['.', '.', '.']console.log(result.length); // 3
+As we can see spreading the array happens element by element, so the resulting array just copied all the elements, and looks the same – with just 3 string dots.
+And the answer is: 3.
+
+Question 8:1typeof (function* f() &amp;#123; yield f &amp;#125;)().next().next()
+
+“function”
+“generator”
+“object”
+Error
+
+In this example we encounter a generator function. When executed, they return a generator object:
+1let g = (function* f() &amp;#123; yield f &amp;#125;)();
+Generator objects have next method, that returns the next value at the yield position. The returned value has iterator protocol format:
+1&amp;#123;value: &amp;#60;returned value&amp;#62;, done: boolean&amp;#125;;
+So on first next() we get:
+1g.next(); // &amp;#123;value: f, done: false&amp;#125;
+As we see, the returned value itself doesn’t have method next(), so trying to call it as a chain would result to an error:
+1g.next().next(); // error
+Notice though, that we could normally call it as:
+12g.next(); // &amp;#123;value: f, done: true&amp;#125;g.next(); // &amp;#123;value: undefined, done: true&amp;#125;
+So the answer is: Error.
+
+Question 9:1typeof (new class f() &amp;#123; [f]() &amp;#123; &amp;#125;, f: &amp;#123; &amp;#125; &amp;#125;)[`$&amp;#123;f&amp;#125;`]
+
+“function”
+“undefined”
+“object”
+Error
+
+The obfuscated example results to a Syntax Error since class name f() is not correct.
+The answer is Error.
+
+Question 10:1typeof `$&amp;#123;&amp;#123;Object&amp;#125;&amp;#125;`.prototype
+
+“function”
+“undefined”
+“object”
+Error
+
+This one is very tricky :)
+First, we deal with template strings.
+They are capable to render values of variables directly in the strings:
+123let x = 10;console.log(`X is $&amp;#123;x&amp;#125;`); // &quot;X is 10&quot;
+However, in the example we have something that looks a bit strange: it’s not ${Object} how it “should be”, but the $.
+No, it’s not another special syntax of template strings, it’s still a value inside ${}, and the value is {Object}.
+What is {Object}? Well, as we mentioned earlier above, ES6 has short notation for object literals, so in fact it’s just the: {Object: Object} – a simple object with the property named &amp;quot;Object&amp;quot;, and the value Object (the built-in Object constructor).
+Now it’s becoming more clear:
+1234let x = &amp;#123;Object: Object&amp;#125;;let s = `$&amp;#123;x&amp;#125;`;console.log(s); // &quot;[object Object]&quot;
+See what’s happened? The ${x} is roughly equivalent to the:
+12345'' + x;// or the same:x.toString(); // &quot;[object Object]&quot;
+Now, the string &amp;quot;[object Object]&amp;quot; obviously doesn’t have property prototype:
+123&quot;[object Object]&quot;.prototype; // undefinedtypeof &quot;[object Object]&quot;.prototype; // &quot;undefined&quot;
+So the answer is: &amp;quot;undefined&amp;quot;.
+
+Question 11:1((...x, xs)=&amp;gt;x)(1,2,3)
+
+1
+3
+[1,2,3]
+Error
+
+This one is the simplest. Rest parameters can appear only at the last postion. In this case ...x goes as a first argument of an IIFE arrow function, so results to a Parse Error.
+And the answer is: Error.
+
+Question 12:12345let arr = [ ];for (let &amp;#123; x = 2, y &amp;#125; of [&amp;#123; x: 1 &amp;#125;, 2, &amp;#123; y &amp;#125;]) &amp;#123;  arr.push(x, y);&amp;#125;arr;u
+
+[2, { x: 1 }, 2, 2, 2, { y }]
+[{ x: 1 }, 2, { y }]
+[1, undefined, 2, undefined, 2, undefined]
+Error
+
+Several topics combined here: destructuring assignment, default values, and for-of loop.
+However, we can quickly identify it’s an error, because of two one thing:
+EDIT 1: @fkling42 pointed out that the variable y is in the environment, but is not initialized yet (being under TDZ – Temportal Dead Zone), and that’s the reason why it cannot be accessed
+EDIT 2: @getify pointed out, that value 2 actually normally passes RequireObjectCoercible check, and hence there would be no error in destructuring let { x = 2, y } = 2;.
+
+{ y } is a short notation of {y: y} and will fail, since variable y doesn’t exist in the scope; The variable y is in the scope, but is under TDZ, so cannot be accessed
+(we wouldn’t reach this, because of the frist error, but): trying to destructure 2 will fail too will not fail, since to object coercion will be normally applied.
+
+So the answer is: Error.
+
+Question 13:123456(function() &amp;#123;  if (false) &amp;#123;    let f = &amp;#123; g() =&amp;gt; 1 &amp;#125;;  &amp;#125;  return typeof f;&amp;#125;)();
+
+“function”
+“undefined”
+“object”
+Error
+
+This example is only on attention, since it’s a syntax error: the arrow function =&amp;gt; cannot be defined in this way, since we have a an object with the g (consice) method.
+And the answer is: Error.
+
+ConclusionI like such tricky quiz questions, it’s always fun to track the runtime semantics and parsing process manually. Of course, most of the things here are far from practical production code, and are interesting mostly from the theoretical viewpoint. Still I found it enjoyable.
+I’ll be glad to discuss all the questions in the comments.
+Good luck with ES6 ;)
+Written by: Dmitry Soshnikov
+http://dmitrysoshnikov.com
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Scalable and Modular Architecture for CSS</title><link>http://taoalpha.me/blog/2016/01/10/read-smacss-scalable-and-modular-architecture-for-css/</link><category>read</category><tag>CSS,Modularity,SMACSS</tag><pubDate>2016-01-11T00:13:50.000Z</pubDate><description>Modularity of Web DevAs your project becomes more complex, its more difficult to maintain the code, no matter what kind of language you are using. That’s why we use OOP for most of the projects, by doing that, it saves you a lot of time and energy. Since web development becomes more popular, more and more people start focusing on this area and come up with some fantastic ideas about how to apply modularity or OOP on web development.
 We all know that a basic website would contains three basic parts: HTML/CSS/JS. HTML is in charge of the struture, the CSS will focus on the appearance, and JS will give your website more animation(now css can do that too) and interaction. Among all these three parts, HTML is the easiest one, there is not so many things to talk about except the semantic tag, H5..etc, if you want to improve the modularity, most times HTML is not what you care most. Instead, CSS and JS are your primary concern.
 Scalable and Modular Architecture for CSS is a nice book focus on applying modularity to CSS, and here is the notes I wrote down after I read it. About JS, we will talk about it later :) You can start with a nice and good coding style.
 Reading NotesCategories of RulesJonathan Snook groups CSS rules into five types of categories:
@@ -1406,87 +1603,71 @@ iOS 7开始, 苹果引入了扁平化设计, 去掉了所有的阴影啊等等�
 通过以下方法保持一致性:
     巩固惯例–使用相似的处理过程,使用相似的方法.    建立模式–把相似的事物放在相似的地方,这样用户就可以根据直觉来行动了.    偶尔破坏规则–知道什么时候一个界面需要独一无二,实际上可能比你想象中更少一些.
 当多就是少的时候目前盛行的观念认为简单就是少…删减再删减.但是简单真的应该针对理解和清晰的目标…我们能做出让用户立刻就明白正在做什么,同时可以非常明确的了解下一步将做什么的设计吗?为了实践实现简单,我们可以坚持只有一个核心观点,随时间提升其清晰性,同时利用一致性帮助用户更高效的使用. 在这种情况下,更多也可能就是更少…通过在适当的时候添加适当的细节,整个处理过程将会变得更加简单易用.简单性促使我们认为它应该是更少的,但是其实它真的应该是”刚刚好”. Edit By MaHua
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>谈谈颜色在市场方面的应用</title><link>http://taoalpha.me/blog/2014/11/27/read-talk-about-application-of-colors-in-the-market/</link><category>read</category><tag>关于HCI,翻译文章,设计,译系列,颜色</tag><pubDate>2014-11-27T08:00:00.000Z</pubDate><description>本文讲述了关于颜色的不同所能带来的不同影响, 相信很多人都认可”颜色和人的感受有着非常紧密的关系”这个事实. 那么颜色能产生多大的影响呢? 又是和产生的影响的对应关系如何呢?先说个趣闻: facebook为什么是蓝色为主色调呢? 其实根据New Yorker, 原因很简单. 就是因为Mark Zuckerberg是一个红绿色盲. 这就导致蓝色是Mark所能识别的最好的色调了. 用Mark自己的话说就是:
-
-  蓝色对我而言是最丰富的了, 我可以看到各种的蓝色.
-
-没什么科学价值? 可能就facebook这个个例来说确实没啥特别的价值, 但是实际上现实生活中还有很多关于颜色是如何影响消费者们的消费决策的实例的. 毕竟视觉可谓是多数人类最常用的接收器了.  甚至可以说决定我们是否尝试某款产品的90%因素都是颜色所致呢.
-
-那么颜色和我们的感知究竟是什么样的对应关系呢?
-
-这里作者聚了4个典型的例子:
-
-黑色
-
-绿色
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Why Companies Need Full-Time Product Managers</title><link>http://taoalpha.me/blog/2014/11/01/read-t-why-companies-need-full-time-product-managers/</link><category>read</category><tag>PM,product manager,产品学习,产品经理,翻译文章,译系列</tag><pubDate>2014-11-01T11:00:00.000Z</pubDate><description>写在前头: PM是一个挺让人困惑的职位的, 尤其是在国内, 感觉大大小小PM无数, 更加让人苦恼PM究竟是个什么样的职位呢? 虽然我有接近2年多的PM经验, 但是因为本身更加喜欢FE, 所以往往也是做一个非常Geek的PM, 并不符合真正的PM本质, 而这次能够看到下文, 确实觉得它对PM的总结还是比较到位的, 非常推荐PM以及想要做PM的童鞋们看看~
 
 
+公司为啥需要全职的产品经理呢?(或者说,他们一天都在干啥呢?)
+什么是产品经理呢? 产品经理一天的工作都是什么呢? 最重要的是, 为什么公司需要招聘产品经理呢? 这是个好问题.
 
-蓝色
+我们首先需要明确的问题是究竟什么是”产品”. 在软件开发这个领域内, 一个产品呢, 可以是一个网站, 一个应用, 或者是用户们使用的线上服务. 而根据公司的大小以及它的产品性质本身, 一个产品经理可能会是一个完整系统(比如一个移动app)的负责人, 也可能是某个整体系统的一部分(比如在电子商务网站中, 负责全平台的检验流程).
 
+对这一点可能会存在一些困惑, 毕竟在绝大多数情况下, 产品通常代表着一个你要出售给客户的东西. 尤其是在电子商务, 经常会混淆产品经理和分类经理, 分类经理们主要是负责在电子商务网站出售商品的渠道和经营问题. 所以, 在一定程度上说, 用”产品”这个词确实并不是最合适的. 但是就目前来说, 现状如此, 我们也没法了, 就凑活着用吧.
 
+为了明确产品经理这一职位的性质, 我们首先从Marc Andreessen就”创业公司唯一重要的事情”这一观点说起:
 
-以及在大大小小品牌商标logo中使用的种种颜色:
+一个创业公司产品的质量可以定义为这一个产品对一个实际使用它的客户或者用户所留下的印象: 这个产品的易用性如何? 其功能的丰富性如何? 流畅性和速度如何? 扩展性又如何? 有多精致?有多少bug呢?
 
+而一个创业公司的市场大小, 则是这一产品的客户或用户的数量, 增长速度 …
 
+唯一重要的事情就是要让产品去适应市场(Product-market fit). 产品适应市场意思就是在一个好的市场里, 要让产品尽可能的满足市场的需求.
 
-基于此, 颜色对人类的感受是有着非常明显的影响的, 这一影响尤其是在我们购物时发挥的最为到位. 有一个分析公司 KISSmetrics曾经做过一个非常棒的信息图来描述关于颜色是如何影响我们的购买决策的.
+虽然Andreessen是为创业公司写的, 但是最后这段关于”产品适应市场”的重要性对每一个公司都是一样的–无论这个公司是在开发一个新产品还是说去改善一个现有产品,亦或者是介于这两者之间的,都一样. 这是通向成功的宇宙公理, 而这也是产品经理所负责的核心.
 
-从其中可以看出绿色在购物中使用的最为突出, 因为它最能让人放松.  其次, 黑色也经常用于奢侈品中, 它在背光下表现极为出色. 下面就是这一信息图的全文啦:
+有了这个作为背景, 我对产品经理这一角色的定义就是: 通过数字产品持续性的更新和执行来符合用户需求从而实现商业上的成功.
 
+这一定义总结了一个产品经理所需要涵盖的全部内容: 目标市场, 所属产品的各个方面, 商业成功的需求, 以及如何去衡量这一成功. 它还包含了三个产品经理绝对不能忽视的点:
 
+成功的最佳衡量标准就是商业的健康度, 也即产品给用户提供的价值;所有的一切都起始于对目标市场和需求的深刻理解, 从而把焦点集中到产品体验的质量上去;为了符合市场需求, 可持续发展需要一个良好的策划与执行.
 
-既然说了颜色会影响到人们的心情感受, 那么你要如何利用颜色来提升你的市场效果呢?
+那么, 如何把这些转译成一个产品经理每天的工作呢? 这个问题就太大了, 在这里是说不清楚的, 不过仅作为一个初步介绍的话, Marty Cagan在它的电子书”每一个伟大的产品背后”中列出了一个针对产品经理需要负责的事项清单. 这一清单包含:
 
-同样是来自 KISSmetrics, 我们概括来说有以下几点:
+寻找确认并且评估产品机遇的可行性和易行性,确保合适的产品在合适的时机发布出去,为开发者提供清晰的产品策略和思路指南,带领团队执行产品的思路,确保向团队成员传达产品的内涵,在产品开发流程中始终站在用户的角度思考问题.
 
-针对女性而言
+但是, 在一个产品经理能够做这些事情之前, 我们首先要问一些比较尴尬的问题. 首先, 公司真的需要产品经理吗? 另外, 如果我们同意说需要, 那么一个好的产品经理的特质是什么呢? 同时还有, 这一角色在公司组织架构中的位置呢? 我们来一一回答这些问题.
 
-女性爱好色: 蓝色, 紫色, 绿色女性厌恶色: 橘色, 棕色, 灰色
+为什么公司需要产品经理
 
- 
+产品经理的角色有一些公司可能是非常不买账的. 通常的反对意见包含:
 
-针对男性而言
+我们公司里有各种各样的人, 他们就已经满足一个产品经理职责的各个范畴了, 不需要专门配备这一个职务了.我完全看不出来这个角色能给公司带来什么实质性的利益.产品经理只会拖我们后腿.我不想把产品控制权交到别人手中.(通常这个理由不会那么公开的说…)
 
-男性爱好色: 蓝色, 绿色, 黑色男性厌恶色: 棕色, 橘色, 紫色
+这些考虑都是很有道理的, 但是显然他们并没有很好的理解产品经理这一角色, 或者说这个公司的产品经理很差劲, 没有很好的体现产品经理的职责.
 
- 
+实情是, 为了更高的效率, 对一个产品或者领域的管理权最好不要分散给多个人掌控. 对于产品经理而言, 看到产品全局是非常重要的 – 大局战略和局部细致都是一样重要的 – 为了获得更好的抉择. 如果不同流程的情况掌握在不同人手中, 那么就没有人会有一个完好的大局观, 那么这一角色的价值自然也会渐渐失去.
 
-也有人曾经做过一个实验去看改变一个按钮的颜色 对于转化率的影响. 他们选用了绿色和红色作为对比.
+我们看下产品经理通常能够带来的两个典型好处吧:
 
-对绿色呢, 他们初始猜测:
+产品经理确保产品一直处于市场驱动
 
-  绿色通常和”自然”,”环境”联系在一起, 在加上在交通灯中的广泛应用, 有一种”Go”或者前进的意味在其中;
+对产品经理而言, 其最突出的优点就是他们可以帮助公司一直为目标市场的需求和目标所驱动, 而不是被技术和潮流所驱动. 如同Barbara Nelson在”谁需要产品经理”一文中所说:
 
-对红色呢, 初始认为:
+相比于找到你现有技术的客户而言, 找到市场问题然后用技术手段解决实在是简单太多了.
 
-  红色和绿色不同, 通常认为是一种兴奋的, 激情的, 和血, 警告等联系在一起. 而在交通灯中常用来指示停止. 当然, 红色往往很抢眼.
+如果方法足够正确的话, 一个市场驱动的产品能够促成一个长期的, 可持续的, 有利润的商业, 因为这个公司会持续的把焦点放在解决市场问题而不是用最新的科技去做什么的问题上. 一个公司受什么驱动是很重要的, 因为受市场驱动的公司已经被证实比受其他因素驱动的公司所获得的利润更高(要多出31%, 根据George S.Day 和 Prakash Nedungadi的报告).
 
-按照上面的分析, 多数人会假设绿色更加友好, 其转化率应该更高猜对.
+这并不意味着关注不断出现的变化和产品创新是互斥的. 确定市场问题并不仅仅是找到现有的问题进行改进(比如说, 60%的用户都会在这个页面离开, 那么我们就搞搞这个页面), 同时还需要创造心的产品来满足那些没有被满足的需求(比如说现在的电话实在太烂了, 我们搞个新的吧).
 
-所以, 他们进行了一个简单的 A/B test, 来测试看看究竟是哪种颜色的转化率更高.
+产品经理能够提升时间管理
 
+产品经理带来的第二个好处就是他们能够减少一个公司实现目标所需的时间. 一个定位清晰合适的产品, 其开发流程掌握在一个有效率的管理者手中时会极大改善发布所需时间以及回报所需时间的.
 
+那么为什么产品经理可以做到这一点呢? 因为他们要权衡出那些是值得做的, 那些是不值得的. 这也意味着可以把更少的时间花费在Spaghetti法上了(把所有事情都扔到墙上看哪个能够粘在上面…) 而有更多时间放在已经被市场验证过的产品上了. 这一方法同样还能帮助更好的确定公司的焦点所在, 帮助公司更加投入到那些更有可能成功的项目之中, 而不是把人力分散到那些没人能够确保获利的项目中去.
 
-结果呢? 红色按钮的表现比绿色按钮的表现要好上21% 为什么呢? 本文并没有直接给出答案, 大家可以自己思考一下~
+未完待续(还有两部分回答另外两个问题).
 
-作者结合这个故事主要想说的一点是: 无论要做什么样的改变, 都要先从假设开始, 实践是检验真理的唯一标准.  data always beats opinion,no matter what.
+Resources:
 
-最后来个趣味小知识: 为什么超链接是蓝色的呢?
-
-看的时候我恰好看到下文中有个fun story….于是非常恶意的想: 不会又是万维网之父也是个红绿色盲吧…
-
-当然不是… 哈哈. 实际上使用蓝色是为了能够和原本网页背景色的灰色形成最佳的对比.
-
-
-
-详细解释如下:
-
-  Tim Berners-Lee,万维网的主要缔造者, 被认为是初始设定链接为蓝色的人.  Mosaic, 这个非常早起的浏览器, 展示网页的时候默认是灰色的背景和黑色的文本. 而同样为深色调, 但是又不至于和黑色混在一起的就是蓝色了. 所以, 为了让链接能够在一堆文本中脱颖而出, 方便阅读, 就默认设定超链接的颜色为蓝色了.
-
-作者最后做的总结其实确实值得深思:
-
-  仅仅简单改变一些非常小的类似颜色这种细节, 就能产生如此巨大的改变,  甚至可以完全改变最后的产出.
+原文 - Why Companies Need Full-Time Product Managers 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>设计心理学系列(1) - 网络心理学</title><link>http://taoalpha.me/blog/2015/05/08/read-design-psychology-1-cyber-psychology/</link><category>read</category><tag>Cyber Psychology,设计心理学</tag><pubDate>2015-05-08T12:00:00.000Z</pubDate><description>什么是网络心理学?网络心理学是随着互联网等新技术出现以及发展而逐渐发展起来的一门新兴科学. 它所研究的领域就是网络与心理学的结合, Cyberpsychology本身由两个词合并而成, 前者Cyber是取自Cybernetics, 代表着对于机械控制和与之通信的研究, 代表着对新兴网络领域的研究, 而心理学则是对人脑和行为学的研究. 两者的集合即表明了Cyberpsychology的研究领域主要集中在了人与新兴机器系统(包含虚拟系统)的心理学研究.
 网络心理学简介演化历史Cyberpsychology最开始是集中关注于人在操作机器以及与机器交互的过程中的心理学变化, 后来随着电脑的出现以及普及, 互联网的诞生以及发展, 加上新兴智能机器的出现和发展, 都使得Cyberpsychology的研究重点放到了互联网上面. 而随着虚拟现实技术的出现, Cyberpsychology的研究范围再一次的增广, 可以说, Cyberpsychology的研究范围基本会随着cyberspace的领域增长而延伸.
 通常认为John Suler, 来自Rider University的心理学教授, 是Cyberpsychology的奠基人. Suler教授是最早开始关注与网络对人们心理变化带来的影响, 其出版的The Psychology of Cyberspace一书也是被认为最早整合性的Cyberpsychology学术作品.
@@ -1769,6 +1950,87 @@ Monitoring Module Changes
 
 12345r = Reloader()while True:    r.poll()    time.sleep(1)&amp;lt;/code&amp;gt;
 想要看源代码的可以前往:  complete source code 本身代码也发布到Python Package Index中, 名称为  reloader
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>谈谈颜色在市场方面的应用</title><link>http://taoalpha.me/blog/2014/11/27/read-talk-about-application-of-colors-in-the-market/</link><category>read</category><tag>关于HCI,翻译文章,设计,译系列,颜色</tag><pubDate>2014-11-27T08:00:00.000Z</pubDate><description>本文讲述了关于颜色的不同所能带来的不同影响, 相信很多人都认可”颜色和人的感受有着非常紧密的关系”这个事实. 那么颜色能产生多大的影响呢? 又是和产生的影响的对应关系如何呢?先说个趣闻: facebook为什么是蓝色为主色调呢? 其实根据New Yorker, 原因很简单. 就是因为Mark Zuckerberg是一个红绿色盲. 这就导致蓝色是Mark所能识别的最好的色调了. 用Mark自己的话说就是:
+
+  蓝色对我而言是最丰富的了, 我可以看到各种的蓝色.
+
+没什么科学价值? 可能就facebook这个个例来说确实没啥特别的价值, 但是实际上现实生活中还有很多关于颜色是如何影响消费者们的消费决策的实例的. 毕竟视觉可谓是多数人类最常用的接收器了.  甚至可以说决定我们是否尝试某款产品的90%因素都是颜色所致呢.
+
+那么颜色和我们的感知究竟是什么样的对应关系呢?
+
+这里作者聚了4个典型的例子:
+
+黑色
+
+绿色
+
+
+
+蓝色
+
+
+
+以及在大大小小品牌商标logo中使用的种种颜色:
+
+
+
+基于此, 颜色对人类的感受是有着非常明显的影响的, 这一影响尤其是在我们购物时发挥的最为到位. 有一个分析公司 KISSmetrics曾经做过一个非常棒的信息图来描述关于颜色是如何影响我们的购买决策的.
+
+从其中可以看出绿色在购物中使用的最为突出, 因为它最能让人放松.  其次, 黑色也经常用于奢侈品中, 它在背光下表现极为出色. 下面就是这一信息图的全文啦:
+
+
+
+既然说了颜色会影响到人们的心情感受, 那么你要如何利用颜色来提升你的市场效果呢?
+
+同样是来自 KISSmetrics, 我们概括来说有以下几点:
+
+针对女性而言
+
+女性爱好色: 蓝色, 紫色, 绿色女性厌恶色: 橘色, 棕色, 灰色
+
+ 
+
+针对男性而言
+
+男性爱好色: 蓝色, 绿色, 黑色男性厌恶色: 棕色, 橘色, 紫色
+
+ 
+
+也有人曾经做过一个实验去看改变一个按钮的颜色 对于转化率的影响. 他们选用了绿色和红色作为对比.
+
+对绿色呢, 他们初始猜测:
+
+  绿色通常和”自然”,”环境”联系在一起, 在加上在交通灯中的广泛应用, 有一种”Go”或者前进的意味在其中;
+
+对红色呢, 初始认为:
+
+  红色和绿色不同, 通常认为是一种兴奋的, 激情的, 和血, 警告等联系在一起. 而在交通灯中常用来指示停止. 当然, 红色往往很抢眼.
+
+按照上面的分析, 多数人会假设绿色更加友好, 其转化率应该更高猜对.
+
+所以, 他们进行了一个简单的 A/B test, 来测试看看究竟是哪种颜色的转化率更高.
+
+
+
+结果呢? 红色按钮的表现比绿色按钮的表现要好上21% 为什么呢? 本文并没有直接给出答案, 大家可以自己思考一下~
+
+作者结合这个故事主要想说的一点是: 无论要做什么样的改变, 都要先从假设开始, 实践是检验真理的唯一标准.  data always beats opinion,no matter what.
+
+最后来个趣味小知识: 为什么超链接是蓝色的呢?
+
+看的时候我恰好看到下文中有个fun story….于是非常恶意的想: 不会又是万维网之父也是个红绿色盲吧…
+
+当然不是… 哈哈. 实际上使用蓝色是为了能够和原本网页背景色的灰色形成最佳的对比.
+
+
+
+详细解释如下:
+
+  Tim Berners-Lee,万维网的主要缔造者, 被认为是初始设定链接为蓝色的人.  Mosaic, 这个非常早起的浏览器, 展示网页的时候默认是灰色的背景和黑色的文本. 而同样为深色调, 但是又不至于和黑色混在一起的就是蓝色了. 所以, 为了让链接能够在一堆文本中脱颖而出, 方便阅读, 就默认设定超链接的颜色为蓝色了.
+
+作者最后做的总结其实确实值得深思:
+
+  仅仅简单改变一些非常小的类似颜色这种细节, 就能产生如此巨大的改变,  甚至可以完全改变最后的产出.
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Teenage Usability(译)-为青少年而设计</title><link>http://taoalpha.me/blog/2013/06/12/read-teenage-usability-translated-designed-for-young-people/</link><category>read</category><tag>UX,产品学习,翻译文章,设计,青少年</tag><pubDate>2013-06-12T05:00:00.000Z</pubDate><description>Teenage Usability:Designing Teen-Targeted WebsitesSummary: 青少年往往会对自己的网络技能过渡自信,但实际上他们表现的比成年还要差劲.更弱的阅读水平,没有耐心,而且尚未发展成熟的研究技能,都减少了青少年完成任务的成功率以及对于简单可靠的网站的需要.
 青少年们都是兴奋的.技术已经和青少年的生活密切的结合到一起了,此时为他们创造更多有用而且有益的网站变得更加关键了.在当下这个下一件最重要的事情就是点击鼠标,而短信息打断活动已经成为一种默认的规则而不是偶尔发生的例外的时代,网站架设者们必须清晰的理解青少年们想要什么,如何让他们留在你的网站上.
 为了理解伴随着科技和互联网成长起来的一代人的期望,我们设计了经验性的可用性研究,针对真实的青少年对象,来寻找可以指导关于网站如何提升以满足青少年的能力和偏好.
@@ -1824,58 +2086,4 @@ Age Group Difference(年龄不同的差异)
 
     Smile:代表喜欢,感兴趣,收到吸引,或者用户可以非常轻松的适应它    Middle:用户可能对于其中的一些方面比较看好,但是大量使用可能会出现问题    Dislike:用户不喜欢,甚至不愿意做,或者觉得很难操作很明显,在不同的年龄组中有着非常明显的差异.其中对于青少年而言,易用性的最高水平在于设计直接命中了他们的需求和行为,这一点和儿童以及成年人都有所不同.从表中还可以看到,无论是对交互设计还是对那些更明显的因素,比如话题以及内容风格,这一点都是没错的.
 更多的信息和完整的青少年网站设计可用性指导原则,可见我们的全部研究报告. Edit By MaHua
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>为什么以及如何应用&quot;persona&quot;</title><link>http://taoalpha.me/blog/2015/06/11/read-things-related-to-persona/</link><category>read</category><tag>UX,User Test,persona</tag><pubDate>2015-06-11T10:00:00.000Z</pubDate><description>来源介绍UX BOOTH一直是我很喜欢的一个UX站之一, 不止喜欢其文章, 更喜欢其设计的简洁明了, 重点突出~ 一个好的UX站首先自己的网站设计一定要足够优秀, 毕竟自己的瓜不甜, 如何叫人种瓜呢?
-Creating Personas是UX BOOTH最近的一篇文章, 主要讲的内容也是和persona相关的, 对于任何一个产品而言, 找对你的面向对象, 目标用户是你成功的首要因素之一. 所以读完本文后, 特来分享到此.
-什么是persona首先介绍下persona, persona一词应用到UX领域最早是Alan Cooper在他的The Inmates Are Running the Asylum一书中引入的, 是表示Cooper为了解决设计问题而引入的虚拟用户. 这些虚拟用户本身也都是基于研究数据的. 从那之后, persona就成为了很多”以用户为中心的设计”或者”面向大众设计”等原则的核心思路之一, 逐渐取代了早期的”移情式角色扮演法”.
-简单来说, persona就是基于研究数据而建立其的用户抽象模型. 在设计过程将其作为用户来看待, 从而让设计,甚至开发过程都变的更具实际意义, 更加就事论事.
-通常会将persona分为三种:
-
-Marketing personas: 主要关注与用户的基本属性, 购买动机以及消费的倾向等等; 通常会对用户的行为做出基本的解释, 但并不关注或深究其背后的原因, 通常适用于为特定产品选择合适的消费者;
-Design personas: 与关注商业方面的marketing personas不同, design personas主要关注用户的预期, 目标, 所作出的行为以及其所遇到的痛点等等; 这些personas的建立都是基于具体的研究和真实的用户数据. 这种persona的主要目的是阐述用户为什么这么做的, 借此来将用户引入到整个产品的设计, 开发和服务的各个环节之中. 通常会贯穿整个产品周期, 时刻借此提醒不要便宜目标用户, 始终将核心关注到用户的需求之中去而不是自己的需求上去;
-Proto personas: 这算是一个不标准的Design personas, 因为通常一个完善的design personas是非常耗费资源的, 很多时候可能没有那么多的时间,经历,经济来去建立一个design persona, 这时候我们可以利用他人的研究资料以及团队本身对服务用户的了解, 建立一个不那么严格的design persona, 即proto persona. 需要注意的是, 即便不够标准, proto persona也一定是基于有效的研究数据建立的.
-
-为什么要使用persona说完了什么是persona, 想来大家对为什么要用persona也有了一定的认识. 无非就是以下几点:
-
-通过具体的用户模型, 我们就能将用户需求贯穿产品始终, 时刻提醒我们关注的核心和重点;
-让用户由抽象繁杂变的清晰明了, 更加容易做到以用户为核心的设计;
-更加容易区分核心任务和非核心任务;
-更加容易激发灵感;…
-
-如何使用persona说了这些persona的好处, 我们该如何使用persona呢? 先说说不用persona可能带来的坏处吧, 除了上述那些好处都没了外:
-
-我们很容易被个别用户所引导, 从而不断的更改设计和需求方案;
-团队很容易出现理解上的偏差, 很容易出现自我代入的思维方式;
-很容易陷入到边缘需求之中去;
-
-那么如何使用呢?
-
-根据研究资料, 用户调查, 抽象出典型用户模型;
-团队沟通要完善, 确保每个人都对建立的persona有足够清晰统一的认识;
-需求要以persona为评判对象, 以用户核心需求作为第一要务;
-在产品的各个环节都要随时保持对persona的对比验证, 确保始终走在以用户为核心的设计之路上;
-
-简单? 哈哈, 其实这里的核心都在与那个用户模型, 好的用户模型才能带来实际的好益处, 那么如何评判一个好的用户模型呢?
-
-好的persona一定是反映出了研究中的某种模式;
-好的persona一定是关注当前的, 而不是着眼于未来的;
-好的persona都是非常现实的, 没有那么多的理想主义;
-好的persona都代表着一个颇有难度的设计对象;
-好的persona能够帮助你了解用户的使用情景, 行为, 态度, 需求, 痛点以及其目标和动机;
-
-哈哈, 挺虚的? 可以看看Chris Kelly 收集到pinterest的一些personas的例子~ 也许你会有更加清晰的认识哦~
-结语第一次接触到persona这个词是12年在TX实习的时候, 因为要针对伦敦奥运会做一个微博活动平台, 当时就需要我们针对微博运营人员的调研而建立一个persona, 从而更好的整合大家的需求, 以解决共同需求为主要目的. 当时觉得persona其实就是个用户需求代表, 现在来看, persona更准确说应该是个带着用户主要共同需求的虚拟人物.
-而且通常来说, persona只有和scenario结合的时候才有价值, 而往往一个product下有不止一个persona, 更有无数scenario. 拥有一个完善的persona, 就相当于有一个更好的代入对象, 我们都可以更好的找到一个用户的角度去观察和思考在某个情景下的用户目标, 行为和预期等等, 从而让产品设计的更加贴近用户, 更加自然的与用户交互了.
-参考资料:
-Persona - Wiki
-Chris Kelley’s Board of Personas
-Using Proto-Personas for Executive Alignment
-Clear look at personas - smashing magazine
-
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Success happens overnight(译)--很好的解释&quot;一夜成名&quot;的真相</title><link>http://taoalpha.me/blog/2013/06/11/read-success-happens-overnight-translated-a-good-explanation-overnight-truth/</link><category>read</category><tag>HCIBib,产品学习,翻译文章</tag><pubDate>2013-06-11T09:00:00.000Z</pubDate><description>From UXMYTH{Myth # 32} Success happens overnight–成功总是发生在一夜之间的苹果iPod的出现几乎立刻就把MP3播放器市场整了个天翻地覆,不是吗?亚马逊 也几乎是一下子改变了整个书类的销售方式,不是吗?好吧,世界上它们并没有那么夸张…虽然外界看起来好像是这样的.
-事实上,即便是对于互联网企业,也往往需要多年的努力才能获得一夜成名. 多年的辛苦工作,学习,试验以及一路上无数的失败.有时候甚至还要追逐一个几乎所有人都不喜欢的项目,比如当初随着Gmail开发的”Crazy Javascript stuff”.
-
-
-那些看起来很写意的成功也往往花费了很长的时间去实现的.
-    Amazon:亚马逊成立于1994年,但是直到1996年才增加了书评的功能.一开始他们主要努力于获取用户.他们一直到1998年才增加了CDs类的商品,而直到2001年它们甚至都没有获得利润.而这一点很容易被人忽略,从而以为它们在此之前就获得了成功…    Twitter:Twitter的创始人Biz Stone在创立Twitter之前,已经在Blog,移动和社交等领域从事产品工作长达八年之久.他自己说:”时机,耐心,花费十年努力才最终让你似乎一夜成名”.    Apple iPod:iPod的一夜成名背后有着三年的努力付出.”第一款的iPod是在2001年发布的,在一年内,苹果就改进了它的功效性而发布了第二版.但是直到2004年的第四版才开始出现脱销的盛况.”    37signals:当我们五年前开始Basecamp的时候,我想我们只有不到2000人订阅我们的RSS.即便算上那些时不时只是过来看一下的用户也只多了几千人.所以猜测我们初始的用户不到5000人还是蛮合理的.从今天来看,它的规模是非常小的.但是当初那些用户也是我们花费了多年的时间建立起来的.    Gmail:我们是在2001年8月开始Gmail项目的.在很长的一段时间里,几乎所有人都不喜欢它…有不少的一些人认为我们应该关闭这个项目,或者重启这个项目,并将它作为一个企业级产品,再加上本地客户端软件,而不是所谓的crazy Javascript stuff.甚至到2004年4月1日,也就是开启2年半后,许多Google内部的人都预测它最终将走向灭亡…    AngryBirds:愤怒的小鸟是一款非常成功的手机游戏.但是Rovio本身在做到这一点之前已经经历过30多款手机游戏了…    FedEx:Frederick W.Smith在1965年的时候想到了这个快递寄送服务的主意,在1973年的时候成立了FedEx,当时第一天只有7个包裹,而在事业初期的26个月里,它就损失了2900万美金,但是仅仅到70年代末它就获得了成功.    The Beatles:披头士似乎是在1964年在Ed sullivan的表演中,突然出现并引爆了整个世界.但是它们其实从1957年就开始在Liverpool和Hamburg的小酒吧中玩音乐了,而且在他们获得了广大影响力的早期,它们第一个关键意义的成功,Sgt Peppers是在1967年发布的.    …或者看下Tiger Woods:虽然他是世界上最年轻的获得大师赛冠军的高尔夫选手,他也是花费了他整个人生在练习的.”他是一个少年天才,在两岁前就开始接触高尔夫了.”还有更多的一些关于一夜成名的看法:
-    一夜成名的概念对于任何希望长期并稳定可持续发展的企业而言都是一种误导甚至非常有害的.无论是何种商业,巨大的成功都是花费了多年的努力汗水才建立起来的,而且很少有反例(即很少有不劳而获的).”Spotify的联合创始人Daniel Ek说道.”一夜成名的背后往往有着长时间的努力积累.简单的总结就是:更努力的工作,把一件事做到更好,做得更快,让自己变得更加强壮,比之前更好,一小时接着一小时的,我们的工作从来没有结束的时候.”    Seth Godin认为”一直以来,一些人说服自己去相信只有一种成功值得拥有,那就是’一夜成名’,那种如果你不在第一周内达到巅峰,那么你就等同于失败了.那种如果你的交互界面没有完美到跳出界面本身,或者你的新店没有在开张的时候门口就排了5000人的队,那么你就都已经输了”.    Barrie Bergman曾在他的ChangeThis宣言中这样写道”个人来说,我从来没遇到过一夜成名的好事.我曾经遇到过那些在很长的时间里都做得好好的人,只是突然被发现了而已.然后所有人都假设这些人都是无名氏,就那么突然一夜成名了.”    “一夜成名真的也就是一夜而已.” Jonathan Fields.当然,YouTube算是一个例外了.不过想想即便是他们也花费了五年的时间才开始盈利.
 </description><source>TaoAlpha</source><author>TaoALpha</author></item></channel></rss>

@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> ES6 Quiz With Answer | TaoAlpha's Blog</title><meta name="description" content="Here is my new blog based on hexo."><meta name="viewport" content="width=device-width, initial-scale=1"><!-- open graph part--><meta property="og:image" content="http://taoalpha.me/images/newblog.jpg"><meta property="og:description" content="TaoAlpha's hexo Blog"><meta property="og:type" content="website"><link rel="short icon" href="/blog/favicon.png"><link rel="stylesheet" href="/blog/css/default.css"></head><body class="blogpost"><aside class="home-menu"><nav class="home-icon-con upside"></nav><a href="/blog/" class="home-menu-icon brand active">涛</a><a href="/blog/tipme" class="home-menu-icon"><i class="fa fa-1x fa-gratipay"></i></a><a href="javascript:$('.searchbox').focus().css('border', '4px dashed #666');setTimeout(function(){$('.searchbox').focus().css('border', 'none').css('border-bottom', '1px solid #ccc')},1000);" class="home-menu-icon"><i class="fa fa-1x fa-search"></i></a><a href="/blog/puzzle" class="home-menu-icon"><i class="fa fa-1x fa-puzzle-piece"></i></a><a href="javascript:;" title="Contact Me" class="home-menu-icon follow">+</a><div class="home-contact"><a href="http://facebook.com/zzgary/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/facebook-32.png" alt="facebook"></a><a href="http://github.com/taoalpha/" target="something"><img src="https://cdn1.iconfinder.com/data/icons/social-shade-rounded-rects/512/github-32.png" alt="github"></a><a href="http://taoalpha.me" target="something"><img src="https://cdn3.iconfinder.com/data/icons/colore-sociale/32/mewally_32x32.png" alt="portfolio"></a><a href="http://douban.com/people/129154019" target="something"><img src="http://img3.douban.com/favicon.ico" alt="douban"></a></div><nav class="home-icon-con downside"><a href="#contribution" class="home-menu-icon makecontribution"><i class="fa fa-pencil fa-1x"></i></a><a id="togglemusic" href="javascript:;" class="home-menu-icon"><i class="fa fa-music fa-1x"></i></a></nav><div id="musicbar"><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="40" src=""></iframe></div></aside><div id="contribution" class="hide"><span class="close"></span><input id="sender_mail" type="email" placeholder="Give me your email"><textarea id="contributionContent" name="contribution" cols="30" rows="10" placeholder="Thanks for your contribution!  Now tell me what you want to say: feedback ? advice ? contributions ? Whatever you want ^_^.  I will look at it as soon as I receive it and reply you asap.  "></textarea><input id="sendToMe" type="submit"></div><article id="content"><section class="entry"><h1 class="entry-title"><a href="http://taoalpha.me/blog/2016/01/11/tech-es6-quiz-with-answer/" title="ES6 Quiz With Answer">ES6 Quiz With Answer</a></h1><div class="meta-top"><a href="http://dmitrysoshnikov.com"><div style="display:inline-block;" class="avatar"><img src="https://avatars0.githubusercontent.com/u/244010?v=3&amp;s=96" alt="100"></div><span>Dmitry Soshnikov</span></a><span>2016-01-11</span><span class="wordage">10847字</span><span class="readspeed">31 分钟读完</span></div><p><a href="https://gist.github.com/DmitrySoshnikov/3928607cb8fdba42e712" target="_blank" rel="external">Origin Post</a></p>
+<h2 id="@kangax_u2019s_ES6_quiz_2C_explained"><a href="#@kangax_u2019s_ES6_quiz_2C_explained" class="headerlink" title="@kangax’s ES6 quiz, explained"></a>@kangax’s ES6 quiz, explained</h2><p><a href="https://twitter.com/kangax" target="_blank" rel="external">@kangax</a> created a new <a href="http://perfectionkills.com/javascript-quiz-es6/" target="_blank" rel="external">interesting quiz</a>, this time devoted to ES6 (aka ES2015). I found this quiz very interesting and quite hard (made myself 3 mistakes on first pass).</p>
+<p>Here we go with the explanations:</p>
+<h3 id="Question_1_3A"><a href="#Question_1_3A" class="headerlink" title="Question 1:"></a>Question 1:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">x, f = (</span>) =&gt; <span class="title">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> x;</span><br><span class="line">  <span class="keyword">var</span> y = x;</span><br><span class="line">  x = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">return</span> [x, y, f()];</span><br><span class="line">&#125;)(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><span style="color: green;"><strong>[2, 1, 1]</strong></span></li>
+<li>[2, undefined, 1]</li>
+<li>[2, 1, 2]</li>
+<li>[2, undefined, 2]</li>
+</ul>
+<p>The most complex question for me in this quiz. I didn’t get it right initially until read the <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-functiondeclarationinstantiation" target="_blank" rel="external">spec</a> and <a href="https://twitter.com/DmitrySoshnikov/status/662035788826337281" target="_blank" rel="external">clarified</a> with <a href="https://twitter.com/kangax" target="_blank" rel="external">@kangax</a>. First I answered <code>[2, undefined, 1]</code>, which is <em>“almost correct”</em>, except <em>one subtle thing</em>. The correct answer here is the first one, <code>[2, 1, 1]</code>, and let’s see why.</p>
+<p><a href="http://dmitrysoshnikov.com/ecmascript/es6-notes-default-values-of-parameters/#conditional-intermediate-scope-for-parameters" target="_blank" rel="external">As we know</a>, parameters create <em>extra scope</em> in case of using <a href="http://dmitrysoshnikov.com/ecmascript/es6-notes-default-values-of-parameters/" target="_blank" rel="external">default values</a>.</p>
+<p>Parameter <code>f</code> is always the function (the default value, since it’s not passed), and it <em>captures</em> <code>x</code> exactly from the <em>parameters scope</em>, that is <code>1</code>.</p>
+<p>Local <em>variable</em> <code>x</code> <em>shadows</em> the parameter with the same name, <code>var x;</code>. It’s <a href="http://dmitrysoshnikov.com/notes/note-4-two-words-about-hoisting/" target="_blank" rel="external">hoisted</a>, and is assigned default value… <code>undefined</code>? Yes, <em>usually</em> it would be assigned value <code>undefined</code>, but not in this case, and this is the subtle thing we mentioned. If there is a parameter with the same name, then the local binding is initialized not with <code>undefined</code>, but with the value (including default) of that parameter, that is <code>1</code>.</p>
+<p>So the variable <code>y</code> gets the value <code>1</code> as well, <code>var y = x;</code>.</p>
+<p>Next assignment to local variable <code>x</code> happens, <code>x = 2</code>, and it gets value <code>2</code>.</p>
+<p>By the time of the return, we have <code>x</code> is <code>2</code>, <code>y</code> is <code>1</code>, and <code>f()</code> is also <code>1</code>. It’s also a tricky part: since <code>f</code> was created in the scope of parameters, its <code>x</code> refers to the <em>parameter</em> <code>x</code>, which is still <code>1</code>.</p>
+<p>And the final return value is: <code>[2, 1, 1]</code>.</p>
+<hr>
+<h3 id="Question_2_3A"><a href="#Question_2_3A" class="headerlink" title="Question 2:"></a>Question 2:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [</span><br><span class="line">    (() =&gt; <span class="keyword">this</span>.x).bind(&#123; x: <span class="string">'inner'</span> &#125;)(),</span><br><span class="line">    (() =&gt; <span class="keyword">this</span>.x)()</span><br><span class="line">  ]</span><br><span class="line">&#125;).call(&#123; x: <span class="string">'outer'</span> &#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>[‘inner’, ‘outer’]</li>
+<li><span style="color: green;"><strong>[‘outer’, ‘outer’]</strong></span></li>
+<li>[undefined, undefined]</li>
+<li>Error</li>
+</ul>
+<p>Arrow functions have <em>lexical <code>this</code></em> value. This means, they inherit <code>this</code> value from the context they are <em>defined</em>. And later it stays <em>unchangeable</em>, even if explicitly <em>bound</em> or called in a different context.</p>
+<p>In this case both arrow functions are created within the context of <code>{x: &#39;outer&#39;}</code>, and <code>.bind({ x: &#39;inner&#39; })</code> applied on the first function doesn’t make difference.</p>
+<p>So the answer is: <code>[&#39;outer&#39;, &#39;outer&#39;]</code>.</p>
+<hr>
+<h3 id="Question_3_3A"><a href="#Question_3_3A" class="headerlink" title="Question 3:"></a>Question 3:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x, &#123; x: y = <span class="number">1</span> &#125; = &#123; x &#125;; y;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>undefined</li>
+<li><span style="color: green;"><strong>1</strong></span></li>
+<li>{ x: 1 }</li>
+<li>Error</li>
+</ul>
+<p>Variable <code>y</code> will eventually have value <code>1</code> since:</p>
+<p>First, <code>let x</code> defines <code>x</code> with the value <code>undefined</code>.</p>
+<p>Then, <em>destructuring assignment</em> <code>{ x: y = 1 } = { x }</code> on the <em>right hand side</em> has a <em>short notation</em> for an object literal: the <code>{x}</code> is equivalent to <code>{x: x}</code>, that is an object <code>{x: undefined}</code>.</p>
+<p>Once it’s destructured the pattern <code>{ x: y = 1 }</code>, we extract variable <code>y</code>, that corresponds to the property <code>x</code>. However, since property <code>x</code> is <code>undefined</code>, the <em>default value</em> <code>1</code> is assigned to it.</p>
+<p>So the answer is: <code>1</code>.</p>
+<hr>
+<h3 id="Question_4_3A"><a href="#Question_4_3A" class="headerlink" title="Question 4:"></a>Question 4:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> f = <span class="keyword">this</span> ? <span class="class"><span class="keyword">class</span> <span class="title">g</span> </span>&#123; &#125; : <span class="class"><span class="keyword">class</span> <span class="title">h</span> </span>&#123; &#125;;</span><br><span class="line">  <span class="keyword">return</span> [</span><br><span class="line">    <span class="keyword">typeof</span> f,</span><br><span class="line">    <span class="keyword">typeof</span> h</span><br><span class="line">  ];</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<ul>
+<li><span style="color: green;"><strong>[“function”, “undefined”]</strong></span></li>
+<li>[“function”, “function”]</li>
+<li>[“undefined”, “undefined”]</li>
+<li>Error</li>
+</ul>
+<p>This <a href="http://benalman.com/news/2010/11/immediately-invoked-function-expression/" target="_blank" rel="external">IIFE</a> is executed with no explicit <code>this</code> value. In ES6 it means it will be <code>undefined</code> (the same as in <a href="http://dmitrysoshnikov.com/ecmascript/es5-chapter-2-strict-mode/#codethiscode-value-restrictions" target="_blank" rel="external">strict mode</a> in ES5).</p>
+<p>So the variable <code>f</code> is bound to the <code>class h {}</code>. Its <code>typeof</code> is a <code>&quot;function&quot;</code>, since classes in ES6 is a <em>syntactic sugar</em> on top of the constructor <em>functions</em>.</p>
+<p>However, the <code>class h {}</code> itself is created in the <em>expression position</em>, that means its name <code>h</code> <em>is not added</em> to the environment. And testing the <code>typeof h</code> should return <code>&quot;undefined&quot;</code>.</p>
+<p>And the answer is: <code>[&quot;function&quot;, &quot;undefined&quot;]</code>.</p>
+<hr>
+<h3 id="Question_5_3A"><a href="#Question_5_3A" class="headerlink" title="Question 5:"></a>Question 5:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">typeof</span> (<span class="keyword">new</span> (<span class="class"><span class="keyword">class</span> </span>&#123; <span class="class"><span class="keyword">class</span> () </span>&#123;&#125; &#125;)))</span><br></pre></td></tr></table></figure>
+<ul>
+<li>“function”</li>
+<li><span style="color: green;"><strong>“object”</strong></span></li>
+<li>“undefined”</li>
+<li>Error</li>
+</ul>
+<p>This is an obfuscated syntax playing, but let’s try to figure it out :)</p>
+<p>First of all, since ES5 era, <em>keywords</em> are allowed as <em>property names</em>. So on a simple object example, it can look like:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let foo = &#123;</span><br><span class="line">  class: function() &#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>And ES6 standardized <em>concise method definitions</em>, that allows dropping the <code>: function</code> part, so we get the:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> foo = &#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span>() </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>This is exactly what corresponds to the inner <code>class () {}</code> – it’s a <em>method</em> inside a class.</p>
+<p>The class itself is <em>anonymous</em>, so we can rewrite the example:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> c = <span class="class"><span class="keyword">class</span> </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span>() </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> c();</span><br></pre></td></tr></table></figure>
+<p>Now, instead of assigning to the varialbe <code>c</code>, we can instantiate it directly:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="class"><span class="keyword">class</span> </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span>() </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>The result of a default class is always a simple object. And its <code>typeof</code> should return <code>&quot;object&quot;</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> (<span class="keyword">new</span> <span class="class"><span class="keyword">class</span> </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span>() </span>&#123;&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>And the answer is: <code>&quot;object&quot;</code>.</p>
+<hr>
+<h3 id="Quetion_6_3A"><a href="#Quetion_6_3A" class="headerlink" title="Quetion 6:"></a>Quetion 6:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> (<span class="keyword">new</span> (<span class="class"><span class="keyword">class</span> <span class="title">F</span> <span class="keyword">extends</span> (<span class="title">String</span>, <span class="title">Array</span>) </span>&#123; &#125;)).substring</span><br></pre></td></tr></table></figure>
+<ul>
+<li>“function”</li>
+<li>“object”</li>
+<li><span style="color: green;"><strong>“undefined”</strong></span></li>
+<li>Error</li>
+</ul>
+<p>Here we have a similar obfuscated example (but we already figured out this inlined <code>typeof</code>, <code>new</code>, and <code>class</code> thing above ;)), though the interesting part is the value of the <code>extends</code> clause. It’s the: <code>(String, Array)</code>.</p>
+<p>The grouping operator always returns its last argument, so the <code>(String, Array)</code> is actually just <code>Array</code>.</p>
+<p>So what we’ve got here is:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">F</span> <span class="keyword">extends</span> <span class="title">Array</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> f = <span class="keyword">new</span> F();</span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> f.substring; <span class="comment">// "undefined"</span></span><br></pre></td></tr></table></figure>
+<p>Since array instances do not have <code>substring</code> method, and our extended class <code>F</code> didn’t provide it either, the answer is <code>&quot;undefined&quot;</code>.</p>
+<hr>
+<h3 id="Question_7_3A"><a href="#Question_7_3A" class="headerlink" title="Question 7:"></a>Question 7:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[...[...<span class="string">'...'</span>]].length</span><br></pre></td></tr></table></figure>
+<ul>
+<li>1</li>
+<li><span style="color: green;"><strong>3</strong></span></li>
+<li>6</li>
+<li>Error</li>
+</ul>
+<p>Here we deal with the <a href="http://exploringjs.com/es6/ch_parameter-handling.html#sec_spread-operator" target="_blank" rel="external">spread operator</a>. It allows to <em>spread</em> all the elements to the array. It can work with any <em>iterable</em> object.</p>
+<p>Strings are iterable, meaning that we can iterate over their chars (in this case char by char). So the inner <code>[...&#39;...&#39;]</code> results to an array: <code>[&#39;.&#39;, &#39;.&#39;, &#39;.&#39;]</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="string">'...'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = [...s];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// ['.', '.', '.']</span></span><br></pre></td></tr></table></figure>
+<p>Array are iterable as well. So the <em>outer</em> spread is applied on our new array:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> result = [...a];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// ['.', '.', '.']</span></span><br><span class="line"><span class="built_in">console</span>.log(result.length); <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<p>As we can see spreading the array happens element by element, so the resulting array just <code>copied</code> all the elements, and looks the same – with just <code>3</code> string dots.</p>
+<p>And the answer is: <code>3</code>.</p>
+<hr>
+<h3 id="Question_8_3A"><a href="#Question_8_3A" class="headerlink" title="Question 8:"></a>Question 8:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> (<span class="function"><span class="keyword">function</span>* <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="keyword">yield</span> f &#125;)().next().next()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>“function”</li>
+<li>“generator”</li>
+<li>“object”</li>
+<li><span style="color: green;"><strong>Error</strong></span></li>
+</ul>
+<p>In this example we encounter a <a href="https://davidwalsh.name/es6-generators" target="_blank" rel="external">generator function</a>. When executed, they return a <em>generator object</em>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> g = (<span class="function"><span class="keyword">function</span>* <span class="title">f</span>(<span class="params"></span>) </span>&#123; <span class="keyword">yield</span> f &#125;)();</span><br></pre></td></tr></table></figure>
+<p>Generator objects have <code>next</code> method, that returns the next value at the <code>yield</code> position. The returned value has <em>iterator protocol</em> format:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;value: &#60;returned value&#62;, done: boolean&#125;;</span><br></pre></td></tr></table></figure>
+<p>So on first <code>next()</code> we get:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g.next(); <span class="comment">// &#123;value: f, done: false&#125;</span></span><br></pre></td></tr></table></figure>
+<p>As we see, the returned value <em>itself</em> doesn’t have method <code>next()</code>, so trying to call it <em>as a chain</em> would result to an error:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g.next().next(); <span class="comment">// error</span></span><br></pre></td></tr></table></figure>
+<p>Notice though, that we could normally call it as:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g.next(); <span class="comment">// &#123;value: f, done: true&#125;</span></span><br><span class="line">g.next(); <span class="comment">// &#123;value: undefined, done: true&#125;</span></span><br></pre></td></tr></table></figure>
+<p>So the answer is: <code>Error</code>.</p>
+<hr>
+<h3 id="Question_9_3A"><a href="#Question_9_3A" class="headerlink" title="Question 9:"></a>Question 9:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> (<span class="keyword">new</span> <span class="class"><span class="keyword">class</span> <span class="title">f</span>() </span>&#123; [f]() &#123; &#125;, f: &#123; &#125; &#125;)[<span class="string">`<span class="subst">$&#123;f&#125;</span>`</span>]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>“function”</li>
+<li>“undefined”</li>
+<li>“object”</li>
+<li><span style="color: green;"><strong>Error</strong></span></li>
+</ul>
+<p>The obfuscated example results to a Syntax Error since class name <code>f()</code> is not correct.</p>
+<p>The answer is <code>Error</code>.</p>
+<hr>
+<h3 id="Question_10_3A"><a href="#Question_10_3A" class="headerlink" title="Question 10:"></a>Question 10:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="string">`<span class="subst">$&#123;&#123;Object&#125;</span>&#125;`</span>.prototype</span><br></pre></td></tr></table></figure>
+<ul>
+<li>“function”</li>
+<li><span style="color: green;"><strong>“undefined”</strong></span></li>
+<li>“object”</li>
+<li>Error</li>
+</ul>
+<p>This one is very tricky :)</p>
+<p>First, we deal with <a href="https://ponyfoo.com/articles/es6-template-strings-in-depth" target="_blank" rel="external">template strings</a>.</p>
+<p>They are capable to render values of variables directly in the strings:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`X is <span class="subst">$&#123;x&#125;</span>`</span>); <span class="comment">// "X is 10"</span></span><br></pre></td></tr></table></figure>
+<p>However, in the example we have something that looks a bit strange: it’s not <code>${Object}</code> how it “should be”, but the <code>$</code>.</p>
+<p>No, it’s not another special syntax of template strings, it’s still a <em>value</em> inside <code>${}</code>, and the value is <code>{Object}</code>.</p>
+<p>What is <code>{Object}</code>? Well, as we mentioned earlier above, ES6 has short notation for object literals, so in fact it’s just the: <code>{Object: Object}</code> – a simple object with the property named <code>&quot;Object&quot;</code>, and the value <code>Object</code> (the built-in <code>Object</code> constructor).</p>
+<p>Now it’s becoming more clear:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> x = &#123;<span class="built_in">Object</span>: <span class="built_in">Object</span>&#125;;</span><br><span class="line"><span class="keyword">let</span> s = <span class="string">`<span class="subst">$&#123;x&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(s); <span class="comment">// "[object Object]"</span></span><br></pre></td></tr></table></figure>
+<p>See what’s happened? The <code>${x}</code> is roughly equivalent to the:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">''</span> + x;</span><br><span class="line"></span><br><span class="line"><span class="comment">// or the same:</span></span><br><span class="line"></span><br><span class="line">x.toString(); <span class="comment">// "[object Object]"</span></span><br></pre></td></tr></table></figure>
+<p>Now, the string <code>&quot;[object Object]&quot;</code> obviously doesn’t have property <code>prototype</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"[object Object]"</span>.prototype; <span class="comment">// undefined</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">"[object Object]"</span>.prototype; <span class="comment">// "undefined"</span></span><br></pre></td></tr></table></figure>
+<p>So the answer is: <code>&quot;undefined&quot;</code>.</p>
+<hr>
+<h3 id="Question_11_3A"><a href="#Question_11_3A" class="headerlink" title="Question 11:"></a>Question 11:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">((...x, xs)=&gt;x)(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>1</li>
+<li>3</li>
+<li>[1,2,3]</li>
+<li><span style="color: green;"><strong>Error</strong></span></li>
+</ul>
+<p>This one is the simplest. <a href="http://exploringjs.com/es6/ch_parameter-handling.html#sec_rest-parameters" target="_blank" rel="external">Rest parameters</a> can appear <em>only</em> at the <em>last</em> postion. In this case <code>...x</code> goes as a first argument of an IIFE arrow function, so results to a Parse Error.</p>
+<p>And the answer is: <code>Error</code>.</p>
+<hr>
+<h3 id="Question_12_3A"><a href="#Question_12_3A" class="headerlink" title="Question 12:"></a>Question 12:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [ ];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> &#123; x = <span class="number">2</span>, y &#125; <span class="keyword">of</span> [&#123; x: <span class="number">1</span> &#125;, <span class="number">2</span>, &#123; y &#125;]) &#123;</span><br><span class="line">  arr.push(x, y);</span><br><span class="line">&#125;</span><br><span class="line">arr;u</span><br></pre></td></tr></table></figure>
+<ul>
+<li>[2, { x: 1 }, 2, 2, 2, { y }]</li>
+<li>[{ x: 1 }, 2, { y }]</li>
+<li>[1, undefined, 2, undefined, 2, undefined]</li>
+<li><span style="color: green;"><strong>Error</strong></span></li>
+</ul>
+<p>Several topics combined here: <em>destructuring assignment</em>, <em>default values</em>, and <code>for-of</code> loop.</p>
+<p>However, we can quickly identify it’s an error, because of <del>two</del> one thing:</p>
+<p><strong>EDIT 1:</strong> <a href="https://twitter.com/fkling42" target="_blank" rel="external">@fkling42</a> <a href="https://gist.github.com/DmitrySoshnikov/3928607cb8fdba42e712#gistcomment-1612938" target="_blank" rel="external">pointed out</a> that the variable <code>y</code> is in the environment, but <em>is not initialized</em> yet (being under TDZ – <em>Temportal Dead Zone</em>), and <em>that’s the reason</em> why it cannot be accessed</p>
+<p><strong>EDIT 2:</strong> <a href="https://twitter.com/getify" target="_blank" rel="external">@getify</a> <a href="https://twitter.com/getify/status/662050783945359360" target="_blank" rel="external">pointed out</a>, that value <code>2</code> actually normally passes <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-requireobjectcoercible" target="_blank" rel="external">RequireObjectCoercible</a> check, and hence there would be no error in destructuring <code>let { x = 2, y } = 2;</code>.</p>
+<ul>
+<li><code>{ y }</code> is a short notation of <code>{y: y}</code> <del>and will fail, since variable <code>y</code> doesn’t exist in the scope;</del> The variable <code>y</code> is in the scope, but is under <em>TDZ</em>, so cannot be accessed</li>
+<li>(we wouldn’t reach this, because of the frist error, but): trying to destructure <code>2</code> <del>will fail too</del> will not fail, since to object coercion will be normally applied.</li>
+</ul>
+<p>So the answer is: <code>Error</code>.</p>
+<hr>
+<h3 id="Question_13_3A"><a href="#Question_13_3A" class="headerlink" title="Question 13:"></a>Question 13:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="literal">false</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> f = &#123; g() =&gt; <span class="number">1</span> &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">typeof</span> f;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>“function”</li>
+<li>“undefined”</li>
+<li>“object”</li>
+<li><span style="color: green;"><strong>Error</strong></span></li>
+</ul>
+<p>This example is only on attention, since it’s a syntax error: the arrow function <code>=&gt;</code> cannot be defined in this way, since we have a an object with the <code>g</code> (consice) method.</p>
+<p>And the answer is: <code>Error</code>.</p>
+<hr>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>I like such tricky quiz questions, it’s always fun to track the runtime semantics and parsing process manually. Of course, most of the things here are far from practical production code, and are interesting mostly from the theoretical viewpoint. Still I found it enjoyable.</p>
+<p>I’ll be glad to discuss all the questions in the comments.</p>
+<p>Good luck with ES6 ;)</p>
+<p>Written by: Dmitry Soshnikov</p>
+<p><a href="http://dmitrysoshnikov.com" target="_blank" rel="external">http://dmitrysoshnikov.com</a></p>
+<aside class="tipme special"><a href="/blog/tipme" class="tipme">If you like my work, buy me a soda or send me a book ! ^_^</a></aside></section><aside class="sidenav"><input type="text" placeholder="Enter to search" class="st-default-search-input searchbox"></aside><div class="relatedposts sidenav"><h2>Related Posts:</h2><ul class="article-list"><li><a href="http://taoalpha.me/blog/2015/12/07/tech-my-first-cli-tool-with-nodejs/">First CLI tool with NodeJS</a></li><li><a href="http://taoalpha.me/blog/2015/11/19/tech-preventDefault-and-stopPropagation-in-JS/">preventDefault and stopPropagation in JS</a></li><li><a href="http://taoalpha.me/blog/2015/11/11/tech-use-strict-in-js/">Strict Mode in JavaScript</a></li><li><a href="http://taoalpha.me/blog/2015/11/06/tech-es6-general-summary/">ES6 General Summary</a></li><li><a href="http://taoalpha.me/blog/2015/11/03/tech-javascript-lru-cache/">Implement LRU Cache in JavaScript</a></li></ul></div><aside class="sidenav"><div class="recentposts"><h2>Recent Posts:</h2><ul class="article-list"><li><a href="http://taoalpha.me/blog/2016/01/09/read-javascript-coding-style/">JavaScript Coding Style</a></li><li><a href="http://taoalpha.me/blog/2016/01/06/oj-oj-leetcode-sort-3/">OJ LeetCode Sort 3</a></li><li><a href="http://taoalpha.me/blog/2016/01/05/oj-oj-leetcode-sort-2/">OJ LeetCode Sort 2</a></li><li><a href="http://taoalpha.me/blog/2016/01/04/oj-oj-leetcode-sort-1/">OJ LeetCode Sort 1</a></li></ul></div></aside><div class="comments"><div data-thread-key="2016/01/11/tech-es6-quiz-with-answer/" data-title="ES6 Quiz With Answer" data-url="http://taoalpha.me/blog/2016/01/11/tech-es6-quiz-with-answer/" data-author-key="1" class="ds-thread"></div><script>var duoshuoQuery = {short_name:"taoalpha"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0] 
+   || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script></div></article><div class="notification fail hidden"></div><!-- jquery--><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-46725017-2",'auto');ga('send','pageview');</script><script>(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+_st('install','CUMLELEvkSRAFuVehSCm','2.0.0');</script><!-- main functions--><script src="/blog/js/functions.js"></script><script src="/blog/js/default.js"></script><script src="/blog/js/post.js"></script></body></html>
