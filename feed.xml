@@ -1,4 +1,27 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-11T03:23:39.746Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>ES6 Quiz With Answer</title><link>http://taoalpha.me/blog/2016/01/11/tech-es6-quiz-with-answer/</link><category>tech</category><tag>ES6,JS,Quiz</tag><pubDate>2016-01-11T08:15:24.000Z</pubDate><description>Origin Post
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-12T04:12:39.543Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>Dynamic scheduling crawler for FeedPusher</title><link>http://taoalpha.me/blog/2016/01/12/tech-dynamic-scheduling-crawler-for-feedpusher/</link><category>tech</category><tag>Crawler,FeedPusher,NodeJS</tag><pubDate>2016-01-12T08:12:44.000Z</pubDate><description>As I promised, I have been working on refactoring the feedpusher with pure JS/nodeJS from last week. Now I have set up the basic database struture and spider which has already been running for one week with 80 sites and 8k feeds stored into my mongodb on raspberry pi.
+Today, I jsut set up a new process to crawl the updates which I called dynamic scheduling which means now the spider can decide whether this site needs to be recrawled this time or not by itself. Why? Most important reason is that as the number of sites goes bigger, the time it crawles all sites is longer, and also crawl every site everytime is not a good way.
+Now I will explain how I do that with nodeJS.
+TheoryOur purpose is let the spider decide when to crawl a specific website/rss link, or in another word, everytime the spider runs, it needs to decide which website should be recrawled this time.
+What data I haveNow I have and I can store some data into my database that may be good for this purpose, but we want to use as few as possible, so I decide to use these two attributes:
+
+lastCrawled: time I last crawled this website;
+updateDuration: the duration between two continuous crawl of this site;
+
+Dynamic SchedulingThe lastCrawled is pretty simple and we don’t have a lot things can do with it. But the updateDuration is the core of the dynamic scheduling, since we can increase it and tell the spider that this site needs a longer duration before next crawling and vice versa.
+So the basic idea is:
+The larger the updateDuration is, the longer the website get recrawled.
+Rules
+When to crawl: if current time minus the time lastCrawled is longer than the updateDuration, then the website needs to be recrawled;
+Motivate: if this round of crawling got any updates(new feeds) of this website, then we decrease the updateDuration of this website which is like motivating this website because of the updates;
+Penalize: if this round of crawling got no updates(new feeds) of this website, then we increase the updateDuration of this website which is like penalizing this website because of the later update than expected;
+
+ResultsBased on these simple rules, the updateDuration of one site would be dynamic changing and will reflect the frequency of a website updates in some level.
+CodingThe coding part is pretty stright forward, but since the spider need get a lot of data from the mongodb, so you might need a lot promises to make sure the order of different processes is under your control.
+I will put the Pseudocode here, if you are interested in the real code, you can check my feedpusher code refactoring repo :)
+PseudocodeThis is not a real pseudocode… but I believe you can bare with that :)
+1234567891011121314151617181920212223242526272829303132333435363738394041424344// feed is the object of my core class I used for this spiderfeed.db.open((err, db) =&amp;gt;&amp;#123;  // connect with database  var allSites = [] // store all sites we crawled this time in order to update the lastCrawled and updateDuration later  // find all sites from the database  feed.findAllSites().then((data) =&amp;gt; &amp;#123;    var curTime = moment()    // Need use promise to make sure all finished before you update the lastCrawled and updateDuration    return Promise.all(data.filter( (v) =&amp;gt; &amp;#123;      // filter all sites that the time from lastCrawled has passed the updateDuration      return (((curTime - moment(v.lastCrawled)) / 3600 / 1000) &amp;gt; v.updateDuration)    &amp;#125;)    .map( (v) =&amp;gt;&amp;#123;      // crawl and store each feedUrl which is the link of the rss      allSites.push(v.feedUrl)      return feed.crawler(v.feedUrl)    &amp;#125;) )  &amp;#125;)  .then( ()=&amp;gt;&amp;#123;    // update the lastFCrawled for all sites    return feed.updateCrawled(allSites)  &amp;#125;,(reason)=&amp;gt;&amp;#123;    console.log(&quot;Broken at crawler&quot;)    console.log(reason)    db.close()  &amp;#125;)  .then( ()=&amp;gt;&amp;#123;    console.log(feed.stats)    feed.updateDuration(allSites).then( () =&amp;gt; &amp;#123;      // Now update the updateDuration for all sites      db.close()    &amp;#125;,(reason)=&amp;gt;&amp;#123;      console.log(&quot;Broken at updatedDuration&quot;)      console.log(reason)      db.close()    &amp;#125;)  &amp;#125;,(reason)=&amp;gt;&amp;#123;    console.log(&quot;Broken at updatedCrawled&quot;)    console.log(reason)    db.close()  &amp;#125;)&amp;#125;)
+Yup! currently it works pretty good! :)
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>ES6 Quiz With Answer</title><link>http://taoalpha.me/blog/2016/01/11/tech-es6-quiz-with-answer/</link><category>tech</category><tag>ES6,JS,Quiz</tag><pubDate>2016-01-11T08:15:24.000Z</pubDate><description>Origin Post
 @kangax’s ES6 quiz, explained@kangax created a new interesting quiz, this time devoted to ES6 (aka ES2015). I found this quiz very interesting and quite hard (made myself 3 mistakes on first pass).
 Here we go with the explanations:
 Question 1:123456(function(x, f = () =&amp;gt; x) &amp;#123;  var x;  var y = x;  x = 2;  return [x, y, f()];&amp;#125;)(1)
@@ -252,84 +275,125 @@ Others: others;
 Be Consistent;
 
 SummaryThis book is pretty short with all valueable content. Strongly recommend after you get familiar with all basic css concepts.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (5)</title><link>http://taoalpha.me/blog/2015/06/24/read-javascript-the-definitive-guide-5/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-24T08:00:00.000Z</pubDate><description>概述在十到十二章中, 第十章的正则表达式内容最为丰富, 也是目前应用即为广泛的内容之一. 不过这里也主要是结合js的应用, 实际上正则表达式本身就是一个很值得研究的话题, 有不少书都在谈这个话题, 我后面要读的书目中恰巧就有这么一本, 后面会更加详细的学习以下正则表达式的方方面面.
-十一章算是非常前沿, 高端或者说冷门的点了, 随着浏览器的盛行以及技术的进步, 安全问题始终都是一个很重视的点, 而在这种攻防演练中也促进了js本身的进步, 而主流浏览器本身更是走在了js的最前沿. 各种新的属性都是由他们引入而逐渐成为标准的;
-十二章主要是对走出浏览器的JS做了一个简单的介绍, 而NodeJS的大名在近几年在前后端, 全端领域都可谓是人尽皆知. 我也会在之后阅读相关书籍的时候做更详细的笔记记录.
-阅读笔记Chapter 10 - Pattern Matching Regular Expressions
-normal repetition characters:
-{m,n} 匹配m-n次;
-{m,} 匹配至少m次;
-{m} 匹配恰好m次;
-? 匹配0或1次;
-+ 匹配1或多次;
-* 匹配0或多次;
-
-
-Nongreedy repetition:
-??, +?, *? 在常规的匹配后加上?就能让匹配尽可能发生的短, 它会在允许范围内, 找到尽可能短的匹配;
-
-
-Alternation, Grouping, Reference:
-| 表示匹配前者或者后者;
-(...) 成组, 以组的形式来使用*,+,?等, 同时会记录组的匹配以用于Reference;
-(?:...) 只是成组, 不记录匹配, 不能用于reference, 也不算做reference的序号中去;
-\n 引用, n表示序号, 从1开始, 代表之前第几个group的匹配, 用于匹配开头结尾相同且多样的有奇效:/([&amp;#39;&amp;quot;])[^&amp;#39;&amp;quot;]*\1/ 匹配单引号或者双引号内的内容;
-需要注意的就是, reference不能用于[]的character class之中!
-
-
-anchor characters:
-^: 匹配开头;
-$: 匹配结尾;
-\b: 匹配词边界, /\bJava\b/ =&amp;gt; Java
-\B: 匹配非词边界, /\B[Ss]cript\B/ =&amp;gt; JavaScript, postscript...
-?=p: 表示内容需要匹配p规则,但是返回的命中中不包含这部分;
-?!p: 表示内容不匹配p规则;
-
-
-flags:
-i: 大小写敏感, 即区分大小写;
-g: 全局匹配, 默认是匹配首个;
-m: 多行匹配;
-
-
-String Methods for Pattern Matching:
-search(): 返回匹配词的位置或者-1代表无返回;
-replace(): 支持正则匹配替换, 同时支持替换时使用$n代表是正则匹配的引用, 比如text.replace(/&amp;quot;([^&amp;quot;]*)&amp;quot;/g, &amp;#39;“$1”&amp;#39;);即替换&amp;quot;&amp;quot;为“”;
-match(): 返回包含了匹配的结果, 返回结构为数组格式;
-split(): 接受正则匹配作为其分隔符, 比如: &amp;quot;1, 2, 3&amp;quot;.split(/\s*,\s*/); =&amp;gt; [&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;], 就去掉了本来直接split()多余的空格;
-
-
-RegExp prototype method:
-exec(): 基本等同match(), 不过接受的是string类型去匹配, 而由正则去调用, 当表达式加了全局flag后, exec()每次执行会记录其上次匹配的位置并从此开始新的匹配, 比如:var pattern = /Java/g;pattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).indexpattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).index就会相继输出0,28两个位置;
-test(): 用以检测表达式是否匹配了传入的string, 其执行逻辑(g模式下记录上次匹配位置)和exec()一样;
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (4)</title><link>http://taoalpha.me/blog/2015/06/23/read-javascript-the-definitive-guide-4/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-23T07:00:00.000Z</pubDate><description>概述第六版和第五版的最大区别在于ECMAScript 5的引入, 这是目前发布的最新的js版本, 有着最新的属性和函数, 目前主流浏览器基本都已经完全支持. 本文为阅读5-9章内容的笔记总结, 主要是覆盖了JS中的语句和典型对象.
+阅读笔记Chapter 5 - Statements
+switch/case中使用的是===进行比较判断的, 而不是==;
+with带入scope chain的对象只有读取权限, 没有写入功能, 即with后, 可以获取其代入的对象, 但其内声明的变量都依然归于gloabl或者local之中;
+debugger是ECMAScript 5引入的一个新的statement, 起主要作用是和浏览器结合使用, 用于创建断点以便查错使用;
+use strict也是ECMAScript 5引入的, 严格来说不算statement而是directive, 不过两者很是相近; 其使用必须位于js整体的起始位置或者是一个function主体的起始位置;
+use strict的使用会开启代码的strict mode, 为了提升效率, 错误追踪以及更好的安全性, 其语法要求会更加严格, 简单列举如下:
+停用with语句;
+所有变量必须声明才能调用;
+所有独立声明的函数而非对象的方法定义的, 其this域都默认为undefined, 而函数如果通过apply,call调用, 其this域为传入对象;
+对未声明变量的赋值或者不能写入的对象进行写入, 都会抛出异常;
+eval调用会自动创建临时局部scope, 不再能直接对母域新建声明了;
+arguments成为传入参数的硬拷贝, 和传入参数名之间不在绝对相等, 即改变一方不会引起另一方的改变, 同时停用其caller,callee方法;
+delete用于变量, 函数或者函数参数的时候会抛出异常, 操作对象的某个未声明属性也会抛出异常;
+对象(包括函数)创建中不能出现同名属性(参数);
+直接声明的八进制数是不允许的(即0开头的数字);
+eval,arguments作为keywords对待, 不能赋值, 或赋予其他变量, 也不能用于identifier;
 
 
 
-Chapter 11 - JavaScript Subsets and Extensions本章主要介绍一些目前主流浏览器支持但是还没有写入JavaScript官方版本中的一些js语言的子集(非官方版本)和扩展属性:
 
-subsets: 通常是为了确保不确定安全性的代码能够安全的运行而出现的(除了Crockford’s JavaScript: The Good Parts);
-ADsafe, 最早一个因为安全因素设计的子集语言, 会禁止对绝大多数全局变量的访问;
-dojox.secure: 算是Dojo toolkit的一个扩展;
-Caja: 其包含了两个子集, 一个是Cajita, 比较严格, 类似ADsafe 和 dojox.secure; 还有个是Valija, 则比较接近如今ECMAScript 5的strict mode了;
-Microsoft Web Sandbox;
-FBJS: facebook使用的一个自己;通常子集都需要对应一个verifier, 来确保代码符合其要求;
+Chapter 6 - Objects
+Property Attributes (ECMAScript 5之后引入可自定义配置, 之前默认三者皆有.)
+writable: 可赋值;
+enumerable: 可递归;
+configurable: 可配置 - 可删除也可修改;
 
 
-extensions:
-const: 声明常量, 比如: const pi = 3.14;;
-let: 块变量声明, 相当于缩小版的var, 作用域仅存活在最近的一个块结构里, 你可以用{}来自行创建一个block;
-destructing: 允许多变量结构化赋值: let [x,y] = [1,2];let [r,theta] = polar(1.0, 1.0); function polar(x,y){...};甚至这种all = [first,second] = [1,2,3,4]; 或者这种let transparent = {r:0.0, g:0.0, b:0.0, a:1.0}; let {r:red, g:green, b:blue} = transparent;;
-for/each: 和for/in循环不同, for/each遍历对象的属性值而不是属性名, 且可操作类array对象;
-for/in: 从js 1.7(mozilla的js引擎版本号)开始, for/in也不局限在array和常规object了, 只要是可循环的元素都可以使用了;
-yield: 从python中引入的;
-Array Comprehensions:  还是从Python中借用的, let evensquares = [x*x for (x in range(0,10)) if (x % 2 === 0)];
-try/catch: 支持多catch;
+Object Attributes
+portotype: 指向当前对象的属性继承对象;
+class: 指代对象所属类别;
+extensible: 指示当前对象是否能够新增属性 (ECMAScript 5引入);
+
+
+Object Categories and Property Types:
+native object: js中内置的对象, 包含Arrays, functions, dates, regular expressions等;
+host object: 由js运行环境所定义的对象, 比如常见的浏览器, 就包含了HTMLElement对象;
+user-defined: 执行js代码的时候创建的对象;
+own property: 直接由对象中定义的属性;
+inherited property: 由对象的prototype object继承来的属性;
+
+
+Prototype:
+任何一个对象(除了Object.protytpe)的出现都必然包含了第二个对象的存在: new Array() =&amp;gt; Array.prototype;
+Object.prototype是唯一一个没有母继承的对象了, 它是最顶部的类;
+类似new Array() =&amp;gt; Array.prototype =&amp;gt; Object.prototype这样的两个prototype就组成了Array的prototype chain;
+Object.create() 是ECMAScript 5引入的新的创建对象的方法, 其接受两个参数, 第一个参数会作为新建对象的prototype传入, 第二个则是用来描述新对象的属性的. 如果你传入null, 则新建对象是完全没有prototype的, 只有Object.create(Object.prototype)才是等价于我们常用的{} or new Object();
+获取某个object的未定义属性将返回undefined, 但是获取undefined或者null的某个属性则会抛出异常;
+
+
+getter &amp;amp;&amp;amp; setter
+ECMAScript 5新引入的两个accessor properties, 分别对应某个属性的调用和赋值;
+只有setter的属性只有写入权限, 只有getter的属性则是只读权限;
+
+
+property attributes
+value, writable, enumerable, and configurable
+对应的accessor property: get, set, enumerable, and configurable
+Object.getOwnPropertyDescriptor(object_name, property_name) 获取某个属性的特征描述;
+Object.defineProperty(object_name, property_name,{property_attribute:attribute_value}) 对某个属性设定其特征描述;
 
 
 
-Chapter 12 - Server-Side JavaScript随着js的发展, 慢慢的超出了其本身的作用域: 浏览器. 随着Google V8引擎为js包入了unix的常用API: files,processes,streams,sockets等, js开始走出浏览器进入server端了. 正式命名为Node.JS. 想来很多人可能都听过, 因为后面我的数目中也包含了相关的书, 且本章内容也没见过太多, 所以就一起留到以后吧~
-参考文献:
+下例即为利用Object.defineProperty自定义的一个extend()函数:
+123456789101112131415161718192021222324252627282930// Example 6-3. Copying property attributes/** Add a nonenumerable extend() method to Object.prototype.* This method extends the object on which it is called by copying properties* from the object passed as its argument. All property attributes are* copied, not just the property value. All own properties (even non-* enumerable ones) of the argument object are copied unless a property* with the same name already exists in the target object. */Object.defineProperty(Object.prototype,  &quot;extend&quot;,  &amp;#123;    writable: true,    enumerable: false,    configurable: true,    value: function(o) &amp;#123;      // Define Object.prototype.extend      // Make it nonenumerable      // Its value is this function      // Get all own props, even nonenumerable ones      var names = Object.getOwnPropertyNames(o); // Loop through them      for(var i = 0; i &amp;lt; names.length; i++) &amp;#123;        // Skip props already in this object        if (names[i] in this) continue;        // Get property description from o        var desc = Object.getOwnPropertyDescriptor(o,names[i]);        // Use it to create property on this Object.defineProperty(this, names[i], desc);      &amp;#125;    &amp;#125;  &amp;#125;);
+
+Object Attributes;
+Object.getPrototypeOf() ECMAScript 5引入, 可用于获取某个对象的prototype;
+p.isPrototypeOf() 同上, 用于判断某个对象是否为另一个对象的prototype;
+Object.isExtensible(),Object.preventExtensions()则分别是用于判断一个object是否是可扩展的, 以及禁止其可扩展性的(此操作不可复原);
+Object.seal()类似Object.preventExtensions(), 不过它同时禁掉了properties的configurable属性,Object.isSealed()则是对应用于判断是否sealed的函数;
+Object.freeze()比Object.seal()还要严格,所有属性都变为可读了, 对应的查询函数为:Object.isFrozen();
+Object.preventExtensions(),Object.seal(),Object.freeze()都是只针对当前object而言的;
+class属性目前基本没啥用, 有点等价或者说更细化的typeOf or instanceOf了;
+
+
+
+Chapter 7 - Arrays这里主要记录ECMAScript 5引入的一些新的方法, 3已有的可以查看 阅读笔记-2
+
+forEach(value,index,array_itself): array自身的循环调用函数, 相当于for(i in array_name){}, 区别在于其不支持break等可以跳出循环的语句, 如果你想要提前结束循环, 就需要通过try/catch包裹并利用抛出异常来结束循环;
+map(): 也算是循环的一种, 遍历每个元素并传递给传入的函数, 最终返回一个新数组;
+filter(): 顾名思义, 这是对数组进行筛选的, 值得一提的是filter()会自动跳过空白,所以对于稀疏数组通过filter()可以去除所有空白, 在加上undefined判断, 就可以去除所有空值了;
+every() 和 some(): every()是当数组每个元素都使传入函数为真的时候返回真, some()则是只要一个为真即返回为真, 需要注意的事, 对于空数组, every()会返回真, 而some()会返回为假;
+reduce(function,initial_value) 和 reduceRight(): 通过执行传入函数而对数组元素进行整合,计算,判断, 最终返回一个结果: var max = a.reduce(function(x,y) { return (x&amp;gt;y)?x:y; });即返回数组的最大值; reduceRight()与reduce()一致, 只是循环顺序相反, 从右到左; 当没有声明初始值时, 采用第一个执行元素作为初始值;
+indexOf() 和 lastIndexOf: 顾名思义, 获取数组中某个元素的index, 前者获取首个匹配元素的index, 后者获取最后一个匹配元素的index;
+
+Chapter 8 - Functions
+Functions的调用有四种:
+直接调用;
+作为对象的方法调用;
+作为constructor调用;
+通过call,apply方法调用(间接调用);
+
+
+call() 和 apply:
+call和apply都是间接调用的方法, 允许一个函数临时客串为某个object的方法;
+一定程度上, 可以等价于o.m = f;o.m();delete o.m;
+其接受的第一个参数会成为函数运行的this域, 如果是非strict mode下, 传入null/undefined则会自动将global作为this, 而如果传入的是primitive datatype, 则自动转为对应的wrapper object, 即string =&amp;gt; String;
+call和apply的区别主要体现在后面的参数上, 前者以分散元素传入, 后者则以整体数组形式传入, 所以用apply可以把原本只支持不定长参数的函数转换为接受数组的函数:var biggest = Math.max.apply(Math, array_of_numbers);;
+apply对类array元素处理方式同array元素;
+
+
+bind(): 很是类似call和apply, 本质也是把某个函数作为某个对象的方法调用, 实现则是通过把object和function绑定, 形成一个新函数从而每次调用新函数都等价于调用了object.funtion, bind接受多个参数, 其首个以后的参数都会作为this域成员代入函数中, 并按序成为函数自身的参数function f(y,z) { return this.x + y + z };var g = f.bind({x:1}, 2);g(3) // 2被赋予了y, 新的3则给了z;
+higher-order function: 作用于另一个函数之上的函数;
+
+partial and memoization 这两个都是function programing中常用的方法:
+
+partial: 类似bind()这种会把传入参数默认分配到函数自身的部分接受参数上的做法就是partial application;
+memoization: 将函数运行过程的计算结果缓存起来的方式;
+
+
+
+123456789101112131415161718192021222324function array(a, n) &amp;#123; return Array.prototype.slice.call(a, n || 0); &amp;#125;// 用以处理类array元素(转为真正的array)function partial(f /*, ... */) &amp;#123;  var args = arguments;  // 存储partial的参数  return function() &amp;#123;    var a = array(args, 1);    // 取出首位以后的参数    var i=0, j=0;    for(; i &amp;lt; a.length; i++)      if (a[i] === undefined) a[i] = arguments[j++];      // 这里的arguments是第二层参数      // 将空元素逐个替换成第二层参数里的值, j自动随着执行+1    a = a.concat(array(arguments, j))    // 组成新的参数数组    return f.apply(this, a);    // 调用f函数, 并传入参数a  &amp;#125;;&amp;#125;var f = function(x,y,z)&amp;#123;return x*y*z&amp;#125;partial(f,undefined,2)(1,3)// x:1,y:2,z:3
+123456789101112131415// Return a memoized version of f.// It only works if arguments to f all have distinct string representations.function memoize(f) &amp;#123;  var cache = &amp;#123;&amp;#125;;  return function() &amp;#123;    var key = arguments.length + Array.prototype.join.call(arguments,&quot;,&quot;);    if (key in cache) return cache[key];    else return cache[key] = f.apply(this, arguments);  &amp;#125;;&amp;#125;// 应用方式类似;var factorial = memoize(function(n) &amp;#123;return (n &amp;lt;= 1) ? 1 : n * factorial(n-1); &amp;#125;);factorial(5) // 此时会自动缓存4,3,2的阶乘值. 对于一些复杂的运算, 如此可以很好的加快运算速度.
+Chapter 9 - Classes and Modules除了 阅读笔记-2中包含的, 由于ECMAScript 5所引入的那些object property自然都可以应用到新的class中, 从而创建更为复杂有效的函数. 其实js中目前不存在class这个关键词, 所以其模仿的class, 说白了就是一个复杂一些的函数对象.
+而因为其内容驳杂繁多, 我么会在后面的应用中有很多实践的机会, 这里就不一一描述了.
+参考资料
 JavaScript the Definitive Guide 6th edition
+Functional Javascript
 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (1)</title><link>http://taoalpha.me/blog/2015/06/28/read-coffeescript-programming-with-jquery-rails-and-nodejs/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-28T04:00:00.000Z</pubDate><description>SummaryThe notes I took while I was learning the ‘CoffeeScript’. If you are a real beginner with ‘CoffeeScript’, I suggest you start with another book called “The Little Book on CoffeeScript”, it’s better for beginners. And after that, this one is definitely your best choice.
 CoffeeScript is a language which complies to JavaScript. Like the sass or scss to css except that CoffeeScript is not compatible with javascript. So you can not mix the javascript syntax with the CoffeeScript.
@@ -612,126 +676,6 @@ Unicode Property
 List of Unicode Characters
 编码历史介绍
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (4)</title><link>http://taoalpha.me/blog/2015/06/23/read-javascript-the-definitive-guide-4/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-23T07:00:00.000Z</pubDate><description>概述第六版和第五版的最大区别在于ECMAScript 5的引入, 这是目前发布的最新的js版本, 有着最新的属性和函数, 目前主流浏览器基本都已经完全支持. 本文为阅读5-9章内容的笔记总结, 主要是覆盖了JS中的语句和典型对象.
-阅读笔记Chapter 5 - Statements
-switch/case中使用的是===进行比较判断的, 而不是==;
-with带入scope chain的对象只有读取权限, 没有写入功能, 即with后, 可以获取其代入的对象, 但其内声明的变量都依然归于gloabl或者local之中;
-debugger是ECMAScript 5引入的一个新的statement, 起主要作用是和浏览器结合使用, 用于创建断点以便查错使用;
-use strict也是ECMAScript 5引入的, 严格来说不算statement而是directive, 不过两者很是相近; 其使用必须位于js整体的起始位置或者是一个function主体的起始位置;
-use strict的使用会开启代码的strict mode, 为了提升效率, 错误追踪以及更好的安全性, 其语法要求会更加严格, 简单列举如下:
-停用with语句;
-所有变量必须声明才能调用;
-所有独立声明的函数而非对象的方法定义的, 其this域都默认为undefined, 而函数如果通过apply,call调用, 其this域为传入对象;
-对未声明变量的赋值或者不能写入的对象进行写入, 都会抛出异常;
-eval调用会自动创建临时局部scope, 不再能直接对母域新建声明了;
-arguments成为传入参数的硬拷贝, 和传入参数名之间不在绝对相等, 即改变一方不会引起另一方的改变, 同时停用其caller,callee方法;
-delete用于变量, 函数或者函数参数的时候会抛出异常, 操作对象的某个未声明属性也会抛出异常;
-对象(包括函数)创建中不能出现同名属性(参数);
-直接声明的八进制数是不允许的(即0开头的数字);
-eval,arguments作为keywords对待, 不能赋值, 或赋予其他变量, 也不能用于identifier;
-
-
-
-
-Chapter 6 - Objects
-Property Attributes (ECMAScript 5之后引入可自定义配置, 之前默认三者皆有.)
-writable: 可赋值;
-enumerable: 可递归;
-configurable: 可配置 - 可删除也可修改;
-
-
-Object Attributes
-portotype: 指向当前对象的属性继承对象;
-class: 指代对象所属类别;
-extensible: 指示当前对象是否能够新增属性 (ECMAScript 5引入);
-
-
-Object Categories and Property Types:
-native object: js中内置的对象, 包含Arrays, functions, dates, regular expressions等;
-host object: 由js运行环境所定义的对象, 比如常见的浏览器, 就包含了HTMLElement对象;
-user-defined: 执行js代码的时候创建的对象;
-own property: 直接由对象中定义的属性;
-inherited property: 由对象的prototype object继承来的属性;
-
-
-Prototype:
-任何一个对象(除了Object.protytpe)的出现都必然包含了第二个对象的存在: new Array() =&amp;gt; Array.prototype;
-Object.prototype是唯一一个没有母继承的对象了, 它是最顶部的类;
-类似new Array() =&amp;gt; Array.prototype =&amp;gt; Object.prototype这样的两个prototype就组成了Array的prototype chain;
-Object.create() 是ECMAScript 5引入的新的创建对象的方法, 其接受两个参数, 第一个参数会作为新建对象的prototype传入, 第二个则是用来描述新对象的属性的. 如果你传入null, 则新建对象是完全没有prototype的, 只有Object.create(Object.prototype)才是等价于我们常用的{} or new Object();
-获取某个object的未定义属性将返回undefined, 但是获取undefined或者null的某个属性则会抛出异常;
-
-
-getter &amp;amp;&amp;amp; setter
-ECMAScript 5新引入的两个accessor properties, 分别对应某个属性的调用和赋值;
-只有setter的属性只有写入权限, 只有getter的属性则是只读权限;
-
-
-property attributes
-value, writable, enumerable, and configurable
-对应的accessor property: get, set, enumerable, and configurable
-Object.getOwnPropertyDescriptor(object_name, property_name) 获取某个属性的特征描述;
-Object.defineProperty(object_name, property_name,{property_attribute:attribute_value}) 对某个属性设定其特征描述;
-
-
-
-下例即为利用Object.defineProperty自定义的一个extend()函数:
-123456789101112131415161718192021222324252627282930// Example 6-3. Copying property attributes/** Add a nonenumerable extend() method to Object.prototype.* This method extends the object on which it is called by copying properties* from the object passed as its argument. All property attributes are* copied, not just the property value. All own properties (even non-* enumerable ones) of the argument object are copied unless a property* with the same name already exists in the target object. */Object.defineProperty(Object.prototype,  &quot;extend&quot;,  &amp;#123;    writable: true,    enumerable: false,    configurable: true,    value: function(o) &amp;#123;      // Define Object.prototype.extend      // Make it nonenumerable      // Its value is this function      // Get all own props, even nonenumerable ones      var names = Object.getOwnPropertyNames(o); // Loop through them      for(var i = 0; i &amp;lt; names.length; i++) &amp;#123;        // Skip props already in this object        if (names[i] in this) continue;        // Get property description from o        var desc = Object.getOwnPropertyDescriptor(o,names[i]);        // Use it to create property on this Object.defineProperty(this, names[i], desc);      &amp;#125;    &amp;#125;  &amp;#125;);
-
-Object Attributes;
-Object.getPrototypeOf() ECMAScript 5引入, 可用于获取某个对象的prototype;
-p.isPrototypeOf() 同上, 用于判断某个对象是否为另一个对象的prototype;
-Object.isExtensible(),Object.preventExtensions()则分别是用于判断一个object是否是可扩展的, 以及禁止其可扩展性的(此操作不可复原);
-Object.seal()类似Object.preventExtensions(), 不过它同时禁掉了properties的configurable属性,Object.isSealed()则是对应用于判断是否sealed的函数;
-Object.freeze()比Object.seal()还要严格,所有属性都变为可读了, 对应的查询函数为:Object.isFrozen();
-Object.preventExtensions(),Object.seal(),Object.freeze()都是只针对当前object而言的;
-class属性目前基本没啥用, 有点等价或者说更细化的typeOf or instanceOf了;
-
-
-
-Chapter 7 - Arrays这里主要记录ECMAScript 5引入的一些新的方法, 3已有的可以查看 阅读笔记-2
-
-forEach(value,index,array_itself): array自身的循环调用函数, 相当于for(i in array_name){}, 区别在于其不支持break等可以跳出循环的语句, 如果你想要提前结束循环, 就需要通过try/catch包裹并利用抛出异常来结束循环;
-map(): 也算是循环的一种, 遍历每个元素并传递给传入的函数, 最终返回一个新数组;
-filter(): 顾名思义, 这是对数组进行筛选的, 值得一提的是filter()会自动跳过空白,所以对于稀疏数组通过filter()可以去除所有空白, 在加上undefined判断, 就可以去除所有空值了;
-every() 和 some(): every()是当数组每个元素都使传入函数为真的时候返回真, some()则是只要一个为真即返回为真, 需要注意的事, 对于空数组, every()会返回真, 而some()会返回为假;
-reduce(function,initial_value) 和 reduceRight(): 通过执行传入函数而对数组元素进行整合,计算,判断, 最终返回一个结果: var max = a.reduce(function(x,y) { return (x&amp;gt;y)?x:y; });即返回数组的最大值; reduceRight()与reduce()一致, 只是循环顺序相反, 从右到左; 当没有声明初始值时, 采用第一个执行元素作为初始值;
-indexOf() 和 lastIndexOf: 顾名思义, 获取数组中某个元素的index, 前者获取首个匹配元素的index, 后者获取最后一个匹配元素的index;
-
-Chapter 8 - Functions
-Functions的调用有四种:
-直接调用;
-作为对象的方法调用;
-作为constructor调用;
-通过call,apply方法调用(间接调用);
-
-
-call() 和 apply:
-call和apply都是间接调用的方法, 允许一个函数临时客串为某个object的方法;
-一定程度上, 可以等价于o.m = f;o.m();delete o.m;
-其接受的第一个参数会成为函数运行的this域, 如果是非strict mode下, 传入null/undefined则会自动将global作为this, 而如果传入的是primitive datatype, 则自动转为对应的wrapper object, 即string =&amp;gt; String;
-call和apply的区别主要体现在后面的参数上, 前者以分散元素传入, 后者则以整体数组形式传入, 所以用apply可以把原本只支持不定长参数的函数转换为接受数组的函数:var biggest = Math.max.apply(Math, array_of_numbers);;
-apply对类array元素处理方式同array元素;
-
-
-bind(): 很是类似call和apply, 本质也是把某个函数作为某个对象的方法调用, 实现则是通过把object和function绑定, 形成一个新函数从而每次调用新函数都等价于调用了object.funtion, bind接受多个参数, 其首个以后的参数都会作为this域成员代入函数中, 并按序成为函数自身的参数function f(y,z) { return this.x + y + z };var g = f.bind({x:1}, 2);g(3) // 2被赋予了y, 新的3则给了z;
-higher-order function: 作用于另一个函数之上的函数;
-
-partial and memoization 这两个都是function programing中常用的方法:
-
-partial: 类似bind()这种会把传入参数默认分配到函数自身的部分接受参数上的做法就是partial application;
-memoization: 将函数运行过程的计算结果缓存起来的方式;
-
-
-
-123456789101112131415161718192021222324function array(a, n) &amp;#123; return Array.prototype.slice.call(a, n || 0); &amp;#125;// 用以处理类array元素(转为真正的array)function partial(f /*, ... */) &amp;#123;  var args = arguments;  // 存储partial的参数  return function() &amp;#123;    var a = array(args, 1);    // 取出首位以后的参数    var i=0, j=0;    for(; i &amp;lt; a.length; i++)      if (a[i] === undefined) a[i] = arguments[j++];      // 这里的arguments是第二层参数      // 将空元素逐个替换成第二层参数里的值, j自动随着执行+1    a = a.concat(array(arguments, j))    // 组成新的参数数组    return f.apply(this, a);    // 调用f函数, 并传入参数a  &amp;#125;;&amp;#125;var f = function(x,y,z)&amp;#123;return x*y*z&amp;#125;partial(f,undefined,2)(1,3)// x:1,y:2,z:3
-123456789101112131415// Return a memoized version of f.// It only works if arguments to f all have distinct string representations.function memoize(f) &amp;#123;  var cache = &amp;#123;&amp;#125;;  return function() &amp;#123;    var key = arguments.length + Array.prototype.join.call(arguments,&quot;,&quot;);    if (key in cache) return cache[key];    else return cache[key] = f.apply(this, arguments);  &amp;#125;;&amp;#125;// 应用方式类似;var factorial = memoize(function(n) &amp;#123;return (n &amp;lt;= 1) ? 1 : n * factorial(n-1); &amp;#125;);factorial(5) // 此时会自动缓存4,3,2的阶乘值. 对于一些复杂的运算, 如此可以很好的加快运算速度.
-Chapter 9 - Classes and Modules除了 阅读笔记-2中包含的, 由于ECMAScript 5所引入的那些object property自然都可以应用到新的class中, 从而创建更为复杂有效的函数. 其实js中目前不存在class这个关键词, 所以其模仿的class, 说白了就是一个复杂一些的函数对象.
-而因为其内容驳杂繁多, 我么会在后面的应用中有很多实践的机会, 这里就不一一描述了.
-参考资料
-JavaScript the Definitive Guide 6th edition
-Functional Javascript
-
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
 Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
 NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
@@ -781,6 +725,85 @@ The core about how to use coffeescript with nodejs is to use the --watch for cof
 And just like jQuery, you just follow the rules and write your code.
 DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
 That’s all. Thanks!
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (5)</title><link>http://taoalpha.me/blog/2015/06/24/read-javascript-the-definitive-guide-5/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-24T08:00:00.000Z</pubDate><description>概述在十到十二章中, 第十章的正则表达式内容最为丰富, 也是目前应用即为广泛的内容之一. 不过这里也主要是结合js的应用, 实际上正则表达式本身就是一个很值得研究的话题, 有不少书都在谈这个话题, 我后面要读的书目中恰巧就有这么一本, 后面会更加详细的学习以下正则表达式的方方面面.
+十一章算是非常前沿, 高端或者说冷门的点了, 随着浏览器的盛行以及技术的进步, 安全问题始终都是一个很重视的点, 而在这种攻防演练中也促进了js本身的进步, 而主流浏览器本身更是走在了js的最前沿. 各种新的属性都是由他们引入而逐渐成为标准的;
+十二章主要是对走出浏览器的JS做了一个简单的介绍, 而NodeJS的大名在近几年在前后端, 全端领域都可谓是人尽皆知. 我也会在之后阅读相关书籍的时候做更详细的笔记记录.
+阅读笔记Chapter 10 - Pattern Matching Regular Expressions
+normal repetition characters:
+{m,n} 匹配m-n次;
+{m,} 匹配至少m次;
+{m} 匹配恰好m次;
+? 匹配0或1次;
++ 匹配1或多次;
+* 匹配0或多次;
+
+
+Nongreedy repetition:
+??, +?, *? 在常规的匹配后加上?就能让匹配尽可能发生的短, 它会在允许范围内, 找到尽可能短的匹配;
+
+
+Alternation, Grouping, Reference:
+| 表示匹配前者或者后者;
+(...) 成组, 以组的形式来使用*,+,?等, 同时会记录组的匹配以用于Reference;
+(?:...) 只是成组, 不记录匹配, 不能用于reference, 也不算做reference的序号中去;
+\n 引用, n表示序号, 从1开始, 代表之前第几个group的匹配, 用于匹配开头结尾相同且多样的有奇效:/([&amp;#39;&amp;quot;])[^&amp;#39;&amp;quot;]*\1/ 匹配单引号或者双引号内的内容;
+需要注意的就是, reference不能用于[]的character class之中!
+
+
+anchor characters:
+^: 匹配开头;
+$: 匹配结尾;
+\b: 匹配词边界, /\bJava\b/ =&amp;gt; Java
+\B: 匹配非词边界, /\B[Ss]cript\B/ =&amp;gt; JavaScript, postscript...
+?=p: 表示内容需要匹配p规则,但是返回的命中中不包含这部分;
+?!p: 表示内容不匹配p规则;
+
+
+flags:
+i: 大小写敏感, 即区分大小写;
+g: 全局匹配, 默认是匹配首个;
+m: 多行匹配;
+
+
+String Methods for Pattern Matching:
+search(): 返回匹配词的位置或者-1代表无返回;
+replace(): 支持正则匹配替换, 同时支持替换时使用$n代表是正则匹配的引用, 比如text.replace(/&amp;quot;([^&amp;quot;]*)&amp;quot;/g, &amp;#39;“$1”&amp;#39;);即替换&amp;quot;&amp;quot;为“”;
+match(): 返回包含了匹配的结果, 返回结构为数组格式;
+split(): 接受正则匹配作为其分隔符, 比如: &amp;quot;1, 2, 3&amp;quot;.split(/\s*,\s*/); =&amp;gt; [&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;], 就去掉了本来直接split()多余的空格;
+
+
+RegExp prototype method:
+exec(): 基本等同match(), 不过接受的是string类型去匹配, 而由正则去调用, 当表达式加了全局flag后, exec()每次执行会记录其上次匹配的位置并从此开始新的匹配, 比如:var pattern = /Java/g;pattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).indexpattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).index就会相继输出0,28两个位置;
+test(): 用以检测表达式是否匹配了传入的string, 其执行逻辑(g模式下记录上次匹配位置)和exec()一样;
+
+
+
+Chapter 11 - JavaScript Subsets and Extensions本章主要介绍一些目前主流浏览器支持但是还没有写入JavaScript官方版本中的一些js语言的子集(非官方版本)和扩展属性:
+
+subsets: 通常是为了确保不确定安全性的代码能够安全的运行而出现的(除了Crockford’s JavaScript: The Good Parts);
+ADsafe, 最早一个因为安全因素设计的子集语言, 会禁止对绝大多数全局变量的访问;
+dojox.secure: 算是Dojo toolkit的一个扩展;
+Caja: 其包含了两个子集, 一个是Cajita, 比较严格, 类似ADsafe 和 dojox.secure; 还有个是Valija, 则比较接近如今ECMAScript 5的strict mode了;
+Microsoft Web Sandbox;
+FBJS: facebook使用的一个自己;通常子集都需要对应一个verifier, 来确保代码符合其要求;
+
+
+extensions:
+const: 声明常量, 比如: const pi = 3.14;;
+let: 块变量声明, 相当于缩小版的var, 作用域仅存活在最近的一个块结构里, 你可以用{}来自行创建一个block;
+destructing: 允许多变量结构化赋值: let [x,y] = [1,2];let [r,theta] = polar(1.0, 1.0); function polar(x,y){...};甚至这种all = [first,second] = [1,2,3,4]; 或者这种let transparent = {r:0.0, g:0.0, b:0.0, a:1.0}; let {r:red, g:green, b:blue} = transparent;;
+for/each: 和for/in循环不同, for/each遍历对象的属性值而不是属性名, 且可操作类array对象;
+for/in: 从js 1.7(mozilla的js引擎版本号)开始, for/in也不局限在array和常规object了, 只要是可循环的元素都可以使用了;
+yield: 从python中引入的;
+Array Comprehensions:  还是从Python中借用的, let evensquares = [x*x for (x in range(0,10)) if (x % 2 === 0)];
+try/catch: 支持多catch;
+
+
+
+Chapter 12 - Server-Side JavaScript随着js的发展, 慢慢的超出了其本身的作用域: 浏览器. 随着Google V8引擎为js包入了unix的常用API: files,processes,streams,sockets等, js开始走出浏览器进入server端了. 正式命名为Node.JS. 想来很多人可能都听过, 因为后面我的数目中也包含了相关的书, 且本章内容也没见过太多, 所以就一起留到以后吧~
+参考文献:
+JavaScript the Definitive Guide 6th edition
+
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (6)</title><link>http://taoalpha.me/blog/2015/06/25/read-javascript-the-definitive-guide-6/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-25T10:00:00.000Z</pubDate><description>概述正式进入本书第二部分的内容, 核心主要围绕在浏览器内的js. 包含了最基本的使用方式, 方法, 因浏览器而增加的各种属性方法, 操作css, dom的方法, 以及常用的一些js框架, 库等, 同时还包含了目前浏览器大热的安全领域.
 阅读笔记Chapter 13 - JavaScript in Web Browsers
 异步:
@@ -1425,15 +1448,30 @@ TestingYou should write testing!!!
 Code Conventions for the JavaScript Programming LanguageAll coved by two styles I list above.
 SummaryCompared to google’s old style guide, airbnb’s style guide has much more valuable new ES6 styles, if you are an active ES6 users, I strongly suggest you use airbnb’s style !!!
 Even you are a solo worker, you should use some common styles, it is a good habit and you should have.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Why Users Aren’t Clicking Your Home Page Carousel?</title><link>http://taoalpha.me/blog/2014/05/03/read-yi-why-users-arent-clicking-your-home-page-carousel/</link><category>read</category><tag>Carousel,HCIBib,UX,UXmovement,关于HCI,翻译文章,译系列</tag><pubDate>2014-05-03T04:00:00.000Z</pubDate><description>首先介绍下什么是carousel: 标准词典翻译为”旋转木马”, 用在网络中, 尤其是网页设计的语境之下, 就是指代的很多网站中使用的多图切换模块, 通常由多张图组成, 但是一次只会显示一张, 图片右下角或者正下方常常有切换指引的远点或者缩略图, 图片左右则有前后箭头, 如此切换的时候会像旋转木马一样一张一张的出现在用户眼前(当然不限于图片, 有的也会用文字作为每一个木马).
-=========正文=========网站研究发现在300w的首页中, 只有1%的用户浏览会点击页面上的carousel部分呢. 为什么占据了首页如此大面积的, 而且是很具有视觉优势的元素获得的点击是如此之少呢? 原因可能比较出乎意料, 因为多数carousel都做的很烂…
-绝大多数的carousel都包含多张切片, 当用户点击箭头切换时进行旋转展现. 通常第一张会获得多数的点击, 随后的点击比例就会急剧下降. 造成carousel如此的低的点击率的原因其实不是因为carousel本身的这种切换模式, 而是因为carousel的导航实在是太烂了….
-carousel中的导航键头通常是没有点击欲望的. 为什们? 因为箭头通常无法表示出用户点击后会获得的信息, 无法给与用户期望. 所以用户通常都会忽视箭头, 把他们自己的注意力放在别的信息之上. 一个箭头只能说明这里还有更多的切片, 这完全不是让用户点击的理由. 所以, 他们很难看到carousel后面的切片, 又怎么产生点击呢? 不仅如此, 用户还常常因为箭头太小太靠近边缘而忽视它. 以这样的设计, 其他的切片能获得高点击才怪呢…
-实际上, carousel所需要的只是一个清晰的, 可见的标签导航即可. 标签本身说明了包含的信息, 有意义的描述, 告诉了用户他们想要的. 这会刺激用户去点击, 因为每个标签都告诉了他们点击后能获得什么. 用户就会更有可能点击那些吸引他们的信息. 导航标签本身也应该有足够的宽高并被置于一个更加可见的位置, 而不是像箭头一样很难发现. 重要的不仅是容易看到, 用户还要同时知道它代表了什么.
-绝大多数人们可能只会看一下这份网站研究报告的结论, 然后觉得所有的carousel都是非常不利于体验的, 他们以后都不应该使用carousel了. 但实际上, 多数carousel如此的糟糕是因为他们没有很好的导航, 都只是用一个小小的箭头来引导. 箭头本身不能承担任何信息, 但是文本标签可以. 如果你希望更多的用户点击你的carousel, 那么, 就是用标签导航把. 把标签写的清楚, 有意义, 你就会有更多的用户点击你的carousel了.
-Links:
-UX Movement: Why Users Aren’t Clicking Your Home Page Carousel
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Using @font-face</title><link>http://taoalpha.me/blog/2014/07/15/read-yi-using-font-face/</link><category>read</category><tag>CSS,font-face,翻译文章,译系列</tag><pubDate>2014-07-15T10:00:00.000Z</pubDate><description>如下例:
+123456789@font-face &amp;#123;  font-family: 'MyWebFont';  src: url('webfont.eot'); /* IE9 Compat Modes */  src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */       url('webfont.woff') format('woff'), /* Modern Browsers */       url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */       url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */&amp;#125;
+由于如今WOFF是如此之火, 你也可以简化使用:
+123456@font-face &amp;#123;  font-family: 'MyWebFont';  src: url('myfont.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */       url('myfont.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */&amp;#125;
+其实只用WOFF也可以的, 目前基本主流浏览器都能支持了.
+然后你就可以在其他元素中使用这一属性了~ 比如:
+1234body &amp;#123;  font-family: 'MyWebFont', Fallback, sans-serif;&amp;#125;
+讲讲font-face的历史吧, @font-face是用于加载以及使用你自定义的字体而出现的, 针对的就是如今浏览器有权限使用的系统已有的有限字体. 这里有个系统预装字体的详情介绍.
+说到性能. 一般我们认为字体文件都是非常巨大的, 同时还会让你的网站增加很多额外的请求, 这些都会拖慢你的站点速度. 所以在使用之前请务必确保你考虑清楚.
+如果你确实要使用自定义字体, 有一种更好的更负责的方式是尽可能的加载足够少的字母和样式种类. 比如, 如果你使用google fonts, 只需要引入一些特定的组合即可:
+123@import url(http://fonts.googleapis.com/css?family=Averia+Sans+Libre:400,300italic,700);
+甚至可以缩减引入的字符数量.
+相比于性能, @font-face似乎经常出现各式各样的bug…比如这种, 这种,还有这种…
+关于字体格式, 倒是有几种, 每种都还有些历史.
+  WOFF    Web Open Font Format. 是专为网络使用而创造的, 由Mozilla和一些其他组织共同发展起来的, WOFF字体通常比其他格式字体加载的更快, 主要是因为他们使用了比OTF和TTF更加压缩的结构, 这种结构中还能包含一些meta信息和license信息, 目前来说WOFF应该是最大的赢家了, 主流的浏览器基本都已经能够支持了.    SVG/SVGZ    Scalable Vector Graphic(Font). SVG是一种字体的矢量化过程, 主要可以让体积变的更小, 同时也能够用于移动设备. 这个字体格式是4.1版本以下的Safari浏览器唯一支持的字体格式了. 目前来说SVG依然不能被Firefox, IE以及IE 移动版支持. Firefox主要精力都在支持WOFF了~ 天知道他们什么时候支持SVG… SVGZ是SVG的再压缩版本.    EOT    Embedded Open Type. 这一格式是由微软从15年前创造的(真正意义上@font-face的源头). 也是唯一一种IE8以及以下版本支持在@font-face中使用的格式了.    OTF/TTF    OpenType Font 和 TrueType Font. 在一定程度上WOFF格式的出现也是因为这些格式可以很容易被复制, 无论合法与否. 同时, OpenType的某些特性(比如手写字体等)比较吸引设计师们.  
 
+
+字体服务有很多, 主要就是提供那些你可能无权使用的字体, 从而让你的使用合法化. 主要有以下这些:
+  Cloud Typography  Typekit  Fontdeck  Webtype  Typotheque  Fontspring  WebINK  Fonts.com  Google Fonts  Font Squirrel
+
+
+
+想要对比下这些服务的好坏?
+Source Link:  CSS Tricks
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>7条规则助你创造优质UI-上篇</title><link>http://taoalpha.me/blog/2014/11/26/read-7-rules-to-help-you-create-high-quality-ui-part/</link><category>read</category><tag>Design,UI,关于HCI,翻译文章,设计,译系列</tag><pubDate>2014-11-26T05:00:00.000Z</pubDate><description>本文来自Medium, 分为上下两篇, 讲述了在制作UI的时候的7条实用规则, 表示个人喜欢最后一条”steal like an artist”…刚看完”the art of steal”…哈哈
 
 不说废话.. 本文作者特别强调了下文章的适用对象主要有两种:
@@ -1588,86 +1626,82 @@ iOS 7开始, 苹果引入了扁平化设计, 去掉了所有的阴影啊等等�
 这种blocking的机制主要是为了防止裸露的HTML带给用户的糟糕体验, 毕竟如果css在html之后加载, 那么无样式的html会先渲染展示, 然后样式加载完在reflow, 感觉就很痛苦了… 这种闪一下的现象通常叫做: Flash of unstyled content(FOUC). 所以现在浏览器通常都采取blocking的方式来保证用户看到的页面的视觉效果. 而blocking对js而言主要是为了应对document.write这个函数, 其实根本来说也是为了一次性让用户看到比较完整, 好看的内容. 当然, 现在其实很多人都不推荐大家使用document.write这个函数, 毕竟js经常会导致更多的blocking时间, 但是毕竟有人再用… 而且浏览器又没办法提前判断js中用没用这个函数…
 
 恩, 基本上, 从一个请求发出到页面加载的过程就是这样了~ 如果想要提高性能, 自然也就从这里面涉及的各个方面着手喽~
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>What does it mean to be simple?(译)</title><link>http://taoalpha.me/blog/2013/06/08/read-what-does-it-mean-to-be-simple-translated/</link><category>read</category><tag>HCI,HCIBib,UX,产品学习,翻译,翻译文章</tag><pubDate>2013-06-08T13:00:00.000Z</pubDate><description>什么才意味着真正的简单呢?(What does it mean to be simple?)所有的设计师都在说”简洁性”是多么多么的重要,那么,究竟什么才真正意味着简单呢?多数情况下我我们认为简单意味着更少,通过去掉一些事物来达到简单的目的. 我们以为通过把内容放置在明显位置,可以帮助用户更好的集中注意力,或者采用使用符号列表而不是段落的形式,会有更多的人愿意去阅读;亦或者通过将文本内容缩略到一半可以让内容更清晰. 但是简单并不意味着”更少”.一个更准确的定义应该是”刚刚好”.
-唔,我可能过于简单了…
-在一些时候,设计需要更多的东西来实现简单.所以,一个更好的定义应该是:”刚刚好可以满足理解以及实现我们的目标”.不采用隐藏或者去除某些东西,我们采用如下的方法让我们的设计变得更加有意义的简单:
-    只有一个核心观点(不要多个观点或者一个不完全的观点)    随时间而逐渐增强清晰性(不要被不恰当的细节淹没)    一致性(避免使用不必要的特殊界面和信息)
-只有一个核心观点注意力和兴趣是你试图让某人做任何事的首要因素.最好的吸引注意力和建立兴趣的方式是只展现一个核心的观点,全面的阐述这一观点.这将允许用户来做一个二选一的选项:”我感兴趣啊?”.
-在介绍某个特性的时候,应当让用户能立刻”看到”自己的操作会产生的任何后果,这将帮助用户更好的理清内容同时对于下一步要做什么有更好的掌控. 只有一个核心目标的原则是贯穿始终的,从全局到每个细小的属性.“除了’Send Message’,没有更好的词语可以描述清楚’Send Message’”.—Des Treynor这是一个非常典型的例子,它的结果非常清楚(就是Send Message).这里其他的版本可能是”Go”或者”Submit Now”,或者仅仅是”Send”.但这些都没有”Send Message”那样清楚,只用两个词就可以让用户非常清楚的理解其含义,从而更轻松的做出选择. 随着转移到更加复杂的一些属性,让其概念清晰易于选择的困难程度呈指数级增长,但是我们的目标应该是一致的:利用一个核心观点指引用户合理的设定他们的预期.如果我们没能成功的做到这一点,那么感知起来的复杂度就会有所增加.
-只有一个核心观点包括以下内容:
-    二选一的:足够简单只有两个选择…允许人们方便的评估他们同意与否    用朴实的语言来陈述:尽可能的清晰以及明显的表述问题或者选择的机会    不断的重复:每一个界面都应该在适当的位置不断重复恰当的问题或选择的机会.    让预期变得明显:每一个问题或者选择机会的结果都应该可预计;
-随时间提升其清晰性在获得人们的兴趣之后,下一步就需要让他们投入时间和精力了.即便当你的用户发现你的应用非常有趣,也依然有很多”摩擦”可能会出现.如果他们被这些阻拦了,那么转化率依然很低.你必须要清晰的没有任何困扰的展示给他们他们可以实现他们的目标.“网络出版:写的太少,无法清楚地表达意思.写的太多,会因为太厚而无法浏览从而有很多内容被跳过.”–Ryan Singer就好比很多对话可以随着时间的进行而变得更清楚更准确,正确的时间出现的正确的细节将会增加最终获得满意结局的机会.去除相关的但是不恰当的细节,将可以帮助用户不断前进而减少被分散的机会.谨记,每一个无法获得有意义的结果的时间和精力的投资都会增加感知的复杂性.
-随时间提升清晰性可以采用如下方法:
-    清楚的开始和结束–确保界面中如何清楚的做某一件事实非常清楚地.    逐步解密–要做到恰到好处:把用户的焦点只放在那些有主意他们理解当前任务的细节上.    明显的路径–总是提供一个清晰的路径到下一步或者下一层次的细节.
-一致性一个新用户和一个老用户是完全不同的两种用户.如果你想要让人们一直停留这里,那么你需要帮助他们,让他们感觉自己掌握了这一应用的每一部分,而且完全没有必要去担心下一个是什么. 每一个特性都需要足够的便捷而让用户感到愉悦以及他们的时间和精力得到了最好的利用.“无论是风中舞动的旗子,空的和挤满人的站台的区别,亦或者是那些暗示着可行的路径的脚印,我们一直寻找着世界上那些明显的标志来提供指引.”–Don Norman你给予他人友好的表情可以带给他们自信,而且可以收获笑容.帮助人们看到那些他们之前看到的内容,基于他们已经知道的事情获得结论.当你确实有一个复杂的问题时,你的界面比较复杂并没有错,但是毫无理由的把用户扔在一个陌生的地方,而且不给于任何指引或者地图,那就是不友好了.
-通过以下方法保持一致性:
-    巩固惯例–使用相似的处理过程,使用相似的方法.    建立模式–把相似的事物放在相似的地方,这样用户就可以根据直觉来行动了.    偶尔破坏规则–知道什么时候一个界面需要独一无二,实际上可能比你想象中更少一些.
-当多就是少的时候目前盛行的观念认为简单就是少…删减再删减.但是简单真的应该针对理解和清晰的目标…我们能做出让用户立刻就明白正在做什么,同时可以非常明确的了解下一步将做什么的设计吗?为了实践实现简单,我们可以坚持只有一个核心观点,随时间提升其清晰性,同时利用一致性帮助用户更高效的使用. 在这种情况下,更多也可能就是更少…通过在适当的时候添加适当的细节,整个处理过程将会变得更加简单易用.简单性促使我们认为它应该是更少的,但是其实它真的应该是”刚刚好”. Edit By MaHua
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Why Companies Need Full-Time Product Managers</title><link>http://taoalpha.me/blog/2014/11/01/read-t-why-companies-need-full-time-product-managers/</link><category>read</category><tag>PM,product manager,产品学习,产品经理,翻译文章,译系列</tag><pubDate>2014-11-01T11:00:00.000Z</pubDate><description>写在前头: PM是一个挺让人困惑的职位的, 尤其是在国内, 感觉大大小小PM无数, 更加让人苦恼PM究竟是个什么样的职位呢? 虽然我有接近2年多的PM经验, 但是因为本身更加喜欢FE, 所以往往也是做一个非常Geek的PM, 并不符合真正的PM本质, 而这次能够看到下文, 确实觉得它对PM的总结还是比较到位的, 非常推荐PM以及想要做PM的童鞋们看看~
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>关于Landing page - serial landing page的重设计</title><link>http://taoalpha.me/blog/2014/11/25/read-weight-on-landing-pageserial-landing-page-design/</link><category>read</category><tag>landing page,关于HCI,翻译文章,译系列</tag><pubDate>2014-11-25T08:00:00.000Z</pubDate><description>本文关于landing page的一些观点还是很不错的~ 所以特地翻译其中的一些不错的观点分享如下:
+
+作者举了一个简单的例子(来自serial-当前非常火爆的一个podcast)作为分析示例:
 
 
-公司为啥需要全职的产品经理呢?(或者说,他们一天都在干啥呢?)
-什么是产品经理呢? 产品经理一天的工作都是什么呢? 最重要的是, 为什么公司需要招聘产品经理呢? 这是个好问题.
 
-我们首先需要明确的问题是究竟什么是”产品”. 在软件开发这个领域内, 一个产品呢, 可以是一个网站, 一个应用, 或者是用户们使用的线上服务. 而根据公司的大小以及它的产品性质本身, 一个产品经理可能会是一个完整系统(比如一个移动app)的负责人, 也可能是某个整体系统的一部分(比如在电子商务网站中, 负责全平台的检验流程).
+这里作者指出上例中的一个重要错误: 当你要尝试说服某人的时候, 你不能使用”我们”(us), 而应该使用”他们”(them).他特意勾出了上图文本中的主语们:
 
-对这一点可能会存在一些困惑, 毕竟在绝大多数情况下, 产品通常代表着一个你要出售给客户的东西. 尤其是在电子商务, 经常会混淆产品经理和分类经理, 分类经理们主要是负责在电子商务网站出售商品的渠道和经营问题. 所以, 在一定程度上说, 用”产品”这个词确实并不是最合适的. 但是就目前来说, 现状如此, 我们也没法了, 就凑活着用吧.
 
-为了明确产品经理这一职位的性质, 我们首先从Marc Andreessen就”创业公司唯一重要的事情”这一观点说起:
 
-一个创业公司产品的质量可以定义为这一个产品对一个实际使用它的客户或者用户所留下的印象: 这个产品的易用性如何? 其功能的丰富性如何? 流畅性和速度如何? 扩展性又如何? 有多精致?有多少bug呢?
+可以看到上文中直到第五句话才提到了听众, 而实际上听众才应该是这段文本所要针对的核心.
 
-而一个创业公司的市场大小, 则是这一产品的客户或用户的数量, 增长速度 …
+什么意思呢? 用 Dale Carnegie的话说就是:
 
-唯一重要的事情就是要让产品去适应市场(Product-market fit). 产品适应市场意思就是在一个好的市场里, 要让产品尽可能的满足市场的需求.
+  “People don’t care about what you want. They only care about what they want.”
 
-虽然Andreessen是为创业公司写的, 但是最后这段关于”产品适应市场”的重要性对每一个公司都是一样的–无论这个公司是在开发一个新产品还是说去改善一个现有产品,亦或者是介于这两者之间的,都一样. 这是通向成功的宇宙公理, 而这也是产品经理所负责的核心.
+或者用 Brennan Dunn的话说就是:
 
-有了这个作为背景, 我对产品经理这一角色的定义就是: 通过数字产品持续性的更新和执行来符合用户需求从而实现商业上的成功.
+  “People buy the outcomes that they want.”
 
-这一定义总结了一个产品经理所需要涵盖的全部内容: 目标市场, 所属产品的各个方面, 商业成功的需求, 以及如何去衡量这一成功. 它还包含了三个产品经理绝对不能忽视的点:
+意思就是写作要围绕这读者来写才行. 我们所编写的小故事不能是关于我们的, 核心的人物应该是他们, 你的读者.
 
-成功的最佳衡量标准就是商业的健康度, 也即产品给用户提供的价值;所有的一切都起始于对目标市场和需求的深刻理解, 从而把焦点集中到产品体验的质量上去;为了符合市场需求, 可持续发展需要一个良好的策划与执行.
+于是乎, 作者就改写了上述的这个捐赠页面:
 
-那么, 如何把这些转译成一个产品经理每天的工作呢? 这个问题就太大了, 在这里是说不清楚的, 不过仅作为一个初步介绍的话, Marty Cagan在它的电子书”每一个伟大的产品背后”中列出了一个针对产品经理需要负责的事项清单. 这一清单包含:
 
-寻找确认并且评估产品机遇的可行性和易行性,确保合适的产品在合适的时机发布出去,为开发者提供清晰的产品策略和思路指南,带领团队执行产品的思路,确保向团队成员传达产品的内涵,在产品开发流程中始终站在用户的角度思考问题.
 
-但是, 在一个产品经理能够做这些事情之前, 我们首先要问一些比较尴尬的问题. 首先, 公司真的需要产品经理吗? 另外, 如果我们同意说需要, 那么一个好的产品经理的特质是什么呢? 同时还有, 这一角色在公司组织架构中的位置呢? 我们来一一回答这些问题.
+上面这个版本着重强调了Serial的听众的两个属性:
 
-为什么公司需要产品经理
+他们痴迷于这一节目. 对他们而言, 最糟糕的事情莫过于这个节目的结束;他们觉得自己是节目的一部分, 自己是促成与这一节目的主人公之一. 他们开始参与Serial相关的party, 聚会, 调研等等, 这成了他们自己的节目.
 
-产品经理的角色有一些公司可能是非常不买账的. 通常的反对意见包含:
+于是基于上述这两个属性, 作者给予Serial了一些中肯的建议: 
 
-我们公司里有各种各样的人, 他们就已经满足一个产品经理职责的各个范畴了, 不需要专门配备这一个职务了.我完全看不出来这个角色能给公司带来什么实质性的利益.产品经理只会拖我们后腿.我不想把产品控制权交到别人手中.(通常这个理由不会那么公开的说…)
+在着陆页打开的同时引用 @chijs的这条tweet. 这会有助于建立一个中心主题:”如果再不更新了怎么办?”邀请听众作为结局问题的一员: 告诉他们他们可以影响自己所喜爱的节目的未来;制造一些紧张感, 比如使用类似”仅本周”的词语;呼吁听众去采取行动. 比如不用”donate”这样的按钮而使用”I want to help”这样的按钮;
 
-这些考虑都是很有道理的, 但是显然他们并没有很好的理解产品经理这一角色, 或者说这个公司的产品经理很差劲, 没有很好的体现产品经理的职责.
+本来到此为止了,  结果作者把文章发表后, 很多网友开始在twitter上回复他, 给他提了很多的建议, 于是他又更新了一个版本:
 
-实情是, 为了更高的效率, 对一个产品或者领域的管理权最好不要分散给多个人掌控. 对于产品经理而言, 看到产品全局是非常重要的 – 大局战略和局部细致都是一样重要的 – 为了获得更好的抉择. 如果不同流程的情况掌握在不同人手中, 那么就没有人会有一个完好的大局观, 那么这一角色的价值自然也会渐渐失去.
 
-我们看下产品经理通常能够带来的两个典型好处吧:
 
-产品经理确保产品一直处于市场驱动
+其中变化的部分主要有:
 
-对产品经理而言, 其最突出的优点就是他们可以帮助公司一直为目标市场的需求和目标所驱动, 而不是被技术和潮流所驱动. 如同Barbara Nelson在”谁需要产品经理”一文中所说:
+柔化了背景( Mark Bunnker表示原来的背景很像是一个警告页面… 很像Tokyo hot的FBI warning是吧…哈哈)加上了Serial的logo(来自 James Love的建议), 以及一个Sarah Koenig的照片从而显得更加人性化更真实( Shen DeShayne的建议);Nathan Barry提议的新题目:”帮助我们讲述更好的故事”;还有很多关于CTA(call to action)的建议, 我最终采用了 Steve Purcell’s的;对排版做了很多的细化, 更精简的语言, 更加强调了听众这一核心以及他们的帮助对于Serial第二季的播出的影响;
 
-相比于找到你现有技术的客户而言, 找到市场问题然后用技术手段解决实在是简单太多了.
+果然是众人拾柴火焰高… 瞬间华丽丽的变身有木有!! 要是我是serial, 果断立刻接着这个活动, 直接替换donate页, 甚至直接向yahoo学习, 来个圣诞节donate系列, 每天一个版本~ 然后根据每天的捐款数, 最后选出几个最佳来哈哈哈 
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>What Is the Relationship Between HCI Research and UX Practice?</title><link>http://taoalpha.me/blog/2014/09/05/read-t-what-is-the-relationship-between-hci-research-and-ux-practice/</link><category>read</category><tag>HCI Research,HCI翻译,关于HCI,翻译文章,译系列</tag><pubDate>2014-09-05T08:00:00.000Z</pubDate><description>测试feedpusher的数据库搜索功能时找到了这篇文章~ 对于HCI Research有很好的介绍!
 
-如果方法足够正确的话, 一个市场驱动的产品能够促成一个长期的, 可持续的, 有利润的商业, 因为这个公司会持续的把焦点放在解决市场问题而不是用最新的科技去做什么的问题上. 一个公司受什么驱动是很重要的, 因为受市场驱动的公司已经被证实比受其他因素驱动的公司所获得的利润更高(要多出31%, 根据George S.Day 和 Prakash Nedungadi的报告).
 
-这并不意味着关注不断出现的变化和产品创新是互斥的. 确定市场问题并不仅仅是找到现有的问题进行改进(比如说, 60%的用户都会在这个页面离开, 那么我们就搞搞这个页面), 同时还需要创造心的产品来满足那些没有被满足的需求(比如说现在的电话实在太烂了, 我们搞个新的吧).
+人机交互是一个快速发展的学术研究领域. 目前来说, 学术机构基本主导了绝大多数的HCI研究, 无论在US,UK,Europe,Australasia以及Japan, 还有逐渐发展起来的南亚以及中国. HCI研究经常是附属在计算机系之下的, 但是又保留着其很强的心理学背景和人因学背景. 此外, 还有几个大型的杰出公司同时在独立的, 当让也有和各学术研究机构合作进行的, HCI相关的研究. 比如微软, PARC以及goole.
+What Do Academic HCI Researchers Do?(那么学术性的HCI研究者都在做什么呢?)
+通常来说, 学术性研究者都在做以下这三类事情:
+    他们通过探索性的实验以及利用复杂的交互系统来创造新的计算机用户界面;    他们建立并发展了一套经验体系, 针对用户对于用户界面的使用和体验; 主要通过实验室中的用户界面研究或者在实际环境中观察用户对用户界面的使用情况(就如同人种学研究一样)来获得的;    他们发展出了一个理论系统来讲述设计以及使用交互系统. 其中包含了一些基本理论, 比如Fitts’s law(菲茨定律),描述指针移动和目标元素在屏幕的位置的的关系, 通常, HCI理论采用设计框架的形式, 包含了各种混杂的概念. HCI研究可能是聚焦到某个整体的局部也可能是直接识图去强化整体.
 
-产品经理能够提升时间管理
 
-产品经理带来的第二个好处就是他们能够减少一个公司实现目标所需的时间. 一个定位清晰合适的产品, 其开发流程掌握在一个有效率的管理者手中时会极大改善发布所需时间以及回报所需时间的.
+Is There a Connection Between Academic Research and Industry Practice?(在学术研究和工业实践之间有联系吗?)
+在工业界的UX从业人士也通常都会做些研究的, 就如同设计一样. 但是学术性HCI研究和UX研究在目的产出, 目标, 以及关注的范围都有着非常显著的差别, 学术研究和工业研究通常可能都在处理那些看起来比较接近的基础对象: 数字化交互系统的设计和理解以及它们的用户群体. 两者都遵循用户为中心的设计原则, 都提倡把对人类的理解融入到设计环节中. 所以说, 它们之间肯定也应该有很强的关系以及重叠区域.
+在UK, 政府在HCI的学术研究基金投入上逐渐关注起学术研究和工业时间的联系了. UK的工程和物理科学研究委员会, 也是HCI研究领域基金的重要来源, 就讨论过关于HCI研究需要考虑如何”把理论和方法应用到工业实践中”. 更进一步地说, 既然HCI学术研究在很多的领域, 包含医疗健康, 电子设备消费品以及软件等等都有很强的关系, 那么在HCI学术研究和UX实践之间建立一个更好的联系就能够获得很高的回报.
+虽然学术圈经常会对UX领域做出很多不准确的猜测,而且有时候认为两者的关系是理所当然的. 学术研究者们通常会假设因为知识的利用和转移, 所以学术研究和工业实践有着非常自然的联系. 但另一方面, UX领域则经常认为HCI的学术研究通常都是脱离实际的, 在现实社会中是无法应用的. 也因为这样的原因, 他们通常会整个抛弃学术研究, 或者至少是觉得消化以及应用学术研究的结论是非常困难的一件事.
+Moving Toward Establishing a Mutually Beneficial Connection Between Academia and Industry(为学术研究和工业实践发展建立一个双赢互惠的关系)
+有两个开放性问题我们需要强调的是:
+    UX职业领域该如何指导以及启发学术研究?    学术研究又能够为UX职业领域做什么事情呢?
 
-那么为什么产品经理可以做到这一点呢? 因为他们要权衡出那些是值得做的, 那些是不值得的. 这也意味着可以把更少的时间花费在Spaghetti法上了(把所有事情都扔到墙上看哪个能够粘在上面…) 而有更多时间放在已经被市场验证过的产品上了. 这一方法同样还能帮助更好的确定公司的焦点所在, 帮助公司更加投入到那些更有可能成功的项目之中, 而不是把人力分散到那些没人能够确保获利的项目中去.
+回答第一个问题可能需要HCI研究者们对理解UX职业领域的工作有着一定的热情, 并且进行一些关于UX实践的经验性研究. 迄今为止, 学术研究中对于UX实践应用的探索还是比较有限的. 无论如何, 在UX领域工作的经验能够对学术研究产生很多意外的重要启示. 而回答第二个问题就要相对更加复杂了 – 甚至可以说完全不知道该如何下手了. 它需要很深入的研究才行.
+令人好奇的是, 学术研究者们通常对HCI研究中大量出现的创新以及其自身关注领域的快速发展而感到忧虑. 在一个学术领域中, 他们的目标通常是建立一个强有力的基础, 然后慢慢发展.
+然而, HCI学术研究领域的创新和广度都强化了其和在工业限制下的UX领域有限的能力形成的鲜明对比. 比如说, 在一个很限制的项目中工作时, 你需要考虑有限定的预算, 有限的时间, 你需要去满足客户的需求以及相关利益人的利益, 还要能和其他领域的人相互配合, 比如软件开发者; 还要习惯于新的工作方式, 比如敏捷开发以及精益方法. 你不会担心有过多的创新, UX从业人士通常希望能够在他们非常受限的环境下创造更多的创新.
+学术性研究的产出中完全可以提供很多对UX领域有潜在价值的东西. 但是如何来传递这些产出呢? 首先也是最重要的是, 我们完全不用把HCI研究和某一个项目或者新项目, 或某项服务的预期条件, 或者某个客户的特定需求绑定在一起; 其次, 学术新的HCI研究有其探究未来科技的自由 – 即便其设计本身有着一定的风险且没有清晰的,即时的回报. 所以, HCI研究者们通常在无数失败的基础上创造了快速的创新, 他们的工作少了很多的限制.
+也许通过有效的沟通, HCI学术研究中的那些成果能够给工业实践带来巨大的价值. 很多UX从业人士都没有那么富裕的时间来让他们去探讨那些当前需求以外的东西. 但是在学术研究中, 关注范围更广是很通常的事情.
+不幸的是, 就目前来说, 绝大多数的学术工作–无论是创造圆形, 概念, 想法, 或者是设计原则 – 都局限在了HCI研究者们在各种会议期刊上发表的论文中了. HCI研究者的受众多数都是那些其他的学术研究者, 而不是那些在工业界工作的人们.
+通过理解用户体验的工作情景, HCI研究者们能够更好的把他们的研究方向切合这些受众, 从而和UX职业领域建立更加友好自然的联系. 与其让学术研究和工业实践互相竞争, 不如假设一方创造那些权威的, 严禁的知识体系, 一方吸收并加以应用呢. 两者这样的互利互惠关系才是最有价值的. 采用这一方法可能会让学术研究者们更好的理解他们该如何进行自己的研究, 让它们更加容易帮助到那些UX从业人士.
+Postscript(后记)
+作为我开始针对这一领域的调研的一部分, 我创建了一个非常简短的, 5分钟调查问卷, 邀请各位UX从业人士来提供一些关于自身背景, 所用方法以及和学术研究的关系的信息. 如果你愿意参与其中, 或者是对这一工作有兴趣的话, 请参与此项调查.
+Acknowledgments(感谢)
+作者非常感谢EPSRC的支持.
+References(参考)
+[1] Benford, Steve, and Gabriella Giannachi. Performing Mixed Reality. Cambridge, MA: MIT Press, 2011.[2] Engineering and Physical Sciences Research Council. Report of the Human EPSRC Computer Interaction Theme Day and Survey, March 2012.[3] Friess, Erin. “Personas and Decision Making in the Design Process: An Ethnographic Case Study.” In Proceedings of CHI ’12. New York: ACM Press, 2012.[4] Goodman, Elizabeth. Performance and Materiality in Professional Interaction Design. PhD thesis, University of California, Berkeley, 2013.[5] Gray, Colin M., Erik Stolterman, and Martin A. Siegel. “Reprioritizing the Relationship Between HCI Research and Practice: Bubble-Up and Trickle-Down Effects.” Proceedings of CHI ’14. New York: ACM Press, 2014.
 
-未完待续(还有两部分回答另外两个问题).
-
-Resources:
-
-原文 - Why Companies Need Full-Time Product Managers 
+Source Link:
+    What Is the Relationship Between HCI Research and UX Practice?
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>设计心理学系列(1) - 网络心理学</title><link>http://taoalpha.me/blog/2015/05/08/read-design-psychology-1-cyber-psychology/</link><category>read</category><tag>Cyber Psychology,设计心理学</tag><pubDate>2015-05-08T12:00:00.000Z</pubDate><description>什么是网络心理学?网络心理学是随着互联网等新技术出现以及发展而逐渐发展起来的一门新兴科学. 它所研究的领域就是网络与心理学的结合, Cyberpsychology本身由两个词合并而成, 前者Cyber是取自Cybernetics, 代表着对于机械控制和与之通信的研究, 代表着对新兴网络领域的研究, 而心理学则是对人脑和行为学的研究. 两者的集合即表明了Cyberpsychology的研究领域主要集中在了人与新兴机器系统(包含虚拟系统)的心理学研究.
 网络心理学简介演化历史Cyberpsychology最开始是集中关注于人在操作机器以及与机器交互的过程中的心理学变化, 后来随着电脑的出现以及普及, 互联网的诞生以及发展, 加上新兴智能机器的出现和发展, 都使得Cyberpsychology的研究重点放到了互联网上面. 而随着虚拟现实技术的出现, Cyberpsychology的研究范围再一次的增广, 可以说, Cyberpsychology的研究范围基本会随着cyberspace的领域增长而延伸.
 通常认为John Suler, 来自Rider University的心理学教授, 是Cyberpsychology的奠基人. Suler教授是最早开始关注与网络对人们心理变化带来的影响, 其出版的The Psychology of Cyberspace一书也是被认为最早整合性的Cyberpsychology学术作品.
@@ -1950,140 +1984,69 @@ Monitoring Module Changes
 
 12345r = Reloader()while True:    r.poll()    time.sleep(1)&amp;lt;/code&amp;gt;
 想要看源代码的可以前往:  complete source code 本身代码也发布到Python Package Index中, 名称为  reloader
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>谈谈颜色在市场方面的应用</title><link>http://taoalpha.me/blog/2014/11/27/read-talk-about-application-of-colors-in-the-market/</link><category>read</category><tag>关于HCI,翻译文章,设计,译系列,颜色</tag><pubDate>2014-11-27T08:00:00.000Z</pubDate><description>本文讲述了关于颜色的不同所能带来的不同影响, 相信很多人都认可”颜色和人的感受有着非常紧密的关系”这个事实. 那么颜色能产生多大的影响呢? 又是和产生的影响的对应关系如何呢?先说个趣闻: facebook为什么是蓝色为主色调呢? 其实根据New Yorker, 原因很简单. 就是因为Mark Zuckerberg是一个红绿色盲. 这就导致蓝色是Mark所能识别的最好的色调了. 用Mark自己的话说就是:
-
-  蓝色对我而言是最丰富的了, 我可以看到各种的蓝色.
-
-没什么科学价值? 可能就facebook这个个例来说确实没啥特别的价值, 但是实际上现实生活中还有很多关于颜色是如何影响消费者们的消费决策的实例的. 毕竟视觉可谓是多数人类最常用的接收器了.  甚至可以说决定我们是否尝试某款产品的90%因素都是颜色所致呢.
-
-那么颜色和我们的感知究竟是什么样的对应关系呢?
-
-这里作者聚了4个典型的例子:
-
-黑色
-
-绿色
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Why Companies Need Full-Time Product Managers</title><link>http://taoalpha.me/blog/2014/11/01/read-t-why-companies-need-full-time-product-managers/</link><category>read</category><tag>PM,product manager,产品学习,产品经理,翻译文章,译系列</tag><pubDate>2014-11-01T11:00:00.000Z</pubDate><description>写在前头: PM是一个挺让人困惑的职位的, 尤其是在国内, 感觉大大小小PM无数, 更加让人苦恼PM究竟是个什么样的职位呢? 虽然我有接近2年多的PM经验, 但是因为本身更加喜欢FE, 所以往往也是做一个非常Geek的PM, 并不符合真正的PM本质, 而这次能够看到下文, 确实觉得它对PM的总结还是比较到位的, 非常推荐PM以及想要做PM的童鞋们看看~
 
 
+公司为啥需要全职的产品经理呢?(或者说,他们一天都在干啥呢?)
+什么是产品经理呢? 产品经理一天的工作都是什么呢? 最重要的是, 为什么公司需要招聘产品经理呢? 这是个好问题.
 
-蓝色
+我们首先需要明确的问题是究竟什么是”产品”. 在软件开发这个领域内, 一个产品呢, 可以是一个网站, 一个应用, 或者是用户们使用的线上服务. 而根据公司的大小以及它的产品性质本身, 一个产品经理可能会是一个完整系统(比如一个移动app)的负责人, 也可能是某个整体系统的一部分(比如在电子商务网站中, 负责全平台的检验流程).
 
+对这一点可能会存在一些困惑, 毕竟在绝大多数情况下, 产品通常代表着一个你要出售给客户的东西. 尤其是在电子商务, 经常会混淆产品经理和分类经理, 分类经理们主要是负责在电子商务网站出售商品的渠道和经营问题. 所以, 在一定程度上说, 用”产品”这个词确实并不是最合适的. 但是就目前来说, 现状如此, 我们也没法了, 就凑活着用吧.
 
+为了明确产品经理这一职位的性质, 我们首先从Marc Andreessen就”创业公司唯一重要的事情”这一观点说起:
 
-以及在大大小小品牌商标logo中使用的种种颜色:
+一个创业公司产品的质量可以定义为这一个产品对一个实际使用它的客户或者用户所留下的印象: 这个产品的易用性如何? 其功能的丰富性如何? 流畅性和速度如何? 扩展性又如何? 有多精致?有多少bug呢?
 
+而一个创业公司的市场大小, 则是这一产品的客户或用户的数量, 增长速度 …
 
+唯一重要的事情就是要让产品去适应市场(Product-market fit). 产品适应市场意思就是在一个好的市场里, 要让产品尽可能的满足市场的需求.
 
-基于此, 颜色对人类的感受是有着非常明显的影响的, 这一影响尤其是在我们购物时发挥的最为到位. 有一个分析公司 KISSmetrics曾经做过一个非常棒的信息图来描述关于颜色是如何影响我们的购买决策的.
+虽然Andreessen是为创业公司写的, 但是最后这段关于”产品适应市场”的重要性对每一个公司都是一样的–无论这个公司是在开发一个新产品还是说去改善一个现有产品,亦或者是介于这两者之间的,都一样. 这是通向成功的宇宙公理, 而这也是产品经理所负责的核心.
 
-从其中可以看出绿色在购物中使用的最为突出, 因为它最能让人放松.  其次, 黑色也经常用于奢侈品中, 它在背光下表现极为出色. 下面就是这一信息图的全文啦:
+有了这个作为背景, 我对产品经理这一角色的定义就是: 通过数字产品持续性的更新和执行来符合用户需求从而实现商业上的成功.
 
+这一定义总结了一个产品经理所需要涵盖的全部内容: 目标市场, 所属产品的各个方面, 商业成功的需求, 以及如何去衡量这一成功. 它还包含了三个产品经理绝对不能忽视的点:
 
+成功的最佳衡量标准就是商业的健康度, 也即产品给用户提供的价值;所有的一切都起始于对目标市场和需求的深刻理解, 从而把焦点集中到产品体验的质量上去;为了符合市场需求, 可持续发展需要一个良好的策划与执行.
 
-既然说了颜色会影响到人们的心情感受, 那么你要如何利用颜色来提升你的市场效果呢?
+那么, 如何把这些转译成一个产品经理每天的工作呢? 这个问题就太大了, 在这里是说不清楚的, 不过仅作为一个初步介绍的话, Marty Cagan在它的电子书”每一个伟大的产品背后”中列出了一个针对产品经理需要负责的事项清单. 这一清单包含:
 
-同样是来自 KISSmetrics, 我们概括来说有以下几点:
+寻找确认并且评估产品机遇的可行性和易行性,确保合适的产品在合适的时机发布出去,为开发者提供清晰的产品策略和思路指南,带领团队执行产品的思路,确保向团队成员传达产品的内涵,在产品开发流程中始终站在用户的角度思考问题.
 
-针对女性而言
+但是, 在一个产品经理能够做这些事情之前, 我们首先要问一些比较尴尬的问题. 首先, 公司真的需要产品经理吗? 另外, 如果我们同意说需要, 那么一个好的产品经理的特质是什么呢? 同时还有, 这一角色在公司组织架构中的位置呢? 我们来一一回答这些问题.
 
-女性爱好色: 蓝色, 紫色, 绿色女性厌恶色: 橘色, 棕色, 灰色
+为什么公司需要产品经理
 
- 
+产品经理的角色有一些公司可能是非常不买账的. 通常的反对意见包含:
 
-针对男性而言
+我们公司里有各种各样的人, 他们就已经满足一个产品经理职责的各个范畴了, 不需要专门配备这一个职务了.我完全看不出来这个角色能给公司带来什么实质性的利益.产品经理只会拖我们后腿.我不想把产品控制权交到别人手中.(通常这个理由不会那么公开的说…)
 
-男性爱好色: 蓝色, 绿色, 黑色男性厌恶色: 棕色, 橘色, 紫色
+这些考虑都是很有道理的, 但是显然他们并没有很好的理解产品经理这一角色, 或者说这个公司的产品经理很差劲, 没有很好的体现产品经理的职责.
 
- 
+实情是, 为了更高的效率, 对一个产品或者领域的管理权最好不要分散给多个人掌控. 对于产品经理而言, 看到产品全局是非常重要的 – 大局战略和局部细致都是一样重要的 – 为了获得更好的抉择. 如果不同流程的情况掌握在不同人手中, 那么就没有人会有一个完好的大局观, 那么这一角色的价值自然也会渐渐失去.
 
-也有人曾经做过一个实验去看改变一个按钮的颜色 对于转化率的影响. 他们选用了绿色和红色作为对比.
+我们看下产品经理通常能够带来的两个典型好处吧:
 
-对绿色呢, 他们初始猜测:
+产品经理确保产品一直处于市场驱动
 
-  绿色通常和”自然”,”环境”联系在一起, 在加上在交通灯中的广泛应用, 有一种”Go”或者前进的意味在其中;
+对产品经理而言, 其最突出的优点就是他们可以帮助公司一直为目标市场的需求和目标所驱动, 而不是被技术和潮流所驱动. 如同Barbara Nelson在”谁需要产品经理”一文中所说:
 
-对红色呢, 初始认为:
+相比于找到你现有技术的客户而言, 找到市场问题然后用技术手段解决实在是简单太多了.
 
-  红色和绿色不同, 通常认为是一种兴奋的, 激情的, 和血, 警告等联系在一起. 而在交通灯中常用来指示停止. 当然, 红色往往很抢眼.
+如果方法足够正确的话, 一个市场驱动的产品能够促成一个长期的, 可持续的, 有利润的商业, 因为这个公司会持续的把焦点放在解决市场问题而不是用最新的科技去做什么的问题上. 一个公司受什么驱动是很重要的, 因为受市场驱动的公司已经被证实比受其他因素驱动的公司所获得的利润更高(要多出31%, 根据George S.Day 和 Prakash Nedungadi的报告).
 
-按照上面的分析, 多数人会假设绿色更加友好, 其转化率应该更高猜对.
+这并不意味着关注不断出现的变化和产品创新是互斥的. 确定市场问题并不仅仅是找到现有的问题进行改进(比如说, 60%的用户都会在这个页面离开, 那么我们就搞搞这个页面), 同时还需要创造心的产品来满足那些没有被满足的需求(比如说现在的电话实在太烂了, 我们搞个新的吧).
 
-所以, 他们进行了一个简单的 A/B test, 来测试看看究竟是哪种颜色的转化率更高.
+产品经理能够提升时间管理
 
+产品经理带来的第二个好处就是他们能够减少一个公司实现目标所需的时间. 一个定位清晰合适的产品, 其开发流程掌握在一个有效率的管理者手中时会极大改善发布所需时间以及回报所需时间的.
 
+那么为什么产品经理可以做到这一点呢? 因为他们要权衡出那些是值得做的, 那些是不值得的. 这也意味着可以把更少的时间花费在Spaghetti法上了(把所有事情都扔到墙上看哪个能够粘在上面…) 而有更多时间放在已经被市场验证过的产品上了. 这一方法同样还能帮助更好的确定公司的焦点所在, 帮助公司更加投入到那些更有可能成功的项目之中, 而不是把人力分散到那些没人能够确保获利的项目中去.
 
-结果呢? 红色按钮的表现比绿色按钮的表现要好上21% 为什么呢? 本文并没有直接给出答案, 大家可以自己思考一下~
+未完待续(还有两部分回答另外两个问题).
 
-作者结合这个故事主要想说的一点是: 无论要做什么样的改变, 都要先从假设开始, 实践是检验真理的唯一标准.  data always beats opinion,no matter what.
+Resources:
 
-最后来个趣味小知识: 为什么超链接是蓝色的呢?
-
-看的时候我恰好看到下文中有个fun story….于是非常恶意的想: 不会又是万维网之父也是个红绿色盲吧…
-
-当然不是… 哈哈. 实际上使用蓝色是为了能够和原本网页背景色的灰色形成最佳的对比.
-
-
-
-详细解释如下:
-
-  Tim Berners-Lee,万维网的主要缔造者, 被认为是初始设定链接为蓝色的人.  Mosaic, 这个非常早起的浏览器, 展示网页的时候默认是灰色的背景和黑色的文本. 而同样为深色调, 但是又不至于和黑色混在一起的就是蓝色了. 所以, 为了让链接能够在一堆文本中脱颖而出, 方便阅读, 就默认设定超链接的颜色为蓝色了.
-
-作者最后做的总结其实确实值得深思:
-
-  仅仅简单改变一些非常小的类似颜色这种细节, 就能产生如此巨大的改变,  甚至可以完全改变最后的产出.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Teenage Usability(译)-为青少年而设计</title><link>http://taoalpha.me/blog/2013/06/12/read-teenage-usability-translated-designed-for-young-people/</link><category>read</category><tag>UX,产品学习,翻译文章,设计,青少年</tag><pubDate>2013-06-12T05:00:00.000Z</pubDate><description>Teenage Usability:Designing Teen-Targeted WebsitesSummary: 青少年往往会对自己的网络技能过渡自信,但实际上他们表现的比成年还要差劲.更弱的阅读水平,没有耐心,而且尚未发展成熟的研究技能,都减少了青少年完成任务的成功率以及对于简单可靠的网站的需要.
-青少年们都是兴奋的.技术已经和青少年的生活密切的结合到一起了,此时为他们创造更多有用而且有益的网站变得更加关键了.在当下这个下一件最重要的事情就是点击鼠标,而短信息打断活动已经成为一种默认的规则而不是偶尔发生的例外的时代,网站架设者们必须清晰的理解青少年们想要什么,如何让他们留在你的网站上.
-为了理解伴随着科技和互联网成长起来的一代人的期望,我们设计了经验性的可用性研究,针对真实的青少年对象,来寻找可以指导关于网站如何提升以满足青少年的能力和偏好.
-我们的研究拒绝了很多刻板印象,包含以下这类的青少年:
-    只是为了通过网络的图片和媒体获得娱乐的;    非常精通技术的科技控;    手机控,用手机做任何事,而且    希望所有事物都能社交化的;青少年不是那些有选择性放弃的浏览网络的技术控们.而且他们并不喜欢充满了炫目的,闪烁的图片的网站.青少年大都比较一致,千篇一律的只喜欢那些大胆新奇的事物.他们经常毫不惧怕技术风险的浏览着网络,而且经常会连接到某种形式的媒体之中.虽然这些都是部分正确的,但是这些都是过于简单的,而且让这些来指引你的设计可能会导致非常灾难性的后果.
-青少年们使用网络的设备是非常多样的,而且会依据不同的环境而有所不同.在我们的研究中,我们主要关注于网页的可用性.主要是从桌面电脑或者笔记本的角度来说. 我们同样也观察了移动网站的可用性,以及青少年是如何使用移动设备的.虽然青少年在发短信,上facebook等事情上花费了无穷无尽的时间,我们并没有关注于此,因为我们的目标是归纳出可以作为主流网站的设计指导的标准,而不是帮助建立下一个Facebook.
-关于本研究
-我们归纳出了111条能吸引青少年并把他们留在你的网站上的可用性指导原则.这些推荐的规则都是基于多种方法的观察研究之上.共计84名用户,年龄范围在13-17岁之间的参与者,分为两轮参与了本次研究:38名请少人在原始研究(8年前),而46名青少年在新的研究中.我们把我们的发现按照下述的三个方法分成三部分:
-    可用性测试:我们和参与者逐一进行测试,并且给与他们一定的任务来完成,让他们在操作的过程中说出他们的想法.为了让整个场景尽可能的有效,我们按照每个参与的青少年的真实兴趣尽量的模拟了真实世界的场景.    实地考察:我们在青少年的家里以及学校观察他们.在他们访问网站期间,我们没有实现给予他们预定的任务,而只是观察他们平常的时候使用网络的方式.    采访测试对象以及焦点小组:为了获得更进一步的关于他们体验的意见和态度,我们询问参与者,由他们提供了一些示例细节,关于他们是如何以及什么时候使用网络的,以及他们认为哪些网站是有用而有趣的.我们同时还请求青少年们给了我们关于如何让网站更有吸引力的建议.采访既会发生在可用性测试前,也会发生在可用性测试之后,同样也会在焦点组中进行.我们在US,Australia的城市和乡村,从富裕的城镇到平穷的乡村都进行了研究.我们测试对象由大致相等的男生女生组成,就152个包含了一个很大范围的网站测试集进行测试,测试集包含:
-    学校资源(加州州立大学,BBC学院,SparkNotes)    旅游,艺术以及娱乐类(Lonely Planet等)    健康类(Australia Drug Foundation)    信息参考类(Nature)    新闻类(CNN)    娱乐和游戏类(MTV等)    电子商务类(Apple)    企业官网(Samsung)    政府网站(NASA)    非盈利机构网站(The Insite,World Food Programme)从这些样例中可以发现,我们测试的网站中既有面向青少年的专业网站,也有一些主流网站,其受众的一部分是青少年.
-Teen Motivation For Using Websites(青少年使用网络的动力)
-青少年使用网络的理由很多样,其中包含娱乐.通常来说,他们会有比较明确的目标,即便是那个目标只能获得他们持续10分钟的注意力.
-虽然他们上网的目的和成年人可能不一样,但是青少年在主要的方式上还是和成年人一致的:两组人都希望网站足够简单易用,可以让他们很快的完成既定目标.想成年人那样,青少年们也大多是面向目标的类型,而且很少无目的的浏览网页.这也是为什么网站的易用性对于他们的重要性和其他用户组一样的原因了.
-我们的研究报告指出,青少年们使用网站用于:
-    学校的安排    爱好或者其他特殊的兴趣(包含学习新的技能以及参与有趣的活动)    娱乐(包含音乐和游戏)    新闻(包含体育类,时事类的以及娱乐类的)    学习一些新的话题    和朋友聊天    购物即便当青少年没有在网站上做任何实际的买卖,他们也会访问这些网站,并且在其中寻找商品建立自己的心愿单,针对于那些有支付信用卡能力的成年人.
-好消息和坏消息
-好消息:青少年在导航网站以及找到他们想要的方面变得更加成功了.青少年的成功率大约提升了16%,按照现在的和8年前的相比,相当于每年增长2个百分点.这相比于成年人在过去的10年里平均每年1.7个百分点的增长还是有微弱的优势.
-注意:成功率反应的是任务完成的学生比例.任何小于100%的百分比都代表了一个网站设计上的失败或者商业上的损失.
-
-究竟是青少年变得更优秀了呢?还是网站变的更优秀了呢?可能两者都有吧.我们观察到了青少年许多和8年前的研究中一样的坏习惯.因此,新研究中青少年良好的表现至少有部分是来自于网站设计本身的提升的. 即便如此,虽然我们8年前的研究对象都是一些重度的互联网使用者,但今天的青少年们有了更多的时间投注到更庞大的互联网中,去使用它,这也导致了更多的机会去磨练他们的浏览技巧.
-坏消息:青少年们并没有人们想象中的那么无敌.虽然青少年在网络上会感觉很自信,但是他们也会犯错误,而且经常轻易的就会放弃.行动敏捷的青少年们相比成年人有更少的谨慎而且经常轻易的下判断,这些都导致更小的成功.实际上,我们得到的成功率只有71%,而成年人则获得了83%的成功率.
-青少年们表现的比成年人差主要是以下三个原因:
-    尚不熟练的阅读技巧;    缺少复杂的研究策略;    低到不可思议的耐心;为了提升你的网站对青少年的易用性,你必须考虑以上三个因素.
-通过不同网站类别,青少年在电子商务网站获得最好的成功,这类网站经常有着标准的设计方式,而且需要很少的阅读技巧.青少年们对那些提供紧凑的内容和弱小的导航的大网站而言是一个巨大的挑战.政府网站,非营利组织网站以及学校网站等都是这种低可用性的代表.
-不管可用性的提升,我们在前些年以及最新的观察中发现了用户纠结于同样的问题:由于合并一些属性以及设计方法而造成的问题.因此,无论是传统的还是新的指导原则都必须考虑技术和人都是在持续进化的,我们最新的报告包含了总计110条指导原则,相比于最初版本的61条还是增加了不少.
-许多指导原则同样适用于普通的用户.对于青少年,这些原则显得更加重要因为易用性表现出了巨大的门槛效应.
-Write Well(优秀的文章)
-为那些没有耐心的用户而写.再没有比满满一屏幕混乱的文本更让年轻的用户感到痛苦而放弃了.青少年们更容易变得无聊,分散以及挫败感.青少年不喜欢在网络上阅读太多东西.他们在学校里已经读的够多了.同样的,许多青少年的阅读技能并不完美,尤其是那些相对更年幼的青少年们.那些更容易浏览或者视觉上更明显的阐述概念的网站更受到青少年的偏爱,尤其是相比于那些有着紧凑文本的网站.
-应用适当的网络书写和排版技术对于和青少年沟通是非常关键的.在小而有意义的块中显示内容,并加以足够的空白/小块可以帮助学生更好的获取信息以及找到他们上次被短信或者电话打断时读到的地方,而且这种打断几乎还是不可避免的.
-通过选择合适的词语来帮助青少年理解以及获取他们的注意力.使用那些青少年可以理解的词语.句子以及段落要足够短.青少年通常在阅读和理解技巧上要略逊于成年人.如果你的网站面向的用户比较广,那么就用6年级的阅读水平(或者更低)作为书写的参考标准.在这一水平的书写,可以帮助几乎所有的用户,无论是年轻的还是年老的,都可以快速的理解你的内容.
-研究过程中,还有一个令人惊喜的发现:青少年和成年人都不喜欢那些太小的字体.我们经常提醒使用小字体的网站,因为它们太小而可能对老年人有负面影响(甚至人过了40岁,视力就开始下降了).我们一贯假设小字体占据主导是因为多数网页设计师都是年轻人,都还有着近乎完美的视力,所以当我们发现小字体对我们的青少年用户也会产生一些问题,引起一些负面的评价时,我们非常惊讶.虽然他们的视力明锐,但在阅读太小的文字时,他们更容易快速跳过或者更容易的被分散注意力.
-Avoid Boring Content–and Entertainment Overload(避免无趣的内容,以及过度娱乐)
-青少年经常抱怨他们浏览的网站过于无趣.枯燥的内容对于那些想要留住青少年的网站而言就是死神之吻.然而,并不是所有的内容都需要有很炫的交互的.虽然青少年们对于美感有较高的评价,但是它们对于表现混乱,包含无意义的媒体的网站也是敬谢不敏的.
-注意不要过度使用交互属性,因为你在为青少年进行设计.多媒体可以吸引也可以激怒青少年,完全取决于它是否有用.对于青少年而言,最佳的上网体验是那些可以交给他们一些新东西或者那些让他们关注于某个目标的网站.
-什么才是好的?以下的这些交互属性都是不错的,因为他们让青少年更好的做事情而不是简单的坐下来阅读:
-    在线小测验;    提供反馈意见或者提问的表;    在线投票;    游戏;    分享图片或者故事的功能;    信息板;    可以提供建议或者给出建议的论坛;    创建一个网站或者添加内容的功能;这些交互的功能都让青少年们在互联网上留下了自己的痕迹或者用某种方式表现了他们自己,有些很微小,有些则很突出.
-网站类型对于用户的期待值是有影响的.比如说,青少年会期待在电子商务网站或者品牌网站中看到专业,而在信息类站点上则希望看到简单而且经过润色的内容;对于后者,用一种礼貌的方式展现有趣的内容会比用新的复杂的功能体验起来更加有吸引力.青少年可以自如的学习以及感到被吸引.
-Make It Snappy(让网站变的时髦)
-一个加载速度很慢的网站会是一个很好的破坏者.无论你做什么,首先先确保你的网站载入速度够快.慢,迟缓的网站对于任何人都是一种沮丧的体验,但是它们对于期待瞬间满足的青少年而言尤其如此.
-每次在你开发新的超酷的插件前好好再想想.如果它很慢,那还是算了吧.青少年们不会有耐心等待它的.因为青少年经常使用的是旧的,二手的计算机,有时候还有着比较慢的网络连接,那些酷炫的特性可能不会很好的展现.青少年喜欢子啊网站上做事情,他们不喜欢看那些很慢的网站或者看起来很炫但是表现的很迟缓的网站.
-Don’t Talk Down To Teens(不要轻视青少年)
-避免任何听起来可能有优越感或者幼稚的话语.恰当的语调可能促使你的成功,也有可能造成你的失败.青少年们多和那些同龄人创造的故事有关,所以你的网站应该提供那些真实的故事,图片以及来自其他青少年的真实例子.
-我们研究中一些网站试图在一个层面上同时服务于儿童和青少年,通常都是让标题看起来像是孩子气的感觉.这其实是一个自掘坟墓的行为,”kid”这个词正好引起青少年的厌恶.青少年对于他们刚赢得的地位有着很强的自豪感,他们不希望过于幼稚的内容—这是面向青少年用户的网站避免过于动画风格或者显眼的色彩主题的又一原因.我们推荐位青少年和儿童提供不同的部分,并分别加以”kids””Teens”的标题.
-Let Teens Control The Social Aspects(让青少年控制社交的方面)
-让分享变的容易但不强迫分享.青少年们的社会交际通常都依赖于科技,但是他们并不希望无时无刻都处在社交的环节中.他们希望能够控制他们分享的内容以及如何分享.那些强迫青少年去注册然后自动将他们的注册信息公开的网站违反了信任的原则.父母以及老师教育青少年在年轻的时候保护自己的隐私,其中一条就是要避免那些恼人的网站.
-当提供分享的功能时,确保包含邮件.不像大学生,青少年经常喜欢使用电子邮件来分享内容,因为他们更注重保护自己的社交账号,而且更谨慎的决定什么人可以看到他们的活动状态.
-Design For Smaller Screens and Poor Ergonomics(为那些小屏幕和弱小的工效学而设计)
-许多学生在尴尬的时候都会使用移动设备来上网,而这些笔记本,平板以及手机等,都有着比较小的屏幕.随着移动设备的发展,就需要你在设计一个网站的时候选择一种不会损害到易用性的方式.因此,即便是对商业用户屏幕在越来越大,青少年也极少能拥有自己的高端台式电脑.
-青少年经常使用带触控板的笔记本,这让交互对于精确性的需求有了要求,比如下拉菜单,拖拽行为,以及小按钮–操作很困难.翻转效果或者狭小的点击区域等设计元素往往会造成问题,如果他们到处都在使用的话.小号文本和紧凑的文本让阅读变的困难.整合所有的功效性低的元素,你就有了一个针对各类错误和苦事的处方了.
-媒体所描绘的青少年都是那种非常熟练的计算机操作者.而实际上,青少年对于利用认知能力整合信息是过度自信的,也就意味着他们经常轻易的放弃,然后责怪网站的设计.他们不会责怪自己,他们责怪你.
-Age Group Difference(年龄不同的差异)
-下表总结了在为少年,青少年,大学生以及成年人而进行的设计方法的主要相似点和差别.其中,关于儿童的发现是基于3-12岁的用户的;而关于大学生的发现则是基于18-24岁的用户的.
-
-    Smile:代表喜欢,感兴趣,收到吸引,或者用户可以非常轻松的适应它    Middle:用户可能对于其中的一些方面比较看好,但是大量使用可能会出现问题    Dislike:用户不喜欢,甚至不愿意做,或者觉得很难操作很明显,在不同的年龄组中有着非常明显的差异.其中对于青少年而言,易用性的最高水平在于设计直接命中了他们的需求和行为,这一点和儿童以及成年人都有所不同.从表中还可以看到,无论是对交互设计还是对那些更明显的因素,比如话题以及内容风格,这一点都是没错的.
-更多的信息和完整的青少年网站设计可用性指导原则,可见我们的全部研究报告. Edit By MaHua
+原文 - Why Companies Need Full-Time Product Managers 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item></channel></rss>
