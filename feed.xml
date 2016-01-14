@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-12T04:12:39.543Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>Dynamic scheduling crawler for FeedPusher</title><link>http://taoalpha.me/blog/2016/01/12/tech-dynamic-scheduling-crawler-for-feedpusher/</link><category>tech</category><tag>Crawler,FeedPusher,NodeJS</tag><pubDate>2016-01-12T08:12:44.000Z</pubDate><description>As I promised, I have been working on refactoring the feedpusher with pure JS/nodeJS from last week. Now I have set up the basic database struture and spider which has already been running for one week with 80 sites and 8k feeds stored into my mongodb on raspberry pi.
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-14T04:31:54.714Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ LeetCode NSum Problem</title><link>http://taoalpha.me/blog/2016/01/13/oj-oj-leetcode-nsum/</link><category>OJ</category><tag>HashTable,LeetCode</tag><pubDate>2016-01-14T01:19:20.000Z</pubDate><description>1. Two SumQuestionGiven an array of integers, find two numbers such that they add up to a specific target number.
+The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
+You may assume that each input would have exactly one solution.
+Input: numbers={2, 7, 11, 15}, target=9Output: index1=1, index2=2
+LeetCode1. 2Sum
+Tags: Array, Hash Table
+AnswersIndexOfBefore we think about hashtable, the more strightforward idea is that we subtract the current number from the target and then check whether the result is in the rest of the list or not.
+12345678910111213/** * @param &amp;#123;number[]&amp;#125; nums * @param &amp;#123;number&amp;#125; target * @return &amp;#123;number[]&amp;#125; */var twoSum = function(nums, target) &amp;#123;  for(var i = 0;i&amp;lt;nums.length;i++)&amp;#123;    var secondIndexOffset = nums.slice(i+1,nums.length).indexOf(target - nums[i])    if(secondIndexOffset&amp;gt;-1)&amp;#123;      return [i+1,i+secondIndexOffset+2]    &amp;#125;  &amp;#125;&amp;#125;;
+Runtime: 456 ms
+Or we use while to save some time:
+123456789101112131415/** * @param &amp;#123;number[]&amp;#125; nums * @param &amp;#123;number&amp;#125; target * @return &amp;#123;number[]&amp;#125; */var twoSum = function(nums, target) &amp;#123;  for(var i = 0;i&amp;lt;nums.length;i++)&amp;#123;    var j = i+1    while(j&amp;lt;nums.length)&amp;#123;      if(nums[i]+nums[j] == target)&amp;#123;        return [i+1,j+1]      &amp;#125;    &amp;#125;  &amp;#125;&amp;#125;
+Runtime: 336 ms
+hashtableThe previous answer can solve the problem but it is too slow, it is O(n^2) way too slow. We need to speed it up.
+Since we can assume each input would have exactly one solution which means that there should not have duplicate number in the nums or the duplicate numbers wouldn’t affect the result, so we can use a hashtable store all the numbers and the index of them to speed up the process.
+1234567891011121314151617/** * @param &amp;#123;number[]&amp;#125; nums * @param &amp;#123;number&amp;#125; target * @return &amp;#123;number[]&amp;#125; */var twoSum = function(nums, target) &amp;#123;  var mapper = &amp;#123;&amp;#125;  for(var i =0;i&amp;lt;nums.length;i++)&amp;#123;    mapper[nums[i]] = i+1  &amp;#125;  for(i = 0;i&amp;lt;nums.length;i++)&amp;#123;    var remain = target - nums[i]    if(mapper[remain] &amp;amp;&amp;amp; mapper[remain] -1 !== i)&amp;#123;      return [i+1,mapper[remain]]    &amp;#125;  &amp;#125;&amp;#125;;
+Runtime: 140 ms
+Personal Follow Upif we can not assume that each input would have exactly one solution, then how to solve it?
+1234567891011121314151617/** * @param &amp;#123;number[]&amp;#125; nums * @param &amp;#123;number&amp;#125; target * @return &amp;#123;number[]&amp;#125; */var twoSum = function(nums, target) &amp;#123;  var output = []  for(var i = 0;i&amp;lt;nums.length;i++)&amp;#123;    var j = i+1    while(j&amp;lt;nums.length)&amp;#123;      if(nums[i]+nums[j] == target)&amp;#123;        output.push(i,j)      &amp;#125;    &amp;#125;  &amp;#125;  return output&amp;#125;
+If we want get all possible and no duplicate combinations(using values instead of indices) of two sum:
+1234567891011121314151617181920212223242526272829/** * @param &amp;#123;number[]&amp;#125; nums * @param &amp;#123;number&amp;#125; target * @return &amp;#123;number[]&amp;#125; */var twoSum = function(nums, target) &amp;#123;  var i = 0, j = nums.length-1  var output = []  nums.sort( (a,b)=&amp;gt; a - b)  while(i&amp;lt;j)&amp;#123;    if(nums[i]+nums[j] == target)&amp;#123;      output.push([nums[i],nums[j]])      i ++      j --      // remove the duplicate values      while(i&amp;lt;j &amp;amp;&amp;amp; nums[i] == nums[i-1])&amp;#123;        i++      &amp;#125;      while(i&amp;lt;j &amp;amp;&amp;amp; nums[j] == nums[j+1])&amp;#123;        j--      &amp;#125;    &amp;#125;else if(nums[i]+nums[j] &amp;gt; target)&amp;#123;      j --     &amp;#125;else&amp;#123;      i ++    &amp;#125;  &amp;#125;  return output&amp;#125;
+Use hash table:
+12345678910111213141516171819202122232425262728293031/** * @param &amp;#123;number[]&amp;#125; nums * @param &amp;#123;number&amp;#125; target * @return &amp;#123;number[]&amp;#125; */var twoSum = function(nums, target) &amp;#123;  var output = [],nnums = [],amapper = &amp;#123;&amp;#125;  for(var i = 0;i&amp;lt;nums.length;i++)&amp;#123;    if(!amapper[nums[i]])&amp;#123;      nnums.push(nums[i])      amapper[nums[i]] = 1    &amp;#125;else&amp;#123;      amapper[nums[i]] ++    &amp;#125;  &amp;#125;  // build the hash of all elements and remove the duplicates  // store all possible combinations  for(var i = 0;i&amp;lt;nnums.length;i++)&amp;#123;    for(var j = i+1;j&amp;lt;nnums.length;j++)&amp;#123;      var sum = nnums[i]+nnums[j]      if(sum == target)&amp;#123;        output.push([nnums[i],nnums[j]])      &amp;#125;    &amp;#125;  &amp;#125;  // consider about the special case that two sub elements are same  if(amapper[target/2] &amp;gt;=2)&amp;#123;output.push([target/2,target/2])&amp;#125;  return output&amp;#125;
+Compared with the two pointers method, this one would be a little slower - test with replacing this one with previous one in the findNSum function below.
+18. 4SumQuestionGiven an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.
+Note:Elements in a quadruplet (a,b,c,d) must be in non-descending order. (ie, a ≤ b ≤ c ≤ d). The solution set must not contain duplicate quadruplets.
+For example, given array S = {1 0 -1 0 -2 2}, and target = 0.
+A solution set is:
+(-1,  0, 0, 1)
+(-2, -1, 1, 2)
+(-2,  0, 0, 2)
+LeetCode18. 4Sum
+Tags: Array, Hash Table, Two Pointers, Medium
+Answersreduce to 2Sum123456789101112131415161718192021222324252627282930313233343536373839404142434445464748/** * @param &amp;#123;number[]&amp;#125; nums * @param &amp;#123;number&amp;#125; target * @return &amp;#123;number[][]&amp;#125; */var fourSum = function(nums, target) &amp;#123;  // sort  nums.sort( (a,b)=&amp;gt; a - b)  var output = []  findNSum(nums,target,4,[],output)  return output&amp;#125;;var findNSum = (nums,target,N,result,output)=&amp;gt;&amp;#123;  // base exit case  if(nums.length &amp;lt; N || N &amp;lt; 2) return  // 2Sum like before but don't need to sort the list again  if(N==2)&amp;#123;    // can replace below with any one of these 2Sum ways    var i = 0, j = nums.length-1    while(i&amp;lt;j)&amp;#123;      if(nums[i]+nums[j] == target)&amp;#123;        output.push(result.concat([nums[i],nums[j]]))        i ++        j --        // remove the duplicate values        while(i&amp;lt;j &amp;amp;&amp;amp; nums[i] == nums[i-1])&amp;#123;          i++        &amp;#125;        while(i&amp;lt;j &amp;amp;&amp;amp; nums[j] == nums[j+1])&amp;#123;          j--        &amp;#125;      &amp;#125;else if(nums[i]+nums[j] &amp;gt; target)&amp;#123;        j --       &amp;#125;else&amp;#123;        i ++      &amp;#125;    &amp;#125;  &amp;#125;else&amp;#123;    for(var i = 0;i&amp;lt;nums.length;i++)&amp;#123;      if(i==0 || (i&amp;gt;0 &amp;amp;&amp;amp; nums[i-1] != nums[i]))&amp;#123;        // recursively call findNSum        findNSum(nums.slice(i+1,nums.length), target-nums[i],N-1,result.concat([nums[i]]),output)      &amp;#125;    &amp;#125;  &amp;#125;&amp;#125;
+Runtime: 328 ms
+Since the nums is sorted, we can use pruning during the for loop to save a lot of time:
+12// add this within the for loop before the recursionif(nums[i]*N &amp;gt; target || nums[nums.length-1]*N &amp;lt; target) break
+Runtime: 228
+Using Hash TableThink about using the hashtable store all value of two pairs, and then treat it like a twoSum problem, but will use a lot space.
+SummaryAll NSum problems can be solved by the same way.
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Dynamic scheduling crawler for FeedPusher</title><link>http://taoalpha.me/blog/2016/01/12/tech-dynamic-scheduling-crawler-for-feedpusher/</link><category>tech</category><tag>Crawler,FeedPusher,NodeJS</tag><pubDate>2016-01-12T08:12:44.000Z</pubDate><description>As I promised, I have been working on refactoring the feedpusher with pure JS/nodeJS from last week. Now I have set up the basic database struture and spider which has already been running for one week with 80 sites and 8k feeds stored into my mongodb on raspberry pi.
 Today, I jsut set up a new process to crawl the updates which I called dynamic scheduling which means now the spider can decide whether this site needs to be recrawled this time or not by itself. Why? Most important reason is that as the number of sites goes bigger, the time it crawles all sites is longer, and also crawl every site everytime is not a good way.
 Now I will explain how I do that with nodeJS.
 TheoryOur purpose is let the spider decide when to crawl a specific website/rss link, or in another word, everytime the spider runs, it needs to decide which website should be recrawled this time.
@@ -1669,39 +1708,99 @@ iOS 7开始, 苹果引入了扁平化设计, 去掉了所有的阴影啊等等�
 柔化了背景( Mark Bunnker表示原来的背景很像是一个警告页面… 很像Tokyo hot的FBI warning是吧…哈哈)加上了Serial的logo(来自 James Love的建议), 以及一个Sarah Koenig的照片从而显得更加人性化更真实( Shen DeShayne的建议);Nathan Barry提议的新题目:”帮助我们讲述更好的故事”;还有很多关于CTA(call to action)的建议, 我最终采用了 Steve Purcell’s的;对排版做了很多的细化, 更精简的语言, 更加强调了听众这一核心以及他们的帮助对于Serial第二季的播出的影响;
 
 果然是众人拾柴火焰高… 瞬间华丽丽的变身有木有!! 要是我是serial, 果断立刻接着这个活动, 直接替换donate页, 甚至直接向yahoo学习, 来个圣诞节donate系列, 每天一个版本~ 然后根据每天的捐款数, 最后选出几个最佳来哈哈哈 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>What Is the Relationship Between HCI Research and UX Practice?</title><link>http://taoalpha.me/blog/2014/09/05/read-t-what-is-the-relationship-between-hci-research-and-ux-practice/</link><category>read</category><tag>HCI Research,HCI翻译,关于HCI,翻译文章,译系列</tag><pubDate>2014-09-05T08:00:00.000Z</pubDate><description>测试feedpusher的数据库搜索功能时找到了这篇文章~ 对于HCI Research有很好的介绍!
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>User Experience is a feeling</title><link>http://taoalpha.me/blog/2014/11/10/read-t-user-experience-is-a-feeling/</link><category>read</category><tag>UX,产品学习,关于HCI,翻译文章,译系列</tag><pubDate>2014-11-10T14:00:00.000Z</pubDate><description>用户体验是一种感觉
 
+“如果你以’用户体验是一种感觉’为基础, 那么你就算是向真正理解用户体验迈出了一步.”
 
-人机交互是一个快速发展的学术研究领域. 目前来说, 学术机构基本主导了绝大多数的HCI研究, 无论在US,UK,Europe,Australasia以及Japan, 还有逐渐发展起来的南亚以及中国. HCI研究经常是附属在计算机系之下的, 但是又保留着其很强的心理学背景和人因学背景. 此外, 还有几个大型的杰出公司同时在独立的, 当让也有和各学术研究机构合作进行的, HCI相关的研究. 比如微软, PARC以及goole.
-What Do Academic HCI Researchers Do?(那么学术性的HCI研究者都在做什么呢?)
-通常来说, 学术性研究者都在做以下这三类事情:
-    他们通过探索性的实验以及利用复杂的交互系统来创造新的计算机用户界面;    他们建立并发展了一套经验体系, 针对用户对于用户界面的使用和体验; 主要通过实验室中的用户界面研究或者在实际环境中观察用户对用户界面的使用情况(就如同人种学研究一样)来获得的;    他们发展出了一个理论系统来讲述设计以及使用交互系统. 其中包含了一些基本理论, 比如Fitts’s law(菲茨定律),描述指针移动和目标元素在屏幕的位置的的关系, 通常, HCI理论采用设计框架的形式, 包含了各种混杂的概念. HCI研究可能是聚焦到某个整体的局部也可能是直接识图去强化整体.
+许多人似乎都认为用户体验是一个可以控制的设计产出–好像它是一个你可以通过你的想法, 设计师以及开发者们从而操纵一个人对某个产品或者服务的体验. 实际上, 用户体验经常被认为是一个定义以及管理用户对产品的感觉.
 
+但是你的产品并不能决定一个用户的体验, 用户自己的行为, 态度以及情感才是决定因素. 因此, 用户体验就是一个感觉. 实际上, 它远不止于此, 但如果你是在此基础上去理解用户体验, 那么你就算是向真正理解用户体验迈出了一步.
 
-Is There a Connection Between Academic Research and Industry Practice?(在学术研究和工业实践之间有联系吗?)
-在工业界的UX从业人士也通常都会做些研究的, 就如同设计一样. 但是学术性HCI研究和UX研究在目的产出, 目标, 以及关注的范围都有着非常显著的差别, 学术研究和工业研究通常可能都在处理那些看起来比较接近的基础对象: 数字化交互系统的设计和理解以及它们的用户群体. 两者都遵循用户为中心的设计原则, 都提倡把对人类的理解融入到设计环节中. 所以说, 它们之间肯定也应该有很强的关系以及重叠区域.
-在UK, 政府在HCI的学术研究基金投入上逐渐关注起学术研究和工业时间的联系了. UK的工程和物理科学研究委员会, 也是HCI研究领域基金的重要来源, 就讨论过关于HCI研究需要考虑如何”把理论和方法应用到工业实践中”. 更进一步地说, 既然HCI学术研究在很多的领域, 包含医疗健康, 电子设备消费品以及软件等等都有很强的关系, 那么在HCI学术研究和UX实践之间建立一个更好的联系就能够获得很高的回报.
-虽然学术圈经常会对UX领域做出很多不准确的猜测,而且有时候认为两者的关系是理所当然的. 学术研究者们通常会假设因为知识的利用和转移, 所以学术研究和工业实践有着非常自然的联系. 但另一方面, UX领域则经常认为HCI的学术研究通常都是脱离实际的, 在现实社会中是无法应用的. 也因为这样的原因, 他们通常会整个抛弃学术研究, 或者至少是觉得消化以及应用学术研究的结论是非常困难的一件事.
-Moving Toward Establishing a Mutually Beneficial Connection Between Academia and Industry(为学术研究和工业实践发展建立一个双赢互惠的关系)
-有两个开放性问题我们需要强调的是:
-    UX职业领域该如何指导以及启发学术研究?    学术研究又能够为UX职业领域做什么事情呢?
+一个用户在使用某个产品时的体验是每个产品都需要关注的点. 一个用户可能会有很好的体验也可能会有一个很糟糕的体验. 虽然你不能直接的设计一个用户对一个产品的体验, 但你可以采取一些措施, 应用一些用户为中心的设计原则和流程来确保他们的体验是积极的, 正面的.
 
-回答第一个问题可能需要HCI研究者们对理解UX职业领域的工作有着一定的热情, 并且进行一些关于UX实践的经验性研究. 迄今为止, 学术研究中对于UX实践应用的探索还是比较有限的. 无论如何, 在UX领域工作的经验能够对学术研究产生很多意外的重要启示. 而回答第二个问题就要相对更加复杂了 – 甚至可以说完全不知道该如何下手了. 它需要很深入的研究才行.
-令人好奇的是, 学术研究者们通常对HCI研究中大量出现的创新以及其自身关注领域的快速发展而感到忧虑. 在一个学术领域中, 他们的目标通常是建立一个强有力的基础, 然后慢慢发展.
-然而, HCI学术研究领域的创新和广度都强化了其和在工业限制下的UX领域有限的能力形成的鲜明对比. 比如说, 在一个很限制的项目中工作时, 你需要考虑有限定的预算, 有限的时间, 你需要去满足客户的需求以及相关利益人的利益, 还要能和其他领域的人相互配合, 比如软件开发者; 还要习惯于新的工作方式, 比如敏捷开发以及精益方法. 你不会担心有过多的创新, UX从业人士通常希望能够在他们非常受限的环境下创造更多的创新.
-学术性研究的产出中完全可以提供很多对UX领域有潜在价值的东西. 但是如何来传递这些产出呢? 首先也是最重要的是, 我们完全不用把HCI研究和某一个项目或者新项目, 或某项服务的预期条件, 或者某个客户的特定需求绑定在一起; 其次, 学术新的HCI研究有其探究未来科技的自由 – 即便其设计本身有着一定的风险且没有清晰的,即时的回报. 所以, HCI研究者们通常在无数失败的基础上创造了快速的创新, 他们的工作少了很多的限制.
-也许通过有效的沟通, HCI学术研究中的那些成果能够给工业实践带来巨大的价值. 很多UX从业人士都没有那么富裕的时间来让他们去探讨那些当前需求以外的东西. 但是在学术研究中, 关注范围更广是很通常的事情.
-不幸的是, 就目前来说, 绝大多数的学术工作–无论是创造圆形, 概念, 想法, 或者是设计原则 – 都局限在了HCI研究者们在各种会议期刊上发表的论文中了. HCI研究者的受众多数都是那些其他的学术研究者, 而不是那些在工业界工作的人们.
-通过理解用户体验的工作情景, HCI研究者们能够更好的把他们的研究方向切合这些受众, 从而和UX职业领域建立更加友好自然的联系. 与其让学术研究和工业实践互相竞争, 不如假设一方创造那些权威的, 严禁的知识体系, 一方吸收并加以应用呢. 两者这样的互利互惠关系才是最有价值的. 采用这一方法可能会让学术研究者们更好的理解他们该如何进行自己的研究, 让它们更加容易帮助到那些UX从业人士.
-Postscript(后记)
-作为我开始针对这一领域的调研的一部分, 我创建了一个非常简短的, 5分钟调查问卷, 邀请各位UX从业人士来提供一些关于自身背景, 所用方法以及和学术研究的关系的信息. 如果你愿意参与其中, 或者是对这一工作有兴趣的话, 请参与此项调查.
-Acknowledgments(感谢)
-作者非常感谢EPSRC的支持.
-References(参考)
-[1] Benford, Steve, and Gabriella Giannachi. Performing Mixed Reality. Cambridge, MA: MIT Press, 2011.[2] Engineering and Physical Sciences Research Council. Report of the Human EPSRC Computer Interaction Theme Day and Survey, March 2012.[3] Friess, Erin. “Personas and Decision Making in the Design Process: An Ethnographic Case Study.” In Proceedings of CHI ’12. New York: ACM Press, 2012.[4] Goodman, Elizabeth. Performance and Materiality in Professional Interaction Design. PhD thesis, University of California, Berkeley, 2013.[5] Gray, Colin M., Erik Stolterman, and Martin A. Siegel. “Reprioritizing the Relationship Between HCI Research and Practice: Bubble-Up and Trickle-Down Effects.” Proceedings of CHI ’14. New York: ACM Press, 2014.
+你应该把以用户为中心的设计的各种优势告诉那些投资人, 相关利益人从而拿到钱, 而这些优势就包括以下这些:- 快速的获得更多客户- 保留现有的客户- 为你的公司建立信誉- 在公司长期运行中扩大销售额- 降低周边产品/服务(外围设备)的价格, 比如客服/售后- 减少无形的花费, 比如浪费的时间- 完成的更加高效
 
-Source Link:
-    What Is the Relationship Between HCI Research and UX Practice?
+对于你的公司而言, 无论是一个创业公司还是说一个庞然巨物, 都要意识到这些利处, 而你所在的产品团队则需要:
+
+理解伟大的设计和优质的体验之间的区别像用户那样去思考, 而不是站在一个产品的制作者角度在你的产品策划, 设计以及开发环节都要考虑到产品的用户
+
+优秀的设计是不够的
+
+“许多人认为用户体验就是一个产品是如何工作以及外观”. 换句话说, 人们很容易认为用户和产品的交互就是用户体验的全部内容了. 比如, 他们可能关注的焦点问题诸如: 产品的交互界面是否利于用户导航呢? 最重要的内容是否获得了视觉的最优位置呢? 产品外观是否足够优质呢?
+
+如果对此类的回答是”是”, 就会让人很容易的认为你已经给你的产品赋予了极好用户体验. 在很多方面, 你可能已经做的比你的竞争对手好很多. 但是, 一个产品的用户体验所包含的内容远远不止是在一个网页浏览器或者移动设备中打开一个应用这么简单.
+
+让我们以一个我们可能会提问的问题为例: 在用户第一次使用你的产品之前用户对产品的期望是什么? 可能他们听到很多其他用户的看法, 可能是好的, 也可能是不好的看法, 如果这样的话, 这些意见都会成为TA对你的产品最终形成的整体体验感受的重要组成部分, 它当然会影响到他们对产品的使用方式, 他们对产品以及你的公司的看法和感受, 以及很多我们接下来会说到的一些重要部分.
+
+像素, 屏幕, 页面以及体验
+
+“以用户为中心的设计所关心的不只是产品本身的用户界面, 还有用户在界面之外与产品的交互行为.” 这些包含但不限于以下几点:
+
+你的产品市场和分发方式购买, 打开和首次使用产品的整个流程升级流程“登船体验”, 即逐步学习产品所具备的能力, 以及如何使用和如何处理错误信息的过程宣传, 用户的口碑是最好的广告客服或者售后服务质量, 以及你对产品能力的深入了解
+
+上面这个清单仅仅只是非常表面的一些东西, 但是它可以初步让我们对影响用户体验的诸多因素有个大概的了解.
+
+如果你曾经找你的手机或者线路公司进行技术咨询, 你就会理解这一经历会对你对他们的产品以及服务的感受观点有多大影响了. 虽然你可能最后还是解决了问题, 获得了更好的线路以及手机问题得以解决, 但是如果你在处理这一事宜的过程是非常让人不开心的一个经历, 那么你可能依然会对他们的服务产生负面的观感. 而一个用户对你公司的看法和以往的交往经历都可以算是用户体验的一部分.
+
+像一个伟大的UX设计师那样思考
+
+在本文后面的内容中, 我会提供一些你可以用来和你的产品团队分享, 一起帮助每个人像一个伟大的UX设计师那样思考问题. 为了创造一个人们喜欢的产品, 需要你整个团队, 不只是UX团队, 都聚焦到用户身上.” 而如果能够把焦点放到用户身上, 那么就能帮助你传递很多益处, 会带来很多我上面说过的好处.
+
+走向优秀体验的态度
+
+像一个伟大的UX设计师那样思考意味着你需要养成一些思维方式, 这些思维方式与其说是一些特定的思考流程或者做事规则, 不如说是一些基本的态度更为合适.
+
+要有同理心
+
+当你被无数决策缠身, 催促着你从想法走到原型直到上线, 你会很容易的陷入到一个困境, 就是视野会局限在产品团队之中.  你手头工作的复杂和困难以及你作为产品主导者对产品目的, 设计以及功能的熟悉都让你无法兼顾自检的环节了.  在这个环节中, 我们缺失的正式外界的观点-你的用户的角度的看法.
+
+和你的用户交流所能带来的好处不仅是他们提供的那些你可以用来优化设计流程的信息, 随着时间, 和你的用户交流能够帮助你建立更好的同理心. 你将学会通过他们的眼睛看世界.
+
+而有了同理心, 你将可以站在用户的角度去评估你的设计和商业决策. 而且你会更有可能创造一些他们 能够找到其价值, 用处以及给他们带来欢乐的产品.
+
+要承认每个意见都是有价值的
+
+以用户为中心的设计的下一个态度往往很难被人所采用. 请跟着我一起重复:”每个意见都有价值. 每个意见都有价值.” 哪怕是意见本身可能完全没有逻辑. 哪怕是这个意见完全违反了一个正确的设计原则. 哪怕是这个意见是完全非理性的, 而且对你而言完全没有意义的.
+
+如果使用你的产品对用户而言是一个可选行为的话–实际上它确实是个可选的行为–那么他们的意见就是有意义的. 但是从那些非理性或者无逻辑的反馈中找到有价值的东西是有难度的. 然而, 这类用户反馈可能指向的更大的一些问题, 可能代表着用户的某种更深层次的情感模式, 而这对于用户和你的产品之间的交互有着很大的影响. 而如果带着”每个意见都有价值”的观点来处理用户的反馈, 那么就能够帮助你发现这些模式.
+
+如果你收到一些对你完全没有意义的反馈, 那么你应该暂停一下, 好好思考以下它的具体含义. 可以问这么几个问题:
+
+那些没有给我们反馈的用户中有多少可能也有同样的看法呢?为什么他们会需要这么一个具体的功能点呢?为什么他们不能理解我们设定的这种用户工作流呢?为什么他们会这么感觉呢?
+
+退一步讲, 和你的用户聊天, 即便是一些似乎很疯狂的想法也往往能够给你带来一些新的观点, 说不定就能帮助你解决手头的问题呢.
+
+意识到情景和经历都会对用户体验产生影响的
+
+可能你的项目的目的是创造某个全新的东西, 但是你的产品最终会被那些有着自己过往使用科技产品经历以及特定的使用场景的人去使用的. 而这些经历以及所处的情景会在很深层次上影响人们和产品之间的交互.
+
+比如, 我每次购物时如果发现那些老式的黑屏绿字, 带着键盘的销售终端依然还在投入使用时都会觉得这是一件非常令人着迷的事情. 实际上, 我经常能够在非常现代化, 成功的零售商们那里看到类似这样的用户界面.
+
+这样的用户界面可能看起来很过时, 而且使用也不高效, 但是如果你考虑下它使用的场景, 就会有不同的看法了:
+
+零售行业的工作人员在长期的工作中, 因为不断的使用同样的用户界面重复同样的销售操作, 会形成一种独特的肌肉记忆;他们的这种肌肉记忆会允许他们甚至不怎么注意屏幕就能够准确的完成操作, 也就让他们有更多的时间和客户进行视觉交流, 这样能够给客户更好的购物体验;这种肌肉记忆需要很长的时间才能形成. 可能需要一个缓慢的学习曲线去掌握, 但是一旦掌握了, 它带来的速度和效率的提升是雇员们所愿意放弃的, 即便是面临着一个有着快速学习曲线的新的交互界面的诱惑也一样.
+
+如果你忽略这种历史原因以及特定的场景原因, 那么这种古老的POS终端看起来就是一个典型的糟糕的用户体验. 但是你一旦把这些都考虑进来, 你就会获得完全不同的理解了.
+
+当你脱离用户界面, 而考虑更加宏观的一些事情时, 你就会知道哪些因素才能真正让你的产品体验有所不同.
+
+要有情商
+
+如果你自己质疑用户对你产品的感觉的重要性, 那么你可以回想下最近Facebook首次展示了他们做了明显改变的新用户界面, 而随之而来的用户疯狂的愤怒回应.
+
+最强烈的情感–爱, 恨, 快乐和忠诚–都需要时间来建立的. 你的公司的新产品将会继承那些旧产品用户的情感, 而这些完全不受你控制–比如用户对你的app运行平台的看法以及在app store中的应用发现这一过程等都是不受你控制的.
+
+但是他们对你产品的感觉会随着使用逐渐的形成并发展. 想象一下: 不断重复的讨人厌的登录环节, 一个流畅的,愉快的导航, 一个思虑周全的错误处理机制, 一个一直都不尽如人意的客户服务, 这些长期积累下来情绪, 会产生什么样的影响呢?
+
+像一个UX设计师一样思考, 就要考虑到用户和你的产品之间的这种情感关系.
+
+把这种优秀UX设计师的态度应用起来
+
+有一个很简单的, 混合了这些特点的方式可以让你开始像一个优秀的UX设计师那样思考: 注意观察人们是如何和日常生活的事物进行交互的. 他们的这些行为会告诉你很多, 很多在你开始考虑开发一个产品之前需要考虑的事情, 会告诉你如何开发一个新产品, 一个能够让人们生活更加便捷, 更加快乐, 更加符合人们期望的产品. 
+
+来源:
+
+原文: User Experience Is a Feeling
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>设计心理学系列(1) - 网络心理学</title><link>http://taoalpha.me/blog/2015/05/08/read-design-psychology-1-cyber-psychology/</link><category>read</category><tag>Cyber Psychology,设计心理学</tag><pubDate>2015-05-08T12:00:00.000Z</pubDate><description>什么是网络心理学?网络心理学是随着互联网等新技术出现以及发展而逐渐发展起来的一门新兴科学. 它所研究的领域就是网络与心理学的结合, Cyberpsychology本身由两个词合并而成, 前者Cyber是取自Cybernetics, 代表着对于机械控制和与之通信的研究, 代表着对新兴网络领域的研究, 而心理学则是对人脑和行为学的研究. 两者的集合即表明了Cyberpsychology的研究领域主要集中在了人与新兴机器系统(包含虚拟系统)的心理学研究.
 网络心理学简介演化历史Cyberpsychology最开始是集中关注于人在操作机器以及与机器交互的过程中的心理学变化, 后来随着电脑的出现以及普及, 互联网的诞生以及发展, 加上新兴智能机器的出现和发展, 都使得Cyberpsychology的研究重点放到了互联网上面. 而随着虚拟现实技术的出现, Cyberpsychology的研究范围再一次的增广, 可以说, Cyberpsychology的研究范围基本会随着cyberspace的领域增长而延伸.
 通常认为John Suler, 来自Rider University的心理学教授, 是Cyberpsychology的奠基人. Suler教授是最早开始关注与网络对人们心理变化带来的影响, 其出版的The Psychology of Cyberspace一书也是被认为最早整合性的Cyberpsychology学术作品.
@@ -1984,69 +2083,4 @@ Monitoring Module Changes
 
 12345r = Reloader()while True:    r.poll()    time.sleep(1)&amp;lt;/code&amp;gt;
 想要看源代码的可以前往:  complete source code 本身代码也发布到Python Package Index中, 名称为  reloader
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Why Companies Need Full-Time Product Managers</title><link>http://taoalpha.me/blog/2014/11/01/read-t-why-companies-need-full-time-product-managers/</link><category>read</category><tag>PM,product manager,产品学习,产品经理,翻译文章,译系列</tag><pubDate>2014-11-01T11:00:00.000Z</pubDate><description>写在前头: PM是一个挺让人困惑的职位的, 尤其是在国内, 感觉大大小小PM无数, 更加让人苦恼PM究竟是个什么样的职位呢? 虽然我有接近2年多的PM经验, 但是因为本身更加喜欢FE, 所以往往也是做一个非常Geek的PM, 并不符合真正的PM本质, 而这次能够看到下文, 确实觉得它对PM的总结还是比较到位的, 非常推荐PM以及想要做PM的童鞋们看看~
-
-
-公司为啥需要全职的产品经理呢?(或者说,他们一天都在干啥呢?)
-什么是产品经理呢? 产品经理一天的工作都是什么呢? 最重要的是, 为什么公司需要招聘产品经理呢? 这是个好问题.
-
-我们首先需要明确的问题是究竟什么是”产品”. 在软件开发这个领域内, 一个产品呢, 可以是一个网站, 一个应用, 或者是用户们使用的线上服务. 而根据公司的大小以及它的产品性质本身, 一个产品经理可能会是一个完整系统(比如一个移动app)的负责人, 也可能是某个整体系统的一部分(比如在电子商务网站中, 负责全平台的检验流程).
-
-对这一点可能会存在一些困惑, 毕竟在绝大多数情况下, 产品通常代表着一个你要出售给客户的东西. 尤其是在电子商务, 经常会混淆产品经理和分类经理, 分类经理们主要是负责在电子商务网站出售商品的渠道和经营问题. 所以, 在一定程度上说, 用”产品”这个词确实并不是最合适的. 但是就目前来说, 现状如此, 我们也没法了, 就凑活着用吧.
-
-为了明确产品经理这一职位的性质, 我们首先从Marc Andreessen就”创业公司唯一重要的事情”这一观点说起:
-
-一个创业公司产品的质量可以定义为这一个产品对一个实际使用它的客户或者用户所留下的印象: 这个产品的易用性如何? 其功能的丰富性如何? 流畅性和速度如何? 扩展性又如何? 有多精致?有多少bug呢?
-
-而一个创业公司的市场大小, 则是这一产品的客户或用户的数量, 增长速度 …
-
-唯一重要的事情就是要让产品去适应市场(Product-market fit). 产品适应市场意思就是在一个好的市场里, 要让产品尽可能的满足市场的需求.
-
-虽然Andreessen是为创业公司写的, 但是最后这段关于”产品适应市场”的重要性对每一个公司都是一样的–无论这个公司是在开发一个新产品还是说去改善一个现有产品,亦或者是介于这两者之间的,都一样. 这是通向成功的宇宙公理, 而这也是产品经理所负责的核心.
-
-有了这个作为背景, 我对产品经理这一角色的定义就是: 通过数字产品持续性的更新和执行来符合用户需求从而实现商业上的成功.
-
-这一定义总结了一个产品经理所需要涵盖的全部内容: 目标市场, 所属产品的各个方面, 商业成功的需求, 以及如何去衡量这一成功. 它还包含了三个产品经理绝对不能忽视的点:
-
-成功的最佳衡量标准就是商业的健康度, 也即产品给用户提供的价值;所有的一切都起始于对目标市场和需求的深刻理解, 从而把焦点集中到产品体验的质量上去;为了符合市场需求, 可持续发展需要一个良好的策划与执行.
-
-那么, 如何把这些转译成一个产品经理每天的工作呢? 这个问题就太大了, 在这里是说不清楚的, 不过仅作为一个初步介绍的话, Marty Cagan在它的电子书”每一个伟大的产品背后”中列出了一个针对产品经理需要负责的事项清单. 这一清单包含:
-
-寻找确认并且评估产品机遇的可行性和易行性,确保合适的产品在合适的时机发布出去,为开发者提供清晰的产品策略和思路指南,带领团队执行产品的思路,确保向团队成员传达产品的内涵,在产品开发流程中始终站在用户的角度思考问题.
-
-但是, 在一个产品经理能够做这些事情之前, 我们首先要问一些比较尴尬的问题. 首先, 公司真的需要产品经理吗? 另外, 如果我们同意说需要, 那么一个好的产品经理的特质是什么呢? 同时还有, 这一角色在公司组织架构中的位置呢? 我们来一一回答这些问题.
-
-为什么公司需要产品经理
-
-产品经理的角色有一些公司可能是非常不买账的. 通常的反对意见包含:
-
-我们公司里有各种各样的人, 他们就已经满足一个产品经理职责的各个范畴了, 不需要专门配备这一个职务了.我完全看不出来这个角色能给公司带来什么实质性的利益.产品经理只会拖我们后腿.我不想把产品控制权交到别人手中.(通常这个理由不会那么公开的说…)
-
-这些考虑都是很有道理的, 但是显然他们并没有很好的理解产品经理这一角色, 或者说这个公司的产品经理很差劲, 没有很好的体现产品经理的职责.
-
-实情是, 为了更高的效率, 对一个产品或者领域的管理权最好不要分散给多个人掌控. 对于产品经理而言, 看到产品全局是非常重要的 – 大局战略和局部细致都是一样重要的 – 为了获得更好的抉择. 如果不同流程的情况掌握在不同人手中, 那么就没有人会有一个完好的大局观, 那么这一角色的价值自然也会渐渐失去.
-
-我们看下产品经理通常能够带来的两个典型好处吧:
-
-产品经理确保产品一直处于市场驱动
-
-对产品经理而言, 其最突出的优点就是他们可以帮助公司一直为目标市场的需求和目标所驱动, 而不是被技术和潮流所驱动. 如同Barbara Nelson在”谁需要产品经理”一文中所说:
-
-相比于找到你现有技术的客户而言, 找到市场问题然后用技术手段解决实在是简单太多了.
-
-如果方法足够正确的话, 一个市场驱动的产品能够促成一个长期的, 可持续的, 有利润的商业, 因为这个公司会持续的把焦点放在解决市场问题而不是用最新的科技去做什么的问题上. 一个公司受什么驱动是很重要的, 因为受市场驱动的公司已经被证实比受其他因素驱动的公司所获得的利润更高(要多出31%, 根据George S.Day 和 Prakash Nedungadi的报告).
-
-这并不意味着关注不断出现的变化和产品创新是互斥的. 确定市场问题并不仅仅是找到现有的问题进行改进(比如说, 60%的用户都会在这个页面离开, 那么我们就搞搞这个页面), 同时还需要创造心的产品来满足那些没有被满足的需求(比如说现在的电话实在太烂了, 我们搞个新的吧).
-
-产品经理能够提升时间管理
-
-产品经理带来的第二个好处就是他们能够减少一个公司实现目标所需的时间. 一个定位清晰合适的产品, 其开发流程掌握在一个有效率的管理者手中时会极大改善发布所需时间以及回报所需时间的.
-
-那么为什么产品经理可以做到这一点呢? 因为他们要权衡出那些是值得做的, 那些是不值得的. 这也意味着可以把更少的时间花费在Spaghetti法上了(把所有事情都扔到墙上看哪个能够粘在上面…) 而有更多时间放在已经被市场验证过的产品上了. 这一方法同样还能帮助更好的确定公司的焦点所在, 帮助公司更加投入到那些更有可能成功的项目之中, 而不是把人力分散到那些没人能够确保获利的项目中去.
-
-未完待续(还有两部分回答另外两个问题).
-
-Resources:
-
-原文 - Why Companies Need Full-Time Product Managers 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item></channel></rss>
