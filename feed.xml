@@ -1,4 +1,34 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-14T04:31:54.714Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ LeetCode NSum Problem</title><link>http://taoalpha.me/blog/2016/01/13/oj-oj-leetcode-nsum/</link><category>OJ</category><tag>HashTable,LeetCode</tag><pubDate>2016-01-14T01:19:20.000Z</pubDate><description>1. Two SumQuestionGiven an array of integers, find two numbers such that they add up to a specific target number.
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-16T03:49:36.470Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ LeetCode Substring Questions 1</title><link>http://taoalpha.me/blog/2016/01/16/oj-oj-leetcode-substring-questions-1/</link><category>OJ</category><tag>LeetCode,Substring</tag><pubDate>2016-01-16T06:52:31.000Z</pubDate><description>3. Longest Substring Without Repeating CharactersQuestionGiven a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for “abcabcbb” is “abc”, which the length is 3. For “bbbbb” the longest substring is “b”, with the length of 1.
+LeetCode3. Longest Substring Without Repeating Characters
+Tags: Medium, String, Two Pointers, Hash Table
+AnswersHash TableAf first, my idea is use a hashmap as a view window to tract all the letters of current substring, and everytime we found the repeated one, we just move the loop pointer to the last position of this repeated character, and continue looping to the end. But apparently it will cost much more than O(n) for the average case. So then I thought I don’t need the move the loop pointer back, just need a new pointer to indicate the start of the substring, and if I do that, I couldn’t empty the view window which is the hashmap since I will lose tract of the elements between the start and i, so I keep all elements in the hashmap, just make sure every valid repeated character is appeared after the current start pointer.
+Here is the code:
+123456789101112131415161718192021/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;number&amp;#125; */var lengthOfLongestSubstring = function(s) &amp;#123;  if(s.length &amp;lt;=0)&amp;#123;return 0&amp;#125;  var view = &amp;#123;&amp;#125;, // store the current substring      max = 0, // store the max length      start = 0 // store the start of the current substring  for(var i = 0;i&amp;lt;s.length;i++)&amp;#123;    if(view[s[i]] &amp;amp;&amp;amp; view[s[i]] &amp;gt; start)&amp;#123;      max = Math.max(max,i-start)      // now we have a repeated element appeared in current substring      start = view[s[i]]    &amp;#125;    view[s[i]] = i+1  &amp;#125;  // in case no repeated element in this string  max = Math.max(max,i-start)  return max&amp;#125;;
+Runtime: 376 ms
+DPThis method is borrow from the discussion shortest O(n) DP solution with explanations. More concise!
+12345678910111213141516171819202122232425262728293031323334353637/** * Solution (DP, O(n)): *  * Assume L[i] = s[m...i], denotes the longest substring without repeating * characters that ends up at s[i], and we keep a hashmap for every * characters between m ... i, while storing &amp;lt;character, index&amp;gt; in the * hashmap. * We know that each character will appear only once. * Then to find s[i+1]: * 1) if s[i+1] does not appear in hashmap *    we can just add s[i+1] to hash map. and L[i+1] = s[m...i+1] * 2) if s[i+1] exists in hashmap, and the hashmap value (the index) is k *    let m = max(m, k), then L[i+1] = s[m...i+1], we also need to update *    entry in hashmap to mark the latest occurency of s[i+1]. *  * Since we scan the string for only once, and the 'm' will also move from * beginning to end for at most once. Overall complexity is O(n). * * If characters are all in ASCII, we could use array to mimic hashmap. *//** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;number&amp;#125; */var lengthOfLongestSubstring = function(s) &amp;#123;  var charIndex = &amp;#123;&amp;#125;  var longest = 0, m = 0;  for (var i = 0; i &amp;lt; s.length; i++) &amp;#123;    m = Math.max((typeof charIndex[s[i]] === &quot;undefined&quot; ? -1:charIndex[s[i]]) + 1, m);    // automatically takes care of -1 case    charIndex[s[i]] = i;    longest = Math.max(longest, i - m + 1);  &amp;#125;  return longest;&amp;#125;
+Runtime: 376
+5. Longest Palindromic SubstringQuestionGiven a string S, find the longest palindromic substring in S. You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.
+LeetCode5. Longest Palindromic Substring
+Tags: Medium, String
+Answerstwo pointersWe need to take advantage of the features of the palindrom: xxx|xxx which is start from the separator, it is symetric.
+12345678910111213141516171819202122232425262728/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;string&amp;#125; */var longestPalindrome = function(s) &amp;#123;  if(s.length &amp;lt; 2) return s  var start = 0,end = 1;  for(var i = 0;i&amp;lt;s.length;)&amp;#123;    if(s.length - i &amp;lt;= (end-start+1)/2) break; // if the number of elements left is less than half of length of current longest palindrome, then we can break safely    var left = i, right = i; // left is from separator to left; vice versa for right    // skil the duplicate number, set all duplicate numbers as the separator of the palindrom since duplicate numbers definitely are palindrom     while(right &amp;lt; s.length - 1 &amp;amp;&amp;amp; s[right] == s[right+1]) right ++ ;    // update the i to the right next to right, no need to loop the duplicate number    i = right + 1    // now expand the left and right, try to enlarge the palindrom    while(right &amp;lt; s.length - 1 &amp;amp;&amp;amp; left &amp;gt;0 &amp;amp;&amp;amp; s[left-1] == s[right+1])&amp;#123;      // be careful about the condition in there: use &amp;lt; and &amp;gt; because maybe have 'bbb', so the s[left-1] and s[right+1] both are undefined, and they are equal...      left --      right ++    &amp;#125;    // update the longest if it is    if((right - left +1) &amp;gt; (end - start))&amp;#123;      start = left      end = right + 1    &amp;#125;  &amp;#125;  return s.slice(start,end)&amp;#125;;
+Runtime: 164 ms
+Brute Force CheckBasic idea is loop over entire string, and everytime we loop to a new character, we check whether it would produce new palindrome of (current length + 1) or (current length + 2). From this post
+123456789101112131415161718192021222324252627/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;string&amp;#125; */var longestPalindrome = function(s) &amp;#123;  if(s.length &amp;lt; 2) return s;  var subs = '', currentLength = 1;  for(var i = 1;i&amp;lt;s.length;i++)&amp;#123;    if(isPalindrome(s,i-currentLength-1,i))&amp;#123;      //       subs = s.slice(i-currentLength-1,i+1)      currentLength += 2    &amp;#125;else if(isPalindrome(s,i-currentLength,i))&amp;#123;      subs = s.slice(i-currentLength,i+1)      currentLength += 1    &amp;#125;  &amp;#125;  return subs&amp;#125;var isPalindrome(s,begin,end) =&amp;gt; &amp;#123;  if(begin&amp;lt;0) return false;  while(begin &amp;lt; end)&amp;#123;    if(s[begin++] !== s[end--]) return false;  &amp;#125;  return true&amp;#125;
+Runtime: 188 ms
+And the detail explanations:
+
+Example: “xxxbcbxxxxxa”, (x is random character, not all x are equal) now we are dealing with the last character ‘a’. The current longest palindrome is “bcb” with length 3.
+
+check “xxxxa” so if it is palindrome we could get a new palindrome of length 5.
+check “xxxa” so if it is palindrome we could get a new palindrome of length 4.
+do NOT check “xxa” or any shorter string since the length of the new string is no bigger than current longest length.
+do NOT check “xxxxxa” or any longer string because if “xxxxxa” is palindrome then “xxxx” got  from cutting off the head and tail is also palindrom. It has length &amp;gt; 3 which is impossible.’
+
+
+Really smart!!!
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>OJ LeetCode NSum Problem</title><link>http://taoalpha.me/blog/2016/01/13/oj-oj-leetcode-nsum/</link><category>OJ</category><tag>HashTable,LeetCode</tag><pubDate>2016-01-14T01:19:20.000Z</pubDate><description>1. Two SumQuestionGiven an array of integers, find two numbers such that they add up to a specific target number.
 The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
 You may assume that each input would have exactly one solution.
 Input: numbers={2, 7, 11, 15}, target=9Output: index1=1, index2=2
@@ -314,125 +344,127 @@ Others: others;
 Be Consistent;
 
 SummaryThis book is pretty short with all valueable content. Strongly recommend after you get familiar with all basic css concepts.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (4)</title><link>http://taoalpha.me/blog/2015/06/23/read-javascript-the-definitive-guide-4/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-23T07:00:00.000Z</pubDate><description>概述第六版和第五版的最大区别在于ECMAScript 5的引入, 这是目前发布的最新的js版本, 有着最新的属性和函数, 目前主流浏览器基本都已经完全支持. 本文为阅读5-9章内容的笔记总结, 主要是覆盖了JS中的语句和典型对象.
-阅读笔记Chapter 5 - Statements
-switch/case中使用的是===进行比较判断的, 而不是==;
-with带入scope chain的对象只有读取权限, 没有写入功能, 即with后, 可以获取其代入的对象, 但其内声明的变量都依然归于gloabl或者local之中;
-debugger是ECMAScript 5引入的一个新的statement, 起主要作用是和浏览器结合使用, 用于创建断点以便查错使用;
-use strict也是ECMAScript 5引入的, 严格来说不算statement而是directive, 不过两者很是相近; 其使用必须位于js整体的起始位置或者是一个function主体的起始位置;
-use strict的使用会开启代码的strict mode, 为了提升效率, 错误追踪以及更好的安全性, 其语法要求会更加严格, 简单列举如下:
-停用with语句;
-所有变量必须声明才能调用;
-所有独立声明的函数而非对象的方法定义的, 其this域都默认为undefined, 而函数如果通过apply,call调用, 其this域为传入对象;
-对未声明变量的赋值或者不能写入的对象进行写入, 都会抛出异常;
-eval调用会自动创建临时局部scope, 不再能直接对母域新建声明了;
-arguments成为传入参数的硬拷贝, 和传入参数名之间不在绝对相等, 即改变一方不会引起另一方的改变, 同时停用其caller,callee方法;
-delete用于变量, 函数或者函数参数的时候会抛出异常, 操作对象的某个未声明属性也会抛出异常;
-对象(包括函数)创建中不能出现同名属性(参数);
-直接声明的八进制数是不允许的(即0开头的数字);
-eval,arguments作为keywords对待, 不能赋值, 或赋予其他变量, 也不能用于identifier;
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (3)</title><link>http://taoalpha.me/blog/2015/06/22/read-javascript-the-definitive-guide-3/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-22T04:00:00.000Z</pubDate><description>概述先说点不相关的… 为了更好的阅读, 所以以后读书笔记相关的博文都会分拆成4个部分:
+
+概述: 算是阅读总结摘要以及类似这段话之类的声明介绍等等;
+阅读笔记: 这部分主要以阅读过程中的记录为主, 会比较杂, 基本算是逐点记录, 评判相对主观;
+心得: 这部分则主要为笔记的延伸, 算是对笔记的一种补充或者说自己的阅读理解消化所得, 有时候也会覆盖到一些使用架桥等等;
+谜题: 这里主要记录一些没有完全理解的部分, 会加上自己的猜测解答, 当弄懂后会更新正解;
+
+DONE.
+本篇是博主重新翻阅了”JavaScript the Definitive Guide(第六版)”的前4章内容(之前 阅读笔记-2均是第五版的)后的读书笔记以及心得体会. 内容主要覆盖js的基本用法, 考虑到重复, 这里主要是在上两篇的基础上查漏补缺.
+阅读笔记Chapter 2 - 基础知识JS能识别的whitespaces:
+常规空格: \u0020 # 即url中常见的%20
+Tab(制表符): \u0009 # js中常见的\t
+Vertical Tab: \u000B # \v
+Form Feed(翻页/页码分隔符): \u000C # \f
+Nonbreaking Space(不间断空格): \u00A0  # 通常在html中用来阻止默认连续多空格自动归一的性质(auto collapsing)而使用&amp;amp;nbsp;, 同时因为软件处理的需要, 使用&amp;amp;nbsp;能够防止相应的处理器将普通空格转为行分隔;
+Byte order mark: \uFEFF
+any character in Unicode category Zs
+
+JS能识别的line terminators:
+line feed: \u000A # \n
+carriage return: \u000D # \r
+line separator: \u2028
+paragraph separator: \u2029
+
+值得一说的是, js是支持unicode作为indentifier的合法字符的, 但是上述这些则不在其中.
+JS的”Unicode Escape Sequences”类似”\u00E9”这种结构的字符在js都代表一种特殊的字符:”unicode”. 如果你在js中使用这些字符, js会自动将其编译为对应的字符(如果是在js的注释中, 则不会编译, 而是以ascii对待), 比如: 示例就会编译为”é”. 而在js中, 这种对等关系是支持的, 即 &amp;quot;\u00E9&amp;quot; === &amp;quot;é&amp;quot;是为真的.
+但是一定要慎用… 因为unicode变化过多, 有时候输出看起来一样的字符, 其本质不一定一样: &amp;quot;e\u0301&amp;quot;的输出也是”é”, 但是它相当于是&amp;quot;e&amp;quot;+&amp;quot;\u0301&amp;quot;组成的.
+JS中的&amp;quot;;&amp;quot;在JS中, &amp;quot;;&amp;quot;作为语句结尾并不是必须的, 只有当多语句同行的时候, &amp;quot;;&amp;quot;才是必须的. 当你没有&amp;quot;;&amp;quot;的时候, js会自动为你添加合适的&amp;quot;;&amp;quot;. 通常它会自动将它没有&amp;quot;;&amp;quot;无法解析代码时候遇到的换行处加以&amp;quot;;&amp;quot;(除了类似return,break, ++, –等, 它会自动将其后的行分隔符作为&amp;quot;;&amp;quot;对待.):
+1234567var aa=3console.log(a)// output: 3// js在第一个换行处识别了其语句分割的意义, 但是在 a = 3 的两个分割处都因为它可以识别合并后的语句所以没有作为`&quot;;&quot;`处理.
+但是上述的成功不意味着js的智能, 更多时候如果我们不合适的使用&amp;quot;;&amp;quot;, 会造成很多奇怪的问题的, 比如以(, [, /, +, -为起始的语句很可能会被误认为是前一语句的延续. 所以通常来说, js的编码还是比较鼓励使用&amp;quot;;&amp;quot;作为语句结尾的.
+Chapter 3 - 数据类型Number:
+Global viriables: Infinity,NaN
+Global Objects: Math,Number
+
+Tips:
+
+NaN 具有唯一性, 其不等于任意值, 包括它自己, 0/0会产生’NaN’, 但是0/0 != NaN, 如果需要判断一个变量是不是NaN, 需要使用isNaN()这个内置的函数;
+Infinity &amp;lt;==&amp;gt; Number.POSITIVE_INFINITY &amp;lt;==&amp;gt; 1/0
+-Infinity &amp;lt;==&amp;gt; Number.NEGATIVE_INFINITY &amp;lt;==&amp;gt; -1/0
+Binary Floating-Point会导致小数级错误, 比如0.3-0.2 != 0.2-0.1, 这个属于计算机本身因为二进制编码的原因所致, 所以在比较数字大小的时候要格外小心;
+
+String:
+immutable ordered sequence of 16-bit values
+
+Tips:
+
+string的长度都是按照16-bit来计算的, 所以当如果一个字符超过了16-bit, 则会按照多的计算. 比如: e - \ud835\udc52, 就需要按照两个16bit计算, 即其长度应为:”2”
+从ECMAScript 5之后就允许string跨行定义了, 只需要在换行的地方加上一个反斜杠\, 即可.
+转义字符\如果加在普通字符前, 不会产生任何效果;
+typeof null =&amp;gt; Object , typeof undefined =&amp;gt; undefined;
+null == undefined, null!==undefined =&amp;gt; True
+
+类型转换javascript是一个很宽松的语言, 我们不需要预先定义变量类型, 而在运算以及执行过程中, js也会自动的帮助我们进行类型转换, 当然为了更好的借助这一特点, 了解下图中的js转换类型的规则还是非常有必要的.
+
+其中object转换 primitive datatype 的话, 一般会按照如下步骤进行:
+
+首先会默认调用toString()函数, 你可以自行定义这一函数, 如果toString()返回结果正常, 则转换结束;
+如果toString()未定义, 或者返回结果非primitive datatype的话, 会自动调用valueOf()函数, 同上一步;
+而如果两个都没找到, 那么js将会抛出TypeError;
+
+而根据要转换的是string还是number而交换1,2两步( string 的话先调用toString(), 且返回值必然会转为string; 如果是number的话, 则先找valueOf(), 返回结果为number). 当然至于boolean的话, 所有的object转换到boolean都是true.
+Array转换string的时候默认的toString()就是一个join()调用~ Function的话, 则也可以自己定义toString()函数.
+Tips:
+
+x + “” // Same as String(x)
++x // Same as Number(x). You may also see x-0
+!!x // Same as Boolean(x). Note double !
+在ECMAScript 5的strict模式下, 所有变量君需要声明才能赋值, 否则会报错;
+
+Chapter 4: Expressions and Operators
+上图为按照优先级顺序排列下来的操作符(横线分隔的同一组块之间的级别相同).
+Tips:
+
+运算顺序不影响赋值顺序, 赋值顺序始终都是严格从左到右的, 比如:h = x+y+z, 那么赋值顺序始终都是h-&amp;gt;x-&amp;gt;y-&amp;gt;z; 通常情况下, 这一赋值顺序不会影响之后的计算顺序, 对结果基本没什么影响, 除了一种情况:
+如果前变量的赋值会影响到后面变量的值的话, 比如共用同一个变量, 那么这种情况下, 赋值顺序就可能会对结果产生一定的影响了. 最简单的例子就是z = 2;y = function(){z = 3;return 1};, 因为y是一个函数, 而它的执行会改变z的值, 所以y()+z和z+y()的结果就是不相同的.
+
+“+”运算符中的类型转换:
+
+string优先, 只要有两个操作数中有一个是string或者是有toString()的object, 那么其都会按照string来进行链接运算;
+除非两个都是非string, 才会进行加法运算;
+当”+”作为单操作数时, 则意味着将操作数向number类型转换;
+
+
+&amp;amp;&amp;amp;运算符如果第一个为false, 则不执行第二条判断, 所以可以用这个方法来代替if: (a==b) &amp;amp;&amp;amp; alert(&amp;quot;a equals b&amp;quot;)就相当于if(a==b) alert(&amp;quot;a equals b&amp;quot;).
+
+!(p &amp;amp;&amp;amp; q) === !p || !q
+!(p || q) === !p &amp;amp;&amp;amp; !q
+a op= b 和 a = a op b通常是等价的, 除非a本身的重复赋值会有副作用, 比如 a[i++] += 1和a[i++] = a[i++] +1就不一样, 因为后者前后两个i不同了.
+eval()函数会继承当前的scope, 除非eval()被赋予某个新的reference, 那样的话只会使用global的scope;
+void操作数很少用到, 它是个单操作数的操作符, 其用法就是丢弃操作数的返回结果, 然后返回 undefined…
+
+心得whitespaces 和 line terminators通常在js里面我们使用\s来统一代表所有其可以识别的whitespace, line terminators. 如下例:
+1234567var k = 'asd \t asdasd \na asd \f asda dad\rasd\u2028asd\u2029\u00A0'k// output 里面有两个换行的符号, 我这里为了演示方便就不换行了k.replace(/\n/g,'-')// 同上,里面的&quot;\r&quot;我也不换行了k.replace(/\s/g,'-')// output: &quot;asd---asdasd--a-asd---asda-dad-asd-asd--&quot;
+因为在console中输出的时候是不换行的, 所以有时候单单看console输出的话, 类似这种编码问题所致的错误就找不出来, 为了省事, 我们可以统一使用\s来代表所有此类符号.
+谜题Q: 按照正常来说Number.MAX_VALUE加上一个数应该就会自动转为Infinity, 但实际上, 测试过程中发现, 只有当Number.MAX_VALUE加上一个足够大的数后才会等与Infinity, 这是为什么?
+1234567Number.MAX_VALUE// output: 1.7976931348623157e+308Number.MAX_VALUE +1// output: 1.7976931348623157e+308...Number.MAX_VALUE + Math.pow(10,1000)// output: Infinity
+正解: the sum is computed and rounded to the nearest representable value using IEEE 754 round-to-nearest mode. If the magnitude is too large to represent, the operation overflows and the result is then an infinity of appropriate sign.
+
+IEEE 754
+In the following two rounding-direction attributes, an infinitely precise result with magnitude at least bemax ( b − ½ b^(1-p) ) shall round to ∞ with no change in sign; here emax and p are determined by the destination format (see 3.3). With:
+
+roundTiesToEven: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with an even least significant digit shall be delivered
+
+roundTiesToAway: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with larger magnitude shall be delivered.
 
 
 
+ECMAScript does not specify which of the round-to-nearest, but it doesn’t matter here because both gives the same result. The number in ECMAScript is “double”, in which
 
-Chapter 6 - Objects
-Property Attributes (ECMAScript 5之后引入可自定义配置, 之前默认三者皆有.)
-writable: 可赋值;
-enumerable: 可递归;
-configurable: 可配置 - 可删除也可修改;
+b = 2
+emax = 1023
+p = 53,
 
-
-Object Attributes
-portotype: 指向当前对象的属性继承对象;
-class: 指代对象所属类别;
-extensible: 指示当前对象是否能够新增属性 (ECMAScript 5引入);
-
-
-Object Categories and Property Types:
-native object: js中内置的对象, 包含Arrays, functions, dates, regular expressions等;
-host object: 由js运行环境所定义的对象, 比如常见的浏览器, 就包含了HTMLElement对象;
-user-defined: 执行js代码的时候创建的对象;
-own property: 直接由对象中定义的属性;
-inherited property: 由对象的prototype object继承来的属性;
-
-
-Prototype:
-任何一个对象(除了Object.protytpe)的出现都必然包含了第二个对象的存在: new Array() =&amp;gt; Array.prototype;
-Object.prototype是唯一一个没有母继承的对象了, 它是最顶部的类;
-类似new Array() =&amp;gt; Array.prototype =&amp;gt; Object.prototype这样的两个prototype就组成了Array的prototype chain;
-Object.create() 是ECMAScript 5引入的新的创建对象的方法, 其接受两个参数, 第一个参数会作为新建对象的prototype传入, 第二个则是用来描述新对象的属性的. 如果你传入null, 则新建对象是完全没有prototype的, 只有Object.create(Object.prototype)才是等价于我们常用的{} or new Object();
-获取某个object的未定义属性将返回undefined, 但是获取undefined或者null的某个属性则会抛出异常;
-
-
-getter &amp;amp;&amp;amp; setter
-ECMAScript 5新引入的两个accessor properties, 分别对应某个属性的调用和赋值;
-只有setter的属性只有写入权限, 只有getter的属性则是只读权限;
-
-
-property attributes
-value, writable, enumerable, and configurable
-对应的accessor property: get, set, enumerable, and configurable
-Object.getOwnPropertyDescriptor(object_name, property_name) 获取某个属性的特征描述;
-Object.defineProperty(object_name, property_name,{property_attribute:attribute_value}) 对某个属性设定其特征描述;
-
-
-
-下例即为利用Object.defineProperty自定义的一个extend()函数:
-123456789101112131415161718192021222324252627282930// Example 6-3. Copying property attributes/** Add a nonenumerable extend() method to Object.prototype.* This method extends the object on which it is called by copying properties* from the object passed as its argument. All property attributes are* copied, not just the property value. All own properties (even non-* enumerable ones) of the argument object are copied unless a property* with the same name already exists in the target object. */Object.defineProperty(Object.prototype,  &quot;extend&quot;,  &amp;#123;    writable: true,    enumerable: false,    configurable: true,    value: function(o) &amp;#123;      // Define Object.prototype.extend      // Make it nonenumerable      // Its value is this function      // Get all own props, even nonenumerable ones      var names = Object.getOwnPropertyNames(o); // Loop through them      for(var i = 0; i &amp;lt; names.length; i++) &amp;#123;        // Skip props already in this object        if (names[i] in this) continue;        // Get property description from o        var desc = Object.getOwnPropertyDescriptor(o,names[i]);        // Use it to create property on this Object.defineProperty(this, names[i], desc);      &amp;#125;    &amp;#125;  &amp;#125;);
-
-Object Attributes;
-Object.getPrototypeOf() ECMAScript 5引入, 可用于获取某个对象的prototype;
-p.isPrototypeOf() 同上, 用于判断某个对象是否为另一个对象的prototype;
-Object.isExtensible(),Object.preventExtensions()则分别是用于判断一个object是否是可扩展的, 以及禁止其可扩展性的(此操作不可复原);
-Object.seal()类似Object.preventExtensions(), 不过它同时禁掉了properties的configurable属性,Object.isSealed()则是对应用于判断是否sealed的函数;
-Object.freeze()比Object.seal()还要严格,所有属性都变为可读了, 对应的查询函数为:Object.isFrozen();
-Object.preventExtensions(),Object.seal(),Object.freeze()都是只针对当前object而言的;
-class属性目前基本没啥用, 有点等价或者说更细化的typeOf or instanceOf了;
-
-
-
-Chapter 7 - Arrays这里主要记录ECMAScript 5引入的一些新的方法, 3已有的可以查看 阅读笔记-2
-
-forEach(value,index,array_itself): array自身的循环调用函数, 相当于for(i in array_name){}, 区别在于其不支持break等可以跳出循环的语句, 如果你想要提前结束循环, 就需要通过try/catch包裹并利用抛出异常来结束循环;
-map(): 也算是循环的一种, 遍历每个元素并传递给传入的函数, 最终返回一个新数组;
-filter(): 顾名思义, 这是对数组进行筛选的, 值得一提的是filter()会自动跳过空白,所以对于稀疏数组通过filter()可以去除所有空白, 在加上undefined判断, 就可以去除所有空值了;
-every() 和 some(): every()是当数组每个元素都使传入函数为真的时候返回真, some()则是只要一个为真即返回为真, 需要注意的事, 对于空数组, every()会返回真, 而some()会返回为假;
-reduce(function,initial_value) 和 reduceRight(): 通过执行传入函数而对数组元素进行整合,计算,判断, 最终返回一个结果: var max = a.reduce(function(x,y) { return (x&amp;gt;y)?x:y; });即返回数组的最大值; reduceRight()与reduce()一致, 只是循环顺序相反, 从右到左; 当没有声明初始值时, 采用第一个执行元素作为初始值;
-indexOf() 和 lastIndexOf: 顾名思义, 获取数组中某个元素的index, 前者获取首个匹配元素的index, 后者获取最后一个匹配元素的index;
-
-Chapter 8 - Functions
-Functions的调用有四种:
-直接调用;
-作为对象的方法调用;
-作为constructor调用;
-通过call,apply方法调用(间接调用);
-
-
-call() 和 apply:
-call和apply都是间接调用的方法, 允许一个函数临时客串为某个object的方法;
-一定程度上, 可以等价于o.m = f;o.m();delete o.m;
-其接受的第一个参数会成为函数运行的this域, 如果是非strict mode下, 传入null/undefined则会自动将global作为this, 而如果传入的是primitive datatype, 则自动转为对应的wrapper object, 即string =&amp;gt; String;
-call和apply的区别主要体现在后面的参数上, 前者以分散元素传入, 后者则以整体数组形式传入, 所以用apply可以把原本只支持不定长参数的函数转换为接受数组的函数:var biggest = Math.max.apply(Math, array_of_numbers);;
-apply对类array元素处理方式同array元素;
-
-
-bind(): 很是类似call和apply, 本质也是把某个函数作为某个对象的方法调用, 实现则是通过把object和function绑定, 形成一个新函数从而每次调用新函数都等价于调用了object.funtion, bind接受多个参数, 其首个以后的参数都会作为this域成员代入函数中, 并按序成为函数自身的参数function f(y,z) { return this.x + y + z };var g = f.bind({x:1}, 2);g(3) // 2被赋予了y, 新的3则给了z;
-higher-order function: 作用于另一个函数之上的函数;
-
-partial and memoization 这两个都是function programing中常用的方法:
-
-partial: 类似bind()这种会把传入参数默认分配到函数自身的部分接受参数上的做法就是partial application;
-memoization: 将函数运行过程的计算结果缓存起来的方式;
-
-
-
-123456789101112131415161718192021222324function array(a, n) &amp;#123; return Array.prototype.slice.call(a, n || 0); &amp;#125;// 用以处理类array元素(转为真正的array)function partial(f /*, ... */) &amp;#123;  var args = arguments;  // 存储partial的参数  return function() &amp;#123;    var a = array(args, 1);    // 取出首位以后的参数    var i=0, j=0;    for(; i &amp;lt; a.length; i++)      if (a[i] === undefined) a[i] = arguments[j++];      // 这里的arguments是第二层参数      // 将空元素逐个替换成第二层参数里的值, j自动随着执行+1    a = a.concat(array(arguments, j))    // 组成新的参数数组    return f.apply(this, a);    // 调用f函数, 并传入参数a  &amp;#125;;&amp;#125;var f = function(x,y,z)&amp;#123;return x*y*z&amp;#125;partial(f,undefined,2)(1,3)// x:1,y:2,z:3
-123456789101112131415// Return a memoized version of f.// It only works if arguments to f all have distinct string representations.function memoize(f) &amp;#123;  var cache = &amp;#123;&amp;#125;;  return function() &amp;#123;    var key = arguments.length + Array.prototype.join.call(arguments,&quot;,&quot;);    if (key in cache) return cache[key];    else return cache[key] = f.apply(this, arguments);  &amp;#125;;&amp;#125;// 应用方式类似;var factorial = memoize(function(n) &amp;#123;return (n &amp;lt;= 1) ? 1 : n * factorial(n-1); &amp;#125;);factorial(5) // 此时会自动缓存4,3,2的阶乘值. 对于一些复杂的运算, 如此可以很好的加快运算速度.
-Chapter 9 - Classes and Modules除了 阅读笔记-2中包含的, 由于ECMAScript 5所引入的那些object property自然都可以应用到新的class中, 从而创建更为复杂有效的函数. 其实js中目前不存在class这个关键词, 所以其模仿的class, 说白了就是一个复杂一些的函数对象.
-而因为其内容驳杂繁多, 我么会在后面的应用中有很多实践的机会, 这里就不一一描述了.
-参考资料
+_so the result must be at least 2^1024 - 2^970 ~ 1.7976931348623158 × 10^308 in order to round to infinity. Otherwise it will just round to MAX_VALUE, because that is the closer than Infinity.Notice that MAX_VALUE = 21024 - 2971, so you need to add at least 2^971 - 2^970 = 2^970 ~ 9.979202 × 10^291 in order to get infinity._
+Q: &amp;#39;0&amp;#39; == false 是 true, 为什么 null == false 就是 false呢?
+猜测解释: ==这样的是比较value的, 而 null转换为boolean类型为false, 并不意味着两者的value是相同的. ==只会比较value, 而不会进行转换. 也即true, false两个boolean类型的其value也是1,0. 而null和undefined的value则不同, 前者为空, 后者为无.
+参考资料:
 JavaScript the Definitive Guide 6th edition
-Functional Javascript
+Unicode Property
+List of Unicode Characters
+编码历史介绍
 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (1)</title><link>http://taoalpha.me/blog/2015/06/28/read-coffeescript-programming-with-jquery-rails-and-nodejs/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-28T04:00:00.000Z</pubDate><description>SummaryThe notes I took while I was learning the ‘CoffeeScript’. If you are a real beginner with ‘CoffeeScript’, I suggest you start with another book called “The Little Book on CoffeeScript”, it’s better for beginners. And after that, this one is definitely your best choice.
 CoffeeScript is a language which complies to JavaScript. Like the sass or scss to css except that CoffeeScript is not compatible with javascript. So you can not mix the javascript syntax with the CoffeeScript.
@@ -593,128 +625,6 @@ new Function()不继承作用域, 几遍其是在嵌套函数中定义, 也只�
 谜题12345678910111213var name = &quot;The Window&quot;;var object = &amp;#123;  name : &quot;My Object&quot;,  getNameFunc : function()&amp;#123;    console.log(this);    return function()&amp;#123;      return this.name;    &amp;#125;;  &amp;#125;&amp;#125;;console.log(object.getNameFunc()());// output: Object&amp;#123;name:&quot;My Object&quot;&amp;#125;; &quot;The Window&quot;
 上述定义中, 为什么嵌套函数没有继承上层函数的this呢? 反而继承了全局的this?
 猜测解答: this这个关键字是个比较特殊的关键字, 它具有一个很有趣的特点就是: 当一个函数作为函数而不是方法来调用的时候, this指向的是全局对象, 只有当它是方法的时候, 其指向的才是所属对象; 题目来源阮一峰博客. 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (3)</title><link>http://taoalpha.me/blog/2015/06/22/read-javascript-the-definitive-guide-3/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-22T04:00:00.000Z</pubDate><description>概述先说点不相关的… 为了更好的阅读, 所以以后读书笔记相关的博文都会分拆成4个部分:
-
-概述: 算是阅读总结摘要以及类似这段话之类的声明介绍等等;
-阅读笔记: 这部分主要以阅读过程中的记录为主, 会比较杂, 基本算是逐点记录, 评判相对主观;
-心得: 这部分则主要为笔记的延伸, 算是对笔记的一种补充或者说自己的阅读理解消化所得, 有时候也会覆盖到一些使用架桥等等;
-谜题: 这里主要记录一些没有完全理解的部分, 会加上自己的猜测解答, 当弄懂后会更新正解;
-
-DONE.
-本篇是博主重新翻阅了”JavaScript the Definitive Guide(第六版)”的前4章内容(之前 阅读笔记-2均是第五版的)后的读书笔记以及心得体会. 内容主要覆盖js的基本用法, 考虑到重复, 这里主要是在上两篇的基础上查漏补缺.
-阅读笔记Chapter 2 - 基础知识JS能识别的whitespaces:
-常规空格: \u0020 # 即url中常见的%20
-Tab(制表符): \u0009 # js中常见的\t
-Vertical Tab: \u000B # \v
-Form Feed(翻页/页码分隔符): \u000C # \f
-Nonbreaking Space(不间断空格): \u00A0  # 通常在html中用来阻止默认连续多空格自动归一的性质(auto collapsing)而使用&amp;amp;nbsp;, 同时因为软件处理的需要, 使用&amp;amp;nbsp;能够防止相应的处理器将普通空格转为行分隔;
-Byte order mark: \uFEFF
-any character in Unicode category Zs
-
-JS能识别的line terminators:
-line feed: \u000A # \n
-carriage return: \u000D # \r
-line separator: \u2028
-paragraph separator: \u2029
-
-值得一说的是, js是支持unicode作为indentifier的合法字符的, 但是上述这些则不在其中.
-JS的”Unicode Escape Sequences”类似”\u00E9”这种结构的字符在js都代表一种特殊的字符:”unicode”. 如果你在js中使用这些字符, js会自动将其编译为对应的字符(如果是在js的注释中, 则不会编译, 而是以ascii对待), 比如: 示例就会编译为”é”. 而在js中, 这种对等关系是支持的, 即 &amp;quot;\u00E9&amp;quot; === &amp;quot;é&amp;quot;是为真的.
-但是一定要慎用… 因为unicode变化过多, 有时候输出看起来一样的字符, 其本质不一定一样: &amp;quot;e\u0301&amp;quot;的输出也是”é”, 但是它相当于是&amp;quot;e&amp;quot;+&amp;quot;\u0301&amp;quot;组成的.
-JS中的&amp;quot;;&amp;quot;在JS中, &amp;quot;;&amp;quot;作为语句结尾并不是必须的, 只有当多语句同行的时候, &amp;quot;;&amp;quot;才是必须的. 当你没有&amp;quot;;&amp;quot;的时候, js会自动为你添加合适的&amp;quot;;&amp;quot;. 通常它会自动将它没有&amp;quot;;&amp;quot;无法解析代码时候遇到的换行处加以&amp;quot;;&amp;quot;(除了类似return,break, ++, –等, 它会自动将其后的行分隔符作为&amp;quot;;&amp;quot;对待.):
-1234567var aa=3console.log(a)// output: 3// js在第一个换行处识别了其语句分割的意义, 但是在 a = 3 的两个分割处都因为它可以识别合并后的语句所以没有作为`&quot;;&quot;`处理.
-但是上述的成功不意味着js的智能, 更多时候如果我们不合适的使用&amp;quot;;&amp;quot;, 会造成很多奇怪的问题的, 比如以(, [, /, +, -为起始的语句很可能会被误认为是前一语句的延续. 所以通常来说, js的编码还是比较鼓励使用&amp;quot;;&amp;quot;作为语句结尾的.
-Chapter 3 - 数据类型Number:
-Global viriables: Infinity,NaN
-Global Objects: Math,Number
-
-Tips:
-
-NaN 具有唯一性, 其不等于任意值, 包括它自己, 0/0会产生’NaN’, 但是0/0 != NaN, 如果需要判断一个变量是不是NaN, 需要使用isNaN()这个内置的函数;
-Infinity &amp;lt;==&amp;gt; Number.POSITIVE_INFINITY &amp;lt;==&amp;gt; 1/0
--Infinity &amp;lt;==&amp;gt; Number.NEGATIVE_INFINITY &amp;lt;==&amp;gt; -1/0
-Binary Floating-Point会导致小数级错误, 比如0.3-0.2 != 0.2-0.1, 这个属于计算机本身因为二进制编码的原因所致, 所以在比较数字大小的时候要格外小心;
-
-String:
-immutable ordered sequence of 16-bit values
-
-Tips:
-
-string的长度都是按照16-bit来计算的, 所以当如果一个字符超过了16-bit, 则会按照多的计算. 比如: e - \ud835\udc52, 就需要按照两个16bit计算, 即其长度应为:”2”
-从ECMAScript 5之后就允许string跨行定义了, 只需要在换行的地方加上一个反斜杠\, 即可.
-转义字符\如果加在普通字符前, 不会产生任何效果;
-typeof null =&amp;gt; Object , typeof undefined =&amp;gt; undefined;
-null == undefined, null!==undefined =&amp;gt; True
-
-类型转换javascript是一个很宽松的语言, 我们不需要预先定义变量类型, 而在运算以及执行过程中, js也会自动的帮助我们进行类型转换, 当然为了更好的借助这一特点, 了解下图中的js转换类型的规则还是非常有必要的.
-
-其中object转换 primitive datatype 的话, 一般会按照如下步骤进行:
-
-首先会默认调用toString()函数, 你可以自行定义这一函数, 如果toString()返回结果正常, 则转换结束;
-如果toString()未定义, 或者返回结果非primitive datatype的话, 会自动调用valueOf()函数, 同上一步;
-而如果两个都没找到, 那么js将会抛出TypeError;
-
-而根据要转换的是string还是number而交换1,2两步( string 的话先调用toString(), 且返回值必然会转为string; 如果是number的话, 则先找valueOf(), 返回结果为number). 当然至于boolean的话, 所有的object转换到boolean都是true.
-Array转换string的时候默认的toString()就是一个join()调用~ Function的话, 则也可以自己定义toString()函数.
-Tips:
-
-x + “” // Same as String(x)
-+x // Same as Number(x). You may also see x-0
-!!x // Same as Boolean(x). Note double !
-在ECMAScript 5的strict模式下, 所有变量君需要声明才能赋值, 否则会报错;
-
-Chapter 4: Expressions and Operators
-上图为按照优先级顺序排列下来的操作符(横线分隔的同一组块之间的级别相同).
-Tips:
-
-运算顺序不影响赋值顺序, 赋值顺序始终都是严格从左到右的, 比如:h = x+y+z, 那么赋值顺序始终都是h-&amp;gt;x-&amp;gt;y-&amp;gt;z; 通常情况下, 这一赋值顺序不会影响之后的计算顺序, 对结果基本没什么影响, 除了一种情况:
-如果前变量的赋值会影响到后面变量的值的话, 比如共用同一个变量, 那么这种情况下, 赋值顺序就可能会对结果产生一定的影响了. 最简单的例子就是z = 2;y = function(){z = 3;return 1};, 因为y是一个函数, 而它的执行会改变z的值, 所以y()+z和z+y()的结果就是不相同的.
-
-“+”运算符中的类型转换:
-
-string优先, 只要有两个操作数中有一个是string或者是有toString()的object, 那么其都会按照string来进行链接运算;
-除非两个都是非string, 才会进行加法运算;
-当”+”作为单操作数时, 则意味着将操作数向number类型转换;
-
-
-&amp;amp;&amp;amp;运算符如果第一个为false, 则不执行第二条判断, 所以可以用这个方法来代替if: (a==b) &amp;amp;&amp;amp; alert(&amp;quot;a equals b&amp;quot;)就相当于if(a==b) alert(&amp;quot;a equals b&amp;quot;).
-
-!(p &amp;amp;&amp;amp; q) === !p || !q
-!(p || q) === !p &amp;amp;&amp;amp; !q
-a op= b 和 a = a op b通常是等价的, 除非a本身的重复赋值会有副作用, 比如 a[i++] += 1和a[i++] = a[i++] +1就不一样, 因为后者前后两个i不同了.
-eval()函数会继承当前的scope, 除非eval()被赋予某个新的reference, 那样的话只会使用global的scope;
-void操作数很少用到, 它是个单操作数的操作符, 其用法就是丢弃操作数的返回结果, 然后返回 undefined…
-
-心得whitespaces 和 line terminators通常在js里面我们使用\s来统一代表所有其可以识别的whitespace, line terminators. 如下例:
-1234567var k = 'asd \t asdasd \na asd \f asda dad\rasd\u2028asd\u2029\u00A0'k// output 里面有两个换行的符号, 我这里为了演示方便就不换行了k.replace(/\n/g,'-')// 同上,里面的&quot;\r&quot;我也不换行了k.replace(/\s/g,'-')// output: &quot;asd---asdasd--a-asd---asda-dad-asd-asd--&quot;
-因为在console中输出的时候是不换行的, 所以有时候单单看console输出的话, 类似这种编码问题所致的错误就找不出来, 为了省事, 我们可以统一使用\s来代表所有此类符号.
-谜题Q: 按照正常来说Number.MAX_VALUE加上一个数应该就会自动转为Infinity, 但实际上, 测试过程中发现, 只有当Number.MAX_VALUE加上一个足够大的数后才会等与Infinity, 这是为什么?
-1234567Number.MAX_VALUE// output: 1.7976931348623157e+308Number.MAX_VALUE +1// output: 1.7976931348623157e+308...Number.MAX_VALUE + Math.pow(10,1000)// output: Infinity
-正解: the sum is computed and rounded to the nearest representable value using IEEE 754 round-to-nearest mode. If the magnitude is too large to represent, the operation overflows and the result is then an infinity of appropriate sign.
-
-IEEE 754
-In the following two rounding-direction attributes, an infinitely precise result with magnitude at least bemax ( b − ½ b^(1-p) ) shall round to ∞ with no change in sign; here emax and p are determined by the destination format (see 3.3). With:
-
-roundTiesToEven: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with an even least significant digit shall be delivered
-
-roundTiesToAway: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with larger magnitude shall be delivered.
-
-
-
-ECMAScript does not specify which of the round-to-nearest, but it doesn’t matter here because both gives the same result. The number in ECMAScript is “double”, in which
-
-b = 2
-emax = 1023
-p = 53,
-
-_so the result must be at least 2^1024 - 2^970 ~ 1.7976931348623158 × 10^308 in order to round to infinity. Otherwise it will just round to MAX_VALUE, because that is the closer than Infinity.Notice that MAX_VALUE = 21024 - 2971, so you need to add at least 2^971 - 2^970 = 2^970 ~ 9.979202 × 10^291 in order to get infinity._
-Q: &amp;#39;0&amp;#39; == false 是 true, 为什么 null == false 就是 false呢?
-猜测解释: ==这样的是比较value的, 而 null转换为boolean类型为false, 并不意味着两者的value是相同的. ==只会比较value, 而不会进行转换. 也即true, false两个boolean类型的其value也是1,0. 而null和undefined的value则不同, 前者为空, 后者为无.
-参考资料:
-JavaScript the Definitive Guide 6th edition
-Unicode Property
-List of Unicode Characters
-编码历史介绍
-
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
 Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
 NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
@@ -764,6 +674,126 @@ The core about how to use coffeescript with nodejs is to use the --watch for cof
 And just like jQuery, you just follow the rules and write your code.
 DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
 That’s all. Thanks!
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (4)</title><link>http://taoalpha.me/blog/2015/06/23/read-javascript-the-definitive-guide-4/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-23T07:00:00.000Z</pubDate><description>概述第六版和第五版的最大区别在于ECMAScript 5的引入, 这是目前发布的最新的js版本, 有着最新的属性和函数, 目前主流浏览器基本都已经完全支持. 本文为阅读5-9章内容的笔记总结, 主要是覆盖了JS中的语句和典型对象.
+阅读笔记Chapter 5 - Statements
+switch/case中使用的是===进行比较判断的, 而不是==;
+with带入scope chain的对象只有读取权限, 没有写入功能, 即with后, 可以获取其代入的对象, 但其内声明的变量都依然归于gloabl或者local之中;
+debugger是ECMAScript 5引入的一个新的statement, 起主要作用是和浏览器结合使用, 用于创建断点以便查错使用;
+use strict也是ECMAScript 5引入的, 严格来说不算statement而是directive, 不过两者很是相近; 其使用必须位于js整体的起始位置或者是一个function主体的起始位置;
+use strict的使用会开启代码的strict mode, 为了提升效率, 错误追踪以及更好的安全性, 其语法要求会更加严格, 简单列举如下:
+停用with语句;
+所有变量必须声明才能调用;
+所有独立声明的函数而非对象的方法定义的, 其this域都默认为undefined, 而函数如果通过apply,call调用, 其this域为传入对象;
+对未声明变量的赋值或者不能写入的对象进行写入, 都会抛出异常;
+eval调用会自动创建临时局部scope, 不再能直接对母域新建声明了;
+arguments成为传入参数的硬拷贝, 和传入参数名之间不在绝对相等, 即改变一方不会引起另一方的改变, 同时停用其caller,callee方法;
+delete用于变量, 函数或者函数参数的时候会抛出异常, 操作对象的某个未声明属性也会抛出异常;
+对象(包括函数)创建中不能出现同名属性(参数);
+直接声明的八进制数是不允许的(即0开头的数字);
+eval,arguments作为keywords对待, 不能赋值, 或赋予其他变量, 也不能用于identifier;
+
+
+
+
+Chapter 6 - Objects
+Property Attributes (ECMAScript 5之后引入可自定义配置, 之前默认三者皆有.)
+writable: 可赋值;
+enumerable: 可递归;
+configurable: 可配置 - 可删除也可修改;
+
+
+Object Attributes
+portotype: 指向当前对象的属性继承对象;
+class: 指代对象所属类别;
+extensible: 指示当前对象是否能够新增属性 (ECMAScript 5引入);
+
+
+Object Categories and Property Types:
+native object: js中内置的对象, 包含Arrays, functions, dates, regular expressions等;
+host object: 由js运行环境所定义的对象, 比如常见的浏览器, 就包含了HTMLElement对象;
+user-defined: 执行js代码的时候创建的对象;
+own property: 直接由对象中定义的属性;
+inherited property: 由对象的prototype object继承来的属性;
+
+
+Prototype:
+任何一个对象(除了Object.protytpe)的出现都必然包含了第二个对象的存在: new Array() =&amp;gt; Array.prototype;
+Object.prototype是唯一一个没有母继承的对象了, 它是最顶部的类;
+类似new Array() =&amp;gt; Array.prototype =&amp;gt; Object.prototype这样的两个prototype就组成了Array的prototype chain;
+Object.create() 是ECMAScript 5引入的新的创建对象的方法, 其接受两个参数, 第一个参数会作为新建对象的prototype传入, 第二个则是用来描述新对象的属性的. 如果你传入null, 则新建对象是完全没有prototype的, 只有Object.create(Object.prototype)才是等价于我们常用的{} or new Object();
+获取某个object的未定义属性将返回undefined, 但是获取undefined或者null的某个属性则会抛出异常;
+
+
+getter &amp;amp;&amp;amp; setter
+ECMAScript 5新引入的两个accessor properties, 分别对应某个属性的调用和赋值;
+只有setter的属性只有写入权限, 只有getter的属性则是只读权限;
+
+
+property attributes
+value, writable, enumerable, and configurable
+对应的accessor property: get, set, enumerable, and configurable
+Object.getOwnPropertyDescriptor(object_name, property_name) 获取某个属性的特征描述;
+Object.defineProperty(object_name, property_name,{property_attribute:attribute_value}) 对某个属性设定其特征描述;
+
+
+
+下例即为利用Object.defineProperty自定义的一个extend()函数:
+123456789101112131415161718192021222324252627282930// Example 6-3. Copying property attributes/** Add a nonenumerable extend() method to Object.prototype.* This method extends the object on which it is called by copying properties* from the object passed as its argument. All property attributes are* copied, not just the property value. All own properties (even non-* enumerable ones) of the argument object are copied unless a property* with the same name already exists in the target object. */Object.defineProperty(Object.prototype,  &quot;extend&quot;,  &amp;#123;    writable: true,    enumerable: false,    configurable: true,    value: function(o) &amp;#123;      // Define Object.prototype.extend      // Make it nonenumerable      // Its value is this function      // Get all own props, even nonenumerable ones      var names = Object.getOwnPropertyNames(o); // Loop through them      for(var i = 0; i &amp;lt; names.length; i++) &amp;#123;        // Skip props already in this object        if (names[i] in this) continue;        // Get property description from o        var desc = Object.getOwnPropertyDescriptor(o,names[i]);        // Use it to create property on this Object.defineProperty(this, names[i], desc);      &amp;#125;    &amp;#125;  &amp;#125;);
+
+Object Attributes;
+Object.getPrototypeOf() ECMAScript 5引入, 可用于获取某个对象的prototype;
+p.isPrototypeOf() 同上, 用于判断某个对象是否为另一个对象的prototype;
+Object.isExtensible(),Object.preventExtensions()则分别是用于判断一个object是否是可扩展的, 以及禁止其可扩展性的(此操作不可复原);
+Object.seal()类似Object.preventExtensions(), 不过它同时禁掉了properties的configurable属性,Object.isSealed()则是对应用于判断是否sealed的函数;
+Object.freeze()比Object.seal()还要严格,所有属性都变为可读了, 对应的查询函数为:Object.isFrozen();
+Object.preventExtensions(),Object.seal(),Object.freeze()都是只针对当前object而言的;
+class属性目前基本没啥用, 有点等价或者说更细化的typeOf or instanceOf了;
+
+
+
+Chapter 7 - Arrays这里主要记录ECMAScript 5引入的一些新的方法, 3已有的可以查看 阅读笔记-2
+
+forEach(value,index,array_itself): array自身的循环调用函数, 相当于for(i in array_name){}, 区别在于其不支持break等可以跳出循环的语句, 如果你想要提前结束循环, 就需要通过try/catch包裹并利用抛出异常来结束循环;
+map(): 也算是循环的一种, 遍历每个元素并传递给传入的函数, 最终返回一个新数组;
+filter(): 顾名思义, 这是对数组进行筛选的, 值得一提的是filter()会自动跳过空白,所以对于稀疏数组通过filter()可以去除所有空白, 在加上undefined判断, 就可以去除所有空值了;
+every() 和 some(): every()是当数组每个元素都使传入函数为真的时候返回真, some()则是只要一个为真即返回为真, 需要注意的事, 对于空数组, every()会返回真, 而some()会返回为假;
+reduce(function,initial_value) 和 reduceRight(): 通过执行传入函数而对数组元素进行整合,计算,判断, 最终返回一个结果: var max = a.reduce(function(x,y) { return (x&amp;gt;y)?x:y; });即返回数组的最大值; reduceRight()与reduce()一致, 只是循环顺序相反, 从右到左; 当没有声明初始值时, 采用第一个执行元素作为初始值;
+indexOf() 和 lastIndexOf: 顾名思义, 获取数组中某个元素的index, 前者获取首个匹配元素的index, 后者获取最后一个匹配元素的index;
+
+Chapter 8 - Functions
+Functions的调用有四种:
+直接调用;
+作为对象的方法调用;
+作为constructor调用;
+通过call,apply方法调用(间接调用);
+
+
+call() 和 apply:
+call和apply都是间接调用的方法, 允许一个函数临时客串为某个object的方法;
+一定程度上, 可以等价于o.m = f;o.m();delete o.m;
+其接受的第一个参数会成为函数运行的this域, 如果是非strict mode下, 传入null/undefined则会自动将global作为this, 而如果传入的是primitive datatype, 则自动转为对应的wrapper object, 即string =&amp;gt; String;
+call和apply的区别主要体现在后面的参数上, 前者以分散元素传入, 后者则以整体数组形式传入, 所以用apply可以把原本只支持不定长参数的函数转换为接受数组的函数:var biggest = Math.max.apply(Math, array_of_numbers);;
+apply对类array元素处理方式同array元素;
+
+
+bind(): 很是类似call和apply, 本质也是把某个函数作为某个对象的方法调用, 实现则是通过把object和function绑定, 形成一个新函数从而每次调用新函数都等价于调用了object.funtion, bind接受多个参数, 其首个以后的参数都会作为this域成员代入函数中, 并按序成为函数自身的参数function f(y,z) { return this.x + y + z };var g = f.bind({x:1}, 2);g(3) // 2被赋予了y, 新的3则给了z;
+higher-order function: 作用于另一个函数之上的函数;
+
+partial and memoization 这两个都是function programing中常用的方法:
+
+partial: 类似bind()这种会把传入参数默认分配到函数自身的部分接受参数上的做法就是partial application;
+memoization: 将函数运行过程的计算结果缓存起来的方式;
+
+
+
+123456789101112131415161718192021222324function array(a, n) &amp;#123; return Array.prototype.slice.call(a, n || 0); &amp;#125;// 用以处理类array元素(转为真正的array)function partial(f /*, ... */) &amp;#123;  var args = arguments;  // 存储partial的参数  return function() &amp;#123;    var a = array(args, 1);    // 取出首位以后的参数    var i=0, j=0;    for(; i &amp;lt; a.length; i++)      if (a[i] === undefined) a[i] = arguments[j++];      // 这里的arguments是第二层参数      // 将空元素逐个替换成第二层参数里的值, j自动随着执行+1    a = a.concat(array(arguments, j))    // 组成新的参数数组    return f.apply(this, a);    // 调用f函数, 并传入参数a  &amp;#125;;&amp;#125;var f = function(x,y,z)&amp;#123;return x*y*z&amp;#125;partial(f,undefined,2)(1,3)// x:1,y:2,z:3
+123456789101112131415// Return a memoized version of f.// It only works if arguments to f all have distinct string representations.function memoize(f) &amp;#123;  var cache = &amp;#123;&amp;#125;;  return function() &amp;#123;    var key = arguments.length + Array.prototype.join.call(arguments,&quot;,&quot;);    if (key in cache) return cache[key];    else return cache[key] = f.apply(this, arguments);  &amp;#125;;&amp;#125;// 应用方式类似;var factorial = memoize(function(n) &amp;#123;return (n &amp;lt;= 1) ? 1 : n * factorial(n-1); &amp;#125;);factorial(5) // 此时会自动缓存4,3,2的阶乘值. 对于一些复杂的运算, 如此可以很好的加快运算速度.
+Chapter 9 - Classes and Modules除了 阅读笔记-2中包含的, 由于ECMAScript 5所引入的那些object property自然都可以应用到新的class中, 从而创建更为复杂有效的函数. 其实js中目前不存在class这个关键词, 所以其模仿的class, 说白了就是一个复杂一些的函数对象.
+而因为其内容驳杂繁多, 我么会在后面的应用中有很多实践的机会, 这里就不一一描述了.
+参考资料
+JavaScript the Definitive Guide 6th edition
+Functional Javascript
+
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (5)</title><link>http://taoalpha.me/blog/2015/06/24/read-javascript-the-definitive-guide-5/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-24T08:00:00.000Z</pubDate><description>概述在十到十二章中, 第十章的正则表达式内容最为丰富, 也是目前应用即为广泛的内容之一. 不过这里也主要是结合js的应用, 实际上正则表达式本身就是一个很值得研究的话题, 有不少书都在谈这个话题, 我后面要读的书目中恰巧就有这么一本, 后面会更加详细的学习以下正则表达式的方方面面.
 十一章算是非常前沿, 高端或者说冷门的点了, 随着浏览器的盛行以及技术的进步, 安全问题始终都是一个很重视的点, 而在这种攻防演练中也促进了js本身的进步, 而主流浏览器本身更是走在了js的最前沿. 各种新的属性都是由他们引入而逐渐成为标准的;
 十二章主要是对走出浏览器的JS做了一个简单的介绍, 而NodeJS的大名在近几年在前后端, 全端领域都可谓是人尽皆知. 我也会在之后阅读相关书籍的时候做更详细的笔记记录.
@@ -1487,30 +1517,14 @@ TestingYou should write testing!!!
 Code Conventions for the JavaScript Programming LanguageAll coved by two styles I list above.
 SummaryCompared to google’s old style guide, airbnb’s style guide has much more valuable new ES6 styles, if you are an active ES6 users, I strongly suggest you use airbnb’s style !!!
 Even you are a solo worker, you should use some common styles, it is a good habit and you should have.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Using @font-face</title><link>http://taoalpha.me/blog/2014/07/15/read-yi-using-font-face/</link><category>read</category><tag>CSS,font-face,翻译文章,译系列</tag><pubDate>2014-07-15T10:00:00.000Z</pubDate><description>如下例:
-123456789@font-face &amp;#123;  font-family: 'MyWebFont';  src: url('webfont.eot'); /* IE9 Compat Modes */  src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */       url('webfont.woff') format('woff'), /* Modern Browsers */       url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */       url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */&amp;#125;
-由于如今WOFF是如此之火, 你也可以简化使用:
-123456@font-face &amp;#123;  font-family: 'MyWebFont';  src: url('myfont.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */       url('myfont.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */&amp;#125;
-其实只用WOFF也可以的, 目前基本主流浏览器都能支持了.
-然后你就可以在其他元素中使用这一属性了~ 比如:
-1234body &amp;#123;  font-family: 'MyWebFont', Fallback, sans-serif;&amp;#125;
-讲讲font-face的历史吧, @font-face是用于加载以及使用你自定义的字体而出现的, 针对的就是如今浏览器有权限使用的系统已有的有限字体. 这里有个系统预装字体的详情介绍.
-说到性能. 一般我们认为字体文件都是非常巨大的, 同时还会让你的网站增加很多额外的请求, 这些都会拖慢你的站点速度. 所以在使用之前请务必确保你考虑清楚.
-如果你确实要使用自定义字体, 有一种更好的更负责的方式是尽可能的加载足够少的字母和样式种类. 比如, 如果你使用google fonts, 只需要引入一些特定的组合即可:
-123@import url(http://fonts.googleapis.com/css?family=Averia+Sans+Libre:400,300italic,700);
-甚至可以缩减引入的字符数量.
-相比于性能, @font-face似乎经常出现各式各样的bug…比如这种, 这种,还有这种…
-关于字体格式, 倒是有几种, 每种都还有些历史.
-  WOFF    Web Open Font Format. 是专为网络使用而创造的, 由Mozilla和一些其他组织共同发展起来的, WOFF字体通常比其他格式字体加载的更快, 主要是因为他们使用了比OTF和TTF更加压缩的结构, 这种结构中还能包含一些meta信息和license信息, 目前来说WOFF应该是最大的赢家了, 主流的浏览器基本都已经能够支持了.    SVG/SVGZ    Scalable Vector Graphic(Font). SVG是一种字体的矢量化过程, 主要可以让体积变的更小, 同时也能够用于移动设备. 这个字体格式是4.1版本以下的Safari浏览器唯一支持的字体格式了. 目前来说SVG依然不能被Firefox, IE以及IE 移动版支持. Firefox主要精力都在支持WOFF了~ 天知道他们什么时候支持SVG… SVGZ是SVG的再压缩版本.    EOT    Embedded Open Type. 这一格式是由微软从15年前创造的(真正意义上@font-face的源头). 也是唯一一种IE8以及以下版本支持在@font-face中使用的格式了.    OTF/TTF    OpenType Font 和 TrueType Font. 在一定程度上WOFF格式的出现也是因为这些格式可以很容易被复制, 无论合法与否. 同时, OpenType的某些特性(比如手写字体等)比较吸引设计师们.  
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Top 10 Mistakes in Web Design</title><link>http://taoalpha.me/blog/2014/04/19/read-yi-top-10-mistakes-in-web-design/</link><category>read</category><tag>HCI,HCIBib,Usability,关于HCI,翻译文章,译系列</tag><pubDate>2014-04-19T12:00:00.000Z</pubDate><description>这是一篇很古老的文章了–发表在2011年1月. 之所以还把它挖出来, 一方面是因为正好看到了, 更重要的方面是因为里面列举的10条即便是现在也应该极力避免的~
+摘要: 最让用户讨厌的10个恶习.  网页设计和html中可诟病的东西不少, 虽然其中有一些可能已经比过去少见多了.
+自从1996年第一次尝试一来, 我编写了不少列举网页设计中的top 10错误清单. 你可以在本文的结尾处看到这些文章的链接. 本文重点在列举其中的突出条目.
+            Bad Search(糟糕的搜索)        过度依赖文本的搜索方式是很影响用户体验的, 因为它们无法处理书写错误, 复数形式, 连字符号以及query中其他的一些特殊部分. 这样的搜索引擎对于年长者尤其难用, 但是它们伤害的是所有人.        还有一个相关的问题就是搜索引擎仅仅根据结果中包含的query成分的多少来排列结果, 而不是根据每个文档的重要程度. 可能你把最佳猜测的结果放在最前面要更好一些, 尤其是对一些重要的查询, 比如产品名称等.        搜索是用户在导航失败的时候的唯一依赖. 即便有些时候高级搜索能提供一些帮助, 但是简简单单的搜索本身更为常用, 同时搜索应该能够展示一个简简单单的结果, 因为那才是用户所需要的.        博主说:  目前来说, google, baidu等这种大型搜索基本已经不会出现这类问题了, 所以这个问题多数出现在个人blog搜索或者小站的自建搜索上, 通常只是个简单的sql语句, 也真心不能奢求做的太过完美.                PDF Files for Online Reading(pdf文件的在线阅读)        用户讨厌在浏览过程中突然遇到一个pdf, 这会打乱它们的工作流. 即便是简单如打印和保存都很难使用, 因为标准的浏览器命令都不能发挥作用. 网页布局往往为纸张优化, 而无法适应用户的浏览器窗口. 所以经藏无奈的看着眼前难用的窗口和小小的字体.        最糟糕的是, pdf文档本身不易于浏览.        PDF对于打印或者使用手册以及其他的一些需要打印出来的大型文档而言是非常有帮助的. 所以保持这一目标, 把相关的信息都转为更适合浏览的文本呈现在网页之中.        博主说:  对当下来说, 首先是显示器有了很大的进度, 目前的显示器基本都能轻松支持pdf的阅读了, 浏览器本身的渲染也考虑的文本的问题, 不过本身pdf的浏览性确实差了一些, 当然那些有目录交互的动态pdf除外;                Not Changing the color of visited links(不改变已访问链接的颜色)        一个对已经进行过的行为有区分的导航能够对当前的浏览起到巨大的帮助, 因为它代表了你的每一步操作. 了解过去的位置和当前所在可以让你更容易的决定下一步去哪里. 链接是导航处理的一个核心元素. 用户可以排除那些他们已经访问过的无用链接. 相反的, 他们也可以再次访问那些有价值的链接.        最为重要的是, 了解自己已经访问过的页面能够避免用户重复地访问同一个页面.        这些益处必须有一个前提: 就是用户可以分辨出已访问的和未访问的链接–利用浏览器中呈现出不同的颜色. 当已访问的链接没有改变颜色, 用户测试中发现用户表现出更加容易迷失在导航之中, 持续的访问同一页面.        博主说: 这个是个持续性的问题, 个人也是比较支持这种标记链接状态的属性的;                Non-Scannable Text(不适合浏览的文本)        满屏的文本本身绝对是交互体验的死敌. 不亲和, 无聊以及阅读起来非常痛苦…        为在线阅读而写作, 而不是仅仅为了展示内容. 引导用户阅读文本, 同时支持浏览, 利用一些结构化的技巧:                            副标题                列表清单                高亮的关键字                简短的段落;                倒金字塔结构;                简单的写作风格, 以及尽可能避免语法错误或者信息冗余.                            博主说: 这个是一个老生常谈的问题了, 很多类似的文章也介绍过很多方法来更好的在网上呈现内容, 究其根本还是用户读书和上网阅读的行为差异很大–一个是读, 一个是看…                Fixed Font Size(合适的字体大小)        css文件非常不幸的给与了网站控制其样式的能力, 它们可以覆盖掉浏览器本身的字体样式, 同时还禁止了浏览器本身的字体大小设置的按钮, 取而代之以新的字体大小. 通常是time字体, 但往往会显得过小了写, 显著得降低了很多40以上的人们的可读性.        请尊重用户的偏好, 让他们自行设置字体大小. 还有, 使用相对值而不是像素绝对值来定义字体大小.        博主说: 对于修改字体大小的按钮, 这个功能还是提供的 , 但是很多时候是隐性的, 目前多数浏览器应该是不会直接提供的, 个人觉得这属于一个排版型的问题, 毕竟大字会导致很多版式上的影响, 同时也是一个针对特殊人群的处理问题…                Page Titles With Low Search Engine Visibility(网页标题不具备很好的易搜索性)        搜索是一个用户发现网站的重要途径. 搜索本身也是用户在一个个网站之中跳转的方式. 你的页面标题是一个吸引新用户的主要方式. 通过提升在搜索结果的排位以及尽可能 的让已有的用户快速确定他们的需求.        页面标题是存在与html的title标签之中. 通常会显示在搜索结果页的条目标题上, 点击后跳转到对应的网站. 搜索引擎通常会按照某种规则来阶段显示其中的部分, 比如66个字符, 所以这是一个非常微型的文本.        页面标题经常还被用作浏览器书签添加后条目的标题. 对于你的首页而言, 以公司名为开始,加上简短的站点介绍. 千万不要用The, welcome to等开头, 除非你想要排序排在T或者W后…        对于很多非主页的页面, 可以以本页最突出的一些信息作为关键字描述一些用户可以在页面上发现的信息. 因为页面标题是用来作为浏览器窗口的标题, 同时还用来作为浏览器下任务栏的标题(windows下), 意味着高级用户将会在多个窗口下不断的切换, 仅仅依赖于前两三个词语, 所以如果每个页面都使用同样的页面标题, 你就会显著的影响可用性.        博主说: 这是比较实际的一个问题, 即便现在也是经常的遇到的…                Anything That Looks Like an Advertisement(任何看起来像广告的东西)        选择性注意是非常有帮助的, 而且网页用户已经学会忽略那些页面上的广告了–尤其是对于那些目标驱动型的浏览用户而言.        不幸的是, 用户同时也会忽略那些正常的只是看起来比较像广告的元素. 毕竟, 当你忽略某事时, 你不需要再费力去去研究它看它究竟是啥.        所以, 最简单的方法就是避免设计像广告的元素. 当然, 具体实施起来有很多的规则, 参照着现在越来越多的广告样式. 就目前来说, 有以下规则:                            条幅忽略: 意味着用户将不会注意那些看起来像个条幅, 通栏的位置.                避免动态效果: 用户会自动忽略那些闪烁的或者带着特效字体的, 比较故意吸引注意力的元素;                弹出: 用户经常会在弹出页面加载完全之前就关掉了.                            博主说: 这个确实很现实, 尤其是随着广告的样式越来越多…如何更好的区分广告和内容是个非常值得考虑的问题, 目前来说, 基本都是通过分区来划分的, 似乎大家也都知道广告的点击很低, 但总还是有人会点的…                Violating Design Conventions(违背设计规则)        一致性是一个最为有帮助的可用性原则: 当所有事物保持一致的时候, 用户就不需要担忧什么将会发生. 反而, 他们知道什么将会发生, 基于过往的经验. 每次你在牛顿头上放个苹果, 它就会掉在他的头上. 这就很好.        越符合用户的预期, 用户就会越能感觉到掌控权, 他们就会越高兴. 然而如果总是违背用户的预期, 他们就会失去安全感. 那么你下次放开苹果, 它很有可能变成一个番茄并且飞到天上去的.        Jakob’s 关于用户体验的规则注明: 用户更多的时间是花费在其他网站上的.        这意味着, 他们的预期是基于那些网站的共性作出的. 如果你背离了, 你的网站就会很难使用而流失用户.        博主说: Jakob’s law 这是本文的最大收获了!!!                Opening New Browser Windows(新开窗口)        新开窗口就像一个吸尘器销售员销售前先把一堆灰尘倒在用户的前门地毯上. 不要用更多的窗口来污染我的屏幕, 非常感谢(尤其是在现在的操作系统管理窗口是如此的糟糕).        设计新开窗口的重要原因是在希望能够让用户留在当前站点. 但是不顾用户自己的意愿直接接管用户的电脑是非常自欺欺人的行为, 尤其这种操作导致back按钮失效, 而这才是用户通常使用的. 用户经常没有注意到一个新窗口的打开, 尤其是他们使用的是小型的显示器且窗口本身最大化的情况下. 所以一个用户试图回到之前的页面而不能的时候会非常困惑的.        链接的行为和预期不一致会破坏用户对于自己的系统的理解. 一个链接就应该是那一个见到那的超链文本, 代表着用新的内容取代当前的页面, 如果需要在新窗口打开链接, 用户可以自行选择使用浏览器提供的”新窗口打开”命令.        博主说: 这个个人觉得需要针对具体情况考虑了, 网络的属性就决定了它发散的特征, 而用户又普遍有一种保留欲望: 打开总是容易的, 关闭总是困难的.                Not Answering Users’ Questions(答非所问)        用户经常是目标驱动型的, 他们带着一定的目的来访问页面的, 甚至可能是要购买你的产品. 一个网站最大的失败就是没有提供用户寻找的信息.        有时候仅仅因为没有在页面上找到答案, 你就失去了一笔订单. 因为用户会假设你的产品或者服务无法实现他的需求, 如果你不告诉他们细节的话. 另外一些时候, 这些关于产品的细节特性被淹没在众多的网站信息和庸俗的口号中. 因为用户没有时间去仔细阅读所有的信息, 所以隐藏在一堆信息中就相当于不存在.        最糟糕的答非所问的例子就是: 避免展示价格. 没有那个B2C网站会犯这种错误. 但是在B2B经常会出现这种问题. 多数企业呈现的信息都让你无法分别他们是适用于100人还是10w人的…价格是用户所希望获得的最明显的信息, 而如果不提供它, 会让用户觉得迷失以及降低他们对一个产品的认知. 我们有一个长达几个小时的视频记录了客户在理发的时候问”价格表在哪里?”.        即便是B2C网站也经常会忘记列出价格, 比如分类页面或者搜索结果页面. 在这两种情况下, 价格也是一个重要信息. 因为它让用户区分不同的商品, 而从最相关的商品中进行挑选.        博主说: 反例就是恶意SEO, 典型. 而在现在搜索引擎作为入口, 用户甚至不会记得上次上当的页面…所以也就出现了多次上当的情况….    
 
+Other Top-10 Lists
+            High-Profit Redesign Priorities             Usability in the Movies — Top 10 Bloopers            Most violated homepage guidelines             Top homepage usability guidelines             Good deeds in Web design             Web design mistakes (2005)            Web design mistakes (2003)            Web design mistakes (2002)        With cartoons.            Web design mistakes (1999)            Web design mistakes (1996)        My first list. Luckily, many of these mistakes have been fixed by now.            Application design mistakes             Information Architecture (IA) mistakes 
 
-字体服务有很多, 主要就是提供那些你可能无权使用的字体, 从而让你的使用合法化. 主要有以下这些:
-  Cloud Typography  Typekit  Fontdeck  Webtype  Typotheque  Fontspring  WebINK  Fonts.com  Google Fonts  Font Squirrel
-
-
-
-想要对比下这些服务的好坏?
-Source Link:  CSS Tricks
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>7条规则助你创造优质UI-上篇</title><link>http://taoalpha.me/blog/2014/11/26/read-7-rules-to-help-you-create-high-quality-ui-part/</link><category>read</category><tag>Design,UI,关于HCI,翻译文章,设计,译系列</tag><pubDate>2014-11-26T05:00:00.000Z</pubDate><description>本文来自Medium, 分为上下两篇, 讲述了在制作UI的时候的7条实用规则, 表示个人喜欢最后一条”steal like an artist”…刚看完”the art of steal”…哈哈
 
 不说废话.. 本文作者特别强调了下文章的适用对象主要有两种:
@@ -1665,142 +1679,70 @@ iOS 7开始, 苹果引入了扁平化设计, 去掉了所有的阴影啊等等�
 这种blocking的机制主要是为了防止裸露的HTML带给用户的糟糕体验, 毕竟如果css在html之后加载, 那么无样式的html会先渲染展示, 然后样式加载完在reflow, 感觉就很痛苦了… 这种闪一下的现象通常叫做: Flash of unstyled content(FOUC). 所以现在浏览器通常都采取blocking的方式来保证用户看到的页面的视觉效果. 而blocking对js而言主要是为了应对document.write这个函数, 其实根本来说也是为了一次性让用户看到比较完整, 好看的内容. 当然, 现在其实很多人都不推荐大家使用document.write这个函数, 毕竟js经常会导致更多的blocking时间, 但是毕竟有人再用… 而且浏览器又没办法提前判断js中用没用这个函数…
 
 恩, 基本上, 从一个请求发出到页面加载的过程就是这样了~ 如果想要提高性能, 自然也就从这里面涉及的各个方面着手喽~
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>关于Landing page - serial landing page的重设计</title><link>http://taoalpha.me/blog/2014/11/25/read-weight-on-landing-pageserial-landing-page-design/</link><category>read</category><tag>landing page,关于HCI,翻译文章,译系列</tag><pubDate>2014-11-25T08:00:00.000Z</pubDate><description>本文关于landing page的一些观点还是很不错的~ 所以特地翻译其中的一些不错的观点分享如下:
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Why Sass?</title><link>http://taoalpha.me/blog/2013/12/16/read-translation-why-sass/</link><category>read</category><tag>HCIBib,Sass for web designers,翻译文章,译系列</tag><pubDate>2013-12-16T08:00:00.000Z</pubDate><description>好久不写HCI翻译项目了~恩,拾起~哈===========================================正文===============================原作者:DAN CEDERHOLM @ November 13,2013
+原文备注: 这是DAN CEDERHOLM&amp;lt;&amp;lt;Sass For Web Designers&amp;gt;&amp;gt; 一书的一部分摘要.
+正文:
+我并不是一个Sass的虔诚信奉者. 我一般都是自己写样式表! 我不需要任何帮助!而且我当然不想要给我的工作增加任何的复杂成分.所以,请走开(Sass)!
+无论如何,这是最初的想法.但是实际上,Sass以及其他的CSS预处理程序都可以成为一个非常强有力的帮手,一个任何样式作者都可以轻易的在日常工作中使用的工具. 它确实让我犹豫了好一阵儿,不过我非常确定我很高兴我真的这么做了.
+而这也是我想要写这本书的原因. 来分享我是如何通过使用Sass在保持我自己10年来形成的舒适的CSS写作方式的同时让自己变得更加高效的.最初,我对Sass有很多误解,这也是一直阻止我去接近它的原因.我一直担心自己需要完全变更自己已有的写作和管理样式表的方式.因为CSS很多时候确实很琐碎,所以对于作者们希望保护自己的创作的心情是可以理解的~不是吗?
+恩,所以,我在此向大家展示Sass是如何在不打断你的工作和处理方式的同时让你的生活变的容易的~我会阐述Sass的各个方面: 如何安装?如何使用?以及它是如何在我自己的项目中帮助我们的.幸运的话,我希望你也能成为一个Sass的信奉者~
+Sass的电梯游说
 
-作者举了一个简单的例子(来自serial-当前非常火爆的一个podcast)作为分析示例:
+假如你要做个小改动,比如说一个颜色值,然后你发现自己需要在多处修改这个值.难道你不希望CSS可以允许你这么做吗:
+12345678$brand-color: #fc3;a &amp;#123;color: $brand-color;&amp;#125;nav &amp;#123;         background-color: $brand-color;&amp;#125;
+如果你只需要在一个地方修改这个值,然后整个样式文件都会生效,这样岂不快哉?用Sass就可以!~
+再比如在样式文件中多处重复使用的样式模块:
+12345678p &amp;#123;margin-bottom: 20px; font-size: 14px; line-height: 1.5;&amp;#125;footer &amp;#123;         margin-bottom: 20px;         font-size: 14px;         line-height: 1.5;&amp;#125;
+如果把这些共享的规则都放进一个重复使用的模块中不是更奇妙更好吗? 再一次,利用Sass你就可以只需要定义一次,然后在任何地方使用它了
+1234567891011     @mixin default-type &amp;#123;     margin-bottom: 20px;     font-size: 14px;     line-height: 1.5;&amp;#125;p &amp;#123;@include default-type;&amp;#125;footer &amp;#123;     @include default-type;&amp;#125;
+这些都是Sass的功劳!这两个极为简单,只能算得上Sass工作的皮毛的例子已经足以告诉你Sass是如何让样式文件的制作更加的快捷,更加的容易以及更加的灵活~这是一个在网页设计领域非常受欢迎的助手, 因为任何一个制作网站的人都知道…
+CSS很难我们需要面对这个事实: 学习CSS并不是一个容易的事情.了解每个属性都能做什么,层叠是如何工作的,哪个浏览器支持哪个属性,选择器,各种技巧等等,这并不容易.再加上我们现在这个时代流行的界面的复杂度,以及长时间的维护…等等,为什么我们再次开始抱怨这些? 这是一个迷,而我们中的部分人会非常享受最终的完工一刻~但CSS的问题还在于它最开始并不是用来做现在做的事情的.当然,因为浏览器快速的而更新以及CSS3的实施等,CSS有了一个非常不错的转变~但是我们仍然需要依赖那些技术,或者说,那些技巧.比如说float这个属性,其实是设计来让在一个文本块中的图片能够很好的对其.对,就是这样,而我们则逐渐利用这个属性来调整整个界面的布局~我们的样式表更是拥有者大量的重复.颜色,字体,以及经常使用的成堆的样式属性等等.一个典型的CSS文件是一个非常极端的线性文档–那种让一个面向对象的程序员想要把自己的头发揪掉的东西…我并不是一个面向对象的程序员,但是我确实剩下没多少的头发…你可以尽可能曲解此意..随着界面和网页应用变得更加强大和复杂,我们正在将原本的CSS运用到更加广阔的地方,那些想都没想过的地方.我们实际上很享受其中.幸运的是,浏览器一致在非常快速的适应着最新的CSS特性,利用更加高效抢到的属性以及选择器来解决各种现在遇到的问题.那些像CSS3新的层级属性:border-radius,box-shadow,以及高级的选择器,变化,变形,动画等等.这是一个令人兴奋的时代,当然,CSS本身还有很多的欠缺.随着漏洞的逐渐修补完善,样式的制作者们的生活应该变得更加容易~DRY原则如果我们窥视到软件工程的世界(这里我更喜欢用窥视而不是逛悠,也更加自然),我们可以很快的了解到那些关于组织结构,变量,常量,控制变量等概念都是非常根深蒂固的,对于创建复杂系统都是非常关键的工作.你可能听说过”不要重复(代码)”(DRY)原则.由Andy Hunt以及Dave Thomas在他们的&amp;lt;&amp;gt;一书中提出,含义是:知识的每一个碎片在其系统内都一定有一个单独的,不混淆的,权威的表述.这一观点的提出是因为重复的代码很容易造成失败以及对开发者造成困惑.同样作为常识:把公用的模式只写一遍然后在整个程序中重复使用.这对于维护代码也会更加高效而容易.CSS就是典型的DRY原则适用者.曾经,它充斥着各种重复的规则,声明,属性等等,在整个样式文件中我们不断的重复着那些颜色,字体等常用的样式类型…一旦看过一个适当的CSS文件,一个DRY原则实践者一定会泪牛满面的,先是困惑,然后会遇到失望于挫折.“如何维护这些恶心的符号!@#$?”他们会问.“我告诉你过关于IE的bug吧?”你一定会带着一丝厌恶的回答他.那么为什么CSS会这么的难用呢?我们可以从CSS的共同创始人Bert Bos的一篇文章中获得一些提示:  CSS停用了很多在其他语言中使用的比较强大的功能,比如宏,变量,符号常量,条件语句,变量表达式等等,那是因为这些东西会让很多厉害的使用者们获得更多的方便和技巧,但是那些经验比较少的人常常会不自知的陷入其中,不能自拔; 或者更可能的是,他们甚至不会去尝试接近CSS.这算是一个平衡,而且对于CSS而言,这个平衡还略有不同.  最初的CSS构架是经过深思熟虑后的.他们非常希望能有更多的人可以自己创建网站.他们希望CSS能成为一个足够强大的工具来自定义他们的网页,在易用和易于理解的同时又能和内容的展示区分开来.我当然对此表示非常尊重.同时,我们又必须承认我们目前的工作正在越来越复杂,越微妙,也越来越有挑战性,无论是维护还是未来发展.幸运的是,还是有很多方法可以帮助我们脱离苦海,其中之一就是使用Sass.什么是Sass?Sass是一个CSS的预处理程序–一个介于样式表和css文件之间的中间层.Sass(Syntactically Awesome Stylesheets的简称)为CSS填补了不少漏洞,允许你利用DRY原则更快的coding,更加高效也更加容易的维护.Sass官网上给出的简介如下:  Sass是一个基于CSS之上的元语言,用来更加整洁以及结构化的方式来描述一个样式文本,比单纯的CSS要更加强大.Sass同时提供了一个更加简单,更加优雅的CSS语法以及更多样的特性使用来创建更加可控的样式文件.  所以,当常规的CSS不能允许的诸如变量,复用块以及其他的好东西,Sass都可以提供,为你的CSS开启了”高级功能”模式.之后又可以通过一个命令行程序或者网页框架插件把这些语法翻译成一个常规的CSS文件.更特别的是,Sass是一个CSS3的扩展,而且它的SCSS语法–我们稍后会谈到–是CSS3的父集.意思是,任何有效的CSS3文本都是一个有效的SCSS文本.这促成了Sass可以作为一个你很容易使用的工具.开始Sass的过程是没有任何痛苦的,而且你可以随意的使用或多或少的SCSS语法~这也意味着将一个现成的CSS文件转为SCSS格式的文件是可以分步进行的,随着你对Sass的功能的了解而逐步加深.稍后,当你已经熟练使用Sass时(这不会需要多少时间),它就会变成一个CSS的扩展,非常自然,就好像CSS自己把我们想要它弥补的那些漏洞补上了一样.这也是为什么,一旦我开始使用Sass后,我就从来不曾认为它有任何的尴尬或者费劲–它就像CSS应该做到的那样.一旦你开始尝试了,你很有可能就会永远的离不开它.Sass的误解
 
+我之前提到过我非常犹豫的尝试Sass.这也是因为我在使用它之前听到的大量的传闻.我需要先了解Ruby或者高级的命令行技巧吗?我需要完全改变我写css的方式吗?输出的css会不会很臃肿完全不能看呢?
+谢天谢地,以上所有的问题的答案都是否定的,当然,但是我确实能从各种网络渠道到听到很多人在提到Sass的时候蹦出这些问题…让我们来清理一下一部分流言:
+我很恐惧命令行…无论从哪方面讲我都绝对不是一个命令行专家,但是这么多年来,我或多或少的在不同地方学到了一些,刚刚够让我陷入困境的…我不担心切换文件系统或者使用Git命令等.那意味着,我同情那些设计师以及前端开发者,他们从不担心这些.在一些人群中确实有一种命令行的恐慌.对于Sass,只需要非常少的一些命令行操作-实际上,一个命令行就足够做到所有了~更何况,现在有很多app以及网络框架都可以让你免受命令行的打扰来实现一切.(在下一章我会介绍这些工具)所以,如果你想要避开命令行,那么不要让命令行成为阻止你接触Sass的理由~我不想要改变我写CSS的模式
 
+这是我当时所持有的一个误解.我特别在意的就是我的样式文件的结构和组织方式.这里有非常多的个人习惯存在其中. 但是要记住,因为SCSS是一个CSS3的父集,所以你完全不用改变任何你写CSS的方式和习惯.注释,缩进或者不缩进等,所有你所偏好的设置都可以保留在.scss文件中.一旦我了解了这些,我就没有任何恐惧的开始了Sass之行.
+我不想要SASS改变我设计的方式
 
-这里作者指出上例中的一个重要错误: 当你要尝试说服某人的时候, 你不能使用”我们”(us), 而应该使用”他们”(them).他特意勾出了上图文本中的主语们:
+另一方面,Sass并不会解决你所有的问题,也不会纠正你的话习惯.更无效率的是,臃肿的样式即便用Sass也会同样的臃肿.良好的组织以及敏捷的思考仍然适用这里.实际上,有很多例子证实Sass可以放大一些弊端,这些我们稍后也会到.但是当使用的足够合适和明智,Sass将会成为一个非常优秀的网页助手.
+好吧,我们先把所有的细节都移开,让我们先玩些有趣的事情.我想你一定会被Sass所能做到的事情所震惊的.在下一章,我会建立起我们的工作流–Sass是如何适应你的处理流程以及在命令行或者app中操作它是多么的简单.让我们开始Sass吧~凡人们!
+DONE!–有兴趣的可翻阅全书! 从国外网盘找到了先关资源~分享给大家(因为公开分享会导致审核失败…所以只能私密了,领取码为:77ur)~有机会可能会翻译全书.
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>The Who, What, When, Wear, and Why of Wearable Technology</title><link>http://taoalpha.me/blog/2014/10/29/read-t-the-who-what-when-wear-and-why-of-wearable-technology/</link><category>read</category><tag>Wearable,关于HCI,穿戴式设备,翻译文章,译系列</tag><pubDate>2014-10-29T04:00:00.000Z</pubDate><description>穿戴式技术的5个W
 
+什么是移动性？移动性就应该是让内容服务对用户做到随时随地的访问， 尽可能的便捷高效。 就好比移动设备让人们再也不用坐到一台电脑前才能获取信息那样，穿戴式设备让人们甚至不用再拿着设备来获取信息了。 就好比我们把思维模式转移到iPhone的小屏幕并且学习着这全新的使用情景一样， 我们需要再次调整我们的思维方式去适应穿戴式设备–更小的屏幕，以及更加收缩的交互界面。 苹果最近推出了Apple Watch， 这也是穿戴式设备正式登场的一大证明–所有重量级玩家都已经落座， 游戏要正式开始了。
 
+深度挖掘
 
-可以看到上文中直到第五句话才提到了听众, 而实际上听众才应该是这段文本所要针对的核心.
+首先， 了解『穿戴式』这一术语的含义非常重要，因为这一术语有一些误导性， 因为它囊括了数以百计的，有着不同目的和用途的设备于一体：智能手表，智能眼镜，智能衣服，智能袜子，智能腕带等等。 最基本的， 『穿戴式』是指所有那些用户能够穿戴起来的设备，当然这些设备还需要能够实现有价值的计算功能的能力。 但是为了能够理解他们的能力， 我们需要区分这些不同的设备以及他们的应用模式。 以下是当下最主流也是最具区分性的穿戴式设备的特点。
 
-什么意思呢? 用 Dale Carnegie的话说就是:
+活动记录
 
-  “People don’t care about what you want. They only care about what they want.”
+通常来说， 形如腕带的这种设备都是围绕在收集我们身体数据（诸如心率， 脉搏， 运动模式， 每日行走距离等）这一服务核心来服务的。获得数据后， 他们就可以把数据传输到云端， 进行分析从而获得一些关于如何提升用户身体健康的结论。 而通过穿上这么一个并不怎么碍眼的设备， 收集我们自己的身体数据， 我们就可以更好的了解我们自己的身体， 从而更好的生活。虽然活动记录这一功能已经很受欢迎， 但是他们依然还有着很多巨大的商业价值和利用空间。 比如， 加拿大奥运代表队就利用智能服装来跟踪记录队员的重要指标， 这在团队在Sochi奥运会上取得的成功中扮演了很重要的角色。 同样的， 这些小型设备还可以影响到保险行业， 保险公司可以通过获得客户的个人信息来更加精确的计算客户的风险， 从而来降低保价。当然， 这肯定会引发很多的隐私问题， 但是对那些为了折扣同意提供自己个人信息的市民而言还是很有可能做到的。
 
-或者用 Brennan Dunn的话说就是:
+智能手表
 
-  “People buy the outcomes that they want.”
+与活动跟踪不同， 智能手表更多的是被用来主动使用的。 在很早以前就已经播下了智能手表的种子： 近百年来， 腕表一直作为一个重要的工具， 一个用于计时，随时告知我们身处当下的工具。
 
-意思就是写作要围绕这读者来写才行. 我们所编写的小故事不能是关于我们的, 核心的人物应该是他们, 你的读者.
+如今， 智能手表远远超出了这个范畴， 它能够给我们提供更加多样的情景信息： 邮件短信的提醒，会议的提醒，天气预报，电子票（机场，剧院，音乐会等等地方）。 智能手表还有着丰富的交互，意味着我们不仅可以用来查看我们的邮件， 还能回复邮件； 我们可以用来Google，入住酒店，修改音乐记录备忘，查看时间等等，再也不用花费时间去从手袋中掏出手机了。 正如设计师们都知道的， 行动的简洁性对我们决定是否采取行动有着非常重要的影响， 所以这些多余的时间是非常重要的。 这所有的一切都在说明一个现实， 就是我们如今把手机安放到了我们的手腕上， 虽然因此有了一些设计上的限制。
 
-于是乎, 作者就改写了上述的这个捐赠页面:
+而对设计师而言更加有诱惑力的一个现实就是智能手表是支持定制apps的， 这也意味着我们可以拥有一个全新的手表专属apps的生态系统了。 我们可以看到全新版本的Instagram，Pinterest，Foursquare以及各种各样的新的商业apps。 这对于各大品牌而言同样是个好消息，因为他们有了一个新的机会和渠道向他们的客户宣传自己了。
 
+智能眼镜
 
+信息一直在不断的向着和我们大脑建立协同发展关系的目标前进着， 而智能眼镜无疑是这一阶梯上的下一步–跟随在20世纪60年代的计算中心的成功，以及之后数十年的PC时代，笔记本时代和手机时代之后。 智能眼镜和智能手表有一点是相似的： 他们把信息和我们的距离拉的更近了， 而且鼓励这种更加简单的交互形式。 但是， 眼镜是完全的解放了我们的双手， 彻底的把信息直接带到了我们的眼前， 完全使用语音命令和感应器作为输入设备。
 
-上面这个版本着重强调了Serial的听众的两个属性:
+与智能手表很轻易的就能融入到我们的日常生活不同， 智能眼镜略微有一点过于超前了。 问题出在很多方面， 比如：技术上，习俗上，以及社交上等等。 简而言之， 以Google Glass这个当前最有代表性的智能眼镜技术为例， 它所提供的价值和他本身的价格并不相配：$1500的价格，极为有限的电池寿命，非常不舒服的街道视觉体验等等， 再加上一个简单的相机和导航，非常有限的几个酷炫应用和效果， 尚不足以说服我每天都早上把这玩意带在我的脸上。。。至少目前还不行。
 
-他们痴迷于这一节目. 对他们而言, 最糟糕的事情莫过于这个节目的结束;他们觉得自己是节目的一部分, 自己是促成与这一节目的主人公之一. 他们开始参与Serial相关的party, 聚会, 调研等等, 这成了他们自己的节目.
+这种现象也被成为『杀手级应用问题』， 但是它并不意味着这个产品或者这种表现形式就是彻底无用的。 相反， 它已经被证实对商业使用有着巨大的价值：医生们可以用在手术过程中看到重要的提示，仓库工作人员就可以用语音实现商品扫描以及详细信息录入等事情了，运动员可以实时的看到他们的数据–这些理由都足够让Google开启他们的商业化项目并且和Vuzix合作了。 这其中的模式非常清楚而直接： 允许雇员们在工作以及处理数据的过程中解放双手。 这不仅可以节省他们的时间， 同时还能提高安全性： 不需要更换手套， 拿手机或者因为别的屏幕而分散注意力。
 
-于是基于上述这两个属性, 作者给予Serial了一些中肯的建议: 
+结论
 
-在着陆页打开的同时引用 @chijs的这条tweet. 这会有助于建立一个中心主题:”如果再不更新了怎么办?”邀请听众作为结局问题的一员: 告诉他们他们可以影响自己所喜爱的节目的未来;制造一些紧张感, 比如使用类似”仅本周”的词语;呼吁听众去采取行动. 比如不用”donate”这样的按钮而使用”I want to help”这样的按钮;
+每一种穿戴式设备都有他自身的特点。有一些只是单纯的用于收集数据， 还有一些则是用来进行主动的交互， 有些是把自身的使用环境建立在每天的日常使用基础上，而有些可能在某些特定场合下更加有帮助， 有一些可能在社会接受程度上更为突出， 而有些则需要时间和规则才能被慢慢接受。 但是他们都共享着一些相似的属性， 而了解这一点对于设计师，开发者以及那些处理产品商业相关事宜的人们都会有更好帮助，帮助他们更加全面的利用这些设备。
 
-本来到此为止了,  结果作者把文章发表后, 很多网友开始在twitter上回复他, 给他提了很多的建议, 于是他又更新了一个版本:
+Resource:
 
-
-
-其中变化的部分主要有:
-
-柔化了背景( Mark Bunnker表示原来的背景很像是一个警告页面… 很像Tokyo hot的FBI warning是吧…哈哈)加上了Serial的logo(来自 James Love的建议), 以及一个Sarah Koenig的照片从而显得更加人性化更真实( Shen DeShayne的建议);Nathan Barry提议的新题目:”帮助我们讲述更好的故事”;还有很多关于CTA(call to action)的建议, 我最终采用了 Steve Purcell’s的;对排版做了很多的细化, 更精简的语言, 更加强调了听众这一核心以及他们的帮助对于Serial第二季的播出的影响;
-
-果然是众人拾柴火焰高… 瞬间华丽丽的变身有木有!! 要是我是serial, 果断立刻接着这个活动, 直接替换donate页, 甚至直接向yahoo学习, 来个圣诞节donate系列, 每天一个版本~ 然后根据每天的捐款数, 最后选出几个最佳来哈哈哈 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>User Experience is a feeling</title><link>http://taoalpha.me/blog/2014/11/10/read-t-user-experience-is-a-feeling/</link><category>read</category><tag>UX,产品学习,关于HCI,翻译文章,译系列</tag><pubDate>2014-11-10T14:00:00.000Z</pubDate><description>用户体验是一种感觉
-
-“如果你以’用户体验是一种感觉’为基础, 那么你就算是向真正理解用户体验迈出了一步.”
-
-许多人似乎都认为用户体验是一个可以控制的设计产出–好像它是一个你可以通过你的想法, 设计师以及开发者们从而操纵一个人对某个产品或者服务的体验. 实际上, 用户体验经常被认为是一个定义以及管理用户对产品的感觉.
-
-但是你的产品并不能决定一个用户的体验, 用户自己的行为, 态度以及情感才是决定因素. 因此, 用户体验就是一个感觉. 实际上, 它远不止于此, 但如果你是在此基础上去理解用户体验, 那么你就算是向真正理解用户体验迈出了一步.
-
-一个用户在使用某个产品时的体验是每个产品都需要关注的点. 一个用户可能会有很好的体验也可能会有一个很糟糕的体验. 虽然你不能直接的设计一个用户对一个产品的体验, 但你可以采取一些措施, 应用一些用户为中心的设计原则和流程来确保他们的体验是积极的, 正面的.
-
-你应该把以用户为中心的设计的各种优势告诉那些投资人, 相关利益人从而拿到钱, 而这些优势就包括以下这些:- 快速的获得更多客户- 保留现有的客户- 为你的公司建立信誉- 在公司长期运行中扩大销售额- 降低周边产品/服务(外围设备)的价格, 比如客服/售后- 减少无形的花费, 比如浪费的时间- 完成的更加高效
-
-对于你的公司而言, 无论是一个创业公司还是说一个庞然巨物, 都要意识到这些利处, 而你所在的产品团队则需要:
-
-理解伟大的设计和优质的体验之间的区别像用户那样去思考, 而不是站在一个产品的制作者角度在你的产品策划, 设计以及开发环节都要考虑到产品的用户
-
-优秀的设计是不够的
-
-“许多人认为用户体验就是一个产品是如何工作以及外观”. 换句话说, 人们很容易认为用户和产品的交互就是用户体验的全部内容了. 比如, 他们可能关注的焦点问题诸如: 产品的交互界面是否利于用户导航呢? 最重要的内容是否获得了视觉的最优位置呢? 产品外观是否足够优质呢?
-
-如果对此类的回答是”是”, 就会让人很容易的认为你已经给你的产品赋予了极好用户体验. 在很多方面, 你可能已经做的比你的竞争对手好很多. 但是, 一个产品的用户体验所包含的内容远远不止是在一个网页浏览器或者移动设备中打开一个应用这么简单.
-
-让我们以一个我们可能会提问的问题为例: 在用户第一次使用你的产品之前用户对产品的期望是什么? 可能他们听到很多其他用户的看法, 可能是好的, 也可能是不好的看法, 如果这样的话, 这些意见都会成为TA对你的产品最终形成的整体体验感受的重要组成部分, 它当然会影响到他们对产品的使用方式, 他们对产品以及你的公司的看法和感受, 以及很多我们接下来会说到的一些重要部分.
-
-像素, 屏幕, 页面以及体验
-
-“以用户为中心的设计所关心的不只是产品本身的用户界面, 还有用户在界面之外与产品的交互行为.” 这些包含但不限于以下几点:
-
-你的产品市场和分发方式购买, 打开和首次使用产品的整个流程升级流程“登船体验”, 即逐步学习产品所具备的能力, 以及如何使用和如何处理错误信息的过程宣传, 用户的口碑是最好的广告客服或者售后服务质量, 以及你对产品能力的深入了解
-
-上面这个清单仅仅只是非常表面的一些东西, 但是它可以初步让我们对影响用户体验的诸多因素有个大概的了解.
-
-如果你曾经找你的手机或者线路公司进行技术咨询, 你就会理解这一经历会对你对他们的产品以及服务的感受观点有多大影响了. 虽然你可能最后还是解决了问题, 获得了更好的线路以及手机问题得以解决, 但是如果你在处理这一事宜的过程是非常让人不开心的一个经历, 那么你可能依然会对他们的服务产生负面的观感. 而一个用户对你公司的看法和以往的交往经历都可以算是用户体验的一部分.
-
-像一个伟大的UX设计师那样思考
-
-在本文后面的内容中, 我会提供一些你可以用来和你的产品团队分享, 一起帮助每个人像一个伟大的UX设计师那样思考问题. 为了创造一个人们喜欢的产品, 需要你整个团队, 不只是UX团队, 都聚焦到用户身上.” 而如果能够把焦点放到用户身上, 那么就能帮助你传递很多益处, 会带来很多我上面说过的好处.
-
-走向优秀体验的态度
-
-像一个伟大的UX设计师那样思考意味着你需要养成一些思维方式, 这些思维方式与其说是一些特定的思考流程或者做事规则, 不如说是一些基本的态度更为合适.
-
-要有同理心
-
-当你被无数决策缠身, 催促着你从想法走到原型直到上线, 你会很容易的陷入到一个困境, 就是视野会局限在产品团队之中.  你手头工作的复杂和困难以及你作为产品主导者对产品目的, 设计以及功能的熟悉都让你无法兼顾自检的环节了.  在这个环节中, 我们缺失的正式外界的观点-你的用户的角度的看法.
-
-和你的用户交流所能带来的好处不仅是他们提供的那些你可以用来优化设计流程的信息, 随着时间, 和你的用户交流能够帮助你建立更好的同理心. 你将学会通过他们的眼睛看世界.
-
-而有了同理心, 你将可以站在用户的角度去评估你的设计和商业决策. 而且你会更有可能创造一些他们 能够找到其价值, 用处以及给他们带来欢乐的产品.
-
-要承认每个意见都是有价值的
-
-以用户为中心的设计的下一个态度往往很难被人所采用. 请跟着我一起重复:”每个意见都有价值. 每个意见都有价值.” 哪怕是意见本身可能完全没有逻辑. 哪怕是这个意见完全违反了一个正确的设计原则. 哪怕是这个意见是完全非理性的, 而且对你而言完全没有意义的.
-
-如果使用你的产品对用户而言是一个可选行为的话–实际上它确实是个可选的行为–那么他们的意见就是有意义的. 但是从那些非理性或者无逻辑的反馈中找到有价值的东西是有难度的. 然而, 这类用户反馈可能指向的更大的一些问题, 可能代表着用户的某种更深层次的情感模式, 而这对于用户和你的产品之间的交互有着很大的影响. 而如果带着”每个意见都有价值”的观点来处理用户的反馈, 那么就能够帮助你发现这些模式.
-
-如果你收到一些对你完全没有意义的反馈, 那么你应该暂停一下, 好好思考以下它的具体含义. 可以问这么几个问题:
-
-那些没有给我们反馈的用户中有多少可能也有同样的看法呢?为什么他们会需要这么一个具体的功能点呢?为什么他们不能理解我们设定的这种用户工作流呢?为什么他们会这么感觉呢?
-
-退一步讲, 和你的用户聊天, 即便是一些似乎很疯狂的想法也往往能够给你带来一些新的观点, 说不定就能帮助你解决手头的问题呢.
-
-意识到情景和经历都会对用户体验产生影响的
-
-可能你的项目的目的是创造某个全新的东西, 但是你的产品最终会被那些有着自己过往使用科技产品经历以及特定的使用场景的人去使用的. 而这些经历以及所处的情景会在很深层次上影响人们和产品之间的交互.
-
-比如, 我每次购物时如果发现那些老式的黑屏绿字, 带着键盘的销售终端依然还在投入使用时都会觉得这是一件非常令人着迷的事情. 实际上, 我经常能够在非常现代化, 成功的零售商们那里看到类似这样的用户界面.
-
-这样的用户界面可能看起来很过时, 而且使用也不高效, 但是如果你考虑下它使用的场景, 就会有不同的看法了:
-
-零售行业的工作人员在长期的工作中, 因为不断的使用同样的用户界面重复同样的销售操作, 会形成一种独特的肌肉记忆;他们的这种肌肉记忆会允许他们甚至不怎么注意屏幕就能够准确的完成操作, 也就让他们有更多的时间和客户进行视觉交流, 这样能够给客户更好的购物体验;这种肌肉记忆需要很长的时间才能形成. 可能需要一个缓慢的学习曲线去掌握, 但是一旦掌握了, 它带来的速度和效率的提升是雇员们所愿意放弃的, 即便是面临着一个有着快速学习曲线的新的交互界面的诱惑也一样.
-
-如果你忽略这种历史原因以及特定的场景原因, 那么这种古老的POS终端看起来就是一个典型的糟糕的用户体验. 但是你一旦把这些都考虑进来, 你就会获得完全不同的理解了.
-
-当你脱离用户界面, 而考虑更加宏观的一些事情时, 你就会知道哪些因素才能真正让你的产品体验有所不同.
-
-要有情商
-
-如果你自己质疑用户对你产品的感觉的重要性, 那么你可以回想下最近Facebook首次展示了他们做了明显改变的新用户界面, 而随之而来的用户疯狂的愤怒回应.
-
-最强烈的情感–爱, 恨, 快乐和忠诚–都需要时间来建立的. 你的公司的新产品将会继承那些旧产品用户的情感, 而这些完全不受你控制–比如用户对你的app运行平台的看法以及在app store中的应用发现这一过程等都是不受你控制的.
-
-但是他们对你产品的感觉会随着使用逐渐的形成并发展. 想象一下: 不断重复的讨人厌的登录环节, 一个流畅的,愉快的导航, 一个思虑周全的错误处理机制, 一个一直都不尽如人意的客户服务, 这些长期积累下来情绪, 会产生什么样的影响呢?
-
-像一个UX设计师一样思考, 就要考虑到用户和你的产品之间的这种情感关系.
-
-把这种优秀UX设计师的态度应用起来
-
-有一个很简单的, 混合了这些特点的方式可以让你开始像一个优秀的UX设计师那样思考: 注意观察人们是如何和日常生活的事物进行交互的. 他们的这些行为会告诉你很多, 很多在你开始考虑开发一个产品之前需要考虑的事情, 会告诉你如何开发一个新产品, 一个能够让人们生活更加便捷, 更加快乐, 更加符合人们期望的产品. 
-
-来源:
-
-原文: User Experience Is a Feeling
+原文：The Who, What, When, Wear, and Why of Wearable Technology
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>设计心理学系列(1) - 网络心理学</title><link>http://taoalpha.me/blog/2015/05/08/read-design-psychology-1-cyber-psychology/</link><category>read</category><tag>Cyber Psychology,设计心理学</tag><pubDate>2015-05-08T12:00:00.000Z</pubDate><description>什么是网络心理学?网络心理学是随着互联网等新技术出现以及发展而逐渐发展起来的一门新兴科学. 它所研究的领域就是网络与心理学的结合, Cyberpsychology本身由两个词合并而成, 前者Cyber是取自Cybernetics, 代表着对于机械控制和与之通信的研究, 代表着对新兴网络领域的研究, 而心理学则是对人脑和行为学的研究. 两者的集合即表明了Cyberpsychology的研究领域主要集中在了人与新兴机器系统(包含虚拟系统)的心理学研究.
 网络心理学简介演化历史Cyberpsychology最开始是集中关注于人在操作机器以及与机器交互的过程中的心理学变化, 后来随着电脑的出现以及普及, 互联网的诞生以及发展, 加上新兴智能机器的出现和发展, 都使得Cyberpsychology的研究重点放到了互联网上面. 而随着虚拟现实技术的出现, Cyberpsychology的研究范围再一次的增广, 可以说, Cyberpsychology的研究范围基本会随着cyberspace的领域增长而延伸.
 通常认为John Suler, 来自Rider University的心理学教授, 是Cyberpsychology的奠基人. Suler教授是最早开始关注与网络对人们心理变化带来的影响, 其出版的The Psychology of Cyberspace一书也是被认为最早整合性的Cyberpsychology学术作品.
@@ -2016,71 +1958,4 @@ When to Work on Usability(什么时候注意易用性)
 想要获得一个高质量的用户体验唯一的方法就是在设计的早期就开始用户测试,并一直持续的在接下来的每一步实施它.
 Where to Test(在哪里测试)
 如果你每周至少实施一次用户测试,那么专门建立一个可用性实验室就有必要的了.但对绝大多数公司,在一个会议室或者办公室里进行一次测试就已经不错了,只要你关上门隔开干扰就可以了.重点在于你要有真实的用户,并且可以在他们测试的过程中陪坐一旁.你唯一需要的设备就是一个笔记本.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Reloading Python Modules</title><link>http://taoalpha.me/blog/2015/02/16/read-reloading-python-modules/</link><category>read</category><tag>coding,python,应用推荐与技巧,翻译文章</tag><pubDate>2015-02-16T13:00:00.000Z</pubDate><description>Reloading Python Modules是一篇10年的老文了. 不过正好最近有看到Python中reload的相关介绍, 推荐了本文, 特地译来加深记忆以及分享给大家:
-
-Python众多优点中的一个就是可以对代码模块进行重载. 这就允许了开发者即便在Python的编译器运行状态下也可以修改Python代码了. 通常来说,  只需要把对应要重载的模块对象传入 imp.reload()函数中即可(python 2.x中是通过直接reload()来实现). 
-
-不过这里面还有几个潜在的复杂问题.
-
-如果一个模块中引入了重载模块的一些symbols, 那么这些symbols不会自动重载. 比如, 我们有一个包含了常量 INTERVAL = 5的A模块, 而模块B则引入了这一常量, 比如通过(from A import INTERVAL). 那么如果我们修改INTERVAL = 10, 然后重载A模块的话, 在B模块中的INTERVAL以及所有基于INTERVAL的值都不会自动更新的.
-
-解决这一问题的办法就是我们要把B模块也重载一些. 但是要注意的是一定要在A模块重载完后重载B, 不然的话, B还是不能按照更新后的A来执行.
-
-PyUnit则通过引入了一个 rollbackimporter的方式来处理这类问题. 它会通过重写python的全局引入 import而将引入规则”rolls back”到之前的状态.  这一方法在让编译器还原到前一测试点上非常便捷, 但是却不能算是一个解决实时代码重载的好方法, 因为那些为加载的模块还是不能自动的重载.
-
-下述介绍了一个很好的模块重载解决方法, 目的是让这一过程更加自动化, 更加透明以及可靠.
-
-Recording Module Dependencies
-
-在重载前一定要清楚各个模块之间依赖关系, 这样才能很好的设计重载的顺序. 理想的方法是建立一个模块之间的依赖关系图谱. 这可以通过引入一个自定义的import, 并且在程序常规代码部分引入它来实现.
-
-import builtins
-
-
-12345678910111213141516171819202122232425262728_baseimport = builtins.__import___dependencies = dict()_parent = Nonedef _import(name, globals=None, locals=None, fromlist=None, level=-1):    # Track our current parent module.  This is used to find our current    # place in the dependency graph.    global _parent    parent = _parent    _parent = name    # Perform the actual import using the base import function.    m = _baseimport(name, globals, locals, fromlist, level)    # If we have a parent (i.e. this is a nested import) and this is a    # reloadable (source-based) module, we append ourself to our parent's    # dependency list.    if parent is not None and hasattr(m, '__file__'):        l = _dependencies.setdefault(parent, &amp;amp;lt;input type=checkbox&amp;amp;gt;)        l.append(m)    # Lastly, we always restore our global _parent pointer.    _parent = parent    return mbuiltins.__import__ = _import&amp;lt;/code&amp;gt;
-这里把内置的import函数(在_baseimport类中)做了简单的修改. 它能够跟踪当前的母模块(依赖模块), 也就是进行import操作的模块. 而最顶层的模块自然是没有依赖模块的.
-
-而一旦一个模块被成功的引入后, 它就会自动的加入到依赖模块的依赖列表中去. 你可能注意到上述代码中只是关注了那些基于文件的模块 内置的那些扩展则都被忽略了, 这是因为内置的模块是不能够被重载的.
-
-这就给我们了一个完整的模块依赖关系链, 我们就能够轻松的获取到某个模块相关的所有依赖模块了:
-
-
-1234def get_dependencies(m):    &quot;&quot;&quot;Get the dependency list for the given imported module.&quot;&quot;&quot;    return _dependencies.get(m.__name__, None)&amp;lt;/code&amp;gt;
-Reloading Modules
-
-在知道了相关的依赖模块关系后, 我么就可以建立一个依赖模块重载路线了:
-
-
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647import impdef _reload(m, visited):    &quot;&quot;&quot;Internal module reloading routine.&quot;&quot;&quot;    name = m.__name__    # Start by adding this module to our set of visited modules.  We use    # this set to avoid running into infinite recursion while walking the    # module dependency graph.    visited.add(m)    # Start by reloading all of our dependencies in reverse order.  Note    # that we recursively call ourself to perform the nested reloads.    deps = _dependencies.get(name, None)    if deps is not None:        for dep in reversed(deps):            if dep not in visited:                _reload(dep, visited)    # Clear this module's list of dependencies.  Some import statements    # may have been removed.  We'll rebuild the dependency list as part    # of the reload operation below.    try:        del _dependencies[name]    except KeyError:        pass    # Because we're triggering a reload and not an import, the module    # itself won't run through our _import hook.  In order for this    # module's dependencies (which will pass through the _import hook) to    # be associated with this module, we need to set our parent pointer    # beforehand.    global _parent    _parent = name    # Perform the reload operation.    imp.reload(m)    # Reset our parent pointer.    _parent = Nonedef reload(m):    &quot;&quot;&quot;Reload an existing module.    Any known dependencies of the module will also be reloaded.&quot;&quot;&quot;    _reload(m, set())&amp;lt;/code&amp;gt;
-上述reload()函数通过递归方式去按照相反顺序依次reload所有和这一模块相关的模块, 而最后再reload以下自身. 它通过visited属性的设置来避免出现无限死循环. 同时在reload的时候它会自动重建模块的依赖关系, 来确保他们能精确的反映出模块的更新状态.
-
-Custom Reloading Behavior
-
-有时候reload模块的时候可能需要执行一些其他的操作或者逻辑. 比如, 重新初始化一些预加载的状态. 而为了支持这一点, 我们需要让我们的reload函数去寻找一个模块级函数reload(). 这一函数可以在一个成功的重载后被调用, 且能保留重载前的状态.
-
-这种情况下, 我们就不能简单的直接调用imp.reload()了:
-
-
-12345678910# If the module has a __reload__(d) function, we'll call it with a# copy of the original module's dictionary after it's been reloaded.callback = getattr(m, '__reload__', None)if callback is not None:    d = _deepcopy_module_dict(m)    imp.reload(m)    callback(d)else:    imp.reload(m)&amp;lt;/code&amp;gt;
-其中_deepcopy_module_dict()的作用是帮助我们避免deepcopy()一些不支持或者不需要的数据.
-
-
-12345678910111213def _deepcopy_module_dict(m):    &quot;&quot;&quot;Make a deep copy of a module's dictionary.&quot;&quot;&quot;    import copy    # We can't deepcopy() everything in the module's dictionary because    # some items, such as '__builtins__', aren't deepcopy()-able.    # To work around that, we start by making a shallow copy of the    # dictionary, giving us a way to remove keys before performing the    # deep copy.    d = vars(m).copy()    del d['__builtins__']    return copy.deepcopy(d)&amp;lt;/code&amp;gt;
-Monitoring Module Changes
-
-对于重载而言, 能够自动检测模块的变化而进行自动重载那是最好不过了. 那么, 实际上我们确实有很多方式来检测一个文件的变化情况. 这里使用的是一个后台线程以及 stat()这个系统函数的调用来检测文件上一次修改时间, 从而确定其更新状态. 一旦检测到一个文件被更新, 那么就会把这一文件名加入到一个 thread-safe queue
-
-
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253import os, sys, timeimport queue, threading_win = (sys.platform == 'win32')class ModuleMonitor(threading.Thread):    &quot;&quot;&quot;Monitor module source file changes&quot;&quot;&quot;    def __init__(self, interval=1):        threading.Thread.__init__(self)        self.daemon = True        self.mtimes = &amp;#123;&amp;#125;        self.queue = queue.Queue()        self.interval = interval    def run(self):        while True:            self._scan()            time.sleep(self.interval)    def _scan(self):        # We're only interested in file-based modules (not C extensions).        modules = [m.__file__ for m in sys.modules.values()                if '__file__' in m.__dict__]        for filename in modules:            # We're only interested in the source .py files.            if filename.endswith('.pyc') or filename.endswith('.pyo'):                filename = filename[:-1]            # stat() the file.  This might fail if the module is part            # of a bundle (.egg).  We simply skip those modules because            # they're not really reloadable anyway.            try:                stat = os.stat(filename)            except OSError:                continue            # Check the modification time.  We need to adjust on Windows.            mtime = stat.st_mtime            if _win32:                mtime -= stat.st_ctime            # Check if we've seen this file before.  We don't need to do            # anything for new files.            if filename in self.mtimes:                # If this file's mtime has changed, queue it for reload.                if mtime != self.mtimes[filename]:                    self.queue.put(filename)            # Record this filename's current mtime.            self.mtimes[filename] = mtime&amp;lt;/code&amp;gt;
-此外还可以通过调用原生操作系统的相关函数, 比如 Win32 Directory Change Notification之类的函数.
-
-加上我们的reloader()部分:
-
-
-1234567891011121314151617181920212223242526import impimport reloaderclass Reloader(object):    def __init__(self):        self.monitor = ModuleMonitor()        self.monitor.start()    def poll(self):        filenames = set()        while not self.monitor.queue.empty():            try:                filenames.add(self.monitor.queue.get_nowait())            except queue.Empty:                break        if filenames:            self._reload(filenames)    def _reload(self, filenames):        modules = [m for m in sys.modules.values()                if getattr(m, '__file__', None) in filenames]        for mod in modules:            reloader.reload(mod)&amp;lt;/code&amp;gt;
-在这一模型中, reloader需要循环执行来检测文件的状态, 从而能够计时的响应. 最简单的则是:
-
-
-12345r = Reloader()while True:    r.poll()    time.sleep(1)&amp;lt;/code&amp;gt;
-想要看源代码的可以前往:  complete source code 本身代码也发布到Python Package Index中, 名称为  reloader
 </description><source>TaoAlpha</source><author>TaoALpha</author></item></channel></rss>
