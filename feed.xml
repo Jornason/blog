@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-16T17:18:53.909Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>Blur on Background</title><link>http://taoalpha.me/blog/2015/12/31/tech-blur-on-background/</link><category>tech</category><tag>Blur,CSS3</tag><pubDate>2015-12-31T08:09:10.000Z</pubDate><description>Today I finally made my first angularJS app which is a simple todo app connected with my First nodejs cli tool: baby. They share the same data set, so you can think it as the UI for baby todo part (I will build the UI for other nice features, one by one).
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-16T17:23:49.459Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>Blur on Background</title><link>http://taoalpha.me/blog/2015/12/31/tech-blur-on-background/</link><category>tech</category><tag>Blur,CSS3</tag><pubDate>2015-12-31T08:09:10.000Z</pubDate><description>Today I finally made my first angularJS app which is a simple todo app connected with my First nodejs cli tool: baby. They share the same data set, so you can think it as the UI for baby todo part (I will build the UI for other nice features, one by one).
 I really like the interface of the Papaly, especially the speed dial dashboard !! So I also use a large image and the crystal blur block on my design, here I just want to share something with you :)
 BlurBlur is quite popular in Web Design, you can see them all the time. But how we do that from the point of coding part ? Before CSS3 introduced the filter, people just modify the images manually and make them blur before actually use them in the design, and now we have CSS3, we can just use filter.
 We all know make a image blur is pretty simple, but how we make part of image blur, and even more, how we make part of image blur be dynamic ? This is what I gonna talk about today :)
@@ -365,46 +365,6 @@ Others: others;
 Be Consistent;
 
 SummaryThis book is pretty short with all valueable content. Strongly recommend after you get familiar with all basic css concepts.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (2)</title><link>http://taoalpha.me/blog/2015/06/18/read-javascript-the-definitive-guide-2/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-18T10:00:00.000Z</pubDate><description>概述作为JS中的一等公民, function(函数)始终是JS的核心中的核心. 所以这里单独用一篇笔记来记录JavaScript: the definitive Guide一书第八章的内容. 主要介绍了函数的定义, 作用域, 参数, 声明以及执行等基础知识, 另外也着重介绍了其高级用法中的closure. 我将自己觉得重要的, 值得记录的部分都作为心得摘抄如下:
-心得arguments对象对每一个function而言, 都自动会有一个内置的arguments对象, 用它就可以访问传入的参数了. 通常来说arguments对象我们只会用在不定长传参的函数上, 但arguments本身带有的一个函数却是可以在某些时刻发挥重要作用的~ 这个函数就是callee函数:
-12345678// 递归自我调用函数在解决一些问题的时候是很常用的, 而通常情况下我们都会在函数内调用本函数名即可, 但是如果我们需要实现自我调用的函数正好是一个无名函数呢?// arguments.callee 即调用当前执行的函数function(x)&amp;#123;return x*arguments.callee(x-1)&amp;#125;// 如上, 就实现了一个很简单的&amp;gt;2阶乘计算了
-需要特别注意的就是callee作为arguments对象的一个方法, 是可以跟随arguments作为参数传递的, 而且其作为参数的时候保持其所指代函数不变.
-既然说到arguments, 就多说两句喽. 首先arguments算是一个类array的object. 它本身具有array的一些特性, 比如可以直接调用length函数(通常的object是不能通过.length直接调用获取长度的, 需要使用Object.keys(object_name).length才能获得). 但是它本身和array.length有很大的差别, 其中最大的一个差别就是: 无法通过.length直接更改数组长度.
-123456var a = [1,3,4]a.length = 5console.log(a)// output: [1,3,4,undefined x 2](function(x)&amp;#123;arguments.length = 5;console.log(arguments)&amp;#125;)(10,1,2)// output: [10,1,2]
-可以看到通过对arguments.length直接赋值, 并不会影响其本身的长度, 这一点和array本身有很大的差别.
-PS. 上述示例是增加长度, 其实缩减长度也是一样的, 多余的元素会被自动删除. 所以, 通过直接向array.length赋值也算是一个修改array长度的方法喽~
-PSS. 通常如果一个函数接受参数比较多的时候, 为了预防因为参数顺序而产生的问题, 可以采取传json格式的object作为参数, 这样就能够通过key而不根据顺序获取参数了.
-Function的property请先看下述代码:
-1234567891011f.temp = &quot;test&quot;function f(x)&amp;#123;  console.log(arguments.length);  console.log(arguments.callee.length);  console.log(f.temp);&amp;#125;f(1,2)// output: 2 1 &quot;test&quot;
-首先, 我们看一下我们前两个输出值:
-  如上所述,arguments.length即代表传入参数的数量, 我们传入了两个参数, 所以这里输出2, 没有任何问题. 那么后面的arguments.callee.length又是什么呢? 为什么它输出的是1呢? 
-  根据之前的介绍, 我们当知道arguments.callee是代指当前的函数f(), 那么对应的arguments.callee.length即我们的函数f的length了. 对于Function这个对象而言, 它所拥有的length这一属性特指其声明的参数数量, 我们应该知道JavaScript作为一个很宽松的语言, 其函数定义后接受的参数是不定长的, 即便传入参数与函数声明的参数不相等也是不会抛出异常的, 那么有时候我们需要获取确保函数接受的参数和其声明的参数数量一致, 就可以使用函数自身的length属性来实现;
-其次, 我们自定义了一个f的属性temp, 但是我们实在函数定义之前赋予这个属性的, 为什么依然能够在函数运行中输出呢? 
-  这主要是因为js的执行顺序所致. js在载入执行过程中, 首先会将内部声明的函数都定义之后才会正式由上至下的逐次执行. 所以这里虽然我们把f.temp写在了函数定义之前, 但是js执行过程中, 还是首先定义了函数f, 接着才开始运行我们的f.temp赋值语句. 自然就不会报错说f没有定义了~
-PS. 其实不止是Function, 即便是普通的变量声明, 也是编译和执行分开进行的, 比如var a = 2;也是拆解为var a; a = 2两步执行的, 而声明都是发生在编译过程, 待编译过程全部结束后, 才会由上到下一次执行, 这也是为什么, 单纯的声明可以出现在代码的任意部位都不会影响其所在作用域的生效, 不会爆出not defined的错误;
-reserved word, identifier, keyword这三个作为基础知识, 可以说是每门语言都共通的概念,  但很多时候我们都不会用到或者不会特意去区分这三个名词, 而最近因为看原版书, 经常会出现三个词的交叉, 所以这里特别google了以下, 试图总结下三者的区别:
-
-identifier: 通常我们把我们定义的变量名, 函数名, 类名, 标签名,宏定义名, 类型名等称为identifier, 取其标识之意, 用以作为其名称以便代用;
-reserved word: 与identifier相对, reserved word则是指由语言规定而保留的一些词, 这些词有着特定的用途而不能被用作identifier;
-keyword: 作为语言语法的组成部分之一, keyword通常都会有着特定的含义, 绝大多数的keyword都是reserved word, 但也有少量语法中存在keyword不是reserved word的情况, 比如fortran就没有reserved word的概念, 它的所有keyword都可以用作identifier;
-
-reserved word和keyword确实在很大程度上是共同的, 除了上述说的类似fortran语言这种情况外, 也存在reserved word不是keyword的情况, 比如java中的goto就是一个reserved word, 但本身又不是一个keyword, 所以可以说goto这个词基本在java中是完全废弃的~ 那他们为啥要定义这个goto呢?? 有一种说法是这样情况通常是为未来版本预留的~ 还有一种说法是JVM作者James Gosling最初加了goto的支持, 但后来发现完全没必要, 就又去掉了, 但是为了兼容性问题,也一直没有把goto从reserved word此表中删去.
-PS. 很多时候也有人完全不区分reserved word和keyword的区别, 完全等同二者为”不能用来做identifier的词”.
-closure - 闭包在javascript中, 一个function由两部分组成: 函数执行的代码以及代码执行的环境. 而这两个组合到一起后也有个专属的名称, 即closure. 不过单独一个独立函数的closure并没有什么值得说的意义, 因为其执行的环境, 即我们称之为scope的东西, 随着函数的执行开始与结束会自动的被创建并清理掉, 所以通常情况下closure都单指在嵌套函数中. 当存在嵌套的函数时, 并且函数之外存在一个reference指向函数的话, 事情就变得好玩多了:
-12345678910111213141516171819202122232425262728function f()&amp;#123;  var id = 1;  return function()&amp;#123;console.log(id++)&amp;#125;&amp;#125;f()();f()();f()()// output: 1,1,1// 每次我们调用`f()`,都会自动创建一个包含了其局部变量`id`的对象, 而嵌套的函数`f()()`会自动继承母函数的作用域;// 但每次随着调用结束, 因为没有任何外部引用, 所以创建的对象都会自动的被回收, 如此就导致每次调用`f()()`都会输出1了;var k = f();k();k();k()// output: 1,2,3// 同样是调用`f()`, 但是我们首先引入了一个新的变量`k`引用`f()`函数; // 这样随着`f()`的调用和结束, 其创建的`call`对象(即包含了局部变量id的那个对象)就因为还存在外部引用而得以保留// 所以后面连续调用`k()`的过程中, 本身的嵌套函数就始终共享着`call`对象的作用域, 如此每次输出的时候都是先获取了局部变量id, 然后在执行`id++`,所以输出为1,2,3// 不喜欢`f()()`这种调用方式, 也不想单独创建新变量来增加引用? 当然可以, 只需要借助下`anonymous function`即可:var f = (function()&amp;#123;    var id = 1;    return function()&amp;#123;console.log(id++)&amp;#125;  &amp;#125;)();f();f();f()// output: 1,2,3// `anonymous function`是自执行的函数, 这里相当于把之前的`var k = f()`以及`f()`的声明定义合二为一了.
-可以说上述基本就是closure最基本的内容了, 而closure作为js的高级用法之一, 掌握了它, 你就能做很多有意思的操作了. 一个简单的例子就是: 你可以参照closure的原理来模拟实现浏览器探查元素(inspector)的breakpoint功能.
-因为原作trimpath上的文章已经无法访问, 所以转载了一个类似的如下, 略作了简单的修改(加了几句更友好的提示和显示每一步的运算结果):
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061// This function implements a breakpoint. It repeatedly prompts the user// for an expression, evaluates it with the supplied self-inspecting closure,// and displays the result.  It is the closure that provides access to the// scope to be inspected, so each function must supply its own closure.// // Inspired by Steve Yen's breakpoint() function at// http://trimpath.com/project/wiki/TrimBreakpoint//function inspect(inspector, title) &amp;#123;    var expression, result;    // You can use a breakpoint to turn off subsequent breakpoints by    // creating a property named &quot;ignore&quot; on this function.    if (&quot;ignore&quot; in arguments.callee) return;    while(true) &amp;#123;        // Figure out how to prompt the user        var message = &quot;&quot;;        // If we were given a title, display that first        if (title) message = title + &quot;\n&quot;;        // If we've already evaluated an expression, display it and its value        if (expression) message += &quot;\n&quot; + expression + &quot; ==&amp;gt; &quot; + result + &quot;\n&quot;;        else expression = &quot;&quot;;        // We always display at least a basic prompt:        message += &quot;Enter an expression to evaluate, or just click cancel to see the next step of current calculation.&quot;;        // Get the user's input, displaying our prompt and using the        // last expression as the default value this time.        expression = prompt(message, expression);        // If the user didn't enter anything (or clicked Cancel),        // they're done and so we return, ending the breakpoint.        if (!expression) return;        // Otherwise, use the supplied closure to evaluate the expression        // in the scope that is being inspected.         // The result will be displayed on the next iteration.        result = inspector(expression);    &amp;#125;&amp;#125;function factorial(n) &amp;#123;        var inspector = function(x) &amp;#123;                return eval(x);        &amp;#125;        inspect (inspector, &quot;Entering factorial()&quot;);        var result = 1;        while (n &amp;gt; 1)&amp;#123;                result = result * n;                n--;                inspect(inspector, &quot;factorial() loop with current result:&quot;+result);        &amp;#125;        inspect(inspector, &quot;Exiting factorial()&quot;);        return result;&amp;#125;inspect(function (x) &amp;#123;return eval(x);&amp;#125;, 'Hello')factorial(5)// 通过closure, 它就可以检测factorial执行的各个环节, 从而更容易的找到你在不同环节的问题.
-虽然closure让你可以写出更加复杂的js代码, 但是本身closure的使用还是要慎重的, 因为closure需要存储函数对象在内存中而不销毁, 所以如果函数主体庞大, 那么对于内存的压力和运行性能都是会有影响的~
-Function constructor类似Array, String等都有着一个对应的类, 可以允许你通过new来创建对象. Function也有自己对应的Function()类, 可以通过:new Function()来创建函数, 其接收不定长参数, 最后一个参数始终作为函数运行主体. 不过通常来说这种方法定义函数远没有我们常用的function关键词来的方便, 所以使用上倒是少了很多~ 不过有几点还是值得注意的:
-
-new ClassFunction() 是把function作为constructor的一种用法, 你可以简单的理解为: var cc = new ClassFunction(params) ==&amp;gt; var cc = new Object();ClassFunction.call(cc,params)
-new Function()不接收函数名参数, 即其创建的都是anonymous function;
-new Function()不继承作用域, 几遍其是在嵌套函数中定义, 也只继承global域, 不会继承上层函数的作用域;
-
-谜题12345678910111213var name = &quot;The Window&quot;;var object = &amp;#123;  name : &quot;My Object&quot;,  getNameFunc : function()&amp;#123;    console.log(this);    return function()&amp;#123;      return this.name;    &amp;#125;;  &amp;#125;&amp;#125;;console.log(object.getNameFunc()());// output: Object&amp;#123;name:&quot;My Object&quot;&amp;#125;; &quot;The Window&quot;
-上述定义中, 为什么嵌套函数没有继承上层函数的this呢? 反而继承了全局的this?
-猜测解答: this这个关键字是个比较特殊的关键字, 它具有一个很有趣的特点就是: 当一个函数作为函数而不是方法来调用的时候, this指向的是全局对象, 只有当它是方法的时候, 其指向的才是所属对象; 题目来源阮一峰博客. 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (3)</title><link>http://taoalpha.me/blog/2015/06/22/read-javascript-the-definitive-guide-3/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-22T04:00:00.000Z</pubDate><description>概述先说点不相关的… 为了更好的阅读, 所以以后读书笔记相关的博文都会分拆成4个部分:
 
 概述: 算是阅读总结摘要以及类似这段话之类的声明介绍等等;
@@ -726,115 +686,55 @@ Chapter 12 - Server-Side JavaScript随着js的发展, 慢慢的超出了其本�
 参考文献:
 JavaScript the Definitive Guide 6th edition
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (6)</title><link>http://taoalpha.me/blog/2015/06/25/read-javascript-the-definitive-guide-6/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-25T10:00:00.000Z</pubDate><description>概述正式进入本书第二部分的内容, 核心主要围绕在浏览器内的js. 包含了最基本的使用方式, 方法, 因浏览器而增加的各种属性方法, 操作css, dom的方法, 以及常用的一些js框架, 库等, 同时还包含了目前浏览器大热的安全领域.
-阅读笔记Chapter 13 - JavaScript in Web Browsers
-异步:
-defer: 使浏览器在解析并加载渲染完HTML的DOM后加载此js脚本;
-async: 使浏览器在尽快执行js脚本, 但在下载js脚本时不停止DOM的解析, 优先级高于defer;
-使用方式为在script中增加关键字即可: &amp;lt;script defer src=&amp;quot;deferred.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;;
-注意在使用defer/async的时候, js中不能使用document.write();
-document.readyState的变化过程: loading(async downloading, normal executing) =&amp;gt; interactive (defer/async executing) =&amp;gt; complete(defer/async done, event handlers invoked);
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
+Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
+NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
+jQueryjQuery is the most popular js module people used in their websites or webapps. And using jQuery with CoffeeScript is just like javascript. jQuery is javascript, after all.
+Want to use CoffeeScript with jQuery? Just do it and follow the rules we learn from the basic syntax part. Here I list several examples and if you look it closely, you will find everything you have already known if you read the first chapter carefully. The author of the book shows us another complex examples: TodoMVC in CoffeeScript.
+BTW: TodoMVC is a great project which shows you how to write a todo app in all kinds of tools and frameworks.
+1234567891011121314151617181920212223242526272829303132333435363738394041$ -&amp;gt;  do some  do another### =&amp;gt;$(function() &amp;#123;  some();  return another();&amp;#125;);That's just like the $(document).ready(function()&amp;#123;&amp;#125;)#### A function using ajax to send mail, which is a new feature I will add to my blog in a few days :)@sendMail = (msg)-&amp;gt;  $.ajax    type: 'POST'    url: 'https://mandrillapp.com/api/1.0/messages/send.json'    data:      'key': ''      'message':        'from_email': msg.sender_mail        'from_name' : msg.sender_name        'to': [            &amp;#123;              'email': ''              'name': 'TaoAlpha'              'type': 'to'            &amp;#125;          ]        'autotext': 'true'        'subject': msg.subject        'html': msg.content  .done (response)-&amp;gt;    showAlert(&quot;success&quot;,&quot;Thanks for your contribution!&quot;)  .fail (data)-&amp;gt;    showAlert(&quot;fail&quot;,&quot;Sorry! Failed to send the email. Please retry!&quot;)# another function to get unique result from an array of objectsArray::getObjectUnique = (id) -&amp;gt;  a=b=[];  add = (data) -&amp;gt; b.push data[id];data  (add i for i in @ when b.indexOf(i[id]) == -1 )
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748// You can see that you have saved a lot of keystrokes and the codes look more clean and beautiful.// Because coffeescript doesn't support declare global variables directly, and if we want to use the function in other script, we need to declare it into the `this` scope.this.sendMail = function(msg) &amp;#123;  return $.ajax(&amp;#123;    type: 'POST',    url: 'https://mandrillapp.com/api/1.0/messages/send.json',    data: &amp;#123;      'key': '',      'message': &amp;#123;        'from_email': msg.sender_mail,        'from_name': msg.sender_name,        'to': [          &amp;#123;            'email': '',            'name': 'TaoAlpha',            'type': 'to'          &amp;#125;        ],        'autotext': 'true',        'subject': msg.subject,        'html': msg.content      &amp;#125;    &amp;#125;  &amp;#125;).done(function(response) &amp;#123;    return showAlert(&quot;success&quot;, &quot;Thanks for your contribution!&quot;);  &amp;#125;).fail(function(data) &amp;#123;    return showAlert(&quot;fail&quot;, &quot;Sorry! Failed to send the email. Please retry!&quot;);  &amp;#125;);&amp;#125;;# get unque result for array of objectsArray.prototype.getObjectUnique = function(id) &amp;#123;  var a, add, b, i, j, len, results;  a = b = [];  add = function(data) &amp;#123;    b.push(data[id]);    return data;  &amp;#125;;  results = [];  for (j = 0, len = this.length; j &amp;lt; len; j++) &amp;#123;    i = this[j];    if (b.indexOf(i[id]) === -1) &amp;#123;      results.push(add(i));    &amp;#125;  &amp;#125;  return results;&amp;#125;;
+RailsRuby on Rails is a web framework that came around in 2004. And it soon became quite popular. Actually many people believe that Rails saved the ruby…
+Check this:How to download and install Rails if you haven’t installed it.
+Rails’s principles
+Convention over configuration
 
 
-Compatibility Check:
-按照目前的浏览器格局, 基本上一个浏览器就有着一种js的版本, 除了标准版本的基础功能之外, 所有的扩展功能, 各家与各家的实现方式都略有不同, 所以在使用过程中, 就需要我们考虑到兼容性的问题;
-Can I Use…, 这是一个非常优秀的检测某个属性, 方法的浏览器支持度, 拿不准的都可以在这里进行查询确认, 其还支持css和html5的检测;
-IE5的时候引入了一个Conditional Comments的技巧, 是通过特殊的html注释从而让浏览器识别其IE版本, 比如&amp;lt;!--[if lte IE 7]&amp;gt;&amp;lt;![endif]--&amp;gt;就代表IE7及以下, 而写在这个if里面的内容就会在IE7及以下的浏览器中被识别并作为页面html的一部分而提取出来(仅限IE浏览器), 其他的浏览器都会自动当做注释不理会此部分;
-IE的JS也支持Conditional Comments, 比如/*@cc_on @if (@_jscript)...@end @*/, 这里面@cc_on...@*/是整个Conditional Comments, 而里面的@if (@_jscript)...@end则是判断部分, 其中@_jscript是IE自身js编译器的名称;
+Rails is designed to assume that the programmer will follow certain known conventions, which if used, provide great benefit and much less need to configure the framework.That means that the framework makes assumptions on how a typical application should be built and structured and it doesn’t try to be overly flexible and configurable. This helps you spend less time on mundane tasks like configuring and wiring up an application architecture and more time on actually building your app.
 
 
-Accessibility:
-对于身体原因而有不便的人, js的支持效果会大打折扣, 所以根据这部分人的情况而优化自身的网页结构, 目前也是网页设计的一大核心之一;
+Don’t repeat yourself, or DRY
 
 
-Security:
-随着js的发展使用, 其危害性也日益提升;
-目前的保障安全手段主要有:限制其功能,限制其使用范围和情景,敏感权限默认关闭虚人工开启;
-The Same-Origin Policy: js只允许读取与当前执行环境域名相同域名下的windows属性, 那么怎么界定相同域名呢:
-来自不同的网络服务器;
-来自相同的网络服务器, 不同的端口;
-同一网络服务器, 同一端口, 不同的http协议(http,https);
-以上, 都认为是不同域名;
+Every piece of knowledge must have a single, unambiguous, and authoritative representation within a system.Rails strives to remove duplication and boilerplate wherever it can.
+
+How to use Rails with CoffeeScriptLuckily, after Rails 3.1, you don’t need do anything to let Rails support CoffeeScript. It has already become part of rails! And also, rails has changed its default js library to jQuery.
+So what you need to do if you want to use coffeescript with rails? Nothing but learn rails!
+Just like the author said in the book: “If you haven’t done so already, I encourage you to spend some more time learning Rails as well as Ruby, and immersing yourself in the wonderful communities they support.”
+Node.jsNode is fantastic. It changes something. Before node, javascript was mostly run inside browsers. Now it just came out and gave web developers a chance to become a full-stack!
+Features of Node
+Event-driven
 
 
-如何舒缓此规则:
-document.domain: 考虑到同级子域名也会被禁止, 那么通过设定document.domain为同一母域名即可实现同级子域名的跨域;
-Cross-Origin Resource Sharing: 通过http请求新增的Access-Control-Allow-Origin头部, 服务器就可以指定其允许跨域的程度了;
-cross-document messaging: HTML5新增了一些很强大的API,cross-document messaging API就是其中之一, 它允许不同的document之间的js进行通讯;
+The Node.js framework only allows non-blocking, asynchronous I/O. This means that any I/O operation that is accessing an external resource, such as the operating system, a database, or a network resource must happen asynchronously.
 
 
+Fast and scalable
 
 
-
-Chapter 14 - The Window Object
-Timers:
-setTimeout(): 延时触发;
-setInterval(): 定时循环执行;
-clearTimeout(): 清除延时触发;
-clearInterval(): 清除定时循环;
+The V8 JavaScript engine(created by google and used in chrome) used by Node.js is highly optimized for performance, thus making Node.js applications very fast. The fact that Node is non-blocking will ensure that your applications will be able to handle many concurrent client requests without using a lot of system resources.
 
 
-Location:
-window.location === document.location 两者皆为当前页面url, 并随页面url变化而更新;
-document.URL 也是指代加载后的当前页面, 但不随页面内动态变化引起的url变化而变化;
-Location这个对象本身包含了多个属性分别指代url的不同部分:protocol表示网络协议, host, hostname通常都指示域名,前者包含端口, port表示端口, pathname表示以域名根目录为/的相对路径, search表示url中?以后的部分但不包含hash部分, hash则是表示url#以后的部分;
-Location还包含了三个常用的函数:assign(),replace(),reload(), 其中前两者功能都一样, 都是用以加载新页面的, 不过replace()加载的同时将当前页面从history中去除了(就是不能后退后之前页面了), 而assign()还保留着; reload()就更不用说了, 只是单纯的重载页面;
+Node is not Rails
 
 
-History:
-back(),forward(): 等价于浏览器的后退,前进按钮;
-go(n): 接受数字作为参数, 表示向前或者后退n个页面;
-如果页面中有iframe, 那么其history会自动合并到主界面的history中;
+Rails strives to be a full-stack solution to building web applications, whereas Node.js is more of a low-level system for writing any type of fast and scalable network application.
 
-
-Navigator:
-appName: 浏览器的名称;
-appVersion: 浏览器版本号;
-userAgent: 用户代理, 对应HTTP的USER-AGENT;
-platform: 操作系统;
-onLine: 是否连通网络, HTML5支持;
-geolocation: 用户地理位置信息, HTML5支持;
-javaEnabled(): 对Java扩展的支持, 非标准;
-cookiesEnabled(): 能够设置cookie, 非标准;
-
-
-Screen:
-width,height: 当前屏幕的长宽尺寸;
-availWidth,availHeight: 去除功能区等部分之后的实际展现内容的屏幕尺寸;
-colorDepth: 显示屏幕的bits-per-pixel;
-
-
-Dialog Boxes:
-alert(): 弹出对话框, 展示传入的信息;
-confirm(): 自带OK,Cancel按钮的对话框, 返回对应的boolean值;
-prompt(): 附带输入框, 返回输入的值;
-上述三个类型的对话框的样式结构都无法调整, 是浏览器默认设定的;
-showModalDialog(): 则更加复杂, 它可以支持弹出一个页面, 其接受的第一个参数即为页面的url, 后面的参数则是弹出窗口的属性; 在chromium中已经被禁止了
-
-
-onerror handler:
-用于处理错误信息的, 你完全可以定制这个函数来更好的显示js中的错误信息;
-
-
-Document Elements As Window Properties:
-当一个html元素被赋予了id时, 其id对应名称的全局变量不存在时, 其自动转为全局变量, 属性名称即为id名, 但如果id名已经被使用, 则不生效;
-对于&amp;lt;a&amp;gt; &amp;lt;applet&amp;gt; &amp;lt;area&amp;gt; &amp;lt;embed&amp;gt; &amp;lt;form&amp;gt; &amp;lt;frame&amp;gt; &amp;lt;frameset&amp;gt; &amp;lt;iframe&amp;gt; &amp;lt;img&amp;gt; &amp;lt;object&amp;gt;这样的元素, 其name值和id效果是一样的, 且name值支持多个元素相同, 会自动生成类array形式, 对于iframe, 对应的属性会指向其内嵌窗口的window对象;
-
-
-Multiple Windows and Frames:
-通过js打开的新窗口都可以被js获取到, 并进行操作, 但是需要符合same-origin的原则;
-frame嵌入的窗口可以通过parent.frames属性来获取, 也可以通过其自带的contentWindow来获取;
-
-
-
-谜题
-Q: 在测试same-origin的时候, 发现有些网站可以设定子域名的document.domain为母域名, 有些不能? 比如在google的搜索结果页, 就可以, 但是在github pages中想要设置为github.io就不可以, 会出现&amp;#39;github.io&amp;#39; is a top-level domain.这样的错误?
-
-参考资料
-JavaScript the Definitive Guide 6th edition
-Can I Use …
-host and hostname
-
+Node and CoffeeScriptWant to write coffeescript in node? It’s easy, all you need is a module named CoffeeScript. And like many other languages, node has several frameworks people built for web development, like: Express.
+The core about how to use coffeescript with nodejs is to use the --watch for coffee command in node. It will automatically compile all file end with coffee into js when there is a change made into these files.
+And just like jQuery, you just follow the rules and write your code.
+DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
+That’s all. Thanks!
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (7)</title><link>http://taoalpha.me/blog/2015/06/26/read-javascript-the-definitive-guide-7/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-26T06:00:00.000Z</pubDate><description>概述阅读笔记Chapter 15 - Scripting Documents
 Selecting:
 document.getElementById(id): 通过id, 一个id对应一个元素;
@@ -1141,55 +1041,6 @@ JavaScript Weekly Newsletter
 YUI Theatre
 Rey Bango 作者本人哈哈
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
-Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
-NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
-jQueryjQuery is the most popular js module people used in their websites or webapps. And using jQuery with CoffeeScript is just like javascript. jQuery is javascript, after all.
-Want to use CoffeeScript with jQuery? Just do it and follow the rules we learn from the basic syntax part. Here I list several examples and if you look it closely, you will find everything you have already known if you read the first chapter carefully. The author of the book shows us another complex examples: TodoMVC in CoffeeScript.
-BTW: TodoMVC is a great project which shows you how to write a todo app in all kinds of tools and frameworks.
-1234567891011121314151617181920212223242526272829303132333435363738394041$ -&amp;gt;  do some  do another### =&amp;gt;$(function() &amp;#123;  some();  return another();&amp;#125;);That's just like the $(document).ready(function()&amp;#123;&amp;#125;)#### A function using ajax to send mail, which is a new feature I will add to my blog in a few days :)@sendMail = (msg)-&amp;gt;  $.ajax    type: 'POST'    url: 'https://mandrillapp.com/api/1.0/messages/send.json'    data:      'key': ''      'message':        'from_email': msg.sender_mail        'from_name' : msg.sender_name        'to': [            &amp;#123;              'email': ''              'name': 'TaoAlpha'              'type': 'to'            &amp;#125;          ]        'autotext': 'true'        'subject': msg.subject        'html': msg.content  .done (response)-&amp;gt;    showAlert(&quot;success&quot;,&quot;Thanks for your contribution!&quot;)  .fail (data)-&amp;gt;    showAlert(&quot;fail&quot;,&quot;Sorry! Failed to send the email. Please retry!&quot;)# another function to get unique result from an array of objectsArray::getObjectUnique = (id) -&amp;gt;  a=b=[];  add = (data) -&amp;gt; b.push data[id];data  (add i for i in @ when b.indexOf(i[id]) == -1 )
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748// You can see that you have saved a lot of keystrokes and the codes look more clean and beautiful.// Because coffeescript doesn't support declare global variables directly, and if we want to use the function in other script, we need to declare it into the `this` scope.this.sendMail = function(msg) &amp;#123;  return $.ajax(&amp;#123;    type: 'POST',    url: 'https://mandrillapp.com/api/1.0/messages/send.json',    data: &amp;#123;      'key': '',      'message': &amp;#123;        'from_email': msg.sender_mail,        'from_name': msg.sender_name,        'to': [          &amp;#123;            'email': '',            'name': 'TaoAlpha',            'type': 'to'          &amp;#125;        ],        'autotext': 'true',        'subject': msg.subject,        'html': msg.content      &amp;#125;    &amp;#125;  &amp;#125;).done(function(response) &amp;#123;    return showAlert(&quot;success&quot;, &quot;Thanks for your contribution!&quot;);  &amp;#125;).fail(function(data) &amp;#123;    return showAlert(&quot;fail&quot;, &quot;Sorry! Failed to send the email. Please retry!&quot;);  &amp;#125;);&amp;#125;;# get unque result for array of objectsArray.prototype.getObjectUnique = function(id) &amp;#123;  var a, add, b, i, j, len, results;  a = b = [];  add = function(data) &amp;#123;    b.push(data[id]);    return data;  &amp;#125;;  results = [];  for (j = 0, len = this.length; j &amp;lt; len; j++) &amp;#123;    i = this[j];    if (b.indexOf(i[id]) === -1) &amp;#123;      results.push(add(i));    &amp;#125;  &amp;#125;  return results;&amp;#125;;
-RailsRuby on Rails is a web framework that came around in 2004. And it soon became quite popular. Actually many people believe that Rails saved the ruby…
-Check this:How to download and install Rails if you haven’t installed it.
-Rails’s principles
-Convention over configuration
-
-
-Rails is designed to assume that the programmer will follow certain known conventions, which if used, provide great benefit and much less need to configure the framework.That means that the framework makes assumptions on how a typical application should be built and structured and it doesn’t try to be overly flexible and configurable. This helps you spend less time on mundane tasks like configuring and wiring up an application architecture and more time on actually building your app.
-
-
-Don’t repeat yourself, or DRY
-
-
-Every piece of knowledge must have a single, unambiguous, and authoritative representation within a system.Rails strives to remove duplication and boilerplate wherever it can.
-
-How to use Rails with CoffeeScriptLuckily, after Rails 3.1, you don’t need do anything to let Rails support CoffeeScript. It has already become part of rails! And also, rails has changed its default js library to jQuery.
-So what you need to do if you want to use coffeescript with rails? Nothing but learn rails!
-Just like the author said in the book: “If you haven’t done so already, I encourage you to spend some more time learning Rails as well as Ruby, and immersing yourself in the wonderful communities they support.”
-Node.jsNode is fantastic. It changes something. Before node, javascript was mostly run inside browsers. Now it just came out and gave web developers a chance to become a full-stack!
-Features of Node
-Event-driven
-
-
-The Node.js framework only allows non-blocking, asynchronous I/O. This means that any I/O operation that is accessing an external resource, such as the operating system, a database, or a network resource must happen asynchronously.
-
-
-Fast and scalable
-
-
-The V8 JavaScript engine(created by google and used in chrome) used by Node.js is highly optimized for performance, thus making Node.js applications very fast. The fact that Node is non-blocking will ensure that your applications will be able to handle many concurrent client requests without using a lot of system resources.
-
-
-Node is not Rails
-
-
-Rails strives to be a full-stack solution to building web applications, whereas Node.js is more of a low-level system for writing any type of fast and scalable network application.
-
-Node and CoffeeScriptWant to write coffeescript in node? It’s easy, all you need is a module named CoffeeScript. And like many other languages, node has several frameworks people built for web development, like: Express.
-The core about how to use coffeescript with nodejs is to use the --watch for coffee command in node. It will automatically compile all file end with coffee into js when there is a change made into these files.
-And just like jQuery, you just follow the rules and write your code.
-DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
-That’s all. Thanks!
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (1)</title><link>http://taoalpha.me/blog/2015/06/28/read-coffeescript-programming-with-jquery-rails-and-nodejs/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-28T04:00:00.000Z</pubDate><description>SummaryThe notes I took while I was learning the ‘CoffeeScript’. If you are a real beginner with ‘CoffeeScript’, I suggest you start with another book called “The Little Book on CoffeeScript”, it’s better for beginners. And after that, this one is definitely your best choice.
 CoffeeScript is a language which complies to JavaScript. Like the sass or scss to css except that CoffeeScript is not compatible with javascript. So you can not mix the javascript syntax with the CoffeeScript.
 This note is mainly about the fist chapter of the book, a nice introduction for CoffeeScript including the basic syntax.
@@ -1313,6 +1164,155 @@ shift, unshift和pop,push基本类似, 不同的地方在于操作的位置和�
 1234567891011121314151617181920var a = [1,2,3]// a.length == 3a[-1.2] = &quot;hehe&quot;a// output: [1,2,3]  where is a[-1.2] ?a[-1.2]// output: &quot;hehe&quot;  WTF???a.length// output: 3 ??console.log(a)// output: [1,2,3,-1.2:'hehe']console.log(a.length)// output: 3a instanceof Array// ouput: Truea[&quot;h&quot;] = &quot;hh&quot;a// output: [1,2,3]console.log(a)// output: [1,2,3,-1.2:&quot;hehe&quot;,h:&quot;hh&quot;]
 问题: a依然还是一个Array(亦或者不是?), 但用json定义的方式赋值的那几个值还是有效的, 可获取的, 但是为什么直接print出来的时候没有这些值呢, 甚至长度都不包含定义的这几个指? 为什么console.log()可以打出来呢?
 猜测解释: a最初被定义为array, 但是却被json方式传值, 存储到了其内存中, 但是调用a时依然按照array来打印, 所以会自动滤除掉不符合array的几个值(只会按照index来找值). 但是console.log()是打出来其存储内容, 所以就按照其内存存储形式打印出来了.
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (6)</title><link>http://taoalpha.me/blog/2015/06/25/read-javascript-the-definitive-guide-6/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-25T10:00:00.000Z</pubDate><description>概述正式进入本书第二部分的内容, 核心主要围绕在浏览器内的js. 包含了最基本的使用方式, 方法, 因浏览器而增加的各种属性方法, 操作css, dom的方法, 以及常用的一些js框架, 库等, 同时还包含了目前浏览器大热的安全领域.
+阅读笔记Chapter 13 - JavaScript in Web Browsers
+异步:
+defer: 使浏览器在解析并加载渲染完HTML的DOM后加载此js脚本;
+async: 使浏览器在尽快执行js脚本, 但在下载js脚本时不停止DOM的解析, 优先级高于defer;
+使用方式为在script中增加关键字即可: &amp;lt;script defer src=&amp;quot;deferred.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;;
+注意在使用defer/async的时候, js中不能使用document.write();
+document.readyState的变化过程: loading(async downloading, normal executing) =&amp;gt; interactive (defer/async executing) =&amp;gt; complete(defer/async done, event handlers invoked);
+
+
+Compatibility Check:
+按照目前的浏览器格局, 基本上一个浏览器就有着一种js的版本, 除了标准版本的基础功能之外, 所有的扩展功能, 各家与各家的实现方式都略有不同, 所以在使用过程中, 就需要我们考虑到兼容性的问题;
+Can I Use…, 这是一个非常优秀的检测某个属性, 方法的浏览器支持度, 拿不准的都可以在这里进行查询确认, 其还支持css和html5的检测;
+IE5的时候引入了一个Conditional Comments的技巧, 是通过特殊的html注释从而让浏览器识别其IE版本, 比如&amp;lt;!--[if lte IE 7]&amp;gt;&amp;lt;![endif]--&amp;gt;就代表IE7及以下, 而写在这个if里面的内容就会在IE7及以下的浏览器中被识别并作为页面html的一部分而提取出来(仅限IE浏览器), 其他的浏览器都会自动当做注释不理会此部分;
+IE的JS也支持Conditional Comments, 比如/*@cc_on @if (@_jscript)...@end @*/, 这里面@cc_on...@*/是整个Conditional Comments, 而里面的@if (@_jscript)...@end则是判断部分, 其中@_jscript是IE自身js编译器的名称;
+
+
+Accessibility:
+对于身体原因而有不便的人, js的支持效果会大打折扣, 所以根据这部分人的情况而优化自身的网页结构, 目前也是网页设计的一大核心之一;
+
+
+Security:
+随着js的发展使用, 其危害性也日益提升;
+目前的保障安全手段主要有:限制其功能,限制其使用范围和情景,敏感权限默认关闭虚人工开启;
+The Same-Origin Policy: js只允许读取与当前执行环境域名相同域名下的windows属性, 那么怎么界定相同域名呢:
+来自不同的网络服务器;
+来自相同的网络服务器, 不同的端口;
+同一网络服务器, 同一端口, 不同的http协议(http,https);
+以上, 都认为是不同域名;
+
+
+如何舒缓此规则:
+document.domain: 考虑到同级子域名也会被禁止, 那么通过设定document.domain为同一母域名即可实现同级子域名的跨域;
+Cross-Origin Resource Sharing: 通过http请求新增的Access-Control-Allow-Origin头部, 服务器就可以指定其允许跨域的程度了;
+cross-document messaging: HTML5新增了一些很强大的API,cross-document messaging API就是其中之一, 它允许不同的document之间的js进行通讯;
+
+
+
+
+
+Chapter 14 - The Window Object
+Timers:
+setTimeout(): 延时触发;
+setInterval(): 定时循环执行;
+clearTimeout(): 清除延时触发;
+clearInterval(): 清除定时循环;
+
+
+Location:
+window.location === document.location 两者皆为当前页面url, 并随页面url变化而更新;
+document.URL 也是指代加载后的当前页面, 但不随页面内动态变化引起的url变化而变化;
+Location这个对象本身包含了多个属性分别指代url的不同部分:protocol表示网络协议, host, hostname通常都指示域名,前者包含端口, port表示端口, pathname表示以域名根目录为/的相对路径, search表示url中?以后的部分但不包含hash部分, hash则是表示url#以后的部分;
+Location还包含了三个常用的函数:assign(),replace(),reload(), 其中前两者功能都一样, 都是用以加载新页面的, 不过replace()加载的同时将当前页面从history中去除了(就是不能后退后之前页面了), 而assign()还保留着; reload()就更不用说了, 只是单纯的重载页面;
+
+
+History:
+back(),forward(): 等价于浏览器的后退,前进按钮;
+go(n): 接受数字作为参数, 表示向前或者后退n个页面;
+如果页面中有iframe, 那么其history会自动合并到主界面的history中;
+
+
+Navigator:
+appName: 浏览器的名称;
+appVersion: 浏览器版本号;
+userAgent: 用户代理, 对应HTTP的USER-AGENT;
+platform: 操作系统;
+onLine: 是否连通网络, HTML5支持;
+geolocation: 用户地理位置信息, HTML5支持;
+javaEnabled(): 对Java扩展的支持, 非标准;
+cookiesEnabled(): 能够设置cookie, 非标准;
+
+
+Screen:
+width,height: 当前屏幕的长宽尺寸;
+availWidth,availHeight: 去除功能区等部分之后的实际展现内容的屏幕尺寸;
+colorDepth: 显示屏幕的bits-per-pixel;
+
+
+Dialog Boxes:
+alert(): 弹出对话框, 展示传入的信息;
+confirm(): 自带OK,Cancel按钮的对话框, 返回对应的boolean值;
+prompt(): 附带输入框, 返回输入的值;
+上述三个类型的对话框的样式结构都无法调整, 是浏览器默认设定的;
+showModalDialog(): 则更加复杂, 它可以支持弹出一个页面, 其接受的第一个参数即为页面的url, 后面的参数则是弹出窗口的属性; 在chromium中已经被禁止了
+
+
+onerror handler:
+用于处理错误信息的, 你完全可以定制这个函数来更好的显示js中的错误信息;
+
+
+Document Elements As Window Properties:
+当一个html元素被赋予了id时, 其id对应名称的全局变量不存在时, 其自动转为全局变量, 属性名称即为id名, 但如果id名已经被使用, 则不生效;
+对于&amp;lt;a&amp;gt; &amp;lt;applet&amp;gt; &amp;lt;area&amp;gt; &amp;lt;embed&amp;gt; &amp;lt;form&amp;gt; &amp;lt;frame&amp;gt; &amp;lt;frameset&amp;gt; &amp;lt;iframe&amp;gt; &amp;lt;img&amp;gt; &amp;lt;object&amp;gt;这样的元素, 其name值和id效果是一样的, 且name值支持多个元素相同, 会自动生成类array形式, 对于iframe, 对应的属性会指向其内嵌窗口的window对象;
+
+
+Multiple Windows and Frames:
+通过js打开的新窗口都可以被js获取到, 并进行操作, 但是需要符合same-origin的原则;
+frame嵌入的窗口可以通过parent.frames属性来获取, 也可以通过其自带的contentWindow来获取;
+
+
+
+谜题
+Q: 在测试same-origin的时候, 发现有些网站可以设定子域名的document.domain为母域名, 有些不能? 比如在google的搜索结果页, 就可以, 但是在github pages中想要设置为github.io就不可以, 会出现&amp;#39;github.io&amp;#39; is a top-level domain.这样的错误?
+
+参考资料
+JavaScript the Definitive Guide 6th edition
+Can I Use …
+host and hostname
+
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (2)</title><link>http://taoalpha.me/blog/2015/06/18/read-javascript-the-definitive-guide-2/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-18T10:00:00.000Z</pubDate><description>概述作为JS中的一等公民, function(函数)始终是JS的核心中的核心. 所以这里单独用一篇笔记来记录JavaScript: the definitive Guide一书第八章的内容. 主要介绍了函数的定义, 作用域, 参数, 声明以及执行等基础知识, 另外也着重介绍了其高级用法中的closure. 我将自己觉得重要的, 值得记录的部分都作为心得摘抄如下:
+心得arguments对象对每一个function而言, 都自动会有一个内置的arguments对象, 用它就可以访问传入的参数了. 通常来说arguments对象我们只会用在不定长传参的函数上, 但arguments本身带有的一个函数却是可以在某些时刻发挥重要作用的~ 这个函数就是callee函数:
+12345678// 递归自我调用函数在解决一些问题的时候是很常用的, 而通常情况下我们都会在函数内调用本函数名即可, 但是如果我们需要实现自我调用的函数正好是一个无名函数呢?// arguments.callee 即调用当前执行的函数function(x)&amp;#123;return x*arguments.callee(x-1)&amp;#125;// 如上, 就实现了一个很简单的&amp;gt;2阶乘计算了
+需要特别注意的就是callee作为arguments对象的一个方法, 是可以跟随arguments作为参数传递的, 而且其作为参数的时候保持其所指代函数不变.
+既然说到arguments, 就多说两句喽. 首先arguments算是一个类array的object. 它本身具有array的一些特性, 比如可以直接调用length函数(通常的object是不能通过.length直接调用获取长度的, 需要使用Object.keys(object_name).length才能获得). 但是它本身和array.length有很大的差别, 其中最大的一个差别就是: 无法通过.length直接更改数组长度.
+123456var a = [1,3,4]a.length = 5console.log(a)// output: [1,3,4,undefined x 2](function(x)&amp;#123;arguments.length = 5;console.log(arguments)&amp;#125;)(10,1,2)// output: [10,1,2]
+可以看到通过对arguments.length直接赋值, 并不会影响其本身的长度, 这一点和array本身有很大的差别.
+PS. 上述示例是增加长度, 其实缩减长度也是一样的, 多余的元素会被自动删除. 所以, 通过直接向array.length赋值也算是一个修改array长度的方法喽~
+PSS. 通常如果一个函数接受参数比较多的时候, 为了预防因为参数顺序而产生的问题, 可以采取传json格式的object作为参数, 这样就能够通过key而不根据顺序获取参数了.
+Function的property请先看下述代码:
+1234567891011f.temp = &quot;test&quot;function f(x)&amp;#123;  console.log(arguments.length);  console.log(arguments.callee.length);  console.log(f.temp);&amp;#125;f(1,2)// output: 2 1 &quot;test&quot;
+首先, 我们看一下我们前两个输出值:
+  如上所述,arguments.length即代表传入参数的数量, 我们传入了两个参数, 所以这里输出2, 没有任何问题. 那么后面的arguments.callee.length又是什么呢? 为什么它输出的是1呢? 
+  根据之前的介绍, 我们当知道arguments.callee是代指当前的函数f(), 那么对应的arguments.callee.length即我们的函数f的length了. 对于Function这个对象而言, 它所拥有的length这一属性特指其声明的参数数量, 我们应该知道JavaScript作为一个很宽松的语言, 其函数定义后接受的参数是不定长的, 即便传入参数与函数声明的参数不相等也是不会抛出异常的, 那么有时候我们需要获取确保函数接受的参数和其声明的参数数量一致, 就可以使用函数自身的length属性来实现;
+其次, 我们自定义了一个f的属性temp, 但是我们实在函数定义之前赋予这个属性的, 为什么依然能够在函数运行中输出呢? 
+  这主要是因为js的执行顺序所致. js在载入执行过程中, 首先会将内部声明的函数都定义之后才会正式由上至下的逐次执行. 所以这里虽然我们把f.temp写在了函数定义之前, 但是js执行过程中, 还是首先定义了函数f, 接着才开始运行我们的f.temp赋值语句. 自然就不会报错说f没有定义了~
+PS. 其实不止是Function, 即便是普通的变量声明, 也是编译和执行分开进行的, 比如var a = 2;也是拆解为var a; a = 2两步执行的, 而声明都是发生在编译过程, 待编译过程全部结束后, 才会由上到下一次执行, 这也是为什么, 单纯的声明可以出现在代码的任意部位都不会影响其所在作用域的生效, 不会爆出not defined的错误;
+reserved word, identifier, keyword这三个作为基础知识, 可以说是每门语言都共通的概念,  但很多时候我们都不会用到或者不会特意去区分这三个名词, 而最近因为看原版书, 经常会出现三个词的交叉, 所以这里特别google了以下, 试图总结下三者的区别:
+
+identifier: 通常我们把我们定义的变量名, 函数名, 类名, 标签名,宏定义名, 类型名等称为identifier, 取其标识之意, 用以作为其名称以便代用;
+reserved word: 与identifier相对, reserved word则是指由语言规定而保留的一些词, 这些词有着特定的用途而不能被用作identifier;
+keyword: 作为语言语法的组成部分之一, keyword通常都会有着特定的含义, 绝大多数的keyword都是reserved word, 但也有少量语法中存在keyword不是reserved word的情况, 比如fortran就没有reserved word的概念, 它的所有keyword都可以用作identifier;
+
+reserved word和keyword确实在很大程度上是共同的, 除了上述说的类似fortran语言这种情况外, 也存在reserved word不是keyword的情况, 比如java中的goto就是一个reserved word, 但本身又不是一个keyword, 所以可以说goto这个词基本在java中是完全废弃的~ 那他们为啥要定义这个goto呢?? 有一种说法是这样情况通常是为未来版本预留的~ 还有一种说法是JVM作者James Gosling最初加了goto的支持, 但后来发现完全没必要, 就又去掉了, 但是为了兼容性问题,也一直没有把goto从reserved word此表中删去.
+PS. 很多时候也有人完全不区分reserved word和keyword的区别, 完全等同二者为”不能用来做identifier的词”.
+closure - 闭包在javascript中, 一个function由两部分组成: 函数执行的代码以及代码执行的环境. 而这两个组合到一起后也有个专属的名称, 即closure. 不过单独一个独立函数的closure并没有什么值得说的意义, 因为其执行的环境, 即我们称之为scope的东西, 随着函数的执行开始与结束会自动的被创建并清理掉, 所以通常情况下closure都单指在嵌套函数中. 当存在嵌套的函数时, 并且函数之外存在一个reference指向函数的话, 事情就变得好玩多了:
+12345678910111213141516171819202122232425262728function f()&amp;#123;  var id = 1;  return function()&amp;#123;console.log(id++)&amp;#125;&amp;#125;f()();f()();f()()// output: 1,1,1// 每次我们调用`f()`,都会自动创建一个包含了其局部变量`id`的对象, 而嵌套的函数`f()()`会自动继承母函数的作用域;// 但每次随着调用结束, 因为没有任何外部引用, 所以创建的对象都会自动的被回收, 如此就导致每次调用`f()()`都会输出1了;var k = f();k();k();k()// output: 1,2,3// 同样是调用`f()`, 但是我们首先引入了一个新的变量`k`引用`f()`函数; // 这样随着`f()`的调用和结束, 其创建的`call`对象(即包含了局部变量id的那个对象)就因为还存在外部引用而得以保留// 所以后面连续调用`k()`的过程中, 本身的嵌套函数就始终共享着`call`对象的作用域, 如此每次输出的时候都是先获取了局部变量id, 然后在执行`id++`,所以输出为1,2,3// 不喜欢`f()()`这种调用方式, 也不想单独创建新变量来增加引用? 当然可以, 只需要借助下`anonymous function`即可:var f = (function()&amp;#123;    var id = 1;    return function()&amp;#123;console.log(id++)&amp;#125;  &amp;#125;)();f();f();f()// output: 1,2,3// `anonymous function`是自执行的函数, 这里相当于把之前的`var k = f()`以及`f()`的声明定义合二为一了.
+可以说上述基本就是closure最基本的内容了, 而closure作为js的高级用法之一, 掌握了它, 你就能做很多有意思的操作了. 一个简单的例子就是: 你可以参照closure的原理来模拟实现浏览器探查元素(inspector)的breakpoint功能.
+因为原作trimpath上的文章已经无法访问, 所以转载了一个类似的如下, 略作了简单的修改(加了几句更友好的提示和显示每一步的运算结果):
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061// This function implements a breakpoint. It repeatedly prompts the user// for an expression, evaluates it with the supplied self-inspecting closure,// and displays the result.  It is the closure that provides access to the// scope to be inspected, so each function must supply its own closure.// // Inspired by Steve Yen's breakpoint() function at// http://trimpath.com/project/wiki/TrimBreakpoint//function inspect(inspector, title) &amp;#123;    var expression, result;    // You can use a breakpoint to turn off subsequent breakpoints by    // creating a property named &quot;ignore&quot; on this function.    if (&quot;ignore&quot; in arguments.callee) return;    while(true) &amp;#123;        // Figure out how to prompt the user        var message = &quot;&quot;;        // If we were given a title, display that first        if (title) message = title + &quot;\n&quot;;        // If we've already evaluated an expression, display it and its value        if (expression) message += &quot;\n&quot; + expression + &quot; ==&amp;gt; &quot; + result + &quot;\n&quot;;        else expression = &quot;&quot;;        // We always display at least a basic prompt:        message += &quot;Enter an expression to evaluate, or just click cancel to see the next step of current calculation.&quot;;        // Get the user's input, displaying our prompt and using the        // last expression as the default value this time.        expression = prompt(message, expression);        // If the user didn't enter anything (or clicked Cancel),        // they're done and so we return, ending the breakpoint.        if (!expression) return;        // Otherwise, use the supplied closure to evaluate the expression        // in the scope that is being inspected.         // The result will be displayed on the next iteration.        result = inspector(expression);    &amp;#125;&amp;#125;function factorial(n) &amp;#123;        var inspector = function(x) &amp;#123;                return eval(x);        &amp;#125;        inspect (inspector, &quot;Entering factorial()&quot;);        var result = 1;        while (n &amp;gt; 1)&amp;#123;                result = result * n;                n--;                inspect(inspector, &quot;factorial() loop with current result:&quot;+result);        &amp;#125;        inspect(inspector, &quot;Exiting factorial()&quot;);        return result;&amp;#125;inspect(function (x) &amp;#123;return eval(x);&amp;#125;, 'Hello')factorial(5)// 通过closure, 它就可以检测factorial执行的各个环节, 从而更容易的找到你在不同环节的问题.
+虽然closure让你可以写出更加复杂的js代码, 但是本身closure的使用还是要慎重的, 因为closure需要存储函数对象在内存中而不销毁, 所以如果函数主体庞大, 那么对于内存的压力和运行性能都是会有影响的~
+Function constructor类似Array, String等都有着一个对应的类, 可以允许你通过new来创建对象. Function也有自己对应的Function()类, 可以通过:new Function()来创建函数, 其接收不定长参数, 最后一个参数始终作为函数运行主体. 不过通常来说这种方法定义函数远没有我们常用的function关键词来的方便, 所以使用上倒是少了很多~ 不过有几点还是值得注意的:
+
+new ClassFunction() 是把function作为constructor的一种用法, 你可以简单的理解为: var cc = new ClassFunction(params) ==&amp;gt; var cc = new Object();ClassFunction.call(cc,params)
+new Function()不接收函数名参数, 即其创建的都是anonymous function;
+new Function()不继承作用域, 几遍其是在嵌套函数中定义, 也只继承global域, 不会继承上层函数的作用域;
+
+谜题12345678910111213var name = &quot;The Window&quot;;var object = &amp;#123;  name : &quot;My Object&quot;,  getNameFunc : function()&amp;#123;    console.log(this);    return function()&amp;#123;      return this.name;    &amp;#125;;  &amp;#125;&amp;#125;;console.log(object.getNameFunc()());// output: Object&amp;#123;name:&quot;My Object&quot;&amp;#125;; &quot;The Window&quot;
+上述定义中, 为什么嵌套函数没有继承上层函数的this呢? 反而继承了全局的this?
+猜测解答: this这个关键字是个比较特殊的关键字, 它具有一个很有趣的特点就是: 当一个函数作为函数而不是方法来调用的时候, this指向的是全局对象, 只有当它是方法的时候, 其指向的才是所属对象; 题目来源阮一峰博客. 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>像TED一样演讲</title><link>http://taoalpha.me/blog/2015/06/25/read-speaking-like-people-on-ted/</link><category>read</category><tag>reading notes,speaking</tag><pubDate>2015-06-25T09:00:00.000Z</pubDate><description>概要今天顺带读完了这本”像TED一样演讲”, 作者上一部和演讲相关的书是”乔布斯的魔力演讲”. 归纳了下书中的核心点, 记录分享给大家. 这一类的书干货其实能占到全书1/10就已经算不错了~ 所以一般看起来也比较快.
 阅读笔记情感共鸣
 释放你内心的热情 =&amp;gt; 热情可以传染;
@@ -1538,123 +1538,15 @@ TestingYou should write testing!!!
 Code Conventions for the JavaScript Programming LanguageAll coved by two styles I list above.
 SummaryCompared to google’s old style guide, airbnb’s style guide has much more valuable new ES6 styles, if you are an active ES6 users, I strongly suggest you use airbnb’s style !!!
 Even you are a solo worker, you should use some common styles, it is a good habit and you should have.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Using @font-face</title><link>http://taoalpha.me/blog/2014/07/15/read-yi-using-font-face/</link><category>read</category><tag>CSS,font-face,翻译文章,译系列</tag><pubDate>2014-07-15T10:00:00.000Z</pubDate><description>如下例:
-123456789@font-face &amp;#123;  font-family: 'MyWebFont';  src: url('webfont.eot'); /* IE9 Compat Modes */  src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */       url('webfont.woff') format('woff'), /* Modern Browsers */       url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */       url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */&amp;#125;
-由于如今WOFF是如此之火, 你也可以简化使用:
-123456@font-face &amp;#123;  font-family: 'MyWebFont';  src: url('myfont.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */       url('myfont.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */&amp;#125;
-其实只用WOFF也可以的, 目前基本主流浏览器都能支持了.
-然后你就可以在其他元素中使用这一属性了~ 比如:
-1234body &amp;#123;  font-family: 'MyWebFont', Fallback, sans-serif;&amp;#125;
-讲讲font-face的历史吧, @font-face是用于加载以及使用你自定义的字体而出现的, 针对的就是如今浏览器有权限使用的系统已有的有限字体. 这里有个系统预装字体的详情介绍.
-说到性能. 一般我们认为字体文件都是非常巨大的, 同时还会让你的网站增加很多额外的请求, 这些都会拖慢你的站点速度. 所以在使用之前请务必确保你考虑清楚.
-如果你确实要使用自定义字体, 有一种更好的更负责的方式是尽可能的加载足够少的字母和样式种类. 比如, 如果你使用google fonts, 只需要引入一些特定的组合即可:
-123@import url(http://fonts.googleapis.com/css?family=Averia+Sans+Libre:400,300italic,700);
-甚至可以缩减引入的字符数量.
-相比于性能, @font-face似乎经常出现各式各样的bug…比如这种, 这种,还有这种…
-关于字体格式, 倒是有几种, 每种都还有些历史.
-  WOFF    Web Open Font Format. 是专为网络使用而创造的, 由Mozilla和一些其他组织共同发展起来的, WOFF字体通常比其他格式字体加载的更快, 主要是因为他们使用了比OTF和TTF更加压缩的结构, 这种结构中还能包含一些meta信息和license信息, 目前来说WOFF应该是最大的赢家了, 主流的浏览器基本都已经能够支持了.    SVG/SVGZ    Scalable Vector Graphic(Font). SVG是一种字体的矢量化过程, 主要可以让体积变的更小, 同时也能够用于移动设备. 这个字体格式是4.1版本以下的Safari浏览器唯一支持的字体格式了. 目前来说SVG依然不能被Firefox, IE以及IE 移动版支持. Firefox主要精力都在支持WOFF了~ 天知道他们什么时候支持SVG… SVGZ是SVG的再压缩版本.    EOT    Embedded Open Type. 这一格式是由微软从15年前创造的(真正意义上@font-face的源头). 也是唯一一种IE8以及以下版本支持在@font-face中使用的格式了.    OTF/TTF    OpenType Font 和 TrueType Font. 在一定程度上WOFF格式的出现也是因为这些格式可以很容易被复制, 无论合法与否. 同时, OpenType的某些特性(比如手写字体等)比较吸引设计师们.  
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Why Users Aren’t Clicking Your Home Page Carousel?</title><link>http://taoalpha.me/blog/2014/05/03/read-yi-why-users-arent-clicking-your-home-page-carousel/</link><category>read</category><tag>Carousel,HCIBib,UX,UXmovement,关于HCI,翻译文章,译系列</tag><pubDate>2014-05-03T04:00:00.000Z</pubDate><description>首先介绍下什么是carousel: 标准词典翻译为”旋转木马”, 用在网络中, 尤其是网页设计的语境之下, 就是指代的很多网站中使用的多图切换模块, 通常由多张图组成, 但是一次只会显示一张, 图片右下角或者正下方常常有切换指引的远点或者缩略图, 图片左右则有前后箭头, 如此切换的时候会像旋转木马一样一张一张的出现在用户眼前(当然不限于图片, 有的也会用文字作为每一个木马).
+=========正文=========网站研究发现在300w的首页中, 只有1%的用户浏览会点击页面上的carousel部分呢. 为什么占据了首页如此大面积的, 而且是很具有视觉优势的元素获得的点击是如此之少呢? 原因可能比较出乎意料, 因为多数carousel都做的很烂…
+绝大多数的carousel都包含多张切片, 当用户点击箭头切换时进行旋转展现. 通常第一张会获得多数的点击, 随后的点击比例就会急剧下降. 造成carousel如此的低的点击率的原因其实不是因为carousel本身的这种切换模式, 而是因为carousel的导航实在是太烂了….
+carousel中的导航键头通常是没有点击欲望的. 为什们? 因为箭头通常无法表示出用户点击后会获得的信息, 无法给与用户期望. 所以用户通常都会忽视箭头, 把他们自己的注意力放在别的信息之上. 一个箭头只能说明这里还有更多的切片, 这完全不是让用户点击的理由. 所以, 他们很难看到carousel后面的切片, 又怎么产生点击呢? 不仅如此, 用户还常常因为箭头太小太靠近边缘而忽视它. 以这样的设计, 其他的切片能获得高点击才怪呢…
+实际上, carousel所需要的只是一个清晰的, 可见的标签导航即可. 标签本身说明了包含的信息, 有意义的描述, 告诉了用户他们想要的. 这会刺激用户去点击, 因为每个标签都告诉了他们点击后能获得什么. 用户就会更有可能点击那些吸引他们的信息. 导航标签本身也应该有足够的宽高并被置于一个更加可见的位置, 而不是像箭头一样很难发现. 重要的不仅是容易看到, 用户还要同时知道它代表了什么.
+绝大多数人们可能只会看一下这份网站研究报告的结论, 然后觉得所有的carousel都是非常不利于体验的, 他们以后都不应该使用carousel了. 但实际上, 多数carousel如此的糟糕是因为他们没有很好的导航, 都只是用一个小小的箭头来引导. 箭头本身不能承担任何信息, 但是文本标签可以. 如果你希望更多的用户点击你的carousel, 那么, 就是用标签导航把. 把标签写的清楚, 有意义, 你就会有更多的用户点击你的carousel了.
+Links:
+UX Movement: Why Users Aren’t Clicking Your Home Page Carousel
 
-
-字体服务有很多, 主要就是提供那些你可能无权使用的字体, 从而让你的使用合法化. 主要有以下这些:
-  Cloud Typography  Typekit  Fontdeck  Webtype  Typotheque  Fontspring  WebINK  Fonts.com  Google Fonts  Font Squirrel
-
-
-
-想要对比下这些服务的好坏?
-Source Link:  CSS Tricks
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>User Experience is a feeling</title><link>http://taoalpha.me/blog/2014/11/10/read-t-user-experience-is-a-feeling/</link><category>read</category><tag>UX,产品学习,关于HCI,翻译文章,译系列</tag><pubDate>2014-11-10T14:00:00.000Z</pubDate><description>用户体验是一种感觉
-
-“如果你以’用户体验是一种感觉’为基础, 那么你就算是向真正理解用户体验迈出了一步.”
-
-许多人似乎都认为用户体验是一个可以控制的设计产出–好像它是一个你可以通过你的想法, 设计师以及开发者们从而操纵一个人对某个产品或者服务的体验. 实际上, 用户体验经常被认为是一个定义以及管理用户对产品的感觉.
-
-但是你的产品并不能决定一个用户的体验, 用户自己的行为, 态度以及情感才是决定因素. 因此, 用户体验就是一个感觉. 实际上, 它远不止于此, 但如果你是在此基础上去理解用户体验, 那么你就算是向真正理解用户体验迈出了一步.
-
-一个用户在使用某个产品时的体验是每个产品都需要关注的点. 一个用户可能会有很好的体验也可能会有一个很糟糕的体验. 虽然你不能直接的设计一个用户对一个产品的体验, 但你可以采取一些措施, 应用一些用户为中心的设计原则和流程来确保他们的体验是积极的, 正面的.
-
-你应该把以用户为中心的设计的各种优势告诉那些投资人, 相关利益人从而拿到钱, 而这些优势就包括以下这些:- 快速的获得更多客户- 保留现有的客户- 为你的公司建立信誉- 在公司长期运行中扩大销售额- 降低周边产品/服务(外围设备)的价格, 比如客服/售后- 减少无形的花费, 比如浪费的时间- 完成的更加高效
-
-对于你的公司而言, 无论是一个创业公司还是说一个庞然巨物, 都要意识到这些利处, 而你所在的产品团队则需要:
-
-理解伟大的设计和优质的体验之间的区别像用户那样去思考, 而不是站在一个产品的制作者角度在你的产品策划, 设计以及开发环节都要考虑到产品的用户
-
-优秀的设计是不够的
-
-“许多人认为用户体验就是一个产品是如何工作以及外观”. 换句话说, 人们很容易认为用户和产品的交互就是用户体验的全部内容了. 比如, 他们可能关注的焦点问题诸如: 产品的交互界面是否利于用户导航呢? 最重要的内容是否获得了视觉的最优位置呢? 产品外观是否足够优质呢?
-
-如果对此类的回答是”是”, 就会让人很容易的认为你已经给你的产品赋予了极好用户体验. 在很多方面, 你可能已经做的比你的竞争对手好很多. 但是, 一个产品的用户体验所包含的内容远远不止是在一个网页浏览器或者移动设备中打开一个应用这么简单.
-
-让我们以一个我们可能会提问的问题为例: 在用户第一次使用你的产品之前用户对产品的期望是什么? 可能他们听到很多其他用户的看法, 可能是好的, 也可能是不好的看法, 如果这样的话, 这些意见都会成为TA对你的产品最终形成的整体体验感受的重要组成部分, 它当然会影响到他们对产品的使用方式, 他们对产品以及你的公司的看法和感受, 以及很多我们接下来会说到的一些重要部分.
-
-像素, 屏幕, 页面以及体验
-
-“以用户为中心的设计所关心的不只是产品本身的用户界面, 还有用户在界面之外与产品的交互行为.” 这些包含但不限于以下几点:
-
-你的产品市场和分发方式购买, 打开和首次使用产品的整个流程升级流程“登船体验”, 即逐步学习产品所具备的能力, 以及如何使用和如何处理错误信息的过程宣传, 用户的口碑是最好的广告客服或者售后服务质量, 以及你对产品能力的深入了解
-
-上面这个清单仅仅只是非常表面的一些东西, 但是它可以初步让我们对影响用户体验的诸多因素有个大概的了解.
-
-如果你曾经找你的手机或者线路公司进行技术咨询, 你就会理解这一经历会对你对他们的产品以及服务的感受观点有多大影响了. 虽然你可能最后还是解决了问题, 获得了更好的线路以及手机问题得以解决, 但是如果你在处理这一事宜的过程是非常让人不开心的一个经历, 那么你可能依然会对他们的服务产生负面的观感. 而一个用户对你公司的看法和以往的交往经历都可以算是用户体验的一部分.
-
-像一个伟大的UX设计师那样思考
-
-在本文后面的内容中, 我会提供一些你可以用来和你的产品团队分享, 一起帮助每个人像一个伟大的UX设计师那样思考问题. 为了创造一个人们喜欢的产品, 需要你整个团队, 不只是UX团队, 都聚焦到用户身上.” 而如果能够把焦点放到用户身上, 那么就能帮助你传递很多益处, 会带来很多我上面说过的好处.
-
-走向优秀体验的态度
-
-像一个伟大的UX设计师那样思考意味着你需要养成一些思维方式, 这些思维方式与其说是一些特定的思考流程或者做事规则, 不如说是一些基本的态度更为合适.
-
-要有同理心
-
-当你被无数决策缠身, 催促着你从想法走到原型直到上线, 你会很容易的陷入到一个困境, 就是视野会局限在产品团队之中.  你手头工作的复杂和困难以及你作为产品主导者对产品目的, 设计以及功能的熟悉都让你无法兼顾自检的环节了.  在这个环节中, 我们缺失的正式外界的观点-你的用户的角度的看法.
-
-和你的用户交流所能带来的好处不仅是他们提供的那些你可以用来优化设计流程的信息, 随着时间, 和你的用户交流能够帮助你建立更好的同理心. 你将学会通过他们的眼睛看世界.
-
-而有了同理心, 你将可以站在用户的角度去评估你的设计和商业决策. 而且你会更有可能创造一些他们 能够找到其价值, 用处以及给他们带来欢乐的产品.
-
-要承认每个意见都是有价值的
-
-以用户为中心的设计的下一个态度往往很难被人所采用. 请跟着我一起重复:”每个意见都有价值. 每个意见都有价值.” 哪怕是意见本身可能完全没有逻辑. 哪怕是这个意见完全违反了一个正确的设计原则. 哪怕是这个意见是完全非理性的, 而且对你而言完全没有意义的.
-
-如果使用你的产品对用户而言是一个可选行为的话–实际上它确实是个可选的行为–那么他们的意见就是有意义的. 但是从那些非理性或者无逻辑的反馈中找到有价值的东西是有难度的. 然而, 这类用户反馈可能指向的更大的一些问题, 可能代表着用户的某种更深层次的情感模式, 而这对于用户和你的产品之间的交互有着很大的影响. 而如果带着”每个意见都有价值”的观点来处理用户的反馈, 那么就能够帮助你发现这些模式.
-
-如果你收到一些对你完全没有意义的反馈, 那么你应该暂停一下, 好好思考以下它的具体含义. 可以问这么几个问题:
-
-那些没有给我们反馈的用户中有多少可能也有同样的看法呢?为什么他们会需要这么一个具体的功能点呢?为什么他们不能理解我们设定的这种用户工作流呢?为什么他们会这么感觉呢?
-
-退一步讲, 和你的用户聊天, 即便是一些似乎很疯狂的想法也往往能够给你带来一些新的观点, 说不定就能帮助你解决手头的问题呢.
-
-意识到情景和经历都会对用户体验产生影响的
-
-可能你的项目的目的是创造某个全新的东西, 但是你的产品最终会被那些有着自己过往使用科技产品经历以及特定的使用场景的人去使用的. 而这些经历以及所处的情景会在很深层次上影响人们和产品之间的交互.
-
-比如, 我每次购物时如果发现那些老式的黑屏绿字, 带着键盘的销售终端依然还在投入使用时都会觉得这是一件非常令人着迷的事情. 实际上, 我经常能够在非常现代化, 成功的零售商们那里看到类似这样的用户界面.
-
-这样的用户界面可能看起来很过时, 而且使用也不高效, 但是如果你考虑下它使用的场景, 就会有不同的看法了:
-
-零售行业的工作人员在长期的工作中, 因为不断的使用同样的用户界面重复同样的销售操作, 会形成一种独特的肌肉记忆;他们的这种肌肉记忆会允许他们甚至不怎么注意屏幕就能够准确的完成操作, 也就让他们有更多的时间和客户进行视觉交流, 这样能够给客户更好的购物体验;这种肌肉记忆需要很长的时间才能形成. 可能需要一个缓慢的学习曲线去掌握, 但是一旦掌握了, 它带来的速度和效率的提升是雇员们所愿意放弃的, 即便是面临着一个有着快速学习曲线的新的交互界面的诱惑也一样.
-
-如果你忽略这种历史原因以及特定的场景原因, 那么这种古老的POS终端看起来就是一个典型的糟糕的用户体验. 但是你一旦把这些都考虑进来, 你就会获得完全不同的理解了.
-
-当你脱离用户界面, 而考虑更加宏观的一些事情时, 你就会知道哪些因素才能真正让你的产品体验有所不同.
-
-要有情商
-
-如果你自己质疑用户对你产品的感觉的重要性, 那么你可以回想下最近Facebook首次展示了他们做了明显改变的新用户界面, 而随之而来的用户疯狂的愤怒回应.
-
-最强烈的情感–爱, 恨, 快乐和忠诚–都需要时间来建立的. 你的公司的新产品将会继承那些旧产品用户的情感, 而这些完全不受你控制–比如用户对你的app运行平台的看法以及在app store中的应用发现这一过程等都是不受你控制的.
-
-但是他们对你产品的感觉会随着使用逐渐的形成并发展. 想象一下: 不断重复的讨人厌的登录环节, 一个流畅的,愉快的导航, 一个思虑周全的错误处理机制, 一个一直都不尽如人意的客户服务, 这些长期积累下来情绪, 会产生什么样的影响呢?
-
-像一个UX设计师一样思考, 就要考虑到用户和你的产品之间的这种情感关系.
-
-把这种优秀UX设计师的态度应用起来
-
-有一个很简单的, 混合了这些特点的方式可以让你开始像一个优秀的UX设计师那样思考: 注意观察人们是如何和日常生活的事物进行交互的. 他们的这些行为会告诉你很多, 很多在你开始考虑开发一个产品之前需要考虑的事情, 会告诉你如何开发一个新产品, 一个能够让人们生活更加便捷, 更加快乐, 更加符合人们期望的产品. 
-
-来源:
-
-原文: User Experience Is a Feeling
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>设计心理学系列(1) - 网络心理学</title><link>http://taoalpha.me/blog/2015/05/08/read-design-psychology-1-cyber-psychology/</link><category>read</category><tag>Cyber Psychology,设计心理学</tag><pubDate>2015-05-08T12:00:00.000Z</pubDate><description>什么是网络心理学?网络心理学是随着互联网等新技术出现以及发展而逐渐发展起来的一门新兴科学. 它所研究的领域就是网络与心理学的结合, Cyberpsychology本身由两个词合并而成, 前者Cyber是取自Cybernetics, 代表着对于机械控制和与之通信的研究, 代表着对新兴网络领域的研究, 而心理学则是对人脑和行为学的研究. 两者的集合即表明了Cyberpsychology的研究领域主要集中在了人与新兴机器系统(包含虚拟系统)的心理学研究.
 网络心理学简介演化历史Cyberpsychology最开始是集中关注于人在操作机器以及与机器交互的过程中的心理学变化, 后来随着电脑的出现以及普及, 互联网的诞生以及发展, 加上新兴智能机器的出现和发展, 都使得Cyberpsychology的研究重点放到了互联网上面. 而随着虚拟现实技术的出现, Cyberpsychology的研究范围再一次的增广, 可以说, Cyberpsychology的研究范围基本会随着cyberspace的领域增长而延伸.
 通常认为John Suler, 来自Rider University的心理学教授, 是Cyberpsychology的奠基人. Suler教授是最早开始关注与网络对人们心理变化带来的影响, 其出版的The Psychology of Cyberspace一书也是被认为最早整合性的Cyberpsychology学术作品.
@@ -1831,6 +1723,22 @@ Ethan Marcotte决心改变当时的设计方式, 想要用同一套内容但是�
 网页设计说白了就是设计师制作的视觉效果在浏览器中呈现罢了. 想象以下, 未来设计们可能只需要拖动下元素, 就能够获得一个简洁的代码文件, 而不在需要手写代码, 这多给力啊. 哪怕不能做到那些酷炫的效果, 仅仅单纯的静态页面和简单的交互也是相当不错的事情呢. 再想象以下未来开发者们再也不用担忧浏览器兼容的问题, 而只需要集中精力解决那些真正的问题, 那TM该是多美好的未来啊…
 
 如今技术上已经出现了一些光明未来的曙光: 比如CSS中新引入的一些属性, vh, vw就容许布局上有更好的灵活性. Flexbox则帮助更好的布局, 不再需要那么多的代码, 只用一行就能制作很棒的布局了. 而那些现成的做好的各个组件, 比如注册登录等等, 都让网页设计变的更加容易更加流畅. 
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Google又做了一件大好事:干掉了烦人的识别型验证码!</title><link>http://taoalpha.me/blog/2014/12/04/read-read-google-did-a-good-thing-kill-annoying-type-identification-code/</link><category>read</category><tag>Captcha,reCaptcha,翻译文章,读系列</tag><pubDate>2014-12-04T14:00:00.000Z</pubDate><description>译系列正式转为读系列, 以后都为阅读后自己整理总结成文~ 吸收知识哈哈
+伟大的Google又做了一件大好事啊!! 它干掉了烦人的识别型验证码!!! 本文简单介绍了一下这一新的验证码.
+
+对于验证码, 大家都不会陌生, 无论你是否经常上网, 是否买过东西, 是否看过网络视频, 你一定遇到过验证码!!! 而如今最为常见的几种验证码形式分别是:
+
+Captcha(Completely Automated Public Turing test to tell Computers and Humans Apart): 图片识别, 通过识别一些或模糊或清晰的图片中的文字信息来达到验证”我不是机器人”的效果;reCAPTCHA: 同样来自Google, 用Captcha的方式做有意义的事情. 其和Captcha的表现形式基本是一致的, 只不过里面的图片不再是预设好的人工生成的那种故意扭曲或者加干扰后的图片, 而是Google的图书扫描项目中那些OCR无法识别的单词(多数是手写体或者不够清晰), 这样你每次输入验证码, 还能帮助Google的Books做的更好哦~(至于如果它自己都不识别, 那么怎么判断输入是否正确, 则是因为通常reCaptcha会提供两个词组, 一个是已知的, 一个是未知的, 所以呢, 在已知的正确的情况下, 未知的正确性就有了一定的保证, 而结合大量的输入, 那么最中获得的结果的正确概率就越高:所以, 面对一些很少有人输入过的验证码, 其实你很有可能输错了部分, 但也通过了~哈); 而继图书项目后, Google又在reCaptcha项目中加入了Google街景的路牌, 街道名识别~ 所以有时候你会遇到那种拍的很模糊的数字图~Puzzle CAPTCHA: 在识别类验证码之后, 又出现了这种拼图类的验证码, 操作方式有很多, 有的是图片切分打乱, 需要你重新排列成完整的图片, 有的则是有一块图片从整个图片中脱离出来, 需要你移动回去这种~ 这种有时候也叫做Draggable Captcha~Quiz Captcha: 这种则属于问答类的验证码了, 有的时候是一些显而易见的数学计算题或者找规律题, 有的时候则是一些基本常识, 还有些时候甚至是当前往网站名称这类有着明显答案提示的问题~
+
+当然, 除了上述的这些, 还有着很多的验证码类型, 但是无论怎样, 为了实现区分人和机器的目的, 都是需要一定操作成本的, 这也是为什么大家很讨厌验证码的原因~
+
+但是! Google这次新的reCaptcha:No CAPTCHA reCAPTCHA, 就改变了这一点, 它完全干掉了现有的这种繁琐的验证码, 取而代之的是一个简单的checkbox!!! 你只要勾选了这个”我不是机器人”边上的checkbox, 就算是通过了验证~ 似乎感觉这不是进步而是退步? 这样怎么能够实现Captcha的区分人和机器人的目的呢?
+
+其实这个简单的checkbox里面有着非常复杂的机制, 它会通过你验证码勾选前后的整个表现来判断是否是一个机器人, 一旦有所怀疑, 甚至可以选择变回旧有的那种图形或者其他传统类型的验证码来再次确认. 这些都是基于 人工智能方面很深入的研究和成果.
+
+目前这种新的Captcha的API已经开放给很多大客户了, 最近在开始接受网站主们的申请了~ 而那些大客户的反馈来看, 其效果是非常不错的: 核心的anti-spam质量虽然文章中没说, 但应该不错, 文章中重点提到了这个新Captcha的一个优点就是可以让用户更快的登录访问网站.
+
+有兴趣的可以前往Google reCaptcha了解更多详情~
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Introduction To Usability(译)</title><link>http://taoalpha.me/blog/2013/06/13/read-introduction-to-usability-translated/</link><category>read</category><tag>UX,Usability,产品学习,翻译文章</tag><pubDate>2013-06-13T09:00:00.000Z</pubDate><description>Introduction To UsabilitySummary 如何定义可用性?如何,什么时间,什么地方来提升?为什么你要关注可用性?这是一个关于核心的可用性概念的介绍以及回答一些基本的问题.
 What–Definition Of Usability
 可用性是一个表征质量的属性,用以描述用户界面在使用性上的难易程度.”Usability”这个词本身也有用以提升设计过程中易用性的方法的含义.
@@ -1854,53 +1762,100 @@ When to Work on Usability(什么时候注意易用性)
 想要获得一个高质量的用户体验唯一的方法就是在设计的早期就开始用户测试,并一直持续的在接下来的每一步实施它.
 Where to Test(在哪里测试)
 如果你每周至少实施一次用户测试,那么专门建立一个可用性实验室就有必要的了.但对绝大多数公司,在一个会议室或者办公室里进行一次测试就已经不错了,只要你关上门隔开干扰就可以了.重点在于你要有真实的用户,并且可以在他们测试的过程中陪坐一旁.你唯一需要的设备就是一个笔记本.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Google又做了一件大好事:干掉了烦人的识别型验证码!</title><link>http://taoalpha.me/blog/2014/12/04/read-read-google-did-a-good-thing-kill-annoying-type-identification-code/</link><category>read</category><tag>Captcha,reCaptcha,翻译文章,读系列</tag><pubDate>2014-12-04T14:00:00.000Z</pubDate><description>译系列正式转为读系列, 以后都为阅读后自己整理总结成文~ 吸收知识哈哈
-伟大的Google又做了一件大好事啊!! 它干掉了烦人的识别型验证码!!! 本文简单介绍了一下这一新的验证码.
-
-对于验证码, 大家都不会陌生, 无论你是否经常上网, 是否买过东西, 是否看过网络视频, 你一定遇到过验证码!!! 而如今最为常见的几种验证码形式分别是:
-
-Captcha(Completely Automated Public Turing test to tell Computers and Humans Apart): 图片识别, 通过识别一些或模糊或清晰的图片中的文字信息来达到验证”我不是机器人”的效果;reCAPTCHA: 同样来自Google, 用Captcha的方式做有意义的事情. 其和Captcha的表现形式基本是一致的, 只不过里面的图片不再是预设好的人工生成的那种故意扭曲或者加干扰后的图片, 而是Google的图书扫描项目中那些OCR无法识别的单词(多数是手写体或者不够清晰), 这样你每次输入验证码, 还能帮助Google的Books做的更好哦~(至于如果它自己都不识别, 那么怎么判断输入是否正确, 则是因为通常reCaptcha会提供两个词组, 一个是已知的, 一个是未知的, 所以呢, 在已知的正确的情况下, 未知的正确性就有了一定的保证, 而结合大量的输入, 那么最中获得的结果的正确概率就越高:所以, 面对一些很少有人输入过的验证码, 其实你很有可能输错了部分, 但也通过了~哈); 而继图书项目后, Google又在reCaptcha项目中加入了Google街景的路牌, 街道名识别~ 所以有时候你会遇到那种拍的很模糊的数字图~Puzzle CAPTCHA: 在识别类验证码之后, 又出现了这种拼图类的验证码, 操作方式有很多, 有的是图片切分打乱, 需要你重新排列成完整的图片, 有的则是有一块图片从整个图片中脱离出来, 需要你移动回去这种~ 这种有时候也叫做Draggable Captcha~Quiz Captcha: 这种则属于问答类的验证码了, 有的时候是一些显而易见的数学计算题或者找规律题, 有的时候则是一些基本常识, 还有些时候甚至是当前往网站名称这类有着明显答案提示的问题~
-
-当然, 除了上述的这些, 还有着很多的验证码类型, 但是无论怎样, 为了实现区分人和机器的目的, 都是需要一定操作成本的, 这也是为什么大家很讨厌验证码的原因~
-
-但是! Google这次新的reCaptcha:No CAPTCHA reCAPTCHA, 就改变了这一点, 它完全干掉了现有的这种繁琐的验证码, 取而代之的是一个简单的checkbox!!! 你只要勾选了这个”我不是机器人”边上的checkbox, 就算是通过了验证~ 似乎感觉这不是进步而是退步? 这样怎么能够实现Captcha的区分人和机器人的目的呢?
-
-其实这个简单的checkbox里面有着非常复杂的机制, 它会通过你验证码勾选前后的整个表现来判断是否是一个机器人, 一旦有所怀疑, 甚至可以选择变回旧有的那种图形或者其他传统类型的验证码来再次确认. 这些都是基于 人工智能方面很深入的研究和成果.
-
-目前这种新的Captcha的API已经开放给很多大客户了, 最近在开始接受网站主们的申请了~ 而那些大客户的反馈来看, 其效果是非常不错的: 核心的anti-spam质量虽然文章中没说, 但应该不错, 文章中重点提到了这个新Captcha的一个优点就是可以让用户更快的登录访问网站.
-
-有兴趣的可以前往Google reCaptcha了解更多详情~
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>What Is the Relationship Between HCI Research and UX Practice?</title><link>http://taoalpha.me/blog/2014/09/05/read-t-what-is-the-relationship-between-hci-research-and-ux-practice/</link><category>read</category><tag>HCI Research,HCI翻译,关于HCI,翻译文章,译系列</tag><pubDate>2014-09-05T08:00:00.000Z</pubDate><description>测试feedpusher的数据库搜索功能时找到了这篇文章~ 对于HCI Research有很好的介绍!
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Why Companies Need Full-Time Product Managers</title><link>http://taoalpha.me/blog/2014/11/01/read-t-why-companies-need-full-time-product-managers/</link><category>read</category><tag>PM,product manager,产品学习,产品经理,翻译文章,译系列</tag><pubDate>2014-11-01T11:00:00.000Z</pubDate><description>写在前头: PM是一个挺让人困惑的职位的, 尤其是在国内, 感觉大大小小PM无数, 更加让人苦恼PM究竟是个什么样的职位呢? 虽然我有接近2年多的PM经验, 但是因为本身更加喜欢FE, 所以往往也是做一个非常Geek的PM, 并不符合真正的PM本质, 而这次能够看到下文, 确实觉得它对PM的总结还是比较到位的, 非常推荐PM以及想要做PM的童鞋们看看~
 
 
-人机交互是一个快速发展的学术研究领域. 目前来说, 学术机构基本主导了绝大多数的HCI研究, 无论在US,UK,Europe,Australasia以及Japan, 还有逐渐发展起来的南亚以及中国. HCI研究经常是附属在计算机系之下的, 但是又保留着其很强的心理学背景和人因学背景. 此外, 还有几个大型的杰出公司同时在独立的, 当让也有和各学术研究机构合作进行的, HCI相关的研究. 比如微软, PARC以及goole.
-What Do Academic HCI Researchers Do?(那么学术性的HCI研究者都在做什么呢?)
-通常来说, 学术性研究者都在做以下这三类事情:
-    他们通过探索性的实验以及利用复杂的交互系统来创造新的计算机用户界面;    他们建立并发展了一套经验体系, 针对用户对于用户界面的使用和体验; 主要通过实验室中的用户界面研究或者在实际环境中观察用户对用户界面的使用情况(就如同人种学研究一样)来获得的;    他们发展出了一个理论系统来讲述设计以及使用交互系统. 其中包含了一些基本理论, 比如Fitts’s law(菲茨定律),描述指针移动和目标元素在屏幕的位置的的关系, 通常, HCI理论采用设计框架的形式, 包含了各种混杂的概念. HCI研究可能是聚焦到某个整体的局部也可能是直接识图去强化整体.
+公司为啥需要全职的产品经理呢?(或者说,他们一天都在干啥呢?)
+什么是产品经理呢? 产品经理一天的工作都是什么呢? 最重要的是, 为什么公司需要招聘产品经理呢? 这是个好问题.
 
+我们首先需要明确的问题是究竟什么是”产品”. 在软件开发这个领域内, 一个产品呢, 可以是一个网站, 一个应用, 或者是用户们使用的线上服务. 而根据公司的大小以及它的产品性质本身, 一个产品经理可能会是一个完整系统(比如一个移动app)的负责人, 也可能是某个整体系统的一部分(比如在电子商务网站中, 负责全平台的检验流程).
 
-Is There a Connection Between Academic Research and Industry Practice?(在学术研究和工业实践之间有联系吗?)
-在工业界的UX从业人士也通常都会做些研究的, 就如同设计一样. 但是学术性HCI研究和UX研究在目的产出, 目标, 以及关注的范围都有着非常显著的差别, 学术研究和工业研究通常可能都在处理那些看起来比较接近的基础对象: 数字化交互系统的设计和理解以及它们的用户群体. 两者都遵循用户为中心的设计原则, 都提倡把对人类的理解融入到设计环节中. 所以说, 它们之间肯定也应该有很强的关系以及重叠区域.
-在UK, 政府在HCI的学术研究基金投入上逐渐关注起学术研究和工业时间的联系了. UK的工程和物理科学研究委员会, 也是HCI研究领域基金的重要来源, 就讨论过关于HCI研究需要考虑如何”把理论和方法应用到工业实践中”. 更进一步地说, 既然HCI学术研究在很多的领域, 包含医疗健康, 电子设备消费品以及软件等等都有很强的关系, 那么在HCI学术研究和UX实践之间建立一个更好的联系就能够获得很高的回报.
-虽然学术圈经常会对UX领域做出很多不准确的猜测,而且有时候认为两者的关系是理所当然的. 学术研究者们通常会假设因为知识的利用和转移, 所以学术研究和工业实践有着非常自然的联系. 但另一方面, UX领域则经常认为HCI的学术研究通常都是脱离实际的, 在现实社会中是无法应用的. 也因为这样的原因, 他们通常会整个抛弃学术研究, 或者至少是觉得消化以及应用学术研究的结论是非常困难的一件事.
-Moving Toward Establishing a Mutually Beneficial Connection Between Academia and Industry(为学术研究和工业实践发展建立一个双赢互惠的关系)
-有两个开放性问题我们需要强调的是:
-    UX职业领域该如何指导以及启发学术研究?    学术研究又能够为UX职业领域做什么事情呢?
+对这一点可能会存在一些困惑, 毕竟在绝大多数情况下, 产品通常代表着一个你要出售给客户的东西. 尤其是在电子商务, 经常会混淆产品经理和分类经理, 分类经理们主要是负责在电子商务网站出售商品的渠道和经营问题. 所以, 在一定程度上说, 用”产品”这个词确实并不是最合适的. 但是就目前来说, 现状如此, 我们也没法了, 就凑活着用吧.
 
-回答第一个问题可能需要HCI研究者们对理解UX职业领域的工作有着一定的热情, 并且进行一些关于UX实践的经验性研究. 迄今为止, 学术研究中对于UX实践应用的探索还是比较有限的. 无论如何, 在UX领域工作的经验能够对学术研究产生很多意外的重要启示. 而回答第二个问题就要相对更加复杂了 – 甚至可以说完全不知道该如何下手了. 它需要很深入的研究才行.
-令人好奇的是, 学术研究者们通常对HCI研究中大量出现的创新以及其自身关注领域的快速发展而感到忧虑. 在一个学术领域中, 他们的目标通常是建立一个强有力的基础, 然后慢慢发展.
-然而, HCI学术研究领域的创新和广度都强化了其和在工业限制下的UX领域有限的能力形成的鲜明对比. 比如说, 在一个很限制的项目中工作时, 你需要考虑有限定的预算, 有限的时间, 你需要去满足客户的需求以及相关利益人的利益, 还要能和其他领域的人相互配合, 比如软件开发者; 还要习惯于新的工作方式, 比如敏捷开发以及精益方法. 你不会担心有过多的创新, UX从业人士通常希望能够在他们非常受限的环境下创造更多的创新.
-学术性研究的产出中完全可以提供很多对UX领域有潜在价值的东西. 但是如何来传递这些产出呢? 首先也是最重要的是, 我们完全不用把HCI研究和某一个项目或者新项目, 或某项服务的预期条件, 或者某个客户的特定需求绑定在一起; 其次, 学术新的HCI研究有其探究未来科技的自由 – 即便其设计本身有着一定的风险且没有清晰的,即时的回报. 所以, HCI研究者们通常在无数失败的基础上创造了快速的创新, 他们的工作少了很多的限制.
-也许通过有效的沟通, HCI学术研究中的那些成果能够给工业实践带来巨大的价值. 很多UX从业人士都没有那么富裕的时间来让他们去探讨那些当前需求以外的东西. 但是在学术研究中, 关注范围更广是很通常的事情.
-不幸的是, 就目前来说, 绝大多数的学术工作–无论是创造圆形, 概念, 想法, 或者是设计原则 – 都局限在了HCI研究者们在各种会议期刊上发表的论文中了. HCI研究者的受众多数都是那些其他的学术研究者, 而不是那些在工业界工作的人们.
-通过理解用户体验的工作情景, HCI研究者们能够更好的把他们的研究方向切合这些受众, 从而和UX职业领域建立更加友好自然的联系. 与其让学术研究和工业实践互相竞争, 不如假设一方创造那些权威的, 严禁的知识体系, 一方吸收并加以应用呢. 两者这样的互利互惠关系才是最有价值的. 采用这一方法可能会让学术研究者们更好的理解他们该如何进行自己的研究, 让它们更加容易帮助到那些UX从业人士.
-Postscript(后记)
-作为我开始针对这一领域的调研的一部分, 我创建了一个非常简短的, 5分钟调查问卷, 邀请各位UX从业人士来提供一些关于自身背景, 所用方法以及和学术研究的关系的信息. 如果你愿意参与其中, 或者是对这一工作有兴趣的话, 请参与此项调查.
-Acknowledgments(感谢)
-作者非常感谢EPSRC的支持.
-References(参考)
-[1] Benford, Steve, and Gabriella Giannachi. Performing Mixed Reality. Cambridge, MA: MIT Press, 2011.[2] Engineering and Physical Sciences Research Council. Report of the Human EPSRC Computer Interaction Theme Day and Survey, March 2012.[3] Friess, Erin. “Personas and Decision Making in the Design Process: An Ethnographic Case Study.” In Proceedings of CHI ’12. New York: ACM Press, 2012.[4] Goodman, Elizabeth. Performance and Materiality in Professional Interaction Design. PhD thesis, University of California, Berkeley, 2013.[5] Gray, Colin M., Erik Stolterman, and Martin A. Siegel. “Reprioritizing the Relationship Between HCI Research and Practice: Bubble-Up and Trickle-Down Effects.” Proceedings of CHI ’14. New York: ACM Press, 2014.
+为了明确产品经理这一职位的性质, 我们首先从Marc Andreessen就”创业公司唯一重要的事情”这一观点说起:
 
-Source Link:
-    What Is the Relationship Between HCI Research and UX Practice?
+一个创业公司产品的质量可以定义为这一个产品对一个实际使用它的客户或者用户所留下的印象: 这个产品的易用性如何? 其功能的丰富性如何? 流畅性和速度如何? 扩展性又如何? 有多精致?有多少bug呢?
+
+而一个创业公司的市场大小, 则是这一产品的客户或用户的数量, 增长速度 …
+
+唯一重要的事情就是要让产品去适应市场(Product-market fit). 产品适应市场意思就是在一个好的市场里, 要让产品尽可能的满足市场的需求.
+
+虽然Andreessen是为创业公司写的, 但是最后这段关于”产品适应市场”的重要性对每一个公司都是一样的–无论这个公司是在开发一个新产品还是说去改善一个现有产品,亦或者是介于这两者之间的,都一样. 这是通向成功的宇宙公理, 而这也是产品经理所负责的核心.
+
+有了这个作为背景, 我对产品经理这一角色的定义就是: 通过数字产品持续性的更新和执行来符合用户需求从而实现商业上的成功.
+
+这一定义总结了一个产品经理所需要涵盖的全部内容: 目标市场, 所属产品的各个方面, 商业成功的需求, 以及如何去衡量这一成功. 它还包含了三个产品经理绝对不能忽视的点:
+
+成功的最佳衡量标准就是商业的健康度, 也即产品给用户提供的价值;所有的一切都起始于对目标市场和需求的深刻理解, 从而把焦点集中到产品体验的质量上去;为了符合市场需求, 可持续发展需要一个良好的策划与执行.
+
+那么, 如何把这些转译成一个产品经理每天的工作呢? 这个问题就太大了, 在这里是说不清楚的, 不过仅作为一个初步介绍的话, Marty Cagan在它的电子书”每一个伟大的产品背后”中列出了一个针对产品经理需要负责的事项清单. 这一清单包含:
+
+寻找确认并且评估产品机遇的可行性和易行性,确保合适的产品在合适的时机发布出去,为开发者提供清晰的产品策略和思路指南,带领团队执行产品的思路,确保向团队成员传达产品的内涵,在产品开发流程中始终站在用户的角度思考问题.
+
+但是, 在一个产品经理能够做这些事情之前, 我们首先要问一些比较尴尬的问题. 首先, 公司真的需要产品经理吗? 另外, 如果我们同意说需要, 那么一个好的产品经理的特质是什么呢? 同时还有, 这一角色在公司组织架构中的位置呢? 我们来一一回答这些问题.
+
+为什么公司需要产品经理
+
+产品经理的角色有一些公司可能是非常不买账的. 通常的反对意见包含:
+
+我们公司里有各种各样的人, 他们就已经满足一个产品经理职责的各个范畴了, 不需要专门配备这一个职务了.我完全看不出来这个角色能给公司带来什么实质性的利益.产品经理只会拖我们后腿.我不想把产品控制权交到别人手中.(通常这个理由不会那么公开的说…)
+
+这些考虑都是很有道理的, 但是显然他们并没有很好的理解产品经理这一角色, 或者说这个公司的产品经理很差劲, 没有很好的体现产品经理的职责.
+
+实情是, 为了更高的效率, 对一个产品或者领域的管理权最好不要分散给多个人掌控. 对于产品经理而言, 看到产品全局是非常重要的 – 大局战略和局部细致都是一样重要的 – 为了获得更好的抉择. 如果不同流程的情况掌握在不同人手中, 那么就没有人会有一个完好的大局观, 那么这一角色的价值自然也会渐渐失去.
+
+我们看下产品经理通常能够带来的两个典型好处吧:
+
+产品经理确保产品一直处于市场驱动
+
+对产品经理而言, 其最突出的优点就是他们可以帮助公司一直为目标市场的需求和目标所驱动, 而不是被技术和潮流所驱动. 如同Barbara Nelson在”谁需要产品经理”一文中所说:
+
+相比于找到你现有技术的客户而言, 找到市场问题然后用技术手段解决实在是简单太多了.
+
+如果方法足够正确的话, 一个市场驱动的产品能够促成一个长期的, 可持续的, 有利润的商业, 因为这个公司会持续的把焦点放在解决市场问题而不是用最新的科技去做什么的问题上. 一个公司受什么驱动是很重要的, 因为受市场驱动的公司已经被证实比受其他因素驱动的公司所获得的利润更高(要多出31%, 根据George S.Day 和 Prakash Nedungadi的报告).
+
+这并不意味着关注不断出现的变化和产品创新是互斥的. 确定市场问题并不仅仅是找到现有的问题进行改进(比如说, 60%的用户都会在这个页面离开, 那么我们就搞搞这个页面), 同时还需要创造心的产品来满足那些没有被满足的需求(比如说现在的电话实在太烂了, 我们搞个新的吧).
+
+产品经理能够提升时间管理
+
+产品经理带来的第二个好处就是他们能够减少一个公司实现目标所需的时间. 一个定位清晰合适的产品, 其开发流程掌握在一个有效率的管理者手中时会极大改善发布所需时间以及回报所需时间的.
+
+那么为什么产品经理可以做到这一点呢? 因为他们要权衡出那些是值得做的, 那些是不值得的. 这也意味着可以把更少的时间花费在Spaghetti法上了(把所有事情都扔到墙上看哪个能够粘在上面…) 而有更多时间放在已经被市场验证过的产品上了. 这一方法同样还能帮助更好的确定公司的焦点所在, 帮助公司更加投入到那些更有可能成功的项目之中, 而不是把人力分散到那些没人能够确保获利的项目中去.
+
+未完待续(还有两部分回答另外两个问题).
+
+Resources:
+
+原文 - Why Companies Need Full-Time Product Managers 
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>当你出现在Designer News的头条之后会发生什么?</title><link>http://taoalpha.me/blog/2014/11/25/read-what-happens-when-you-appear-after-the-designer-news-headlines/</link><category>read</category><tag>DN,翻译文章,译系列</tag><pubDate>2014-11-25T12:00:00.000Z</pubDate><description>本文原文来自 What happens when you’re #1 on Designer News , 内容主要是介绍了一个上周的DN头条产品, 在DN的首位占据了大概12个小时的时间, 获得了48的赞和16个评论, 然后他们分析了这一段时间的一些数据, 很有意思, 值得一看哦~
+
+一些背景数据: DN目前大约有17000个注册用户, 主要受众是设计圈~
+
+总体指标:
+
+一些关于直接来自DN的用户总体指标:
+
+1900 用户5600 PV平均一次访问时长: 1:40min蹦失率: 60%
+
+其他一些结果:
+
+而因为一些看客们在社交媒体上分享了我们的网站, 所以我们实际获得了更多的访问者, 甚至在某个blog中露了一次脸:
+
+SitePoint的报道(带来了500的访问者)大约50条Tweets来自Google+的100位访问者来自facebook的1000位访问者PV的峰值达到了80/min
+
+有几个大牛也在twitter上转载了关于我们的产品推文.
+
+用户的其他属性:
+
+DN的用户基本是30岁左右, 来自美国本土的MacBook用户, 通常使用的也都是Chrome(当然他们中多数都厌恶IE, 哈哈. PS: who doesn’t?):
+
+OS: 83% Mac, 11%  windowsMobile:  95% Desktop, 4% Mobile, 1% TabletBrowser: 88% Chrome, 11% Safari, … , 0% IE!!!Coutries: 40% 美国, 10%的英国, 5%的加拿大, 4%的德国, 4%的瑞士;Language: 85%的英语;
+
+ 
+
+如上~
+
+博主说:
+
+对于一个小产品或者说初始项目而言, 这种小站或者特定细分的垂直站的推广也是不容小觑的哦~ 不过从用户属性来说, DN这种垂直站点的用户属性确实非常突出, 集中啊.
 </description><source>TaoAlpha</source><author>TaoALpha</author></item></channel></rss>
