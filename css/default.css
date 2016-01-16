@@ -2316,6 +2316,28 @@ pre span {
   height: auto !important;
   height: 400px; }
 
+#progressbar {
+  width: 780px;
+  display: none;
+  position: fixed;
+  height: 50px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+  top: 0px;
+  z-index: 10000; }
+  #progressbar span.bg {
+    height: 100%;
+    display: block;
+    background-color: #ccc; }
+  #progressbar span.text {
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 22px;
+    line-height: 50px; }
+
 /****************entry style**************/
 .sidenav {
   width: 300px;
@@ -3128,7 +3150,9 @@ button#gosearch {
     font-size: 14px; }
   #content {
     width: 85%;
-    margin: 100px auto 50px; }
+    margin: 100px auto 0px 40px; }
+  #progressbar {
+    width: 100%; }
   h2 {
     font-size: 20px; }
   h3 {

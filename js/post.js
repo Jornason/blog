@@ -1,33 +1,7 @@
 "use strict";
 
 $(function () {
-  var isMobile;
-  isMobile = {
-    Android: function Android() {
-      return navigator.userAgent.match(/Android/i);
-    },
-    BlackBerry: function BlackBerry() {
-      return navigator.userAgent.match(/BlackBerry/i);
-    },
-    iOS: function iOS() {
-      return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-    },
-    Opera: function Opera() {
-      return navigator.userAgent.match(/Opera Mini/i);
-    },
-    Windows: function Windows() {
-      return navigator.userAgent.match(/IEMobile/i);
-    },
-    any: function any() {
-      return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
-    }
-  };
-
   (function () {
-    var ie6;
-    if ($.browser != null) {
-      ie6 = $.browser.msie && $.browser.version === "6.0";
-    }
     var initHeading = function initHeading() {
       var h2, h2index, h3;
       h2 = [];
@@ -106,7 +80,8 @@ $(function () {
         return timers[uniqueId] = setTimeout(callback, ms);
       };
     })();
-    if ($(".entry h2").length >= 1 && !isMobile.any() && !ie6) {
+    //if ($('.entry h2').length >= 1 && !isMobile.any() && !ie6) {
+    if ($(".entry h2").length >= 1) {
       genIndex();
       $(window).load(function () {
         var menuIndexLeft, menuIndexTop, scrollTop;
@@ -166,5 +141,22 @@ $(function () {
       });
     }
     return $("#menuIndex").css("max-height", $(window).height() - 80);
+  })();
+  // show the progress for reading
+
+  (function () {
+    $(window).scroll(function () {
+      if (window.scrollY > 220) {
+        var percentage = Math.ceil((window.scrollY - 200 + $(window).height()) / $("section.entry").height() * 100);
+        if (percentage < 100) {
+          $("div#progressbar").fadeIn(300).find("span.text").text(percentage + "% read");
+          $("div#progressbar").fadeIn(300).find("span.bg").css({ width: percentage + "%" });
+        } else {
+          $("div#progressbar").fadeOut(300);
+        }
+      } else {
+        $("div#progressbar").fadeOut(300);
+      }
+    });
   })();
 });
