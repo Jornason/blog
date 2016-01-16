@@ -1,4 +1,25 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-16T04:47:39.426Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ LeetCode Substring Questions 1</title><link>http://taoalpha.me/blog/2016/01/16/oj-oj-leetcode-substring-questions-1/</link><category>OJ</category><tag>LeetCode,Substring</tag><pubDate>2016-01-16T06:52:31.000Z</pubDate><description>3. Longest Substring Without Repeating CharactersQuestionGiven a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for “abcabcbb” is “abc”, which the length is 3. For “bbbbb” the longest substring is “b”, with the length of 1.
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-16T17:18:53.909Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>Blur on Background</title><link>http://taoalpha.me/blog/2015/12/31/tech-blur-on-background/</link><category>tech</category><tag>Blur,CSS3</tag><pubDate>2015-12-31T08:09:10.000Z</pubDate><description>Today I finally made my first angularJS app which is a simple todo app connected with my First nodejs cli tool: baby. They share the same data set, so you can think it as the UI for baby todo part (I will build the UI for other nice features, one by one).
+I really like the interface of the Papaly, especially the speed dial dashboard !! So I also use a large image and the crystal blur block on my design, here I just want to share something with you :)
+BlurBlur is quite popular in Web Design, you can see them all the time. But how we do that from the point of coding part ? Before CSS3 introduced the filter, people just modify the images manually and make them blur before actually use them in the design, and now we have CSS3, we can just use filter.
+We all know make a image blur is pretty simple, but how we make part of image blur, and even more, how we make part of image blur be dynamic ? This is what I gonna talk about today :)
+Without CSS3Let’s do it old fashion first. You want create a box within which all background image should be blur, and also the box may move to any place or even can be moved by users. How to do that? Quite simple, we can use two images, one is normal, the other is blur one. 
+Then what you should know is background-attachment which adds the magic.
+12345678910111213141516171819202122232425262728293031323334353637383940/* background-attachment can specify the position of the background image * fixed : the background is fixed with regard to the viewport, so it won't move with the element * background-attachment: fixed; * background-size:100%; * keep size 100% to fit the viewprot */html,body&amp;#123;  width:100%;  height:100%;  margin:0px;&amp;#125;.imgBlur&amp;#123;  width:100%;  height:100%;  margin:auto;  background-image:url(&quot;http://www166.lunapic.com/editor/premade/o-blur.gif&quot;);// image without blur  background-size:100%;&amp;#125;div.blurBox&amp;#123;  width:50%;  margin:auto;  height:200px;  color:white;  padding:30px;  text-align:center;  display:table;&amp;#125;div.blurBox.withoutcss3&amp;#123;  background-attachment:fixed;  background-size:100%;  background-image:url(http://www166.lunapic.com/editor/premade/blur.gif);// image with blur   display:none;&amp;#125;.blurBox span&amp;#123;  display:table-cell;  vertical-align:middle;&amp;#125;
+With CSS3With CSS3, we don’t need the second image, we can just use blur.
+123456789101112131415161718192021/* z-index is to make sure the content of the box won't be blur */div.blurBox.withcss3&amp;#123;  z-index:1;&amp;#125;div.blurBox.withcss3:before&amp;#123;  width:100%;  display:block;  content:&quot; &quot;;  height:100%;  background-image:url(http://www166.lunapic.com/editor/premade/o-blur.gif);  // now we don't need blur image  background-attachment:fixed;  // still need this since we need use the blur on the image  position: absolute;  background-size:100%;   -webkit-filter: blur(3px);  filter:blur(3px);  z-index:-1;&amp;#125;
+Here is the demo I made with codepen:
+See the Pen LGbajd by taoalpha (@taoalpha) on CodePen.
+
+
+Advance SkillsPretty cool ha! Combine with before and after and other cool stuffs,  you can achieve a lot amazing effects, even this one : Depth of field effect with SVG filters
+See the Pen Depth of field effect with SVG filters by Vaughan Curd (@vcurd) on CodePen.
+
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Add a reading progressbar to your blog</title><link>http://taoalpha.me/blog/2016/01/16/tech-add-a-reading-progressbar-to-your-blog/</link><category>tech</category><tag>JS,progressbar</tag><pubDate>2016-01-16T21:37:42.000Z</pubDate><description>Yesterday, I added airbnb blog to my subscriptions, and found an interesting feature on this blog: when you scroll down, there will be a progressbar on the top of the page showing the progress of your reading on this post. So I just added it to my blog :)
+Actually the logic is pretty simple, you calculate the distance you have scroll down, and then divided by the height of your post area, fixed with some margins and offset, added some styles and html, you will get your own reading progressbar :) I don’t know whether airbnb using this method or not since I didn’t look their code…
+1234567891011121314151617181920212223// with jQuery( () =&amp;gt; &amp;#123;  $(window).scroll( () =&amp;gt; &amp;#123;    // listen to the scroll event    if(window.scrollY &amp;gt; 220)&amp;#123;      // the distance between the top of the document and start of your post area, only show when you actually start reading :)      var percentage = Math.ceil( ( (window.scrollY - 200 + $(window).height()) / $('section.entry').height() )*100 )      // calculate the percentage of reading, here I minus the distance at the top but add the height of your screen to make sure it will hit 100 when scroll down to the bottom      if(percentage&amp;lt;=100)&amp;#123;        // show and update the progressbar        $('div#progressbar').fadeIn(300).find('span.text').text(percentage+&quot;% READ&quot;)        $('div#progressbar').fadeIn(300).find('span.bg').css(&amp;#123;width:percentage+&quot;%&quot;&amp;#125;)      &amp;#125;      // hide it when read 100%      if(percentage &amp;gt;= 100)&amp;#123;        $('div#progressbar').fadeOut(300)      &amp;#125;    &amp;#125;else&amp;#123;      // hide if you scroll up to the top      $('div#progressbar').fadeOut(300)    &amp;#125;  &amp;#125;)&amp;#125;)()
+And then you just need a html snippet like this on your post page and add your own styles for them:
+1div#progressbar&amp;#10;  span.bg&amp;#10;  span.text
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>OJ LeetCode Substring Questions 1</title><link>http://taoalpha.me/blog/2016/01/16/oj-oj-leetcode-substring-questions-1/</link><category>OJ</category><tag>LeetCode,Substring</tag><pubDate>2016-01-16T06:52:31.000Z</pubDate><description>3. Longest Substring Without Repeating CharactersQuestionGiven a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for “abcabcbb” is “abc”, which the length is 3. For “bbbbb” the longest substring is “b”, with the length of 1.
 LeetCode3. Longest Substring Without Repeating Characters
 Tags: Medium, String, Two Pointers, Hash Table
 AnswersHash TableAf first, my idea is use a hashmap as a view window to tract all the letters of current substring, and everytime we found the repeated one, we just move the loop pointer to the last position of this repeated character, and continue looping to the end. But apparently it will cost much more than O(n) for the average case. So then I thought I don’t need the move the loop pointer back, just need a new pointer to indicate the start of the substring, and if I do that, I couldn’t empty the view window which is the hashmap since I will lose tract of the elements between the start and i, so I keep all elements in the hashmap, just make sure every valid repeated character is appeared after the current start pointer.
@@ -344,85 +365,6 @@ Others: others;
 Be Consistent;
 
 SummaryThis book is pretty short with all valueable content. Strongly recommend after you get familiar with all basic css concepts.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (5)</title><link>http://taoalpha.me/blog/2015/06/24/read-javascript-the-definitive-guide-5/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-24T08:00:00.000Z</pubDate><description>概述在十到十二章中, 第十章的正则表达式内容最为丰富, 也是目前应用即为广泛的内容之一. 不过这里也主要是结合js的应用, 实际上正则表达式本身就是一个很值得研究的话题, 有不少书都在谈这个话题, 我后面要读的书目中恰巧就有这么一本, 后面会更加详细的学习以下正则表达式的方方面面.
-十一章算是非常前沿, 高端或者说冷门的点了, 随着浏览器的盛行以及技术的进步, 安全问题始终都是一个很重视的点, 而在这种攻防演练中也促进了js本身的进步, 而主流浏览器本身更是走在了js的最前沿. 各种新的属性都是由他们引入而逐渐成为标准的;
-十二章主要是对走出浏览器的JS做了一个简单的介绍, 而NodeJS的大名在近几年在前后端, 全端领域都可谓是人尽皆知. 我也会在之后阅读相关书籍的时候做更详细的笔记记录.
-阅读笔记Chapter 10 - Pattern Matching Regular Expressions
-normal repetition characters:
-{m,n} 匹配m-n次;
-{m,} 匹配至少m次;
-{m} 匹配恰好m次;
-? 匹配0或1次;
-+ 匹配1或多次;
-* 匹配0或多次;
-
-
-Nongreedy repetition:
-??, +?, *? 在常规的匹配后加上?就能让匹配尽可能发生的短, 它会在允许范围内, 找到尽可能短的匹配;
-
-
-Alternation, Grouping, Reference:
-| 表示匹配前者或者后者;
-(...) 成组, 以组的形式来使用*,+,?等, 同时会记录组的匹配以用于Reference;
-(?:...) 只是成组, 不记录匹配, 不能用于reference, 也不算做reference的序号中去;
-\n 引用, n表示序号, 从1开始, 代表之前第几个group的匹配, 用于匹配开头结尾相同且多样的有奇效:/([&amp;#39;&amp;quot;])[^&amp;#39;&amp;quot;]*\1/ 匹配单引号或者双引号内的内容;
-需要注意的就是, reference不能用于[]的character class之中!
-
-
-anchor characters:
-^: 匹配开头;
-$: 匹配结尾;
-\b: 匹配词边界, /\bJava\b/ =&amp;gt; Java
-\B: 匹配非词边界, /\B[Ss]cript\B/ =&amp;gt; JavaScript, postscript...
-?=p: 表示内容需要匹配p规则,但是返回的命中中不包含这部分;
-?!p: 表示内容不匹配p规则;
-
-
-flags:
-i: 大小写敏感, 即区分大小写;
-g: 全局匹配, 默认是匹配首个;
-m: 多行匹配;
-
-
-String Methods for Pattern Matching:
-search(): 返回匹配词的位置或者-1代表无返回;
-replace(): 支持正则匹配替换, 同时支持替换时使用$n代表是正则匹配的引用, 比如text.replace(/&amp;quot;([^&amp;quot;]*)&amp;quot;/g, &amp;#39;“$1”&amp;#39;);即替换&amp;quot;&amp;quot;为“”;
-match(): 返回包含了匹配的结果, 返回结构为数组格式;
-split(): 接受正则匹配作为其分隔符, 比如: &amp;quot;1, 2, 3&amp;quot;.split(/\s*,\s*/); =&amp;gt; [&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;], 就去掉了本来直接split()多余的空格;
-
-
-RegExp prototype method:
-exec(): 基本等同match(), 不过接受的是string类型去匹配, 而由正则去调用, 当表达式加了全局flag后, exec()每次执行会记录其上次匹配的位置并从此开始新的匹配, 比如:var pattern = /Java/g;pattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).indexpattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).index就会相继输出0,28两个位置;
-test(): 用以检测表达式是否匹配了传入的string, 其执行逻辑(g模式下记录上次匹配位置)和exec()一样;
-
-
-
-Chapter 11 - JavaScript Subsets and Extensions本章主要介绍一些目前主流浏览器支持但是还没有写入JavaScript官方版本中的一些js语言的子集(非官方版本)和扩展属性:
-
-subsets: 通常是为了确保不确定安全性的代码能够安全的运行而出现的(除了Crockford’s JavaScript: The Good Parts);
-ADsafe, 最早一个因为安全因素设计的子集语言, 会禁止对绝大多数全局变量的访问;
-dojox.secure: 算是Dojo toolkit的一个扩展;
-Caja: 其包含了两个子集, 一个是Cajita, 比较严格, 类似ADsafe 和 dojox.secure; 还有个是Valija, 则比较接近如今ECMAScript 5的strict mode了;
-Microsoft Web Sandbox;
-FBJS: facebook使用的一个自己;通常子集都需要对应一个verifier, 来确保代码符合其要求;
-
-
-extensions:
-const: 声明常量, 比如: const pi = 3.14;;
-let: 块变量声明, 相当于缩小版的var, 作用域仅存活在最近的一个块结构里, 你可以用{}来自行创建一个block;
-destructing: 允许多变量结构化赋值: let [x,y] = [1,2];let [r,theta] = polar(1.0, 1.0); function polar(x,y){...};甚至这种all = [first,second] = [1,2,3,4]; 或者这种let transparent = {r:0.0, g:0.0, b:0.0, a:1.0}; let {r:red, g:green, b:blue} = transparent;;
-for/each: 和for/in循环不同, for/each遍历对象的属性值而不是属性名, 且可操作类array对象;
-for/in: 从js 1.7(mozilla的js引擎版本号)开始, for/in也不局限在array和常规object了, 只要是可循环的元素都可以使用了;
-yield: 从python中引入的;
-Array Comprehensions:  还是从Python中借用的, let evensquares = [x*x for (x in range(0,10)) if (x % 2 === 0)];
-try/catch: 支持多catch;
-
-
-
-Chapter 12 - Server-Side JavaScript随着js的发展, 慢慢的超出了其本身的作用域: 浏览器. 随着Google V8引擎为js包入了unix的常用API: files,processes,streams,sockets等, js开始走出浏览器进入server端了. 正式命名为Node.JS. 想来很多人可能都听过, 因为后面我的数目中也包含了相关的书, 且本章内容也没见过太多, 所以就一起留到以后吧~
-参考文献:
-JavaScript the Definitive Guide 6th edition
-
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (2)</title><link>http://taoalpha.me/blog/2015/06/18/read-javascript-the-definitive-guide-2/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-18T10:00:00.000Z</pubDate><description>概述作为JS中的一等公民, function(函数)始终是JS的核心中的核心. 所以这里单独用一篇笔记来记录JavaScript: the definitive Guide一书第八章的内容. 主要介绍了函数的定义, 作用域, 参数, 声明以及执行等基础知识, 另外也着重介绍了其高级用法中的closure. 我将自己觉得重要的, 值得记录的部分都作为心得摘抄如下:
 心得arguments对象对每一个function而言, 都自动会有一个内置的arguments对象, 用它就可以访问传入的参数了. 通常来说arguments对象我们只会用在不定长传参的函数上, 但arguments本身带有的一个函数却是可以在某些时刻发挥重要作用的~ 这个函数就是callee函数:
 12345678// 递归自我调用函数在解决一些问题的时候是很常用的, 而通常情况下我们都会在函数内调用本函数名即可, 但是如果我们需要实现自我调用的函数正好是一个无名函数呢?// arguments.callee 即调用当前执行的函数function(x)&amp;#123;return x*arguments.callee(x-1)&amp;#125;// 如上, 就实现了一个很简单的&amp;gt;2阶乘计算了
@@ -705,55 +647,85 @@ Chapter 9 - Classes and Modules除了 阅读笔记-2中包含的, 由于ECMAScri
 JavaScript the Definitive Guide 6th edition
 Functional Javascript
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
-Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
-NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
-jQueryjQuery is the most popular js module people used in their websites or webapps. And using jQuery with CoffeeScript is just like javascript. jQuery is javascript, after all.
-Want to use CoffeeScript with jQuery? Just do it and follow the rules we learn from the basic syntax part. Here I list several examples and if you look it closely, you will find everything you have already known if you read the first chapter carefully. The author of the book shows us another complex examples: TodoMVC in CoffeeScript.
-BTW: TodoMVC is a great project which shows you how to write a todo app in all kinds of tools and frameworks.
-1234567891011121314151617181920212223242526272829303132333435363738394041$ -&amp;gt;  do some  do another### =&amp;gt;$(function() &amp;#123;  some();  return another();&amp;#125;);That's just like the $(document).ready(function()&amp;#123;&amp;#125;)#### A function using ajax to send mail, which is a new feature I will add to my blog in a few days :)@sendMail = (msg)-&amp;gt;  $.ajax    type: 'POST'    url: 'https://mandrillapp.com/api/1.0/messages/send.json'    data:      'key': ''      'message':        'from_email': msg.sender_mail        'from_name' : msg.sender_name        'to': [            &amp;#123;              'email': ''              'name': 'TaoAlpha'              'type': 'to'            &amp;#125;          ]        'autotext': 'true'        'subject': msg.subject        'html': msg.content  .done (response)-&amp;gt;    showAlert(&quot;success&quot;,&quot;Thanks for your contribution!&quot;)  .fail (data)-&amp;gt;    showAlert(&quot;fail&quot;,&quot;Sorry! Failed to send the email. Please retry!&quot;)# another function to get unique result from an array of objectsArray::getObjectUnique = (id) -&amp;gt;  a=b=[];  add = (data) -&amp;gt; b.push data[id];data  (add i for i in @ when b.indexOf(i[id]) == -1 )
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748// You can see that you have saved a lot of keystrokes and the codes look more clean and beautiful.// Because coffeescript doesn't support declare global variables directly, and if we want to use the function in other script, we need to declare it into the `this` scope.this.sendMail = function(msg) &amp;#123;  return $.ajax(&amp;#123;    type: 'POST',    url: 'https://mandrillapp.com/api/1.0/messages/send.json',    data: &amp;#123;      'key': '',      'message': &amp;#123;        'from_email': msg.sender_mail,        'from_name': msg.sender_name,        'to': [          &amp;#123;            'email': '',            'name': 'TaoAlpha',            'type': 'to'          &amp;#125;        ],        'autotext': 'true',        'subject': msg.subject,        'html': msg.content      &amp;#125;    &amp;#125;  &amp;#125;).done(function(response) &amp;#123;    return showAlert(&quot;success&quot;, &quot;Thanks for your contribution!&quot;);  &amp;#125;).fail(function(data) &amp;#123;    return showAlert(&quot;fail&quot;, &quot;Sorry! Failed to send the email. Please retry!&quot;);  &amp;#125;);&amp;#125;;# get unque result for array of objectsArray.prototype.getObjectUnique = function(id) &amp;#123;  var a, add, b, i, j, len, results;  a = b = [];  add = function(data) &amp;#123;    b.push(data[id]);    return data;  &amp;#125;;  results = [];  for (j = 0, len = this.length; j &amp;lt; len; j++) &amp;#123;    i = this[j];    if (b.indexOf(i[id]) === -1) &amp;#123;      results.push(add(i));    &amp;#125;  &amp;#125;  return results;&amp;#125;;
-RailsRuby on Rails is a web framework that came around in 2004. And it soon became quite popular. Actually many people believe that Rails saved the ruby…
-Check this:How to download and install Rails if you haven’t installed it.
-Rails’s principles
-Convention over configuration
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (5)</title><link>http://taoalpha.me/blog/2015/06/24/read-javascript-the-definitive-guide-5/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-24T08:00:00.000Z</pubDate><description>概述在十到十二章中, 第十章的正则表达式内容最为丰富, 也是目前应用即为广泛的内容之一. 不过这里也主要是结合js的应用, 实际上正则表达式本身就是一个很值得研究的话题, 有不少书都在谈这个话题, 我后面要读的书目中恰巧就有这么一本, 后面会更加详细的学习以下正则表达式的方方面面.
+十一章算是非常前沿, 高端或者说冷门的点了, 随着浏览器的盛行以及技术的进步, 安全问题始终都是一个很重视的点, 而在这种攻防演练中也促进了js本身的进步, 而主流浏览器本身更是走在了js的最前沿. 各种新的属性都是由他们引入而逐渐成为标准的;
+十二章主要是对走出浏览器的JS做了一个简单的介绍, 而NodeJS的大名在近几年在前后端, 全端领域都可谓是人尽皆知. 我也会在之后阅读相关书籍的时候做更详细的笔记记录.
+阅读笔记Chapter 10 - Pattern Matching Regular Expressions
+normal repetition characters:
+{m,n} 匹配m-n次;
+{m,} 匹配至少m次;
+{m} 匹配恰好m次;
+? 匹配0或1次;
++ 匹配1或多次;
+* 匹配0或多次;
 
 
-Rails is designed to assume that the programmer will follow certain known conventions, which if used, provide great benefit and much less need to configure the framework.That means that the framework makes assumptions on how a typical application should be built and structured and it doesn’t try to be overly flexible and configurable. This helps you spend less time on mundane tasks like configuring and wiring up an application architecture and more time on actually building your app.
+Nongreedy repetition:
+??, +?, *? 在常规的匹配后加上?就能让匹配尽可能发生的短, 它会在允许范围内, 找到尽可能短的匹配;
 
 
-Don’t repeat yourself, or DRY
+Alternation, Grouping, Reference:
+| 表示匹配前者或者后者;
+(...) 成组, 以组的形式来使用*,+,?等, 同时会记录组的匹配以用于Reference;
+(?:...) 只是成组, 不记录匹配, 不能用于reference, 也不算做reference的序号中去;
+\n 引用, n表示序号, 从1开始, 代表之前第几个group的匹配, 用于匹配开头结尾相同且多样的有奇效:/([&amp;#39;&amp;quot;])[^&amp;#39;&amp;quot;]*\1/ 匹配单引号或者双引号内的内容;
+需要注意的就是, reference不能用于[]的character class之中!
 
 
-Every piece of knowledge must have a single, unambiguous, and authoritative representation within a system.Rails strives to remove duplication and boilerplate wherever it can.
-
-How to use Rails with CoffeeScriptLuckily, after Rails 3.1, you don’t need do anything to let Rails support CoffeeScript. It has already become part of rails! And also, rails has changed its default js library to jQuery.
-So what you need to do if you want to use coffeescript with rails? Nothing but learn rails!
-Just like the author said in the book: “If you haven’t done so already, I encourage you to spend some more time learning Rails as well as Ruby, and immersing yourself in the wonderful communities they support.”
-Node.jsNode is fantastic. It changes something. Before node, javascript was mostly run inside browsers. Now it just came out and gave web developers a chance to become a full-stack!
-Features of Node
-Event-driven
-
-
-The Node.js framework only allows non-blocking, asynchronous I/O. This means that any I/O operation that is accessing an external resource, such as the operating system, a database, or a network resource must happen asynchronously.
+anchor characters:
+^: 匹配开头;
+$: 匹配结尾;
+\b: 匹配词边界, /\bJava\b/ =&amp;gt; Java
+\B: 匹配非词边界, /\B[Ss]cript\B/ =&amp;gt; JavaScript, postscript...
+?=p: 表示内容需要匹配p规则,但是返回的命中中不包含这部分;
+?!p: 表示内容不匹配p规则;
 
 
-Fast and scalable
+flags:
+i: 大小写敏感, 即区分大小写;
+g: 全局匹配, 默认是匹配首个;
+m: 多行匹配;
 
 
-The V8 JavaScript engine(created by google and used in chrome) used by Node.js is highly optimized for performance, thus making Node.js applications very fast. The fact that Node is non-blocking will ensure that your applications will be able to handle many concurrent client requests without using a lot of system resources.
+String Methods for Pattern Matching:
+search(): 返回匹配词的位置或者-1代表无返回;
+replace(): 支持正则匹配替换, 同时支持替换时使用$n代表是正则匹配的引用, 比如text.replace(/&amp;quot;([^&amp;quot;]*)&amp;quot;/g, &amp;#39;“$1”&amp;#39;);即替换&amp;quot;&amp;quot;为“”;
+match(): 返回包含了匹配的结果, 返回结构为数组格式;
+split(): 接受正则匹配作为其分隔符, 比如: &amp;quot;1, 2, 3&amp;quot;.split(/\s*,\s*/); =&amp;gt; [&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;], 就去掉了本来直接split()多余的空格;
 
 
-Node is not Rails
+RegExp prototype method:
+exec(): 基本等同match(), 不过接受的是string类型去匹配, 而由正则去调用, 当表达式加了全局flag后, exec()每次执行会记录其上次匹配的位置并从此开始新的匹配, 比如:var pattern = /Java/g;pattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).indexpattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).index就会相继输出0,28两个位置;
+test(): 用以检测表达式是否匹配了传入的string, 其执行逻辑(g模式下记录上次匹配位置)和exec()一样;
 
 
-Rails strives to be a full-stack solution to building web applications, whereas Node.js is more of a low-level system for writing any type of fast and scalable network application.
 
-Node and CoffeeScriptWant to write coffeescript in node? It’s easy, all you need is a module named CoffeeScript. And like many other languages, node has several frameworks people built for web development, like: Express.
-The core about how to use coffeescript with nodejs is to use the --watch for coffee command in node. It will automatically compile all file end with coffee into js when there is a change made into these files.
-And just like jQuery, you just follow the rules and write your code.
-DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
-That’s all. Thanks!
+Chapter 11 - JavaScript Subsets and Extensions本章主要介绍一些目前主流浏览器支持但是还没有写入JavaScript官方版本中的一些js语言的子集(非官方版本)和扩展属性:
+
+subsets: 通常是为了确保不确定安全性的代码能够安全的运行而出现的(除了Crockford’s JavaScript: The Good Parts);
+ADsafe, 最早一个因为安全因素设计的子集语言, 会禁止对绝大多数全局变量的访问;
+dojox.secure: 算是Dojo toolkit的一个扩展;
+Caja: 其包含了两个子集, 一个是Cajita, 比较严格, 类似ADsafe 和 dojox.secure; 还有个是Valija, 则比较接近如今ECMAScript 5的strict mode了;
+Microsoft Web Sandbox;
+FBJS: facebook使用的一个自己;通常子集都需要对应一个verifier, 来确保代码符合其要求;
+
+
+extensions:
+const: 声明常量, 比如: const pi = 3.14;;
+let: 块变量声明, 相当于缩小版的var, 作用域仅存活在最近的一个块结构里, 你可以用{}来自行创建一个block;
+destructing: 允许多变量结构化赋值: let [x,y] = [1,2];let [r,theta] = polar(1.0, 1.0); function polar(x,y){...};甚至这种all = [first,second] = [1,2,3,4]; 或者这种let transparent = {r:0.0, g:0.0, b:0.0, a:1.0}; let {r:red, g:green, b:blue} = transparent;;
+for/each: 和for/in循环不同, for/each遍历对象的属性值而不是属性名, 且可操作类array对象;
+for/in: 从js 1.7(mozilla的js引擎版本号)开始, for/in也不局限在array和常规object了, 只要是可循环的元素都可以使用了;
+yield: 从python中引入的;
+Array Comprehensions:  还是从Python中借用的, let evensquares = [x*x for (x in range(0,10)) if (x % 2 === 0)];
+try/catch: 支持多catch;
+
+
+
+Chapter 12 - Server-Side JavaScript随着js的发展, 慢慢的超出了其本身的作用域: 浏览器. 随着Google V8引擎为js包入了unix的常用API: files,processes,streams,sockets等, js开始走出浏览器进入server端了. 正式命名为Node.JS. 想来很多人可能都听过, 因为后面我的数目中也包含了相关的书, 且本章内容也没见过太多, 所以就一起留到以后吧~
+参考文献:
+JavaScript the Definitive Guide 6th edition
+
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (6)</title><link>http://taoalpha.me/blog/2015/06/25/read-javascript-the-definitive-guide-6/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-25T10:00:00.000Z</pubDate><description>概述正式进入本书第二部分的内容, 核心主要围绕在浏览器内的js. 包含了最基本的使用方式, 方法, 因浏览器而增加的各种属性方法, 操作css, dom的方法, 以及常用的一些js框架, 库等, 同时还包含了目前浏览器大热的安全领域.
 阅读笔记Chapter 13 - JavaScript in Web Browsers
 异步:
@@ -1169,6 +1141,55 @@ JavaScript Weekly Newsletter
 YUI Theatre
 Rey Bango 作者本人哈哈
 
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
+Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
+NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
+jQueryjQuery is the most popular js module people used in their websites or webapps. And using jQuery with CoffeeScript is just like javascript. jQuery is javascript, after all.
+Want to use CoffeeScript with jQuery? Just do it and follow the rules we learn from the basic syntax part. Here I list several examples and if you look it closely, you will find everything you have already known if you read the first chapter carefully. The author of the book shows us another complex examples: TodoMVC in CoffeeScript.
+BTW: TodoMVC is a great project which shows you how to write a todo app in all kinds of tools and frameworks.
+1234567891011121314151617181920212223242526272829303132333435363738394041$ -&amp;gt;  do some  do another### =&amp;gt;$(function() &amp;#123;  some();  return another();&amp;#125;);That's just like the $(document).ready(function()&amp;#123;&amp;#125;)#### A function using ajax to send mail, which is a new feature I will add to my blog in a few days :)@sendMail = (msg)-&amp;gt;  $.ajax    type: 'POST'    url: 'https://mandrillapp.com/api/1.0/messages/send.json'    data:      'key': ''      'message':        'from_email': msg.sender_mail        'from_name' : msg.sender_name        'to': [            &amp;#123;              'email': ''              'name': 'TaoAlpha'              'type': 'to'            &amp;#125;          ]        'autotext': 'true'        'subject': msg.subject        'html': msg.content  .done (response)-&amp;gt;    showAlert(&quot;success&quot;,&quot;Thanks for your contribution!&quot;)  .fail (data)-&amp;gt;    showAlert(&quot;fail&quot;,&quot;Sorry! Failed to send the email. Please retry!&quot;)# another function to get unique result from an array of objectsArray::getObjectUnique = (id) -&amp;gt;  a=b=[];  add = (data) -&amp;gt; b.push data[id];data  (add i for i in @ when b.indexOf(i[id]) == -1 )
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748// You can see that you have saved a lot of keystrokes and the codes look more clean and beautiful.// Because coffeescript doesn't support declare global variables directly, and if we want to use the function in other script, we need to declare it into the `this` scope.this.sendMail = function(msg) &amp;#123;  return $.ajax(&amp;#123;    type: 'POST',    url: 'https://mandrillapp.com/api/1.0/messages/send.json',    data: &amp;#123;      'key': '',      'message': &amp;#123;        'from_email': msg.sender_mail,        'from_name': msg.sender_name,        'to': [          &amp;#123;            'email': '',            'name': 'TaoAlpha',            'type': 'to'          &amp;#125;        ],        'autotext': 'true',        'subject': msg.subject,        'html': msg.content      &amp;#125;    &amp;#125;  &amp;#125;).done(function(response) &amp;#123;    return showAlert(&quot;success&quot;, &quot;Thanks for your contribution!&quot;);  &amp;#125;).fail(function(data) &amp;#123;    return showAlert(&quot;fail&quot;, &quot;Sorry! Failed to send the email. Please retry!&quot;);  &amp;#125;);&amp;#125;;# get unque result for array of objectsArray.prototype.getObjectUnique = function(id) &amp;#123;  var a, add, b, i, j, len, results;  a = b = [];  add = function(data) &amp;#123;    b.push(data[id]);    return data;  &amp;#125;;  results = [];  for (j = 0, len = this.length; j &amp;lt; len; j++) &amp;#123;    i = this[j];    if (b.indexOf(i[id]) === -1) &amp;#123;      results.push(add(i));    &amp;#125;  &amp;#125;  return results;&amp;#125;;
+RailsRuby on Rails is a web framework that came around in 2004. And it soon became quite popular. Actually many people believe that Rails saved the ruby…
+Check this:How to download and install Rails if you haven’t installed it.
+Rails’s principles
+Convention over configuration
+
+
+Rails is designed to assume that the programmer will follow certain known conventions, which if used, provide great benefit and much less need to configure the framework.That means that the framework makes assumptions on how a typical application should be built and structured and it doesn’t try to be overly flexible and configurable. This helps you spend less time on mundane tasks like configuring and wiring up an application architecture and more time on actually building your app.
+
+
+Don’t repeat yourself, or DRY
+
+
+Every piece of knowledge must have a single, unambiguous, and authoritative representation within a system.Rails strives to remove duplication and boilerplate wherever it can.
+
+How to use Rails with CoffeeScriptLuckily, after Rails 3.1, you don’t need do anything to let Rails support CoffeeScript. It has already become part of rails! And also, rails has changed its default js library to jQuery.
+So what you need to do if you want to use coffeescript with rails? Nothing but learn rails!
+Just like the author said in the book: “If you haven’t done so already, I encourage you to spend some more time learning Rails as well as Ruby, and immersing yourself in the wonderful communities they support.”
+Node.jsNode is fantastic. It changes something. Before node, javascript was mostly run inside browsers. Now it just came out and gave web developers a chance to become a full-stack!
+Features of Node
+Event-driven
+
+
+The Node.js framework only allows non-blocking, asynchronous I/O. This means that any I/O operation that is accessing an external resource, such as the operating system, a database, or a network resource must happen asynchronously.
+
+
+Fast and scalable
+
+
+The V8 JavaScript engine(created by google and used in chrome) used by Node.js is highly optimized for performance, thus making Node.js applications very fast. The fact that Node is non-blocking will ensure that your applications will be able to handle many concurrent client requests without using a lot of system resources.
+
+
+Node is not Rails
+
+
+Rails strives to be a full-stack solution to building web applications, whereas Node.js is more of a low-level system for writing any type of fast and scalable network application.
+
+Node and CoffeeScriptWant to write coffeescript in node? It’s easy, all you need is a module named CoffeeScript. And like many other languages, node has several frameworks people built for web development, like: Express.
+The core about how to use coffeescript with nodejs is to use the --watch for coffee command in node. It will automatically compile all file end with coffee into js when there is a change made into these files.
+And just like jQuery, you just follow the rules and write your code.
+DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
+That’s all. Thanks!
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (1)</title><link>http://taoalpha.me/blog/2015/06/28/read-coffeescript-programming-with-jquery-rails-and-nodejs/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-28T04:00:00.000Z</pubDate><description>SummaryThe notes I took while I was learning the ‘CoffeeScript’. If you are a real beginner with ‘CoffeeScript’, I suggest you start with another book called “The Little Book on CoffeeScript”, it’s better for beginners. And after that, this one is definitely your best choice.
 CoffeeScript is a language which complies to JavaScript. Like the sass or scss to css except that CoffeeScript is not compatible with javascript. So you can not mix the javascript syntax with the CoffeeScript.
 This note is mainly about the fist chapter of the book, a nice introduction for CoffeeScript including the basic syntax.
@@ -1517,113 +1538,123 @@ TestingYou should write testing!!!
 Code Conventions for the JavaScript Programming LanguageAll coved by two styles I list above.
 SummaryCompared to google’s old style guide, airbnb’s style guide has much more valuable new ES6 styles, if you are an active ES6 users, I strongly suggest you use airbnb’s style !!!
 Even you are a solo worker, you should use some common styles, it is a good habit and you should have.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Why Users Aren’t Clicking Your Home Page Carousel?</title><link>http://taoalpha.me/blog/2014/05/03/read-yi-why-users-arent-clicking-your-home-page-carousel/</link><category>read</category><tag>Carousel,HCIBib,UX,UXmovement,关于HCI,翻译文章,译系列</tag><pubDate>2014-05-03T04:00:00.000Z</pubDate><description>首先介绍下什么是carousel: 标准词典翻译为”旋转木马”, 用在网络中, 尤其是网页设计的语境之下, 就是指代的很多网站中使用的多图切换模块, 通常由多张图组成, 但是一次只会显示一张, 图片右下角或者正下方常常有切换指引的远点或者缩略图, 图片左右则有前后箭头, 如此切换的时候会像旋转木马一样一张一张的出现在用户眼前(当然不限于图片, 有的也会用文字作为每一个木马).
-=========正文=========网站研究发现在300w的首页中, 只有1%的用户浏览会点击页面上的carousel部分呢. 为什么占据了首页如此大面积的, 而且是很具有视觉优势的元素获得的点击是如此之少呢? 原因可能比较出乎意料, 因为多数carousel都做的很烂…
-绝大多数的carousel都包含多张切片, 当用户点击箭头切换时进行旋转展现. 通常第一张会获得多数的点击, 随后的点击比例就会急剧下降. 造成carousel如此的低的点击率的原因其实不是因为carousel本身的这种切换模式, 而是因为carousel的导航实在是太烂了….
-carousel中的导航键头通常是没有点击欲望的. 为什们? 因为箭头通常无法表示出用户点击后会获得的信息, 无法给与用户期望. 所以用户通常都会忽视箭头, 把他们自己的注意力放在别的信息之上. 一个箭头只能说明这里还有更多的切片, 这完全不是让用户点击的理由. 所以, 他们很难看到carousel后面的切片, 又怎么产生点击呢? 不仅如此, 用户还常常因为箭头太小太靠近边缘而忽视它. 以这样的设计, 其他的切片能获得高点击才怪呢…
-实际上, carousel所需要的只是一个清晰的, 可见的标签导航即可. 标签本身说明了包含的信息, 有意义的描述, 告诉了用户他们想要的. 这会刺激用户去点击, 因为每个标签都告诉了他们点击后能获得什么. 用户就会更有可能点击那些吸引他们的信息. 导航标签本身也应该有足够的宽高并被置于一个更加可见的位置, 而不是像箭头一样很难发现. 重要的不仅是容易看到, 用户还要同时知道它代表了什么.
-绝大多数人们可能只会看一下这份网站研究报告的结论, 然后觉得所有的carousel都是非常不利于体验的, 他们以后都不应该使用carousel了. 但实际上, 多数carousel如此的糟糕是因为他们没有很好的导航, 都只是用一个小小的箭头来引导. 箭头本身不能承担任何信息, 但是文本标签可以. 如果你希望更多的用户点击你的carousel, 那么, 就是用标签导航把. 把标签写的清楚, 有意义, 你就会有更多的用户点击你的carousel了.
-Links:
-UX Movement: Why Users Aren’t Clicking Your Home Page Carousel
-
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>What Is the Relationship Between HCI Research and UX Practice?</title><link>http://taoalpha.me/blog/2014/09/05/read-t-what-is-the-relationship-between-hci-research-and-ux-practice/</link><category>read</category><tag>HCI Research,HCI翻译,关于HCI,翻译文章,译系列</tag><pubDate>2014-09-05T08:00:00.000Z</pubDate><description>测试feedpusher的数据库搜索功能时找到了这篇文章~ 对于HCI Research有很好的介绍!
-
-
-人机交互是一个快速发展的学术研究领域. 目前来说, 学术机构基本主导了绝大多数的HCI研究, 无论在US,UK,Europe,Australasia以及Japan, 还有逐渐发展起来的南亚以及中国. HCI研究经常是附属在计算机系之下的, 但是又保留着其很强的心理学背景和人因学背景. 此外, 还有几个大型的杰出公司同时在独立的, 当让也有和各学术研究机构合作进行的, HCI相关的研究. 比如微软, PARC以及goole.
-What Do Academic HCI Researchers Do?(那么学术性的HCI研究者都在做什么呢?)
-通常来说, 学术性研究者都在做以下这三类事情:
-    他们通过探索性的实验以及利用复杂的交互系统来创造新的计算机用户界面;    他们建立并发展了一套经验体系, 针对用户对于用户界面的使用和体验; 主要通过实验室中的用户界面研究或者在实际环境中观察用户对用户界面的使用情况(就如同人种学研究一样)来获得的;    他们发展出了一个理论系统来讲述设计以及使用交互系统. 其中包含了一些基本理论, 比如Fitts’s law(菲茨定律),描述指针移动和目标元素在屏幕的位置的的关系, 通常, HCI理论采用设计框架的形式, 包含了各种混杂的概念. HCI研究可能是聚焦到某个整体的局部也可能是直接识图去强化整体.
-
-
-Is There a Connection Between Academic Research and Industry Practice?(在学术研究和工业实践之间有联系吗?)
-在工业界的UX从业人士也通常都会做些研究的, 就如同设计一样. 但是学术性HCI研究和UX研究在目的产出, 目标, 以及关注的范围都有着非常显著的差别, 学术研究和工业研究通常可能都在处理那些看起来比较接近的基础对象: 数字化交互系统的设计和理解以及它们的用户群体. 两者都遵循用户为中心的设计原则, 都提倡把对人类的理解融入到设计环节中. 所以说, 它们之间肯定也应该有很强的关系以及重叠区域.
-在UK, 政府在HCI的学术研究基金投入上逐渐关注起学术研究和工业时间的联系了. UK的工程和物理科学研究委员会, 也是HCI研究领域基金的重要来源, 就讨论过关于HCI研究需要考虑如何”把理论和方法应用到工业实践中”. 更进一步地说, 既然HCI学术研究在很多的领域, 包含医疗健康, 电子设备消费品以及软件等等都有很强的关系, 那么在HCI学术研究和UX实践之间建立一个更好的联系就能够获得很高的回报.
-虽然学术圈经常会对UX领域做出很多不准确的猜测,而且有时候认为两者的关系是理所当然的. 学术研究者们通常会假设因为知识的利用和转移, 所以学术研究和工业实践有着非常自然的联系. 但另一方面, UX领域则经常认为HCI的学术研究通常都是脱离实际的, 在现实社会中是无法应用的. 也因为这样的原因, 他们通常会整个抛弃学术研究, 或者至少是觉得消化以及应用学术研究的结论是非常困难的一件事.
-Moving Toward Establishing a Mutually Beneficial Connection Between Academia and Industry(为学术研究和工业实践发展建立一个双赢互惠的关系)
-有两个开放性问题我们需要强调的是:
-    UX职业领域该如何指导以及启发学术研究?    学术研究又能够为UX职业领域做什么事情呢?
-
-回答第一个问题可能需要HCI研究者们对理解UX职业领域的工作有着一定的热情, 并且进行一些关于UX实践的经验性研究. 迄今为止, 学术研究中对于UX实践应用的探索还是比较有限的. 无论如何, 在UX领域工作的经验能够对学术研究产生很多意外的重要启示. 而回答第二个问题就要相对更加复杂了 – 甚至可以说完全不知道该如何下手了. 它需要很深入的研究才行.
-令人好奇的是, 学术研究者们通常对HCI研究中大量出现的创新以及其自身关注领域的快速发展而感到忧虑. 在一个学术领域中, 他们的目标通常是建立一个强有力的基础, 然后慢慢发展.
-然而, HCI学术研究领域的创新和广度都强化了其和在工业限制下的UX领域有限的能力形成的鲜明对比. 比如说, 在一个很限制的项目中工作时, 你需要考虑有限定的预算, 有限的时间, 你需要去满足客户的需求以及相关利益人的利益, 还要能和其他领域的人相互配合, 比如软件开发者; 还要习惯于新的工作方式, 比如敏捷开发以及精益方法. 你不会担心有过多的创新, UX从业人士通常希望能够在他们非常受限的环境下创造更多的创新.
-学术性研究的产出中完全可以提供很多对UX领域有潜在价值的东西. 但是如何来传递这些产出呢? 首先也是最重要的是, 我们完全不用把HCI研究和某一个项目或者新项目, 或某项服务的预期条件, 或者某个客户的特定需求绑定在一起; 其次, 学术新的HCI研究有其探究未来科技的自由 – 即便其设计本身有着一定的风险且没有清晰的,即时的回报. 所以, HCI研究者们通常在无数失败的基础上创造了快速的创新, 他们的工作少了很多的限制.
-也许通过有效的沟通, HCI学术研究中的那些成果能够给工业实践带来巨大的价值. 很多UX从业人士都没有那么富裕的时间来让他们去探讨那些当前需求以外的东西. 但是在学术研究中, 关注范围更广是很通常的事情.
-不幸的是, 就目前来说, 绝大多数的学术工作–无论是创造圆形, 概念, 想法, 或者是设计原则 – 都局限在了HCI研究者们在各种会议期刊上发表的论文中了. HCI研究者的受众多数都是那些其他的学术研究者, 而不是那些在工业界工作的人们.
-通过理解用户体验的工作情景, HCI研究者们能够更好的把他们的研究方向切合这些受众, 从而和UX职业领域建立更加友好自然的联系. 与其让学术研究和工业实践互相竞争, 不如假设一方创造那些权威的, 严禁的知识体系, 一方吸收并加以应用呢. 两者这样的互利互惠关系才是最有价值的. 采用这一方法可能会让学术研究者们更好的理解他们该如何进行自己的研究, 让它们更加容易帮助到那些UX从业人士.
-Postscript(后记)
-作为我开始针对这一领域的调研的一部分, 我创建了一个非常简短的, 5分钟调查问卷, 邀请各位UX从业人士来提供一些关于自身背景, 所用方法以及和学术研究的关系的信息. 如果你愿意参与其中, 或者是对这一工作有兴趣的话, 请参与此项调查.
-Acknowledgments(感谢)
-作者非常感谢EPSRC的支持.
-References(参考)
-[1] Benford, Steve, and Gabriella Giannachi. Performing Mixed Reality. Cambridge, MA: MIT Press, 2011.[2] Engineering and Physical Sciences Research Council. Report of the Human EPSRC Computer Interaction Theme Day and Survey, March 2012.[3] Friess, Erin. “Personas and Decision Making in the Design Process: An Ethnographic Case Study.” In Proceedings of CHI ’12. New York: ACM Press, 2012.[4] Goodman, Elizabeth. Performance and Materiality in Professional Interaction Design. PhD thesis, University of California, Berkeley, 2013.[5] Gray, Colin M., Erik Stolterman, and Martin A. Siegel. “Reprioritizing the Relationship Between HCI Research and Practice: Bubble-Up and Trickle-Down Effects.” Proceedings of CHI ’14. New York: ACM Press, 2014.
-
-Source Link:
-    What Is the Relationship Between HCI Research and UX Practice?
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Why Companies Need Full-Time Product Managers</title><link>http://taoalpha.me/blog/2014/11/01/read-t-why-companies-need-full-time-product-managers/</link><category>read</category><tag>PM,product manager,产品学习,产品经理,翻译文章,译系列</tag><pubDate>2014-11-01T11:00:00.000Z</pubDate><description>写在前头: PM是一个挺让人困惑的职位的, 尤其是在国内, 感觉大大小小PM无数, 更加让人苦恼PM究竟是个什么样的职位呢? 虽然我有接近2年多的PM经验, 但是因为本身更加喜欢FE, 所以往往也是做一个非常Geek的PM, 并不符合真正的PM本质, 而这次能够看到下文, 确实觉得它对PM的总结还是比较到位的, 非常推荐PM以及想要做PM的童鞋们看看~
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Using @font-face</title><link>http://taoalpha.me/blog/2014/07/15/read-yi-using-font-face/</link><category>read</category><tag>CSS,font-face,翻译文章,译系列</tag><pubDate>2014-07-15T10:00:00.000Z</pubDate><description>如下例:
+123456789@font-face &amp;#123;  font-family: 'MyWebFont';  src: url('webfont.eot'); /* IE9 Compat Modes */  src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */       url('webfont.woff') format('woff'), /* Modern Browsers */       url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */       url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */&amp;#125;
+由于如今WOFF是如此之火, 你也可以简化使用:
+123456@font-face &amp;#123;  font-family: 'MyWebFont';  src: url('myfont.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */       url('myfont.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */&amp;#125;
+其实只用WOFF也可以的, 目前基本主流浏览器都能支持了.
+然后你就可以在其他元素中使用这一属性了~ 比如:
+1234body &amp;#123;  font-family: 'MyWebFont', Fallback, sans-serif;&amp;#125;
+讲讲font-face的历史吧, @font-face是用于加载以及使用你自定义的字体而出现的, 针对的就是如今浏览器有权限使用的系统已有的有限字体. 这里有个系统预装字体的详情介绍.
+说到性能. 一般我们认为字体文件都是非常巨大的, 同时还会让你的网站增加很多额外的请求, 这些都会拖慢你的站点速度. 所以在使用之前请务必确保你考虑清楚.
+如果你确实要使用自定义字体, 有一种更好的更负责的方式是尽可能的加载足够少的字母和样式种类. 比如, 如果你使用google fonts, 只需要引入一些特定的组合即可:
+123@import url(http://fonts.googleapis.com/css?family=Averia+Sans+Libre:400,300italic,700);
+甚至可以缩减引入的字符数量.
+相比于性能, @font-face似乎经常出现各式各样的bug…比如这种, 这种,还有这种…
+关于字体格式, 倒是有几种, 每种都还有些历史.
+  WOFF    Web Open Font Format. 是专为网络使用而创造的, 由Mozilla和一些其他组织共同发展起来的, WOFF字体通常比其他格式字体加载的更快, 主要是因为他们使用了比OTF和TTF更加压缩的结构, 这种结构中还能包含一些meta信息和license信息, 目前来说WOFF应该是最大的赢家了, 主流的浏览器基本都已经能够支持了.    SVG/SVGZ    Scalable Vector Graphic(Font). SVG是一种字体的矢量化过程, 主要可以让体积变的更小, 同时也能够用于移动设备. 这个字体格式是4.1版本以下的Safari浏览器唯一支持的字体格式了. 目前来说SVG依然不能被Firefox, IE以及IE 移动版支持. Firefox主要精力都在支持WOFF了~ 天知道他们什么时候支持SVG… SVGZ是SVG的再压缩版本.    EOT    Embedded Open Type. 这一格式是由微软从15年前创造的(真正意义上@font-face的源头). 也是唯一一种IE8以及以下版本支持在@font-face中使用的格式了.    OTF/TTF    OpenType Font 和 TrueType Font. 在一定程度上WOFF格式的出现也是因为这些格式可以很容易被复制, 无论合法与否. 同时, OpenType的某些特性(比如手写字体等)比较吸引设计师们.  
 
 
-公司为啥需要全职的产品经理呢?(或者说,他们一天都在干啥呢?)
-什么是产品经理呢? 产品经理一天的工作都是什么呢? 最重要的是, 为什么公司需要招聘产品经理呢? 这是个好问题.
+字体服务有很多, 主要就是提供那些你可能无权使用的字体, 从而让你的使用合法化. 主要有以下这些:
+  Cloud Typography  Typekit  Fontdeck  Webtype  Typotheque  Fontspring  WebINK  Fonts.com  Google Fonts  Font Squirrel
 
-我们首先需要明确的问题是究竟什么是”产品”. 在软件开发这个领域内, 一个产品呢, 可以是一个网站, 一个应用, 或者是用户们使用的线上服务. 而根据公司的大小以及它的产品性质本身, 一个产品经理可能会是一个完整系统(比如一个移动app)的负责人, 也可能是某个整体系统的一部分(比如在电子商务网站中, 负责全平台的检验流程).
 
-对这一点可能会存在一些困惑, 毕竟在绝大多数情况下, 产品通常代表着一个你要出售给客户的东西. 尤其是在电子商务, 经常会混淆产品经理和分类经理, 分类经理们主要是负责在电子商务网站出售商品的渠道和经营问题. 所以, 在一定程度上说, 用”产品”这个词确实并不是最合适的. 但是就目前来说, 现状如此, 我们也没法了, 就凑活着用吧.
 
-为了明确产品经理这一职位的性质, 我们首先从Marc Andreessen就”创业公司唯一重要的事情”这一观点说起:
+想要对比下这些服务的好坏?
+Source Link:  CSS Tricks
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>User Experience is a feeling</title><link>http://taoalpha.me/blog/2014/11/10/read-t-user-experience-is-a-feeling/</link><category>read</category><tag>UX,产品学习,关于HCI,翻译文章,译系列</tag><pubDate>2014-11-10T14:00:00.000Z</pubDate><description>用户体验是一种感觉
 
-一个创业公司产品的质量可以定义为这一个产品对一个实际使用它的客户或者用户所留下的印象: 这个产品的易用性如何? 其功能的丰富性如何? 流畅性和速度如何? 扩展性又如何? 有多精致?有多少bug呢?
+“如果你以’用户体验是一种感觉’为基础, 那么你就算是向真正理解用户体验迈出了一步.”
 
-而一个创业公司的市场大小, 则是这一产品的客户或用户的数量, 增长速度 …
+许多人似乎都认为用户体验是一个可以控制的设计产出–好像它是一个你可以通过你的想法, 设计师以及开发者们从而操纵一个人对某个产品或者服务的体验. 实际上, 用户体验经常被认为是一个定义以及管理用户对产品的感觉.
 
-唯一重要的事情就是要让产品去适应市场(Product-market fit). 产品适应市场意思就是在一个好的市场里, 要让产品尽可能的满足市场的需求.
+但是你的产品并不能决定一个用户的体验, 用户自己的行为, 态度以及情感才是决定因素. 因此, 用户体验就是一个感觉. 实际上, 它远不止于此, 但如果你是在此基础上去理解用户体验, 那么你就算是向真正理解用户体验迈出了一步.
 
-虽然Andreessen是为创业公司写的, 但是最后这段关于”产品适应市场”的重要性对每一个公司都是一样的–无论这个公司是在开发一个新产品还是说去改善一个现有产品,亦或者是介于这两者之间的,都一样. 这是通向成功的宇宙公理, 而这也是产品经理所负责的核心.
+一个用户在使用某个产品时的体验是每个产品都需要关注的点. 一个用户可能会有很好的体验也可能会有一个很糟糕的体验. 虽然你不能直接的设计一个用户对一个产品的体验, 但你可以采取一些措施, 应用一些用户为中心的设计原则和流程来确保他们的体验是积极的, 正面的.
 
-有了这个作为背景, 我对产品经理这一角色的定义就是: 通过数字产品持续性的更新和执行来符合用户需求从而实现商业上的成功.
+你应该把以用户为中心的设计的各种优势告诉那些投资人, 相关利益人从而拿到钱, 而这些优势就包括以下这些:- 快速的获得更多客户- 保留现有的客户- 为你的公司建立信誉- 在公司长期运行中扩大销售额- 降低周边产品/服务(外围设备)的价格, 比如客服/售后- 减少无形的花费, 比如浪费的时间- 完成的更加高效
 
-这一定义总结了一个产品经理所需要涵盖的全部内容: 目标市场, 所属产品的各个方面, 商业成功的需求, 以及如何去衡量这一成功. 它还包含了三个产品经理绝对不能忽视的点:
+对于你的公司而言, 无论是一个创业公司还是说一个庞然巨物, 都要意识到这些利处, 而你所在的产品团队则需要:
 
-成功的最佳衡量标准就是商业的健康度, 也即产品给用户提供的价值;所有的一切都起始于对目标市场和需求的深刻理解, 从而把焦点集中到产品体验的质量上去;为了符合市场需求, 可持续发展需要一个良好的策划与执行.
+理解伟大的设计和优质的体验之间的区别像用户那样去思考, 而不是站在一个产品的制作者角度在你的产品策划, 设计以及开发环节都要考虑到产品的用户
 
-那么, 如何把这些转译成一个产品经理每天的工作呢? 这个问题就太大了, 在这里是说不清楚的, 不过仅作为一个初步介绍的话, Marty Cagan在它的电子书”每一个伟大的产品背后”中列出了一个针对产品经理需要负责的事项清单. 这一清单包含:
+优秀的设计是不够的
 
-寻找确认并且评估产品机遇的可行性和易行性,确保合适的产品在合适的时机发布出去,为开发者提供清晰的产品策略和思路指南,带领团队执行产品的思路,确保向团队成员传达产品的内涵,在产品开发流程中始终站在用户的角度思考问题.
+“许多人认为用户体验就是一个产品是如何工作以及外观”. 换句话说, 人们很容易认为用户和产品的交互就是用户体验的全部内容了. 比如, 他们可能关注的焦点问题诸如: 产品的交互界面是否利于用户导航呢? 最重要的内容是否获得了视觉的最优位置呢? 产品外观是否足够优质呢?
 
-但是, 在一个产品经理能够做这些事情之前, 我们首先要问一些比较尴尬的问题. 首先, 公司真的需要产品经理吗? 另外, 如果我们同意说需要, 那么一个好的产品经理的特质是什么呢? 同时还有, 这一角色在公司组织架构中的位置呢? 我们来一一回答这些问题.
+如果对此类的回答是”是”, 就会让人很容易的认为你已经给你的产品赋予了极好用户体验. 在很多方面, 你可能已经做的比你的竞争对手好很多. 但是, 一个产品的用户体验所包含的内容远远不止是在一个网页浏览器或者移动设备中打开一个应用这么简单.
 
-为什么公司需要产品经理
+让我们以一个我们可能会提问的问题为例: 在用户第一次使用你的产品之前用户对产品的期望是什么? 可能他们听到很多其他用户的看法, 可能是好的, 也可能是不好的看法, 如果这样的话, 这些意见都会成为TA对你的产品最终形成的整体体验感受的重要组成部分, 它当然会影响到他们对产品的使用方式, 他们对产品以及你的公司的看法和感受, 以及很多我们接下来会说到的一些重要部分.
 
-产品经理的角色有一些公司可能是非常不买账的. 通常的反对意见包含:
+像素, 屏幕, 页面以及体验
 
-我们公司里有各种各样的人, 他们就已经满足一个产品经理职责的各个范畴了, 不需要专门配备这一个职务了.我完全看不出来这个角色能给公司带来什么实质性的利益.产品经理只会拖我们后腿.我不想把产品控制权交到别人手中.(通常这个理由不会那么公开的说…)
+“以用户为中心的设计所关心的不只是产品本身的用户界面, 还有用户在界面之外与产品的交互行为.” 这些包含但不限于以下几点:
 
-这些考虑都是很有道理的, 但是显然他们并没有很好的理解产品经理这一角色, 或者说这个公司的产品经理很差劲, 没有很好的体现产品经理的职责.
+你的产品市场和分发方式购买, 打开和首次使用产品的整个流程升级流程“登船体验”, 即逐步学习产品所具备的能力, 以及如何使用和如何处理错误信息的过程宣传, 用户的口碑是最好的广告客服或者售后服务质量, 以及你对产品能力的深入了解
 
-实情是, 为了更高的效率, 对一个产品或者领域的管理权最好不要分散给多个人掌控. 对于产品经理而言, 看到产品全局是非常重要的 – 大局战略和局部细致都是一样重要的 – 为了获得更好的抉择. 如果不同流程的情况掌握在不同人手中, 那么就没有人会有一个完好的大局观, 那么这一角色的价值自然也会渐渐失去.
+上面这个清单仅仅只是非常表面的一些东西, 但是它可以初步让我们对影响用户体验的诸多因素有个大概的了解.
 
-我们看下产品经理通常能够带来的两个典型好处吧:
+如果你曾经找你的手机或者线路公司进行技术咨询, 你就会理解这一经历会对你对他们的产品以及服务的感受观点有多大影响了. 虽然你可能最后还是解决了问题, 获得了更好的线路以及手机问题得以解决, 但是如果你在处理这一事宜的过程是非常让人不开心的一个经历, 那么你可能依然会对他们的服务产生负面的观感. 而一个用户对你公司的看法和以往的交往经历都可以算是用户体验的一部分.
 
-产品经理确保产品一直处于市场驱动
+像一个伟大的UX设计师那样思考
 
-对产品经理而言, 其最突出的优点就是他们可以帮助公司一直为目标市场的需求和目标所驱动, 而不是被技术和潮流所驱动. 如同Barbara Nelson在”谁需要产品经理”一文中所说:
+在本文后面的内容中, 我会提供一些你可以用来和你的产品团队分享, 一起帮助每个人像一个伟大的UX设计师那样思考问题. 为了创造一个人们喜欢的产品, 需要你整个团队, 不只是UX团队, 都聚焦到用户身上.” 而如果能够把焦点放到用户身上, 那么就能帮助你传递很多益处, 会带来很多我上面说过的好处.
 
-相比于找到你现有技术的客户而言, 找到市场问题然后用技术手段解决实在是简单太多了.
+走向优秀体验的态度
 
-如果方法足够正确的话, 一个市场驱动的产品能够促成一个长期的, 可持续的, 有利润的商业, 因为这个公司会持续的把焦点放在解决市场问题而不是用最新的科技去做什么的问题上. 一个公司受什么驱动是很重要的, 因为受市场驱动的公司已经被证实比受其他因素驱动的公司所获得的利润更高(要多出31%, 根据George S.Day 和 Prakash Nedungadi的报告).
+像一个伟大的UX设计师那样思考意味着你需要养成一些思维方式, 这些思维方式与其说是一些特定的思考流程或者做事规则, 不如说是一些基本的态度更为合适.
 
-这并不意味着关注不断出现的变化和产品创新是互斥的. 确定市场问题并不仅仅是找到现有的问题进行改进(比如说, 60%的用户都会在这个页面离开, 那么我们就搞搞这个页面), 同时还需要创造心的产品来满足那些没有被满足的需求(比如说现在的电话实在太烂了, 我们搞个新的吧).
+要有同理心
 
-产品经理能够提升时间管理
+当你被无数决策缠身, 催促着你从想法走到原型直到上线, 你会很容易的陷入到一个困境, 就是视野会局限在产品团队之中.  你手头工作的复杂和困难以及你作为产品主导者对产品目的, 设计以及功能的熟悉都让你无法兼顾自检的环节了.  在这个环节中, 我们缺失的正式外界的观点-你的用户的角度的看法.
 
-产品经理带来的第二个好处就是他们能够减少一个公司实现目标所需的时间. 一个定位清晰合适的产品, 其开发流程掌握在一个有效率的管理者手中时会极大改善发布所需时间以及回报所需时间的.
+和你的用户交流所能带来的好处不仅是他们提供的那些你可以用来优化设计流程的信息, 随着时间, 和你的用户交流能够帮助你建立更好的同理心. 你将学会通过他们的眼睛看世界.
 
-那么为什么产品经理可以做到这一点呢? 因为他们要权衡出那些是值得做的, 那些是不值得的. 这也意味着可以把更少的时间花费在Spaghetti法上了(把所有事情都扔到墙上看哪个能够粘在上面…) 而有更多时间放在已经被市场验证过的产品上了. 这一方法同样还能帮助更好的确定公司的焦点所在, 帮助公司更加投入到那些更有可能成功的项目之中, 而不是把人力分散到那些没人能够确保获利的项目中去.
+而有了同理心, 你将可以站在用户的角度去评估你的设计和商业决策. 而且你会更有可能创造一些他们 能够找到其价值, 用处以及给他们带来欢乐的产品.
 
-未完待续(还有两部分回答另外两个问题).
+要承认每个意见都是有价值的
 
-Resources:
+以用户为中心的设计的下一个态度往往很难被人所采用. 请跟着我一起重复:”每个意见都有价值. 每个意见都有价值.” 哪怕是意见本身可能完全没有逻辑. 哪怕是这个意见完全违反了一个正确的设计原则. 哪怕是这个意见是完全非理性的, 而且对你而言完全没有意义的.
 
-原文 - Why Companies Need Full-Time Product Managers 
+如果使用你的产品对用户而言是一个可选行为的话–实际上它确实是个可选的行为–那么他们的意见就是有意义的. 但是从那些非理性或者无逻辑的反馈中找到有价值的东西是有难度的. 然而, 这类用户反馈可能指向的更大的一些问题, 可能代表着用户的某种更深层次的情感模式, 而这对于用户和你的产品之间的交互有着很大的影响. 而如果带着”每个意见都有价值”的观点来处理用户的反馈, 那么就能够帮助你发现这些模式.
+
+如果你收到一些对你完全没有意义的反馈, 那么你应该暂停一下, 好好思考以下它的具体含义. 可以问这么几个问题:
+
+那些没有给我们反馈的用户中有多少可能也有同样的看法呢?为什么他们会需要这么一个具体的功能点呢?为什么他们不能理解我们设定的这种用户工作流呢?为什么他们会这么感觉呢?
+
+退一步讲, 和你的用户聊天, 即便是一些似乎很疯狂的想法也往往能够给你带来一些新的观点, 说不定就能帮助你解决手头的问题呢.
+
+意识到情景和经历都会对用户体验产生影响的
+
+可能你的项目的目的是创造某个全新的东西, 但是你的产品最终会被那些有着自己过往使用科技产品经历以及特定的使用场景的人去使用的. 而这些经历以及所处的情景会在很深层次上影响人们和产品之间的交互.
+
+比如, 我每次购物时如果发现那些老式的黑屏绿字, 带着键盘的销售终端依然还在投入使用时都会觉得这是一件非常令人着迷的事情. 实际上, 我经常能够在非常现代化, 成功的零售商们那里看到类似这样的用户界面.
+
+这样的用户界面可能看起来很过时, 而且使用也不高效, 但是如果你考虑下它使用的场景, 就会有不同的看法了:
+
+零售行业的工作人员在长期的工作中, 因为不断的使用同样的用户界面重复同样的销售操作, 会形成一种独特的肌肉记忆;他们的这种肌肉记忆会允许他们甚至不怎么注意屏幕就能够准确的完成操作, 也就让他们有更多的时间和客户进行视觉交流, 这样能够给客户更好的购物体验;这种肌肉记忆需要很长的时间才能形成. 可能需要一个缓慢的学习曲线去掌握, 但是一旦掌握了, 它带来的速度和效率的提升是雇员们所愿意放弃的, 即便是面临着一个有着快速学习曲线的新的交互界面的诱惑也一样.
+
+如果你忽略这种历史原因以及特定的场景原因, 那么这种古老的POS终端看起来就是一个典型的糟糕的用户体验. 但是你一旦把这些都考虑进来, 你就会获得完全不同的理解了.
+
+当你脱离用户界面, 而考虑更加宏观的一些事情时, 你就会知道哪些因素才能真正让你的产品体验有所不同.
+
+要有情商
+
+如果你自己质疑用户对你产品的感觉的重要性, 那么你可以回想下最近Facebook首次展示了他们做了明显改变的新用户界面, 而随之而来的用户疯狂的愤怒回应.
+
+最强烈的情感–爱, 恨, 快乐和忠诚–都需要时间来建立的. 你的公司的新产品将会继承那些旧产品用户的情感, 而这些完全不受你控制–比如用户对你的app运行平台的看法以及在app store中的应用发现这一过程等都是不受你控制的.
+
+但是他们对你产品的感觉会随着使用逐渐的形成并发展. 想象一下: 不断重复的讨人厌的登录环节, 一个流畅的,愉快的导航, 一个思虑周全的错误处理机制, 一个一直都不尽如人意的客户服务, 这些长期积累下来情绪, 会产生什么样的影响呢?
+
+像一个UX设计师一样思考, 就要考虑到用户和你的产品之间的这种情感关系.
+
+把这种优秀UX设计师的态度应用起来
+
+有一个很简单的, 混合了这些特点的方式可以让你开始像一个优秀的UX设计师那样思考: 注意观察人们是如何和日常生活的事物进行交互的. 他们的这些行为会告诉你很多, 很多在你开始考虑开发一个产品之前需要考虑的事情, 会告诉你如何开发一个新产品, 一个能够让人们生活更加便捷, 更加快乐, 更加符合人们期望的产品. 
+
+来源:
+
+原文: User Experience Is a Feeling
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>设计心理学系列(1) - 网络心理学</title><link>http://taoalpha.me/blog/2015/05/08/read-design-psychology-1-cyber-psychology/</link><category>read</category><tag>Cyber Psychology,设计心理学</tag><pubDate>2015-05-08T12:00:00.000Z</pubDate><description>什么是网络心理学?网络心理学是随着互联网等新技术出现以及发展而逐渐发展起来的一门新兴科学. 它所研究的领域就是网络与心理学的结合, Cyberpsychology本身由两个词合并而成, 前者Cyber是取自Cybernetics, 代表着对于机械控制和与之通信的研究, 代表着对新兴网络领域的研究, 而心理学则是对人脑和行为学的研究. 两者的集合即表明了Cyberpsychology的研究领域主要集中在了人与新兴机器系统(包含虚拟系统)的心理学研究.
 网络心理学简介演化历史Cyberpsychology最开始是集中关注于人在操作机器以及与机器交互的过程中的心理学变化, 后来随着电脑的出现以及普及, 互联网的诞生以及发展, 加上新兴智能机器的出现和发展, 都使得Cyberpsychology的研究重点放到了互联网上面. 而随着虚拟现实技术的出现, Cyberpsychology的研究范围再一次的增广, 可以说, Cyberpsychology的研究范围基本会随着cyberspace的领域增长而延伸.
 通常认为John Suler, 来自Rider University的心理学教授, 是Cyberpsychology的奠基人. Suler教授是最早开始关注与网络对人们心理变化带来的影响, 其出版的The Psychology of Cyberspace一书也是被认为最早整合性的Cyberpsychology学术作品.
@@ -1800,22 +1831,6 @@ Ethan Marcotte决心改变当时的设计方式, 想要用同一套内容但是�
 网页设计说白了就是设计师制作的视觉效果在浏览器中呈现罢了. 想象以下, 未来设计们可能只需要拖动下元素, 就能够获得一个简洁的代码文件, 而不在需要手写代码, 这多给力啊. 哪怕不能做到那些酷炫的效果, 仅仅单纯的静态页面和简单的交互也是相当不错的事情呢. 再想象以下未来开发者们再也不用担忧浏览器兼容的问题, 而只需要集中精力解决那些真正的问题, 那TM该是多美好的未来啊…
 
 如今技术上已经出现了一些光明未来的曙光: 比如CSS中新引入的一些属性, vh, vw就容许布局上有更好的灵活性. Flexbox则帮助更好的布局, 不再需要那么多的代码, 只用一行就能制作很棒的布局了. 而那些现成的做好的各个组件, 比如注册登录等等, 都让网页设计变的更加容易更加流畅. 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Google又做了一件大好事:干掉了烦人的识别型验证码!</title><link>http://taoalpha.me/blog/2014/12/04/read-read-google-did-a-good-thing-kill-annoying-type-identification-code/</link><category>read</category><tag>Captcha,reCaptcha,翻译文章,读系列</tag><pubDate>2014-12-04T14:00:00.000Z</pubDate><description>译系列正式转为读系列, 以后都为阅读后自己整理总结成文~ 吸收知识哈哈
-伟大的Google又做了一件大好事啊!! 它干掉了烦人的识别型验证码!!! 本文简单介绍了一下这一新的验证码.
-
-对于验证码, 大家都不会陌生, 无论你是否经常上网, 是否买过东西, 是否看过网络视频, 你一定遇到过验证码!!! 而如今最为常见的几种验证码形式分别是:
-
-Captcha(Completely Automated Public Turing test to tell Computers and Humans Apart): 图片识别, 通过识别一些或模糊或清晰的图片中的文字信息来达到验证”我不是机器人”的效果;reCAPTCHA: 同样来自Google, 用Captcha的方式做有意义的事情. 其和Captcha的表现形式基本是一致的, 只不过里面的图片不再是预设好的人工生成的那种故意扭曲或者加干扰后的图片, 而是Google的图书扫描项目中那些OCR无法识别的单词(多数是手写体或者不够清晰), 这样你每次输入验证码, 还能帮助Google的Books做的更好哦~(至于如果它自己都不识别, 那么怎么判断输入是否正确, 则是因为通常reCaptcha会提供两个词组, 一个是已知的, 一个是未知的, 所以呢, 在已知的正确的情况下, 未知的正确性就有了一定的保证, 而结合大量的输入, 那么最中获得的结果的正确概率就越高:所以, 面对一些很少有人输入过的验证码, 其实你很有可能输错了部分, 但也通过了~哈); 而继图书项目后, Google又在reCaptcha项目中加入了Google街景的路牌, 街道名识别~ 所以有时候你会遇到那种拍的很模糊的数字图~Puzzle CAPTCHA: 在识别类验证码之后, 又出现了这种拼图类的验证码, 操作方式有很多, 有的是图片切分打乱, 需要你重新排列成完整的图片, 有的则是有一块图片从整个图片中脱离出来, 需要你移动回去这种~ 这种有时候也叫做Draggable Captcha~Quiz Captcha: 这种则属于问答类的验证码了, 有的时候是一些显而易见的数学计算题或者找规律题, 有的时候则是一些基本常识, 还有些时候甚至是当前往网站名称这类有着明显答案提示的问题~
-
-当然, 除了上述的这些, 还有着很多的验证码类型, 但是无论怎样, 为了实现区分人和机器的目的, 都是需要一定操作成本的, 这也是为什么大家很讨厌验证码的原因~
-
-但是! Google这次新的reCaptcha:No CAPTCHA reCAPTCHA, 就改变了这一点, 它完全干掉了现有的这种繁琐的验证码, 取而代之的是一个简单的checkbox!!! 你只要勾选了这个”我不是机器人”边上的checkbox, 就算是通过了验证~ 似乎感觉这不是进步而是退步? 这样怎么能够实现Captcha的区分人和机器人的目的呢?
-
-其实这个简单的checkbox里面有着非常复杂的机制, 它会通过你验证码勾选前后的整个表现来判断是否是一个机器人, 一旦有所怀疑, 甚至可以选择变回旧有的那种图形或者其他传统类型的验证码来再次确认. 这些都是基于 人工智能方面很深入的研究和成果.
-
-目前这种新的Captcha的API已经开放给很多大客户了, 最近在开始接受网站主们的申请了~ 而那些大客户的反馈来看, 其效果是非常不错的: 核心的anti-spam质量虽然文章中没说, 但应该不错, 文章中重点提到了这个新Captcha的一个优点就是可以让用户更快的登录访问网站.
-
-有兴趣的可以前往Google reCaptcha了解更多详情~
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Introduction To Usability(译)</title><link>http://taoalpha.me/blog/2013/06/13/read-introduction-to-usability-translated/</link><category>read</category><tag>UX,Usability,产品学习,翻译文章</tag><pubDate>2013-06-13T09:00:00.000Z</pubDate><description>Introduction To UsabilitySummary 如何定义可用性?如何,什么时间,什么地方来提升?为什么你要关注可用性?这是一个关于核心的可用性概念的介绍以及回答一些基本的问题.
 What–Definition Of Usability
 可用性是一个表征质量的属性,用以描述用户界面在使用性上的难易程度.”Usability”这个词本身也有用以提升设计过程中易用性的方法的含义.
@@ -1839,100 +1854,53 @@ When to Work on Usability(什么时候注意易用性)
 想要获得一个高质量的用户体验唯一的方法就是在设计的早期就开始用户测试,并一直持续的在接下来的每一步实施它.
 Where to Test(在哪里测试)
 如果你每周至少实施一次用户测试,那么专门建立一个可用性实验室就有必要的了.但对绝大多数公司,在一个会议室或者办公室里进行一次测试就已经不错了,只要你关上门隔开干扰就可以了.重点在于你要有真实的用户,并且可以在他们测试的过程中陪坐一旁.你唯一需要的设备就是一个笔记本.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>谈谈颜色在市场方面的应用</title><link>http://taoalpha.me/blog/2014/11/27/read-talk-about-application-of-colors-in-the-market/</link><category>read</category><tag>关于HCI,翻译文章,设计,译系列,颜色</tag><pubDate>2014-11-27T08:00:00.000Z</pubDate><description>本文讲述了关于颜色的不同所能带来的不同影响, 相信很多人都认可”颜色和人的感受有着非常紧密的关系”这个事实. 那么颜色能产生多大的影响呢? 又是和产生的影响的对应关系如何呢?先说个趣闻: facebook为什么是蓝色为主色调呢? 其实根据New Yorker, 原因很简单. 就是因为Mark Zuckerberg是一个红绿色盲. 这就导致蓝色是Mark所能识别的最好的色调了. 用Mark自己的话说就是:
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Google又做了一件大好事:干掉了烦人的识别型验证码!</title><link>http://taoalpha.me/blog/2014/12/04/read-read-google-did-a-good-thing-kill-annoying-type-identification-code/</link><category>read</category><tag>Captcha,reCaptcha,翻译文章,读系列</tag><pubDate>2014-12-04T14:00:00.000Z</pubDate><description>译系列正式转为读系列, 以后都为阅读后自己整理总结成文~ 吸收知识哈哈
+伟大的Google又做了一件大好事啊!! 它干掉了烦人的识别型验证码!!! 本文简单介绍了一下这一新的验证码.
 
-  蓝色对我而言是最丰富的了, 我可以看到各种的蓝色.
+对于验证码, 大家都不会陌生, 无论你是否经常上网, 是否买过东西, 是否看过网络视频, 你一定遇到过验证码!!! 而如今最为常见的几种验证码形式分别是:
 
-没什么科学价值? 可能就facebook这个个例来说确实没啥特别的价值, 但是实际上现实生活中还有很多关于颜色是如何影响消费者们的消费决策的实例的. 毕竟视觉可谓是多数人类最常用的接收器了.  甚至可以说决定我们是否尝试某款产品的90%因素都是颜色所致呢.
+Captcha(Completely Automated Public Turing test to tell Computers and Humans Apart): 图片识别, 通过识别一些或模糊或清晰的图片中的文字信息来达到验证”我不是机器人”的效果;reCAPTCHA: 同样来自Google, 用Captcha的方式做有意义的事情. 其和Captcha的表现形式基本是一致的, 只不过里面的图片不再是预设好的人工生成的那种故意扭曲或者加干扰后的图片, 而是Google的图书扫描项目中那些OCR无法识别的单词(多数是手写体或者不够清晰), 这样你每次输入验证码, 还能帮助Google的Books做的更好哦~(至于如果它自己都不识别, 那么怎么判断输入是否正确, 则是因为通常reCaptcha会提供两个词组, 一个是已知的, 一个是未知的, 所以呢, 在已知的正确的情况下, 未知的正确性就有了一定的保证, 而结合大量的输入, 那么最中获得的结果的正确概率就越高:所以, 面对一些很少有人输入过的验证码, 其实你很有可能输错了部分, 但也通过了~哈); 而继图书项目后, Google又在reCaptcha项目中加入了Google街景的路牌, 街道名识别~ 所以有时候你会遇到那种拍的很模糊的数字图~Puzzle CAPTCHA: 在识别类验证码之后, 又出现了这种拼图类的验证码, 操作方式有很多, 有的是图片切分打乱, 需要你重新排列成完整的图片, 有的则是有一块图片从整个图片中脱离出来, 需要你移动回去这种~ 这种有时候也叫做Draggable Captcha~Quiz Captcha: 这种则属于问答类的验证码了, 有的时候是一些显而易见的数学计算题或者找规律题, 有的时候则是一些基本常识, 还有些时候甚至是当前往网站名称这类有着明显答案提示的问题~
 
-那么颜色和我们的感知究竟是什么样的对应关系呢?
+当然, 除了上述的这些, 还有着很多的验证码类型, 但是无论怎样, 为了实现区分人和机器的目的, 都是需要一定操作成本的, 这也是为什么大家很讨厌验证码的原因~
 
-这里作者聚了4个典型的例子:
+但是! Google这次新的reCaptcha:No CAPTCHA reCAPTCHA, 就改变了这一点, 它完全干掉了现有的这种繁琐的验证码, 取而代之的是一个简单的checkbox!!! 你只要勾选了这个”我不是机器人”边上的checkbox, 就算是通过了验证~ 似乎感觉这不是进步而是退步? 这样怎么能够实现Captcha的区分人和机器人的目的呢?
 
-黑色
+其实这个简单的checkbox里面有着非常复杂的机制, 它会通过你验证码勾选前后的整个表现来判断是否是一个机器人, 一旦有所怀疑, 甚至可以选择变回旧有的那种图形或者其他传统类型的验证码来再次确认. 这些都是基于 人工智能方面很深入的研究和成果.
 
-绿色
+目前这种新的Captcha的API已经开放给很多大客户了, 最近在开始接受网站主们的申请了~ 而那些大客户的反馈来看, 其效果是非常不错的: 核心的anti-spam质量虽然文章中没说, 但应该不错, 文章中重点提到了这个新Captcha的一个优点就是可以让用户更快的登录访问网站.
 
-
-
-蓝色
-
-
-
-以及在大大小小品牌商标logo中使用的种种颜色:
+有兴趣的可以前往Google reCaptcha了解更多详情~
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>What Is the Relationship Between HCI Research and UX Practice?</title><link>http://taoalpha.me/blog/2014/09/05/read-t-what-is-the-relationship-between-hci-research-and-ux-practice/</link><category>read</category><tag>HCI Research,HCI翻译,关于HCI,翻译文章,译系列</tag><pubDate>2014-09-05T08:00:00.000Z</pubDate><description>测试feedpusher的数据库搜索功能时找到了这篇文章~ 对于HCI Research有很好的介绍!
 
 
-
-基于此, 颜色对人类的感受是有着非常明显的影响的, 这一影响尤其是在我们购物时发挥的最为到位. 有一个分析公司 KISSmetrics曾经做过一个非常棒的信息图来描述关于颜色是如何影响我们的购买决策的.
-
-从其中可以看出绿色在购物中使用的最为突出, 因为它最能让人放松.  其次, 黑色也经常用于奢侈品中, 它在背光下表现极为出色. 下面就是这一信息图的全文啦:
-
-
-
-既然说了颜色会影响到人们的心情感受, 那么你要如何利用颜色来提升你的市场效果呢?
-
-同样是来自 KISSmetrics, 我们概括来说有以下几点:
-
-针对女性而言
-
-女性爱好色: 蓝色, 紫色, 绿色女性厌恶色: 橘色, 棕色, 灰色
-
- 
-
-针对男性而言
-
-男性爱好色: 蓝色, 绿色, 黑色男性厌恶色: 棕色, 橘色, 紫色
-
- 
-
-也有人曾经做过一个实验去看改变一个按钮的颜色 对于转化率的影响. 他们选用了绿色和红色作为对比.
-
-对绿色呢, 他们初始猜测:
-
-  绿色通常和”自然”,”环境”联系在一起, 在加上在交通灯中的广泛应用, 有一种”Go”或者前进的意味在其中;
-
-对红色呢, 初始认为:
-
-  红色和绿色不同, 通常认为是一种兴奋的, 激情的, 和血, 警告等联系在一起. 而在交通灯中常用来指示停止. 当然, 红色往往很抢眼.
-
-按照上面的分析, 多数人会假设绿色更加友好, 其转化率应该更高猜对.
-
-所以, 他们进行了一个简单的 A/B test, 来测试看看究竟是哪种颜色的转化率更高.
+人机交互是一个快速发展的学术研究领域. 目前来说, 学术机构基本主导了绝大多数的HCI研究, 无论在US,UK,Europe,Australasia以及Japan, 还有逐渐发展起来的南亚以及中国. HCI研究经常是附属在计算机系之下的, 但是又保留着其很强的心理学背景和人因学背景. 此外, 还有几个大型的杰出公司同时在独立的, 当让也有和各学术研究机构合作进行的, HCI相关的研究. 比如微软, PARC以及goole.
+What Do Academic HCI Researchers Do?(那么学术性的HCI研究者都在做什么呢?)
+通常来说, 学术性研究者都在做以下这三类事情:
+    他们通过探索性的实验以及利用复杂的交互系统来创造新的计算机用户界面;    他们建立并发展了一套经验体系, 针对用户对于用户界面的使用和体验; 主要通过实验室中的用户界面研究或者在实际环境中观察用户对用户界面的使用情况(就如同人种学研究一样)来获得的;    他们发展出了一个理论系统来讲述设计以及使用交互系统. 其中包含了一些基本理论, 比如Fitts’s law(菲茨定律),描述指针移动和目标元素在屏幕的位置的的关系, 通常, HCI理论采用设计框架的形式, 包含了各种混杂的概念. HCI研究可能是聚焦到某个整体的局部也可能是直接识图去强化整体.
 
 
+Is There a Connection Between Academic Research and Industry Practice?(在学术研究和工业实践之间有联系吗?)
+在工业界的UX从业人士也通常都会做些研究的, 就如同设计一样. 但是学术性HCI研究和UX研究在目的产出, 目标, 以及关注的范围都有着非常显著的差别, 学术研究和工业研究通常可能都在处理那些看起来比较接近的基础对象: 数字化交互系统的设计和理解以及它们的用户群体. 两者都遵循用户为中心的设计原则, 都提倡把对人类的理解融入到设计环节中. 所以说, 它们之间肯定也应该有很强的关系以及重叠区域.
+在UK, 政府在HCI的学术研究基金投入上逐渐关注起学术研究和工业时间的联系了. UK的工程和物理科学研究委员会, 也是HCI研究领域基金的重要来源, 就讨论过关于HCI研究需要考虑如何”把理论和方法应用到工业实践中”. 更进一步地说, 既然HCI学术研究在很多的领域, 包含医疗健康, 电子设备消费品以及软件等等都有很强的关系, 那么在HCI学术研究和UX实践之间建立一个更好的联系就能够获得很高的回报.
+虽然学术圈经常会对UX领域做出很多不准确的猜测,而且有时候认为两者的关系是理所当然的. 学术研究者们通常会假设因为知识的利用和转移, 所以学术研究和工业实践有着非常自然的联系. 但另一方面, UX领域则经常认为HCI的学术研究通常都是脱离实际的, 在现实社会中是无法应用的. 也因为这样的原因, 他们通常会整个抛弃学术研究, 或者至少是觉得消化以及应用学术研究的结论是非常困难的一件事.
+Moving Toward Establishing a Mutually Beneficial Connection Between Academia and Industry(为学术研究和工业实践发展建立一个双赢互惠的关系)
+有两个开放性问题我们需要强调的是:
+    UX职业领域该如何指导以及启发学术研究?    学术研究又能够为UX职业领域做什么事情呢?
 
-结果呢? 红色按钮的表现比绿色按钮的表现要好上21% 为什么呢? 本文并没有直接给出答案, 大家可以自己思考一下~
+回答第一个问题可能需要HCI研究者们对理解UX职业领域的工作有着一定的热情, 并且进行一些关于UX实践的经验性研究. 迄今为止, 学术研究中对于UX实践应用的探索还是比较有限的. 无论如何, 在UX领域工作的经验能够对学术研究产生很多意外的重要启示. 而回答第二个问题就要相对更加复杂了 – 甚至可以说完全不知道该如何下手了. 它需要很深入的研究才行.
+令人好奇的是, 学术研究者们通常对HCI研究中大量出现的创新以及其自身关注领域的快速发展而感到忧虑. 在一个学术领域中, 他们的目标通常是建立一个强有力的基础, 然后慢慢发展.
+然而, HCI学术研究领域的创新和广度都强化了其和在工业限制下的UX领域有限的能力形成的鲜明对比. 比如说, 在一个很限制的项目中工作时, 你需要考虑有限定的预算, 有限的时间, 你需要去满足客户的需求以及相关利益人的利益, 还要能和其他领域的人相互配合, 比如软件开发者; 还要习惯于新的工作方式, 比如敏捷开发以及精益方法. 你不会担心有过多的创新, UX从业人士通常希望能够在他们非常受限的环境下创造更多的创新.
+学术性研究的产出中完全可以提供很多对UX领域有潜在价值的东西. 但是如何来传递这些产出呢? 首先也是最重要的是, 我们完全不用把HCI研究和某一个项目或者新项目, 或某项服务的预期条件, 或者某个客户的特定需求绑定在一起; 其次, 学术新的HCI研究有其探究未来科技的自由 – 即便其设计本身有着一定的风险且没有清晰的,即时的回报. 所以, HCI研究者们通常在无数失败的基础上创造了快速的创新, 他们的工作少了很多的限制.
+也许通过有效的沟通, HCI学术研究中的那些成果能够给工业实践带来巨大的价值. 很多UX从业人士都没有那么富裕的时间来让他们去探讨那些当前需求以外的东西. 但是在学术研究中, 关注范围更广是很通常的事情.
+不幸的是, 就目前来说, 绝大多数的学术工作–无论是创造圆形, 概念, 想法, 或者是设计原则 – 都局限在了HCI研究者们在各种会议期刊上发表的论文中了. HCI研究者的受众多数都是那些其他的学术研究者, 而不是那些在工业界工作的人们.
+通过理解用户体验的工作情景, HCI研究者们能够更好的把他们的研究方向切合这些受众, 从而和UX职业领域建立更加友好自然的联系. 与其让学术研究和工业实践互相竞争, 不如假设一方创造那些权威的, 严禁的知识体系, 一方吸收并加以应用呢. 两者这样的互利互惠关系才是最有价值的. 采用这一方法可能会让学术研究者们更好的理解他们该如何进行自己的研究, 让它们更加容易帮助到那些UX从业人士.
+Postscript(后记)
+作为我开始针对这一领域的调研的一部分, 我创建了一个非常简短的, 5分钟调查问卷, 邀请各位UX从业人士来提供一些关于自身背景, 所用方法以及和学术研究的关系的信息. 如果你愿意参与其中, 或者是对这一工作有兴趣的话, 请参与此项调查.
+Acknowledgments(感谢)
+作者非常感谢EPSRC的支持.
+References(参考)
+[1] Benford, Steve, and Gabriella Giannachi. Performing Mixed Reality. Cambridge, MA: MIT Press, 2011.[2] Engineering and Physical Sciences Research Council. Report of the Human EPSRC Computer Interaction Theme Day and Survey, March 2012.[3] Friess, Erin. “Personas and Decision Making in the Design Process: An Ethnographic Case Study.” In Proceedings of CHI ’12. New York: ACM Press, 2012.[4] Goodman, Elizabeth. Performance and Materiality in Professional Interaction Design. PhD thesis, University of California, Berkeley, 2013.[5] Gray, Colin M., Erik Stolterman, and Martin A. Siegel. “Reprioritizing the Relationship Between HCI Research and Practice: Bubble-Up and Trickle-Down Effects.” Proceedings of CHI ’14. New York: ACM Press, 2014.
 
-作者结合这个故事主要想说的一点是: 无论要做什么样的改变, 都要先从假设开始, 实践是检验真理的唯一标准.  data always beats opinion,no matter what.
-
-最后来个趣味小知识: 为什么超链接是蓝色的呢?
-
-看的时候我恰好看到下文中有个fun story….于是非常恶意的想: 不会又是万维网之父也是个红绿色盲吧…
-
-当然不是… 哈哈. 实际上使用蓝色是为了能够和原本网页背景色的灰色形成最佳的对比.
-
-
-
-详细解释如下:
-
-  Tim Berners-Lee,万维网的主要缔造者, 被认为是初始设定链接为蓝色的人.  Mosaic, 这个非常早起的浏览器, 展示网页的时候默认是灰色的背景和黑色的文本. 而同样为深色调, 但是又不至于和黑色混在一起的就是蓝色了. 所以, 为了让链接能够在一堆文本中脱颖而出, 方便阅读, 就默认设定超链接的颜色为蓝色了.
-
-作者最后做的总结其实确实值得深思:
-
-  仅仅简单改变一些非常小的类似颜色这种细节, 就能产生如此巨大的改变,  甚至可以完全改变最后的产出.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>What does it mean to be simple?(译)</title><link>http://taoalpha.me/blog/2013/06/08/read-what-does-it-mean-to-be-simple-translated/</link><category>read</category><tag>HCI,HCIBib,UX,产品学习,翻译,翻译文章</tag><pubDate>2013-06-08T13:00:00.000Z</pubDate><description>什么才意味着真正的简单呢?(What does it mean to be simple?)所有的设计师都在说”简洁性”是多么多么的重要,那么,究竟什么才真正意味着简单呢?多数情况下我我们认为简单意味着更少,通过去掉一些事物来达到简单的目的. 我们以为通过把内容放置在明显位置,可以帮助用户更好的集中注意力,或者采用使用符号列表而不是段落的形式,会有更多的人愿意去阅读;亦或者通过将文本内容缩略到一半可以让内容更清晰. 但是简单并不意味着”更少”.一个更准确的定义应该是”刚刚好”.
-唔,我可能过于简单了…
-在一些时候,设计需要更多的东西来实现简单.所以,一个更好的定义应该是:”刚刚好可以满足理解以及实现我们的目标”.不采用隐藏或者去除某些东西,我们采用如下的方法让我们的设计变得更加有意义的简单:
-    只有一个核心观点(不要多个观点或者一个不完全的观点)    随时间而逐渐增强清晰性(不要被不恰当的细节淹没)    一致性(避免使用不必要的特殊界面和信息)
-只有一个核心观点注意力和兴趣是你试图让某人做任何事的首要因素.最好的吸引注意力和建立兴趣的方式是只展现一个核心的观点,全面的阐述这一观点.这将允许用户来做一个二选一的选项:”我感兴趣啊?”.
-在介绍某个特性的时候,应当让用户能立刻”看到”自己的操作会产生的任何后果,这将帮助用户更好的理清内容同时对于下一步要做什么有更好的掌控. 只有一个核心目标的原则是贯穿始终的,从全局到每个细小的属性.“除了’Send Message’,没有更好的词语可以描述清楚’Send Message’”.—Des Treynor这是一个非常典型的例子,它的结果非常清楚(就是Send Message).这里其他的版本可能是”Go”或者”Submit Now”,或者仅仅是”Send”.但这些都没有”Send Message”那样清楚,只用两个词就可以让用户非常清楚的理解其含义,从而更轻松的做出选择. 随着转移到更加复杂的一些属性,让其概念清晰易于选择的困难程度呈指数级增长,但是我们的目标应该是一致的:利用一个核心观点指引用户合理的设定他们的预期.如果我们没能成功的做到这一点,那么感知起来的复杂度就会有所增加.
-只有一个核心观点包括以下内容:
-    二选一的:足够简单只有两个选择…允许人们方便的评估他们同意与否    用朴实的语言来陈述:尽可能的清晰以及明显的表述问题或者选择的机会    不断的重复:每一个界面都应该在适当的位置不断重复恰当的问题或选择的机会.    让预期变得明显:每一个问题或者选择机会的结果都应该可预计;
-随时间提升其清晰性在获得人们的兴趣之后,下一步就需要让他们投入时间和精力了.即便当你的用户发现你的应用非常有趣,也依然有很多”摩擦”可能会出现.如果他们被这些阻拦了,那么转化率依然很低.你必须要清晰的没有任何困扰的展示给他们他们可以实现他们的目标.“网络出版:写的太少,无法清楚地表达意思.写的太多,会因为太厚而无法浏览从而有很多内容被跳过.”–Ryan Singer就好比很多对话可以随着时间的进行而变得更清楚更准确,正确的时间出现的正确的细节将会增加最终获得满意结局的机会.去除相关的但是不恰当的细节,将可以帮助用户不断前进而减少被分散的机会.谨记,每一个无法获得有意义的结果的时间和精力的投资都会增加感知的复杂性.
-随时间提升清晰性可以采用如下方法:
-    清楚的开始和结束–确保界面中如何清楚的做某一件事实非常清楚地.    逐步解密–要做到恰到好处:把用户的焦点只放在那些有主意他们理解当前任务的细节上.    明显的路径–总是提供一个清晰的路径到下一步或者下一层次的细节.
-一致性一个新用户和一个老用户是完全不同的两种用户.如果你想要让人们一直停留这里,那么你需要帮助他们,让他们感觉自己掌握了这一应用的每一部分,而且完全没有必要去担心下一个是什么. 每一个特性都需要足够的便捷而让用户感到愉悦以及他们的时间和精力得到了最好的利用.“无论是风中舞动的旗子,空的和挤满人的站台的区别,亦或者是那些暗示着可行的路径的脚印,我们一直寻找着世界上那些明显的标志来提供指引.”–Don Norman你给予他人友好的表情可以带给他们自信,而且可以收获笑容.帮助人们看到那些他们之前看到的内容,基于他们已经知道的事情获得结论.当你确实有一个复杂的问题时,你的界面比较复杂并没有错,但是毫无理由的把用户扔在一个陌生的地方,而且不给于任何指引或者地图,那就是不友好了.
-通过以下方法保持一致性:
-    巩固惯例–使用相似的处理过程,使用相似的方法.    建立模式–把相似的事物放在相似的地方,这样用户就可以根据直觉来行动了.    偶尔破坏规则–知道什么时候一个界面需要独一无二,实际上可能比你想象中更少一些.
-当多就是少的时候目前盛行的观念认为简单就是少…删减再删减.但是简单真的应该针对理解和清晰的目标…我们能做出让用户立刻就明白正在做什么,同时可以非常明确的了解下一步将做什么的设计吗?为了实践实现简单,我们可以坚持只有一个核心观点,随时间提升其清晰性,同时利用一致性帮助用户更高效的使用. 在这种情况下,更多也可能就是更少…通过在适当的时候添加适当的细节,整个处理过程将会变得更加简单易用.简单性促使我们认为它应该是更少的,但是其实它真的应该是”刚刚好”. Edit By MaHua
+Source Link:
+    What Is the Relationship Between HCI Research and UX Practice?
 </description><source>TaoAlpha</source><author>TaoALpha</author></item></channel></rss>
