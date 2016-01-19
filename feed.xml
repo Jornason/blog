@@ -1,4 +1,39 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-19T02:20:35.999Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>Sorting Algorithm in JavaScript - Quicksort and Heap Sort</title><link>http://taoalpha.me/blog/2016/01/19/tech-sorting-algorithm-in-javascript-median-sort-and-quicksort/</link><category>tech</category><tag>Algorithm,JS,Sort</tag><pubDate>2016-01-19T05:33:27.000Z</pubDate><description>Last time we have finished the four different sorting algorithms including : insertion sort and selection sort, bubble sort and merge sort.
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-19T20:19:23.566Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>JavaScript Sorting Algorithm - Radix Sort and Bucket Sort</title><link>http://taoalpha.me/blog/2016/01/19/tech-javascript-sorting-algorithm-radix-sort/</link><category>tech</category><tag>Algorithm,JS,Sort</tag><pubDate>2016-01-19T23:44:09.000Z</pubDate><description>Comparison based sorting algorithmsWe have discussed all popular comparison based sorting algorithms:insertion sort and selection sort, bubble sort and merge sort, Quicksort and Heap Sort.
+All these algorithms are great under most of conditions, but their lower bound is O(nlogn), they can not do better.
+If for some reason, we want to achieve better than nLogn, we have to find some other ways.
+About why the lower bound of all comparison based sorting algorithms is nlogn ? 
+Why nlognFor any array with n elements, it has n! possible orders. Since we are using comparison based, suppose we are building a decision tree for all these possible orders, and h is the height of the decision tree and also is how many number of comparisons we need to get down to the leaves. Then we should have:
+2^h &amp;gt;= n! which means: the total number of leaves should be enough to cover all possible orders of our array.
+Then we would get h &amp;gt;= nlogn for approximation.
+Non-Comparison based sorting algorithmsSo if we want to get over the nlogn, we have to ask help from some non-comparison based ways.
+If you knew or heard about the sorting algorithms, you should know we have several famous non-comparison based sorting algorithms: counting sort, bucket sort and radix sort.
+And lets talk about them today, one by one :)
+Counting SortImage this situation: 
+You have a deck of playing cards in random order(without jokers), and you want to sort them into the ascending order from A to K. What you gonna do ? Possibly you will count the cards and group them into 13 groups from A to K, and then combine these groups from A to K.
+This is a classical counting sort. Once we are sure how many groups we have in our array or we know that the elements in our array are coming from a distribution from a to b. Then we can group them into (b - a + 1) buckets and loop over the array, put elements into proper buckets and then combine them.
+Here is the code:1234567891011121314151617181920// counting sortcountingSort(list)&amp;#123;  var bucket = [],idx = 0;  // assign each element to its bucket  for(var i = 0;i&amp;lt;list.length;i++)&amp;#123;    bucket[list[i]] = bucket[list[i]] || 0    bucket[list[i]] ++  &amp;#125;  // now combine all the buckets  for(i = 0; i&amp;lt; bucket.length;i++)&amp;#123;    while(bucket[i] &amp;amp;&amp;amp; bucket[i] &amp;gt; 0)&amp;#123;      // skip empty buckets and loop over every elements in a bucket      list[idx++] = i;      bucket[i] --;    &amp;#125;  &amp;#125;  return list&amp;#125;
+Bucket SortThe counting sort is amazing fast : O(n+k), k is the number of buckets we have. But it costs too much space, and if we don’t know the distribution of elements, it maybe have a lot of empty buckets which is a waste of space. 
+Bucket sort is an optimization of counting sort, instead of only assigning same elements into one bucket, it will put several elements into one bucket but make sure the it is ascending from the point of buckets which means: for i,j buckets, if i &amp;lt; j, we know any elements in i will smaller than any elements in j.
+By doing this, we can divide the entire array into a lot of small subarrays, and now we can just use any comparison based sorting algorithm to sort the small arrays.
+Same as counting sort, if we have a wonderful distribution of our elements, it would be O(n + klogb), k is the number of buckets and b is the number of elements in one bucket, to sort the entire array. But the worst case, all elements assigned into the same buckets, it will degrade to the comparison based sorting algorithm we use, but only when you choose a really bad method to group.
+1234567891011121314151617181920212223242526272829// bucketSortbucketSort(list,bucketCount)&amp;#123;  // only for numbers  var min = Math.min.apply(Math,list),  // get the min      buckets = [],      bucket_count = bucketCount || 200  // build the bucket and distribute the elements in the list  for(var i = 0;i&amp;lt;list.length;i++)&amp;#123;    // this is a simple hash function that will make sure the basic rule of bucket sort    var newIndex = Math.floor( (list[i] - min) / bucket_count );      buckets[newIndex] = buckets[newIndex] || []    buckets[newIndex].push(list[i])  &amp;#125;  // refill the elements into the list  var idx = 0  for(i = 0;i&amp;lt;buckets.length;i++)&amp;#123;    if(typeof buckets[i] !== &quot;undefined&quot;)&amp;#123;      // select those non-empty buckets      insertionSort(buckets[i]);  // use any sorting algorithm would be fine      // sort the elements in the bucket      for(var j = 0;j&amp;lt;buckets[i].length;j++)&amp;#123;        list[idx++] = buckets[i][j]      &amp;#125;    &amp;#125;  &amp;#125;  return list&amp;#125;
+Radix SortCounting sort and Bucket sort are great, but they are too space-consuming and sometimes they are even slower than comparison based ones. Like if we have a really sparse array coming from 0 to n^2, then counting sort would down to O(n^2), and also if we don’t know the distribution of all elements in the array, we might choose an unefficient way to do the hash part for bucket sort, we could still get O(n^2).
+Radix is here to help us out of this trouble. The idea of Radix Sort is to do digit by digit sort starting from least significant digit to most significant digit. Radix sort uses counting sort as a subroutine to sort.
+For example: we have: [101, 203, 5, 87, 76, 48], using radix sort:
+
+[101,203,5,76,87,48] &amp;lt;- last digits
+[101,203,5,48,76,87] &amp;lt;- second last digits
+[5,48,76,87,101,203] &amp;lt;- the first digits
+
+Using zero when the number doesn’t have this digit.
+Now lets show the code:
+1234567891011121314151617181920212223242526272829303132333435363738394041// helper function to get the last nth digit of a numbervar getDigit = function(num,nth)&amp;#123;  // get last nth digit of a number  var ret = 0;  while(nth--)&amp;#123;    ret = num % 10    num = Math.floor((num - ret) / 10)  &amp;#125;  return ret&amp;#125;// radixSortradixSort(list)&amp;#123;  var max = Math.floor(Math.log10(Math.max.apply(Math,list))),        // get the length of digits of the max value in this array      digitBuckets = [],      idx = 0;  for(var i = 0;i&amp;lt;max+1;i++)&amp;#123;    // rebuild the digit buckets according to this digit    digitBuckets = []    for(var j = 0;j&amp;lt;list.length;j++)&amp;#123;      var digit = getDigit(list[j],i+1);      digitBuckets[digit] = digitBuckets[digit] || [];      digitBuckets[digit].push(list[j]);    &amp;#125;    // rebuild the list according to this digit    idx = 0    for(var t = 0; t&amp;lt; digitBuckets.length;t++)&amp;#123;      if(digitBuckets[t] &amp;amp;&amp;amp; digitBuckets[t].length &amp;gt; 0)&amp;#123;        for(j = 0;j&amp;lt;digitBuckets[t].length;j++)&amp;#123;          list[idx++] = digitBuckets[t][j];        &amp;#125;      &amp;#125;    &amp;#125;  &amp;#125;  return list&amp;#125;
+The time complexity for radix sort is : O(d*(n+b)), d is the number of digits the array has, b is the buckets we have, normal it is 10 for base 10 system.
+Cool ha :)
+BTWSince I combine radix sort with bucket sort and counting sort, so this is the last post about sorting algorithms. But for this serie, I think I will have another post talking about when we should use which algorithm.
+See ya.
+Oh, and also, I combine all these codes together and create a gist for it: Soting Algorithms in JS.
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Sorting Algorithm in JavaScript - Quicksort and Heap Sort</title><link>http://taoalpha.me/blog/2016/01/19/tech-sorting-algorithm-in-javascript-median-sort-and-quicksort/</link><category>tech</category><tag>Algorithm,JS,Sort</tag><pubDate>2016-01-19T05:33:27.000Z</pubDate><description>Last time we have finished the four different sorting algorithms including : insertion sort and selection sort, bubble sort and merge sort.
 Now let’s continue playing with another one or two.
 Median Sort and QuicksortMedian SortSimiliar with merge sort, we still use divide and conquer, the basic approach for many problems, but what if we use some statistical information about the array that need to be sorted? Like the median of the array.
 If we know the median, we can sort the array into 2 distinct subarrays of about half the size: left with all elements smaller than the median, and right with all elements bigger or equal to median. And we keep doing this for all subarrays, finally we will get a sorted array.
@@ -24,7 +59,7 @@ right child: idx*2 + 2
 Show me the code !!!
 123456789101112131415161718192021222324252627282930313233343536373839// heapSort - here we use max heapvar heapSort = (list) =&amp;gt; &amp;#123;  buildHeap(list);  // now we have the max value  for(var i = list.length-1;i&amp;gt;=1;i--)&amp;#123;    // always put max value to the end of the current heap    // so the end of the array will always be sorted and gradually expanded to the entire array    swap(list,0,i);     // since we change the head of the heap    // so we need redo the heap to get the new max of the heap    heapify(list,0,i);   &amp;#125;  return list&amp;#125;buildHeap(list)&amp;#123;  // start from the second last level of the tree which is the parent of the last element  var mid = Math.floor(list.length / 2) - 1;  for(var i = mid;i&amp;gt;=0;i--)&amp;#123;    // make sure every node of the tree is heapify    heapify(list,i,list.length)  &amp;#125;&amp;#125;heapify(list,idx,len)&amp;#123;  // len means the number of elements current heap has  var left = 2*idx + 1,      right = 2*idx + 2,      largest;  // temp value to store the index of largest element of this tree unit  largest = left &amp;lt; len &amp;amp;&amp;amp; list[left] &amp;gt; list[idx] ? left: idx;  largest = right &amp;lt; len &amp;amp;&amp;amp; list[right] &amp;gt; list[len] ? right : largest;  // if we have a new largest, swap it and redo heapify to make sure entire heap is correct  if(largest !== idx)&amp;#123;    swap(list,largest,idx)    heapify(list,largest,len)  &amp;#125;&amp;#125;// swap function - same as before
 Heap Sort is really fast, sometimes it is even faster than quicksort since it will guarantee the O(nlogn) even in the worst case. But normally in average case, the quicksort is a little faster.
-BTWI believe I still have 2 posts for this series, one will talk about the radix, and the other will be the counting and bucket sort. See ya.
+BTWI believe I still have 2 posts for this serie, one will talk about the radix, and the other will be the counting and bucket sort. See ya.
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Sorting Algorithm in JavaScript - Insertion Sort and Selection Sort</title><link>http://taoalpha.me/blog/2015/10/29/tech-javascript-sorting-algorithm-1/</link><category>tech</category><tag>Algorithm,JS,Sort</tag><pubDate>2015-10-29T05:00:00.000Z</pubDate><description>Sorting AlgorithmAs the most important and fundamental algorithm, sorting algorithm is always the best start to learn algorithm.
 Among all the different sorting algorithms, we have 10 algorithms which are used a lot in practice, and I will introduce all these ten algorithms one by one. 
 Today we will talk about: Selection Sort and Insertion Sort.
@@ -522,55 +557,128 @@ Others: others;
 Be Consistent;
 
 SummaryThis book is pretty short with all valueable content. Strongly recommend after you get familiar with all basic css concepts.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
-Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
-NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
-jQueryjQuery is the most popular js module people used in their websites or webapps. And using jQuery with CoffeeScript is just like javascript. jQuery is javascript, after all.
-Want to use CoffeeScript with jQuery? Just do it and follow the rules we learn from the basic syntax part. Here I list several examples and if you look it closely, you will find everything you have already known if you read the first chapter carefully. The author of the book shows us another complex examples: TodoMVC in CoffeeScript.
-BTW: TodoMVC is a great project which shows you how to write a todo app in all kinds of tools and frameworks.
-1234567891011121314151617181920212223242526272829303132333435363738394041$ -&amp;gt;  do some  do another### =&amp;gt;$(function() &amp;#123;  some();  return another();&amp;#125;);That's just like the $(document).ready(function()&amp;#123;&amp;#125;)#### A function using ajax to send mail, which is a new feature I will add to my blog in a few days :)@sendMail = (msg)-&amp;gt;  $.ajax    type: 'POST'    url: 'https://mandrillapp.com/api/1.0/messages/send.json'    data:      'key': ''      'message':        'from_email': msg.sender_mail        'from_name' : msg.sender_name        'to': [            &amp;#123;              'email': ''              'name': 'TaoAlpha'              'type': 'to'            &amp;#125;          ]        'autotext': 'true'        'subject': msg.subject        'html': msg.content  .done (response)-&amp;gt;    showAlert(&quot;success&quot;,&quot;Thanks for your contribution!&quot;)  .fail (data)-&amp;gt;    showAlert(&quot;fail&quot;,&quot;Sorry! Failed to send the email. Please retry!&quot;)# another function to get unique result from an array of objectsArray::getObjectUnique = (id) -&amp;gt;  a=b=[];  add = (data) -&amp;gt; b.push data[id];data  (add i for i in @ when b.indexOf(i[id]) == -1 )
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748// You can see that you have saved a lot of keystrokes and the codes look more clean and beautiful.// Because coffeescript doesn't support declare global variables directly, and if we want to use the function in other script, we need to declare it into the `this` scope.this.sendMail = function(msg) &amp;#123;  return $.ajax(&amp;#123;    type: 'POST',    url: 'https://mandrillapp.com/api/1.0/messages/send.json',    data: &amp;#123;      'key': '',      'message': &amp;#123;        'from_email': msg.sender_mail,        'from_name': msg.sender_name,        'to': [          &amp;#123;            'email': '',            'name': 'TaoAlpha',            'type': 'to'          &amp;#125;        ],        'autotext': 'true',        'subject': msg.subject,        'html': msg.content      &amp;#125;    &amp;#125;  &amp;#125;).done(function(response) &amp;#123;    return showAlert(&quot;success&quot;, &quot;Thanks for your contribution!&quot;);  &amp;#125;).fail(function(data) &amp;#123;    return showAlert(&quot;fail&quot;, &quot;Sorry! Failed to send the email. Please retry!&quot;);  &amp;#125;);&amp;#125;;# get unque result for array of objectsArray.prototype.getObjectUnique = function(id) &amp;#123;  var a, add, b, i, j, len, results;  a = b = [];  add = function(data) &amp;#123;    b.push(data[id]);    return data;  &amp;#125;;  results = [];  for (j = 0, len = this.length; j &amp;lt; len; j++) &amp;#123;    i = this[j];    if (b.indexOf(i[id]) === -1) &amp;#123;      results.push(add(i));    &amp;#125;  &amp;#125;  return results;&amp;#125;;
-RailsRuby on Rails is a web framework that came around in 2004. And it soon became quite popular. Actually many people believe that Rails saved the ruby…
-Check this:How to download and install Rails if you haven’t installed it.
-Rails’s principles
-Convention over configuration
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (3)</title><link>http://taoalpha.me/blog/2015/06/22/read-javascript-the-definitive-guide-3/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-22T04:00:00.000Z</pubDate><description>概述先说点不相关的… 为了更好的阅读, 所以以后读书笔记相关的博文都会分拆成4个部分:
+
+概述: 算是阅读总结摘要以及类似这段话之类的声明介绍等等;
+阅读笔记: 这部分主要以阅读过程中的记录为主, 会比较杂, 基本算是逐点记录, 评判相对主观;
+心得: 这部分则主要为笔记的延伸, 算是对笔记的一种补充或者说自己的阅读理解消化所得, 有时候也会覆盖到一些使用架桥等等;
+谜题: 这里主要记录一些没有完全理解的部分, 会加上自己的猜测解答, 当弄懂后会更新正解;
+
+DONE.
+本篇是博主重新翻阅了”JavaScript the Definitive Guide(第六版)”的前4章内容(之前 阅读笔记-2均是第五版的)后的读书笔记以及心得体会. 内容主要覆盖js的基本用法, 考虑到重复, 这里主要是在上两篇的基础上查漏补缺.
+阅读笔记Chapter 2 - 基础知识JS能识别的whitespaces:
+常规空格: \u0020 # 即url中常见的%20
+Tab(制表符): \u0009 # js中常见的\t
+Vertical Tab: \u000B # \v
+Form Feed(翻页/页码分隔符): \u000C # \f
+Nonbreaking Space(不间断空格): \u00A0  # 通常在html中用来阻止默认连续多空格自动归一的性质(auto collapsing)而使用&amp;amp;nbsp;, 同时因为软件处理的需要, 使用&amp;amp;nbsp;能够防止相应的处理器将普通空格转为行分隔;
+Byte order mark: \uFEFF
+any character in Unicode category Zs
+
+JS能识别的line terminators:
+line feed: \u000A # \n
+carriage return: \u000D # \r
+line separator: \u2028
+paragraph separator: \u2029
+
+值得一说的是, js是支持unicode作为indentifier的合法字符的, 但是上述这些则不在其中.
+JS的”Unicode Escape Sequences”类似”\u00E9”这种结构的字符在js都代表一种特殊的字符:”unicode”. 如果你在js中使用这些字符, js会自动将其编译为对应的字符(如果是在js的注释中, 则不会编译, 而是以ascii对待), 比如: 示例就会编译为”é”. 而在js中, 这种对等关系是支持的, 即 &amp;quot;\u00E9&amp;quot; === &amp;quot;é&amp;quot;是为真的.
+但是一定要慎用… 因为unicode变化过多, 有时候输出看起来一样的字符, 其本质不一定一样: &amp;quot;e\u0301&amp;quot;的输出也是”é”, 但是它相当于是&amp;quot;e&amp;quot;+&amp;quot;\u0301&amp;quot;组成的.
+JS中的&amp;quot;;&amp;quot;在JS中, &amp;quot;;&amp;quot;作为语句结尾并不是必须的, 只有当多语句同行的时候, &amp;quot;;&amp;quot;才是必须的. 当你没有&amp;quot;;&amp;quot;的时候, js会自动为你添加合适的&amp;quot;;&amp;quot;. 通常它会自动将它没有&amp;quot;;&amp;quot;无法解析代码时候遇到的换行处加以&amp;quot;;&amp;quot;(除了类似return,break, ++, –等, 它会自动将其后的行分隔符作为&amp;quot;;&amp;quot;对待.):
+1234567var aa=3console.log(a)// output: 3// js在第一个换行处识别了其语句分割的意义, 但是在 a = 3 的两个分割处都因为它可以识别合并后的语句所以没有作为`&quot;;&quot;`处理.
+但是上述的成功不意味着js的智能, 更多时候如果我们不合适的使用&amp;quot;;&amp;quot;, 会造成很多奇怪的问题的, 比如以(, [, /, +, -为起始的语句很可能会被误认为是前一语句的延续. 所以通常来说, js的编码还是比较鼓励使用&amp;quot;;&amp;quot;作为语句结尾的.
+Chapter 3 - 数据类型Number:
+Global viriables: Infinity,NaN
+Global Objects: Math,Number
+
+Tips:
+
+NaN 具有唯一性, 其不等于任意值, 包括它自己, 0/0会产生’NaN’, 但是0/0 != NaN, 如果需要判断一个变量是不是NaN, 需要使用isNaN()这个内置的函数;
+Infinity &amp;lt;==&amp;gt; Number.POSITIVE_INFINITY &amp;lt;==&amp;gt; 1/0
+-Infinity &amp;lt;==&amp;gt; Number.NEGATIVE_INFINITY &amp;lt;==&amp;gt; -1/0
+Binary Floating-Point会导致小数级错误, 比如0.3-0.2 != 0.2-0.1, 这个属于计算机本身因为二进制编码的原因所致, 所以在比较数字大小的时候要格外小心;
+
+String:
+immutable ordered sequence of 16-bit values
+
+Tips:
+
+string的长度都是按照16-bit来计算的, 所以当如果一个字符超过了16-bit, 则会按照多的计算. 比如: e - \ud835\udc52, 就需要按照两个16bit计算, 即其长度应为:”2”
+从ECMAScript 5之后就允许string跨行定义了, 只需要在换行的地方加上一个反斜杠\, 即可.
+转义字符\如果加在普通字符前, 不会产生任何效果;
+typeof null =&amp;gt; Object , typeof undefined =&amp;gt; undefined;
+null == undefined, null!==undefined =&amp;gt; True
+
+类型转换javascript是一个很宽松的语言, 我们不需要预先定义变量类型, 而在运算以及执行过程中, js也会自动的帮助我们进行类型转换, 当然为了更好的借助这一特点, 了解下图中的js转换类型的规则还是非常有必要的.
+
+其中object转换 primitive datatype 的话, 一般会按照如下步骤进行:
+
+首先会默认调用toString()函数, 你可以自行定义这一函数, 如果toString()返回结果正常, 则转换结束;
+如果toString()未定义, 或者返回结果非primitive datatype的话, 会自动调用valueOf()函数, 同上一步;
+而如果两个都没找到, 那么js将会抛出TypeError;
+
+而根据要转换的是string还是number而交换1,2两步( string 的话先调用toString(), 且返回值必然会转为string; 如果是number的话, 则先找valueOf(), 返回结果为number). 当然至于boolean的话, 所有的object转换到boolean都是true.
+Array转换string的时候默认的toString()就是一个join()调用~ Function的话, 则也可以自己定义toString()函数.
+Tips:
+
+x + “” // Same as String(x)
++x // Same as Number(x). You may also see x-0
+!!x // Same as Boolean(x). Note double !
+在ECMAScript 5的strict模式下, 所有变量君需要声明才能赋值, 否则会报错;
+
+Chapter 4: Expressions and Operators
+上图为按照优先级顺序排列下来的操作符(横线分隔的同一组块之间的级别相同).
+Tips:
+
+运算顺序不影响赋值顺序, 赋值顺序始终都是严格从左到右的, 比如:h = x+y+z, 那么赋值顺序始终都是h-&amp;gt;x-&amp;gt;y-&amp;gt;z; 通常情况下, 这一赋值顺序不会影响之后的计算顺序, 对结果基本没什么影响, 除了一种情况:
+如果前变量的赋值会影响到后面变量的值的话, 比如共用同一个变量, 那么这种情况下, 赋值顺序就可能会对结果产生一定的影响了. 最简单的例子就是z = 2;y = function(){z = 3;return 1};, 因为y是一个函数, 而它的执行会改变z的值, 所以y()+z和z+y()的结果就是不相同的.
+
+“+”运算符中的类型转换:
+
+string优先, 只要有两个操作数中有一个是string或者是有toString()的object, 那么其都会按照string来进行链接运算;
+除非两个都是非string, 才会进行加法运算;
+当”+”作为单操作数时, 则意味着将操作数向number类型转换;
 
 
-Rails is designed to assume that the programmer will follow certain known conventions, which if used, provide great benefit and much less need to configure the framework.That means that the framework makes assumptions on how a typical application should be built and structured and it doesn’t try to be overly flexible and configurable. This helps you spend less time on mundane tasks like configuring and wiring up an application architecture and more time on actually building your app.
+&amp;amp;&amp;amp;运算符如果第一个为false, 则不执行第二条判断, 所以可以用这个方法来代替if: (a==b) &amp;amp;&amp;amp; alert(&amp;quot;a equals b&amp;quot;)就相当于if(a==b) alert(&amp;quot;a equals b&amp;quot;).
+
+!(p &amp;amp;&amp;amp; q) === !p || !q
+!(p || q) === !p &amp;amp;&amp;amp; !q
+a op= b 和 a = a op b通常是等价的, 除非a本身的重复赋值会有副作用, 比如 a[i++] += 1和a[i++] = a[i++] +1就不一样, 因为后者前后两个i不同了.
+eval()函数会继承当前的scope, 除非eval()被赋予某个新的reference, 那样的话只会使用global的scope;
+void操作数很少用到, 它是个单操作数的操作符, 其用法就是丢弃操作数的返回结果, 然后返回 undefined…
+
+心得whitespaces 和 line terminators通常在js里面我们使用\s来统一代表所有其可以识别的whitespace, line terminators. 如下例:
+1234567var k = 'asd \t asdasd \na asd \f asda dad\rasd\u2028asd\u2029\u00A0'k// output 里面有两个换行的符号, 我这里为了演示方便就不换行了k.replace(/\n/g,'-')// 同上,里面的&quot;\r&quot;我也不换行了k.replace(/\s/g,'-')// output: &quot;asd---asdasd--a-asd---asda-dad-asd-asd--&quot;
+因为在console中输出的时候是不换行的, 所以有时候单单看console输出的话, 类似这种编码问题所致的错误就找不出来, 为了省事, 我们可以统一使用\s来代表所有此类符号.
+谜题Q: 按照正常来说Number.MAX_VALUE加上一个数应该就会自动转为Infinity, 但实际上, 测试过程中发现, 只有当Number.MAX_VALUE加上一个足够大的数后才会等与Infinity, 这是为什么?
+1234567Number.MAX_VALUE// output: 1.7976931348623157e+308Number.MAX_VALUE +1// output: 1.7976931348623157e+308...Number.MAX_VALUE + Math.pow(10,1000)// output: Infinity
+正解: the sum is computed and rounded to the nearest representable value using IEEE 754 round-to-nearest mode. If the magnitude is too large to represent, the operation overflows and the result is then an infinity of appropriate sign.
+
+IEEE 754
+In the following two rounding-direction attributes, an infinitely precise result with magnitude at least bemax ( b − ½ b^(1-p) ) shall round to ∞ with no change in sign; here emax and p are determined by the destination format (see 3.3). With:
+
+roundTiesToEven: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with an even least significant digit shall be delivered
+
+roundTiesToAway: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with larger magnitude shall be delivered.
 
 
-Don’t repeat yourself, or DRY
 
+ECMAScript does not specify which of the round-to-nearest, but it doesn’t matter here because both gives the same result. The number in ECMAScript is “double”, in which
 
-Every piece of knowledge must have a single, unambiguous, and authoritative representation within a system.Rails strives to remove duplication and boilerplate wherever it can.
+b = 2
+emax = 1023
+p = 53,
 
-How to use Rails with CoffeeScriptLuckily, after Rails 3.1, you don’t need do anything to let Rails support CoffeeScript. It has already become part of rails! And also, rails has changed its default js library to jQuery.
-So what you need to do if you want to use coffeescript with rails? Nothing but learn rails!
-Just like the author said in the book: “If you haven’t done so already, I encourage you to spend some more time learning Rails as well as Ruby, and immersing yourself in the wonderful communities they support.”
-Node.jsNode is fantastic. It changes something. Before node, javascript was mostly run inside browsers. Now it just came out and gave web developers a chance to become a full-stack!
-Features of Node
-Event-driven
+_so the result must be at least 2^1024 - 2^970 ~ 1.7976931348623158 × 10^308 in order to round to infinity. Otherwise it will just round to MAX_VALUE, because that is the closer than Infinity.Notice that MAX_VALUE = 21024 - 2971, so you need to add at least 2^971 - 2^970 = 2^970 ~ 9.979202 × 10^291 in order to get infinity._
+Q: &amp;#39;0&amp;#39; == false 是 true, 为什么 null == false 就是 false呢?
+猜测解释: ==这样的是比较value的, 而 null转换为boolean类型为false, 并不意味着两者的value是相同的. ==只会比较value, 而不会进行转换. 也即true, false两个boolean类型的其value也是1,0. 而null和undefined的value则不同, 前者为空, 后者为无.
+参考资料:
+JavaScript the Definitive Guide 6th edition
+Unicode Property
+List of Unicode Characters
+编码历史介绍
 
-
-The Node.js framework only allows non-blocking, asynchronous I/O. This means that any I/O operation that is accessing an external resource, such as the operating system, a database, or a network resource must happen asynchronously.
-
-
-Fast and scalable
-
-
-The V8 JavaScript engine(created by google and used in chrome) used by Node.js is highly optimized for performance, thus making Node.js applications very fast. The fact that Node is non-blocking will ensure that your applications will be able to handle many concurrent client requests without using a lot of system resources.
-
-
-Node is not Rails
-
-
-Rails strives to be a full-stack solution to building web applications, whereas Node.js is more of a low-level system for writing any type of fast and scalable network application.
-
-Node and CoffeeScriptWant to write coffeescript in node? It’s easy, all you need is a module named CoffeeScript. And like many other languages, node has several frameworks people built for web development, like: Express.
-The core about how to use coffeescript with nodejs is to use the --watch for coffee command in node. It will automatically compile all file end with coffee into js when there is a change made into these files.
-And just like jQuery, you just follow the rules and write your code.
-DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
-That’s all. Thanks!
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (1)</title><link>http://taoalpha.me/blog/2015/06/28/read-coffeescript-programming-with-jquery-rails-and-nodejs/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-28T04:00:00.000Z</pubDate><description>SummaryThe notes I took while I was learning the ‘CoffeeScript’. If you are a real beginner with ‘CoffeeScript’, I suggest you start with another book called “The Little Book on CoffeeScript”, it’s better for beginners. And after that, this one is definitely your best choice.
 CoffeeScript is a language which complies to JavaScript. Like the sass or scss to css except that CoffeeScript is not compatible with javascript. So you can not mix the javascript syntax with the CoffeeScript.
 This note is mainly about the fist chapter of the book, a nice introduction for CoffeeScript including the basic syntax.
@@ -1146,44 +1254,6 @@ Jill Bolte Taylor: My stroke of insight
 Stephen Hawking: Questioning the universe
 David Christian: The history of our world in 18 minutes
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript 阅读阶梯清单</title><link>http://taoalpha.me/blog/2015/06/10/read-must-read-list-of-javascript/</link><category>read</category><tag>js</tag><pubDate>2015-06-10T09:00:00.000Z</pubDate><description>缘起今天翻完了Getting Good With JavaScript, 对于其精华浓缩的设计很欣赏, 很适合有一定无基础或者有一定基础但觉得野路子出身想要夯实一下的人读. 而在文末的Appendix A中作者提到的这个 Rey Bango’s Must-Read list of JavaScript 确实在是本书的又一大收获. 特转来分享~
-基础入门所谓入门自然是以打牢基础为目的, 所以下列书都是以基础概念为主, 算是领路之书(考虑到国情需要, 我都尽可能替换为豆瓣链接了):
-
-JavaScript: The Good Parts
-Professional JavaScript for Web Developers (Wrox Programmer to Programmer)
-ppk on JavaScript, 1/e
-Beginning JavaScript with DOM Scripting and Ajax: From Novice to Professional (Beginning: from Novice to Professional) 
-Eloquent JavaScript
-
-初窥门径一旦你入了门, 就可以修炼中级秘术了~ 可以看到有两条中级秘术和入门级是一样的, 哈 这就和基础功打的够扎实, 基本拳脚也能当秘术使唤的~
-
-Professional JavaScript for Web Developers (Wrox Programmer to Programmer) 
-JavaScript: The Definitive Guide 
-Eloquent JavaScript - Online 
-DOM Scripting: Web Design with JavaScript and the Document Object Model
-
-高手之路一旦确保自己有了一个牢靠的基础后, 我们就可以开启自己的高手之路了.
-
-High Performance JavaScript (Build Faster Web Application Interfaces)
-Object-Oriented JavaScript: Create scalable, reusable high-quality JavaScript applications and libraries
-JavaScript Patterns
-Pragmatic Guide to JavaScript
-Pro JavaScript Techniques
-JavaScript Rocks
-Secrets of the JavaScript Ninja
-
-造物主模式下面这些就是正儿八经的神级模式了… 当你已经把javascript里里外外摸得门清的时候, 就可以试试调整下面的了… 有一种去看汇编原理的感觉了… 开始研究底层源码了…
-
-Standard ECMA-262 ECMAScript Language Specification 3rd edition (December 1999) – PDF File
-Standard ECMA-262 ECMAScript Language Specification 5th edition (December 2009)
-
-JS相关blog分享除了书籍之外, 作者还推荐了一些可以订阅查看的博客~ 我根据其目前存活情况, 主题变更情况简单筛选了下(多数都已经失效了)~
-
-DailyJS - 强烈赞同, 很值得订阅!
-JavaScript Weekly Newsletter
-YUI Theatre
-Rey Bango 作者本人哈哈
-
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (2)</title><link>http://taoalpha.me/blog/2015/06/18/read-javascript-the-definitive-guide-2/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-18T10:00:00.000Z</pubDate><description>概述作为JS中的一等公民, function(函数)始终是JS的核心中的核心. 所以这里单独用一篇笔记来记录JavaScript: the definitive Guide一书第八章的内容. 主要介绍了函数的定义, 作用域, 参数, 声明以及执行等基础知识, 另外也着重介绍了其高级用法中的closure. 我将自己觉得重要的, 值得记录的部分都作为心得摘抄如下:
 心得arguments对象对每一个function而言, 都自动会有一个内置的arguments对象, 用它就可以访问传入的参数了. 通常来说arguments对象我们只会用在不定长传参的函数上, 但arguments本身带有的一个函数却是可以在某些时刻发挥重要作用的~ 这个函数就是callee函数:
 12345678// 递归自我调用函数在解决一些问题的时候是很常用的, 而通常情况下我们都会在函数内调用本函数名即可, 但是如果我们需要实现自我调用的函数正好是一个无名函数呢?// arguments.callee 即调用当前执行的函数function(x)&amp;#123;return x*arguments.callee(x-1)&amp;#125;// 如上, 就实现了一个很简单的&amp;gt;2阶乘计算了
@@ -1224,6 +1294,44 @@ new Function()不继承作用域, 几遍其是在嵌套函数中定义, 也只�
 谜题12345678910111213var name = &quot;The Window&quot;;var object = &amp;#123;  name : &quot;My Object&quot;,  getNameFunc : function()&amp;#123;    console.log(this);    return function()&amp;#123;      return this.name;    &amp;#125;;  &amp;#125;&amp;#125;;console.log(object.getNameFunc()());// output: Object&amp;#123;name:&quot;My Object&quot;&amp;#125;; &quot;The Window&quot;
 上述定义中, 为什么嵌套函数没有继承上层函数的this呢? 反而继承了全局的this?
 猜测解答: this这个关键字是个比较特殊的关键字, 它具有一个很有趣的特点就是: 当一个函数作为函数而不是方法来调用的时候, this指向的是全局对象, 只有当它是方法的时候, 其指向的才是所属对象; 题目来源阮一峰博客. 
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript 阅读阶梯清单</title><link>http://taoalpha.me/blog/2015/06/10/read-must-read-list-of-javascript/</link><category>read</category><tag>js</tag><pubDate>2015-06-10T09:00:00.000Z</pubDate><description>缘起今天翻完了Getting Good With JavaScript, 对于其精华浓缩的设计很欣赏, 很适合有一定无基础或者有一定基础但觉得野路子出身想要夯实一下的人读. 而在文末的Appendix A中作者提到的这个 Rey Bango’s Must-Read list of JavaScript 确实在是本书的又一大收获. 特转来分享~
+基础入门所谓入门自然是以打牢基础为目的, 所以下列书都是以基础概念为主, 算是领路之书(考虑到国情需要, 我都尽可能替换为豆瓣链接了):
+
+JavaScript: The Good Parts
+Professional JavaScript for Web Developers (Wrox Programmer to Programmer)
+ppk on JavaScript, 1/e
+Beginning JavaScript with DOM Scripting and Ajax: From Novice to Professional (Beginning: from Novice to Professional) 
+Eloquent JavaScript
+
+初窥门径一旦你入了门, 就可以修炼中级秘术了~ 可以看到有两条中级秘术和入门级是一样的, 哈 这就和基础功打的够扎实, 基本拳脚也能当秘术使唤的~
+
+Professional JavaScript for Web Developers (Wrox Programmer to Programmer) 
+JavaScript: The Definitive Guide 
+Eloquent JavaScript - Online 
+DOM Scripting: Web Design with JavaScript and the Document Object Model
+
+高手之路一旦确保自己有了一个牢靠的基础后, 我们就可以开启自己的高手之路了.
+
+High Performance JavaScript (Build Faster Web Application Interfaces)
+Object-Oriented JavaScript: Create scalable, reusable high-quality JavaScript applications and libraries
+JavaScript Patterns
+Pragmatic Guide to JavaScript
+Pro JavaScript Techniques
+JavaScript Rocks
+Secrets of the JavaScript Ninja
+
+造物主模式下面这些就是正儿八经的神级模式了… 当你已经把javascript里里外外摸得门清的时候, 就可以试试调整下面的了… 有一种去看汇编原理的感觉了… 开始研究底层源码了…
+
+Standard ECMA-262 ECMAScript Language Specification 3rd edition (December 1999) – PDF File
+Standard ECMA-262 ECMAScript Language Specification 5th edition (December 2009)
+
+JS相关blog分享除了书籍之外, 作者还推荐了一些可以订阅查看的博客~ 我根据其目前存活情况, 主题变更情况简单筛选了下(多数都已经失效了)~
+
+DailyJS - 强烈赞同, 很值得订阅!
+JavaScript Weekly Newsletter
+YUI Theatre
+Rey Bango 作者本人哈哈
+
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (1)</title><link>http://taoalpha.me/blog/2015/06/17/read-reading-javascript-the-definitive-guide-1/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-17T10:00:00.000Z</pubDate><description>概述“JavaScript: the definitive guide”可谓是JS入门必读数目之一了. 今天正好读到第7章, 做一简单总结. 前7章的内容都集中在JS中的基本知识上, 包含了:
 
 数据类型: 最简单的primitive datatypes: string, number, boolean , 两个空值类型: null, undefined(通常认为空值类型属于promitive的一种),以及稍微复杂点的: object类型;
@@ -1263,128 +1371,6 @@ shift, unshift和pop,push基本类似, 不同的地方在于操作的位置和�
 1234567891011121314151617181920var a = [1,2,3]// a.length == 3a[-1.2] = &quot;hehe&quot;a// output: [1,2,3]  where is a[-1.2] ?a[-1.2]// output: &quot;hehe&quot;  WTF???a.length// output: 3 ??console.log(a)// output: [1,2,3,-1.2:'hehe']console.log(a.length)// output: 3a instanceof Array// ouput: Truea[&quot;h&quot;] = &quot;hh&quot;a// output: [1,2,3]console.log(a)// output: [1,2,3,-1.2:&quot;hehe&quot;,h:&quot;hh&quot;]
 问题: a依然还是一个Array(亦或者不是?), 但用json定义的方式赋值的那几个值还是有效的, 可获取的, 但是为什么直接print出来的时候没有这些值呢, 甚至长度都不包含定义的这几个指? 为什么console.log()可以打出来呢?
 猜测解释: a最初被定义为array, 但是却被json方式传值, 存储到了其内存中, 但是调用a时依然按照array来打印, 所以会自动滤除掉不符合array的几个值(只会按照index来找值). 但是console.log()是打出来其存储内容, 所以就按照其内存存储形式打印出来了.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (3)</title><link>http://taoalpha.me/blog/2015/06/22/read-javascript-the-definitive-guide-3/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-22T04:00:00.000Z</pubDate><description>概述先说点不相关的… 为了更好的阅读, 所以以后读书笔记相关的博文都会分拆成4个部分:
-
-概述: 算是阅读总结摘要以及类似这段话之类的声明介绍等等;
-阅读笔记: 这部分主要以阅读过程中的记录为主, 会比较杂, 基本算是逐点记录, 评判相对主观;
-心得: 这部分则主要为笔记的延伸, 算是对笔记的一种补充或者说自己的阅读理解消化所得, 有时候也会覆盖到一些使用架桥等等;
-谜题: 这里主要记录一些没有完全理解的部分, 会加上自己的猜测解答, 当弄懂后会更新正解;
-
-DONE.
-本篇是博主重新翻阅了”JavaScript the Definitive Guide(第六版)”的前4章内容(之前 阅读笔记-2均是第五版的)后的读书笔记以及心得体会. 内容主要覆盖js的基本用法, 考虑到重复, 这里主要是在上两篇的基础上查漏补缺.
-阅读笔记Chapter 2 - 基础知识JS能识别的whitespaces:
-常规空格: \u0020 # 即url中常见的%20
-Tab(制表符): \u0009 # js中常见的\t
-Vertical Tab: \u000B # \v
-Form Feed(翻页/页码分隔符): \u000C # \f
-Nonbreaking Space(不间断空格): \u00A0  # 通常在html中用来阻止默认连续多空格自动归一的性质(auto collapsing)而使用&amp;amp;nbsp;, 同时因为软件处理的需要, 使用&amp;amp;nbsp;能够防止相应的处理器将普通空格转为行分隔;
-Byte order mark: \uFEFF
-any character in Unicode category Zs
-
-JS能识别的line terminators:
-line feed: \u000A # \n
-carriage return: \u000D # \r
-line separator: \u2028
-paragraph separator: \u2029
-
-值得一说的是, js是支持unicode作为indentifier的合法字符的, 但是上述这些则不在其中.
-JS的”Unicode Escape Sequences”类似”\u00E9”这种结构的字符在js都代表一种特殊的字符:”unicode”. 如果你在js中使用这些字符, js会自动将其编译为对应的字符(如果是在js的注释中, 则不会编译, 而是以ascii对待), 比如: 示例就会编译为”é”. 而在js中, 这种对等关系是支持的, 即 &amp;quot;\u00E9&amp;quot; === &amp;quot;é&amp;quot;是为真的.
-但是一定要慎用… 因为unicode变化过多, 有时候输出看起来一样的字符, 其本质不一定一样: &amp;quot;e\u0301&amp;quot;的输出也是”é”, 但是它相当于是&amp;quot;e&amp;quot;+&amp;quot;\u0301&amp;quot;组成的.
-JS中的&amp;quot;;&amp;quot;在JS中, &amp;quot;;&amp;quot;作为语句结尾并不是必须的, 只有当多语句同行的时候, &amp;quot;;&amp;quot;才是必须的. 当你没有&amp;quot;;&amp;quot;的时候, js会自动为你添加合适的&amp;quot;;&amp;quot;. 通常它会自动将它没有&amp;quot;;&amp;quot;无法解析代码时候遇到的换行处加以&amp;quot;;&amp;quot;(除了类似return,break, ++, –等, 它会自动将其后的行分隔符作为&amp;quot;;&amp;quot;对待.):
-1234567var aa=3console.log(a)// output: 3// js在第一个换行处识别了其语句分割的意义, 但是在 a = 3 的两个分割处都因为它可以识别合并后的语句所以没有作为`&quot;;&quot;`处理.
-但是上述的成功不意味着js的智能, 更多时候如果我们不合适的使用&amp;quot;;&amp;quot;, 会造成很多奇怪的问题的, 比如以(, [, /, +, -为起始的语句很可能会被误认为是前一语句的延续. 所以通常来说, js的编码还是比较鼓励使用&amp;quot;;&amp;quot;作为语句结尾的.
-Chapter 3 - 数据类型Number:
-Global viriables: Infinity,NaN
-Global Objects: Math,Number
-
-Tips:
-
-NaN 具有唯一性, 其不等于任意值, 包括它自己, 0/0会产生’NaN’, 但是0/0 != NaN, 如果需要判断一个变量是不是NaN, 需要使用isNaN()这个内置的函数;
-Infinity &amp;lt;==&amp;gt; Number.POSITIVE_INFINITY &amp;lt;==&amp;gt; 1/0
--Infinity &amp;lt;==&amp;gt; Number.NEGATIVE_INFINITY &amp;lt;==&amp;gt; -1/0
-Binary Floating-Point会导致小数级错误, 比如0.3-0.2 != 0.2-0.1, 这个属于计算机本身因为二进制编码的原因所致, 所以在比较数字大小的时候要格外小心;
-
-String:
-immutable ordered sequence of 16-bit values
-
-Tips:
-
-string的长度都是按照16-bit来计算的, 所以当如果一个字符超过了16-bit, 则会按照多的计算. 比如: e - \ud835\udc52, 就需要按照两个16bit计算, 即其长度应为:”2”
-从ECMAScript 5之后就允许string跨行定义了, 只需要在换行的地方加上一个反斜杠\, 即可.
-转义字符\如果加在普通字符前, 不会产生任何效果;
-typeof null =&amp;gt; Object , typeof undefined =&amp;gt; undefined;
-null == undefined, null!==undefined =&amp;gt; True
-
-类型转换javascript是一个很宽松的语言, 我们不需要预先定义变量类型, 而在运算以及执行过程中, js也会自动的帮助我们进行类型转换, 当然为了更好的借助这一特点, 了解下图中的js转换类型的规则还是非常有必要的.
-
-其中object转换 primitive datatype 的话, 一般会按照如下步骤进行:
-
-首先会默认调用toString()函数, 你可以自行定义这一函数, 如果toString()返回结果正常, 则转换结束;
-如果toString()未定义, 或者返回结果非primitive datatype的话, 会自动调用valueOf()函数, 同上一步;
-而如果两个都没找到, 那么js将会抛出TypeError;
-
-而根据要转换的是string还是number而交换1,2两步( string 的话先调用toString(), 且返回值必然会转为string; 如果是number的话, 则先找valueOf(), 返回结果为number). 当然至于boolean的话, 所有的object转换到boolean都是true.
-Array转换string的时候默认的toString()就是一个join()调用~ Function的话, 则也可以自己定义toString()函数.
-Tips:
-
-x + “” // Same as String(x)
-+x // Same as Number(x). You may also see x-0
-!!x // Same as Boolean(x). Note double !
-在ECMAScript 5的strict模式下, 所有变量君需要声明才能赋值, 否则会报错;
-
-Chapter 4: Expressions and Operators
-上图为按照优先级顺序排列下来的操作符(横线分隔的同一组块之间的级别相同).
-Tips:
-
-运算顺序不影响赋值顺序, 赋值顺序始终都是严格从左到右的, 比如:h = x+y+z, 那么赋值顺序始终都是h-&amp;gt;x-&amp;gt;y-&amp;gt;z; 通常情况下, 这一赋值顺序不会影响之后的计算顺序, 对结果基本没什么影响, 除了一种情况:
-如果前变量的赋值会影响到后面变量的值的话, 比如共用同一个变量, 那么这种情况下, 赋值顺序就可能会对结果产生一定的影响了. 最简单的例子就是z = 2;y = function(){z = 3;return 1};, 因为y是一个函数, 而它的执行会改变z的值, 所以y()+z和z+y()的结果就是不相同的.
-
-“+”运算符中的类型转换:
-
-string优先, 只要有两个操作数中有一个是string或者是有toString()的object, 那么其都会按照string来进行链接运算;
-除非两个都是非string, 才会进行加法运算;
-当”+”作为单操作数时, 则意味着将操作数向number类型转换;
-
-
-&amp;amp;&amp;amp;运算符如果第一个为false, 则不执行第二条判断, 所以可以用这个方法来代替if: (a==b) &amp;amp;&amp;amp; alert(&amp;quot;a equals b&amp;quot;)就相当于if(a==b) alert(&amp;quot;a equals b&amp;quot;).
-
-!(p &amp;amp;&amp;amp; q) === !p || !q
-!(p || q) === !p &amp;amp;&amp;amp; !q
-a op= b 和 a = a op b通常是等价的, 除非a本身的重复赋值会有副作用, 比如 a[i++] += 1和a[i++] = a[i++] +1就不一样, 因为后者前后两个i不同了.
-eval()函数会继承当前的scope, 除非eval()被赋予某个新的reference, 那样的话只会使用global的scope;
-void操作数很少用到, 它是个单操作数的操作符, 其用法就是丢弃操作数的返回结果, 然后返回 undefined…
-
-心得whitespaces 和 line terminators通常在js里面我们使用\s来统一代表所有其可以识别的whitespace, line terminators. 如下例:
-1234567var k = 'asd \t asdasd \na asd \f asda dad\rasd\u2028asd\u2029\u00A0'k// output 里面有两个换行的符号, 我这里为了演示方便就不换行了k.replace(/\n/g,'-')// 同上,里面的&quot;\r&quot;我也不换行了k.replace(/\s/g,'-')// output: &quot;asd---asdasd--a-asd---asda-dad-asd-asd--&quot;
-因为在console中输出的时候是不换行的, 所以有时候单单看console输出的话, 类似这种编码问题所致的错误就找不出来, 为了省事, 我们可以统一使用\s来代表所有此类符号.
-谜题Q: 按照正常来说Number.MAX_VALUE加上一个数应该就会自动转为Infinity, 但实际上, 测试过程中发现, 只有当Number.MAX_VALUE加上一个足够大的数后才会等与Infinity, 这是为什么?
-1234567Number.MAX_VALUE// output: 1.7976931348623157e+308Number.MAX_VALUE +1// output: 1.7976931348623157e+308...Number.MAX_VALUE + Math.pow(10,1000)// output: Infinity
-正解: the sum is computed and rounded to the nearest representable value using IEEE 754 round-to-nearest mode. If the magnitude is too large to represent, the operation overflows and the result is then an infinity of appropriate sign.
-
-IEEE 754
-In the following two rounding-direction attributes, an infinitely precise result with magnitude at least bemax ( b − ½ b^(1-p) ) shall round to ∞ with no change in sign; here emax and p are determined by the destination format (see 3.3). With:
-
-roundTiesToEven: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with an even least significant digit shall be delivered
-
-roundTiesToAway: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with larger magnitude shall be delivered.
-
-
-
-ECMAScript does not specify which of the round-to-nearest, but it doesn’t matter here because both gives the same result. The number in ECMAScript is “double”, in which
-
-b = 2
-emax = 1023
-p = 53,
-
-_so the result must be at least 2^1024 - 2^970 ~ 1.7976931348623158 × 10^308 in order to round to infinity. Otherwise it will just round to MAX_VALUE, because that is the closer than Infinity.Notice that MAX_VALUE = 21024 - 2971, so you need to add at least 2^971 - 2^970 = 2^970 ~ 9.979202 × 10^291 in order to get infinity._
-Q: &amp;#39;0&amp;#39; == false 是 true, 为什么 null == false 就是 false呢?
-猜测解释: ==这样的是比较value的, 而 null转换为boolean类型为false, 并不意味着两者的value是相同的. ==只会比较value, 而不会进行转换. 也即true, false两个boolean类型的其value也是1,0. 而null和undefined的value则不同, 前者为空, 后者为无.
-参考资料:
-JavaScript the Definitive Guide 6th edition
-Unicode Property
-List of Unicode Characters
-编码历史介绍
-
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (4)</title><link>http://taoalpha.me/blog/2015/06/23/read-javascript-the-definitive-guide-4/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-23T07:00:00.000Z</pubDate><description>概述第六版和第五版的最大区别在于ECMAScript 5的引入, 这是目前发布的最新的js版本, 有着最新的属性和函数, 目前主流浏览器基本都已经完全支持. 本文为阅读5-9章内容的笔记总结, 主要是覆盖了JS中的语句和典型对象.
 阅读笔记Chapter 5 - Statements
 switch/case中使用的是===进行比较判断的, 而不是==;
@@ -1505,6 +1491,55 @@ Chapter 9 - Classes and Modules除了 阅读笔记-2中包含的, 由于ECMAScri
 JavaScript the Definitive Guide 6th edition
 Functional Javascript
 
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
+Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
+NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
+jQueryjQuery is the most popular js module people used in their websites or webapps. And using jQuery with CoffeeScript is just like javascript. jQuery is javascript, after all.
+Want to use CoffeeScript with jQuery? Just do it and follow the rules we learn from the basic syntax part. Here I list several examples and if you look it closely, you will find everything you have already known if you read the first chapter carefully. The author of the book shows us another complex examples: TodoMVC in CoffeeScript.
+BTW: TodoMVC is a great project which shows you how to write a todo app in all kinds of tools and frameworks.
+1234567891011121314151617181920212223242526272829303132333435363738394041$ -&amp;gt;  do some  do another### =&amp;gt;$(function() &amp;#123;  some();  return another();&amp;#125;);That's just like the $(document).ready(function()&amp;#123;&amp;#125;)#### A function using ajax to send mail, which is a new feature I will add to my blog in a few days :)@sendMail = (msg)-&amp;gt;  $.ajax    type: 'POST'    url: 'https://mandrillapp.com/api/1.0/messages/send.json'    data:      'key': ''      'message':        'from_email': msg.sender_mail        'from_name' : msg.sender_name        'to': [            &amp;#123;              'email': ''              'name': 'TaoAlpha'              'type': 'to'            &amp;#125;          ]        'autotext': 'true'        'subject': msg.subject        'html': msg.content  .done (response)-&amp;gt;    showAlert(&quot;success&quot;,&quot;Thanks for your contribution!&quot;)  .fail (data)-&amp;gt;    showAlert(&quot;fail&quot;,&quot;Sorry! Failed to send the email. Please retry!&quot;)# another function to get unique result from an array of objectsArray::getObjectUnique = (id) -&amp;gt;  a=b=[];  add = (data) -&amp;gt; b.push data[id];data  (add i for i in @ when b.indexOf(i[id]) == -1 )
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748// You can see that you have saved a lot of keystrokes and the codes look more clean and beautiful.// Because coffeescript doesn't support declare global variables directly, and if we want to use the function in other script, we need to declare it into the `this` scope.this.sendMail = function(msg) &amp;#123;  return $.ajax(&amp;#123;    type: 'POST',    url: 'https://mandrillapp.com/api/1.0/messages/send.json',    data: &amp;#123;      'key': '',      'message': &amp;#123;        'from_email': msg.sender_mail,        'from_name': msg.sender_name,        'to': [          &amp;#123;            'email': '',            'name': 'TaoAlpha',            'type': 'to'          &amp;#125;        ],        'autotext': 'true',        'subject': msg.subject,        'html': msg.content      &amp;#125;    &amp;#125;  &amp;#125;).done(function(response) &amp;#123;    return showAlert(&quot;success&quot;, &quot;Thanks for your contribution!&quot;);  &amp;#125;).fail(function(data) &amp;#123;    return showAlert(&quot;fail&quot;, &quot;Sorry! Failed to send the email. Please retry!&quot;);  &amp;#125;);&amp;#125;;# get unque result for array of objectsArray.prototype.getObjectUnique = function(id) &amp;#123;  var a, add, b, i, j, len, results;  a = b = [];  add = function(data) &amp;#123;    b.push(data[id]);    return data;  &amp;#125;;  results = [];  for (j = 0, len = this.length; j &amp;lt; len; j++) &amp;#123;    i = this[j];    if (b.indexOf(i[id]) === -1) &amp;#123;      results.push(add(i));    &amp;#125;  &amp;#125;  return results;&amp;#125;;
+RailsRuby on Rails is a web framework that came around in 2004. And it soon became quite popular. Actually many people believe that Rails saved the ruby…
+Check this:How to download and install Rails if you haven’t installed it.
+Rails’s principles
+Convention over configuration
+
+
+Rails is designed to assume that the programmer will follow certain known conventions, which if used, provide great benefit and much less need to configure the framework.That means that the framework makes assumptions on how a typical application should be built and structured and it doesn’t try to be overly flexible and configurable. This helps you spend less time on mundane tasks like configuring and wiring up an application architecture and more time on actually building your app.
+
+
+Don’t repeat yourself, or DRY
+
+
+Every piece of knowledge must have a single, unambiguous, and authoritative representation within a system.Rails strives to remove duplication and boilerplate wherever it can.
+
+How to use Rails with CoffeeScriptLuckily, after Rails 3.1, you don’t need do anything to let Rails support CoffeeScript. It has already become part of rails! And also, rails has changed its default js library to jQuery.
+So what you need to do if you want to use coffeescript with rails? Nothing but learn rails!
+Just like the author said in the book: “If you haven’t done so already, I encourage you to spend some more time learning Rails as well as Ruby, and immersing yourself in the wonderful communities they support.”
+Node.jsNode is fantastic. It changes something. Before node, javascript was mostly run inside browsers. Now it just came out and gave web developers a chance to become a full-stack!
+Features of Node
+Event-driven
+
+
+The Node.js framework only allows non-blocking, asynchronous I/O. This means that any I/O operation that is accessing an external resource, such as the operating system, a database, or a network resource must happen asynchronously.
+
+
+Fast and scalable
+
+
+The V8 JavaScript engine(created by google and used in chrome) used by Node.js is highly optimized for performance, thus making Node.js applications very fast. The fact that Node is non-blocking will ensure that your applications will be able to handle many concurrent client requests without using a lot of system resources.
+
+
+Node is not Rails
+
+
+Rails strives to be a full-stack solution to building web applications, whereas Node.js is more of a low-level system for writing any type of fast and scalable network application.
+
+Node and CoffeeScriptWant to write coffeescript in node? It’s easy, all you need is a module named CoffeeScript. And like many other languages, node has several frameworks people built for web development, like: Express.
+The core about how to use coffeescript with nodejs is to use the --watch for coffee command in node. It will automatically compile all file end with coffee into js when there is a change made into these files.
+And just like jQuery, you just follow the rules and write your code.
+DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
+That’s all. Thanks!
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript Coding Style</title><link>http://taoalpha.me/blog/2016/01/09/read-javascript-coding-style/</link><category>read</category><tag>JS,coding style</tag><pubDate>2016-01-10T01:49:12.000Z</pubDate><description>Why and What is Coding StyleCoding style is like the common styles and patterns that are used in your personal codebase or some organizations’ codebase, its purpose is making your code more readable and reusable through the entire developemnt, especially when you work in a team. Everyone can create their own coding style, there is no right or wrong among them, like you prefer 4 spaces than 2 spaces, you like to use camelCase represent the functions and variables,that’s totally fine. 
 The benefit of using the same style is obvious, it can save you a lot of time reading and modifying others’ code or even your own code. There are some styles that are pretty popular and agreed by a lot of people and team, like Google Style Guide. Being modified and updated for so many years, I believe these styles would be a better choice to choose rather than create one by yourself.
 Javascript Style GuideThere are several popular style guide for javascript, one is the part of the Google Style Guide series:  Google JavaScript Style Guide, another is created by airbnb:Airbnb JavaScript Style Guide, and also there is a Code Conventions for the JavaScript Programming Language created by the author of JavaScript: The Good Parts.
@@ -1783,6 +1818,7 @@ When to Work on Usability(什么时候注意易用性)
 想要获得一个高质量的用户体验唯一的方法就是在设计的早期就开始用户测试,并一直持续的在接下来的每一步实施它.
 Where to Test(在哪里测试)
 如果你每周至少实施一次用户测试,那么专门建立一个可用性实验室就有必要的了.但对绝大多数公司,在一个会议室或者办公室里进行一次测试就已经不错了,只要你关上门隔开干扰就可以了.重点在于你要有真实的用户,并且可以在他们测试的过程中陪坐一旁.你唯一需要的设备就是一个笔记本.
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Semicolons in JavaScript is optional</title><link>http://taoalpha.me/blog/2014/11/05/read-t-semicolons-in-javascript-is-optional/</link><category>read</category><tag>coding,js,翻译文章,译系列</tag><pubDate>2014-11-05T08:00:00.000Z</pubDate><description>JavaScript作为脚本语言的一种, 其末尾的结尾符号:分号, 其实是可选的, 没错, 这个分号并非是强制要求的.但是, 对这一点很多人有着非常多的担忧啊, 顾虑啊, 不确定啊等等, 也就导致绝大多数的开发者都会推荐我们始终以分号结尾, 以防万一.那我们究竟在防止什么? 我搜集了一些关于开发者们为什么愿意强迫自己使用分号结尾的原因, 下面我就概括的说下:规则过于神秘而且JavaScript本身编译器之间又有很多不同对一个粗略浏览的读者而言, 即使很难理解,明白, 但是关于自动插入分号的规则依然是随处可见的. 而对于JS不同的编译器而言, 又存在很多的区别, 我这恰好有这么个例子. 当我问一些开发者关于为什么使用分号时, 通常他们会这么回答:”哦,有那么一个浏览期就不能正常的编译, 我就是想不起来是哪个了.” 当然, 他们永远也不会想起来的…我自己写JS基本不用分号的, 就个人经验而言, 还没遇到无法处理的JS编译器呢.如果不用分号就不能压缩JS代码对JS源文件而言, 压缩其实共分为3个层次: 压缩(比如gzip), 最小化(即去除不必要的空格和注释) 以及模糊化(修改代码, 缩短变量名以及函数名).类似gzip这类的压缩是最为容易的, 只需要在服务器上设置一次就行了, 完全不需要开发者在进行什么别的代码修改. 曾经IE6在一段时间内不支持这一设定, 不过我记得应该在几年前就已经打补丁修正了, 如今基本没有人会在意这部分了.最小化和模糊化都会对你的源码有一定的修改. 它们都算是一类你可以用于操作js文件, 用以压缩文件大小, 同时不改变代码本身功能的工具. 我比较不喜欢用这类的工具, 因为很多开发者都说如果我不按照特定的代码格式来编写代码的话, 比如使用分号结尾, 那么这些工具就有可能破坏我的代码. 我完全可以理解以及接受他人或者社区规定使我使用特定的代码格式, 但无法接受一个工具要强迫我使用某种代码格式.如果我有一段在我目标浏览器或者编译器上运行的代码, 而我通过你的压缩工具压缩后, 它无法运行了, 那么我只能很伤心的告诉你, 你的工具有问题. 如果一个工具想要编辑JS代码的话, 那么, 它最好还是按照真正的编译器理解的那样来进行.既然说到最小化问题, 我们就简单做个实际的测试吧. 我利用的是jQuery的源码, 当然, 去掉了所有的分号,  然后我在Google Closure Compiler上运行了以下, 将它压缩到76673bytes. 原始的jquery.min.js文件大小在76674(只多了1byte). 所以你可以发现, 基本上是没有区别的; 当然, 它的功能也是完全正常的.这是如何发生的呢? 我们可以参考下面的代码:var a=1var b=2var c=3它有24bytes. 给它加上分号后进行压缩:var a=1;var b=2;var c=3; 还是24bytes. 所以, 你可以看到, 添加分号移除空行后对我们的文件大小并没有产生任何的改变. 从根本上来说, 我们通过最小化减少的文件大小并不是通过移除空行所得的, 而是通过移除注释部分获得的.更新: 很多人都指出他们的最小化工具把上述代码重写为了var a=1,b=2,c=3. 我知道有些工具是这么干的, 但是本文的主旨仅在于探究分号和空行的关系. 而如果一个最小化工具都可以重写代码(比如Closure Compiler), 那么对于它而言, 自动添加分号自然不成问题了.同样的, 有些人推荐在块结构上使用括号, 即使块结构只有一行代码时:// beforeif(condition) stuff()// afterif(condition){  stuff()}// after minificationif(condition){stuff()}强制使用括号至少能给我们的表达式增加1byte, 即便是压缩后也一样. 我实在不知道这样做的好处在哪里–既不利于文件大小, 也不利于可读性啊.以下都是一些空格有具体意义的语言, 你可能听过其中的一些:Ruby – 把操作符,调用函数和空格联合使用的话会抛出异常的;Python - 更不用说了HTML - 可以通过Kangax’s HTML minifier了解更多Haml Templates当然, 针对最小化, 在服务器端我们就不需要进行任何操作了. 我列举这些主要目的是为了支持下面这一论述: 空格可以, 而且经常作为一个语言的一部分. 它并不是一个非要去除不可的坏东西.这是一个优秀的代码格式也通常可以理解为:这对于保持一致性有好处(如果不这么做的话)JSLint该有问题了Douglas Crockford是这么说的当然这也算是”其他人都这么做”的另一种表达方式, 很多人在线上讨论时自己没有观点时往往这么说.至于JSLint, 我能给的建议就是: 不要用了. 为什么要用它呢? 如果你相信它能帮助你, 减少你代码中的bug数目, 那么请听这条快讯: 只有人可以发现并解决软件中的问题, 而不是工具. 所以, 与其使用工具, 不如让更多人看看你的代码.至于所谓Douglas Crockford所说的”4个空格”论, 还有很多流行的JS库用的要么是tab要么是2个空格呢.不同项目的社区自然有着不同的观点, 这就是现实, 就如我之前说的: 让其他人以及你自己来塑造你的代码风格, 而不是某个人或者某个工具.你可能注意到本文中, 我并没有告诉你说你应该彻底扔掉分号. 我只是陈列一些事实告诉你你可以这么做. 具体如何选择还要看你自己.至于说代码风格, 它们的存在使得代码更加可读, 更加容易被团队中的人理解. 深入的想想分号是否真的可以提升你的代码的可读性. 其实多数情况下, 提升你代码可读性的是空格–缩进, 代码块之间的空行, 对齐表达式时使用的空格等, 以及非常易于理解的变量和函数名. 你可以看看这些非常难懂的代码, 里面总是有很多的分号的. 它帮助你更好的阅读了吗? 没有, 实际上帮助到你的是大量使用的空格以及那些初始变量名.在return中插入分号会反咬你一口哦我在搜索”JavaScript分号插入”时, 很多博文中都描述了这么一个问题:function add() {  var a = 1, b = 2  return    a + b}在你费解于为什么有人会把代码写成这么个样子之前, 我们先继续看问题, 这段代码会被最小化为:return;  a + b;显然它并没有返回我们要的求和.  但是你知道吗? 如果我们在a+b后面添加一个分号并不能解决问题. 而当我们去除了return和a+b之间的空行后, 问题就可以解决了.return a+b同样的, 利用这一个极端无知的例子, 我还是建议人们不要在代码中随意添加分号. 当然, 分号可能仅仅只是在这一个问题上有问题, 但是我们要做的其实是更好的理解一个语言是如何被解析的.不加分号的编码中唯一的问题下面这个例子是你在尽量少用分号的编码方式中需要注意的一种情况:// careful: will breaka = b + c(d + e).print()它正常的结果应该是:a = b + c(d + e).print();这一例子取自一篇关于JS2.0兼容性问题的文章, 但是我确实在我自己使用the module pattern的程序中遇到过几次.简单的解决办法是: 当某一行是以括号开头的时候, 可以在括号前面加一个分号.;(d + e).print()这可能看起来不那么优雅, 但是确实可以解决问题. Michaeljohn Clement 做了进一步的解释:如果你选择尽可能少的使用分号, 我的建议是在任何一个括号和方括号为开头的表达式前立刻插入一个分号, 或者任何一个以算数运算符 ‘/‘,’+’,’-‘开头的表达式也应该如此, 如果你正好写了这么一个表达式的话.接受这一建议就不会有问题了.Source:    原文: semicolons in javascript is optional
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Knowledge vs Intelligence</title><link>http://taoalpha.me/blog/2014/11/21/read-knowledge-vs-intelligence/</link><category>read</category><tag>翻译文章,译系列</tag><pubDate>2014-11-21T10:00:00.000Z</pubDate><description>大约一周前, 我在开发我一个小产品的时候遇到了一个很严重的问题. 我花了好几个晚上的时间去解决这个问题, 但是依然没有什么进展, 这让我很沮丧.
 
 之后的一个晚上, 我正在和 Olivier Lacan视讯, 我们讨论了这个问题. 因为他是我的一个非常好的朋友, 所以他建议我把我的桌面分享给他来让他看看. 我正在研究 Laravel一个全新的PHP的框架, 也是Olivier从来没用过的一个框架(当然其实他连PHP都不用的). 但是他很聪明而且是一个很伟大的开发者, 所以我很愉快的接受了他的要求.
@@ -1798,70 +1834,4 @@ Where to Test(在哪里测试)
 Source:
 
 Knowledge vs Intelligence
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>The Who, What, When, Wear, and Why of Wearable Technology</title><link>http://taoalpha.me/blog/2014/10/29/read-t-the-who-what-when-wear-and-why-of-wearable-technology/</link><category>read</category><tag>Wearable,关于HCI,穿戴式设备,翻译文章,译系列</tag><pubDate>2014-10-29T04:00:00.000Z</pubDate><description>穿戴式技术的5个W
-
-什么是移动性？移动性就应该是让内容服务对用户做到随时随地的访问， 尽可能的便捷高效。 就好比移动设备让人们再也不用坐到一台电脑前才能获取信息那样，穿戴式设备让人们甚至不用再拿着设备来获取信息了。 就好比我们把思维模式转移到iPhone的小屏幕并且学习着这全新的使用情景一样， 我们需要再次调整我们的思维方式去适应穿戴式设备–更小的屏幕，以及更加收缩的交互界面。 苹果最近推出了Apple Watch， 这也是穿戴式设备正式登场的一大证明–所有重量级玩家都已经落座， 游戏要正式开始了。
-
-深度挖掘
-
-首先， 了解『穿戴式』这一术语的含义非常重要，因为这一术语有一些误导性， 因为它囊括了数以百计的，有着不同目的和用途的设备于一体：智能手表，智能眼镜，智能衣服，智能袜子，智能腕带等等。 最基本的， 『穿戴式』是指所有那些用户能够穿戴起来的设备，当然这些设备还需要能够实现有价值的计算功能的能力。 但是为了能够理解他们的能力， 我们需要区分这些不同的设备以及他们的应用模式。 以下是当下最主流也是最具区分性的穿戴式设备的特点。
-
-活动记录
-
-通常来说， 形如腕带的这种设备都是围绕在收集我们身体数据（诸如心率， 脉搏， 运动模式， 每日行走距离等）这一服务核心来服务的。获得数据后， 他们就可以把数据传输到云端， 进行分析从而获得一些关于如何提升用户身体健康的结论。 而通过穿上这么一个并不怎么碍眼的设备， 收集我们自己的身体数据， 我们就可以更好的了解我们自己的身体， 从而更好的生活。虽然活动记录这一功能已经很受欢迎， 但是他们依然还有着很多巨大的商业价值和利用空间。 比如， 加拿大奥运代表队就利用智能服装来跟踪记录队员的重要指标， 这在团队在Sochi奥运会上取得的成功中扮演了很重要的角色。 同样的， 这些小型设备还可以影响到保险行业， 保险公司可以通过获得客户的个人信息来更加精确的计算客户的风险， 从而来降低保价。当然， 这肯定会引发很多的隐私问题， 但是对那些为了折扣同意提供自己个人信息的市民而言还是很有可能做到的。
-
-智能手表
-
-与活动跟踪不同， 智能手表更多的是被用来主动使用的。 在很早以前就已经播下了智能手表的种子： 近百年来， 腕表一直作为一个重要的工具， 一个用于计时，随时告知我们身处当下的工具。
-
-如今， 智能手表远远超出了这个范畴， 它能够给我们提供更加多样的情景信息： 邮件短信的提醒，会议的提醒，天气预报，电子票（机场，剧院，音乐会等等地方）。 智能手表还有着丰富的交互，意味着我们不仅可以用来查看我们的邮件， 还能回复邮件； 我们可以用来Google，入住酒店，修改音乐记录备忘，查看时间等等，再也不用花费时间去从手袋中掏出手机了。 正如设计师们都知道的， 行动的简洁性对我们决定是否采取行动有着非常重要的影响， 所以这些多余的时间是非常重要的。 这所有的一切都在说明一个现实， 就是我们如今把手机安放到了我们的手腕上， 虽然因此有了一些设计上的限制。
-
-而对设计师而言更加有诱惑力的一个现实就是智能手表是支持定制apps的， 这也意味着我们可以拥有一个全新的手表专属apps的生态系统了。 我们可以看到全新版本的Instagram，Pinterest，Foursquare以及各种各样的新的商业apps。 这对于各大品牌而言同样是个好消息，因为他们有了一个新的机会和渠道向他们的客户宣传自己了。
-
-智能眼镜
-
-信息一直在不断的向着和我们大脑建立协同发展关系的目标前进着， 而智能眼镜无疑是这一阶梯上的下一步–跟随在20世纪60年代的计算中心的成功，以及之后数十年的PC时代，笔记本时代和手机时代之后。 智能眼镜和智能手表有一点是相似的： 他们把信息和我们的距离拉的更近了， 而且鼓励这种更加简单的交互形式。 但是， 眼镜是完全的解放了我们的双手， 彻底的把信息直接带到了我们的眼前， 完全使用语音命令和感应器作为输入设备。
-
-与智能手表很轻易的就能融入到我们的日常生活不同， 智能眼镜略微有一点过于超前了。 问题出在很多方面， 比如：技术上，习俗上，以及社交上等等。 简而言之， 以Google Glass这个当前最有代表性的智能眼镜技术为例， 它所提供的价值和他本身的价格并不相配：$1500的价格，极为有限的电池寿命，非常不舒服的街道视觉体验等等， 再加上一个简单的相机和导航，非常有限的几个酷炫应用和效果， 尚不足以说服我每天都早上把这玩意带在我的脸上。。。至少目前还不行。
-
-这种现象也被成为『杀手级应用问题』， 但是它并不意味着这个产品或者这种表现形式就是彻底无用的。 相反， 它已经被证实对商业使用有着巨大的价值：医生们可以用在手术过程中看到重要的提示，仓库工作人员就可以用语音实现商品扫描以及详细信息录入等事情了，运动员可以实时的看到他们的数据–这些理由都足够让Google开启他们的商业化项目并且和Vuzix合作了。 这其中的模式非常清楚而直接： 允许雇员们在工作以及处理数据的过程中解放双手。 这不仅可以节省他们的时间， 同时还能提高安全性： 不需要更换手套， 拿手机或者因为别的屏幕而分散注意力。
-
-结论
-
-每一种穿戴式设备都有他自身的特点。有一些只是单纯的用于收集数据， 还有一些则是用来进行主动的交互， 有些是把自身的使用环境建立在每天的日常使用基础上，而有些可能在某些特定场合下更加有帮助， 有一些可能在社会接受程度上更为突出， 而有些则需要时间和规则才能被慢慢接受。 但是他们都共享着一些相似的属性， 而了解这一点对于设计师，开发者以及那些处理产品商业相关事宜的人们都会有更好帮助，帮助他们更加全面的利用这些设备。
-
-Resource:
-
-原文：The Who, What, When, Wear, and Why of Wearable Technology
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>当你出现在Designer News的头条之后会发生什么?</title><link>http://taoalpha.me/blog/2014/11/25/read-what-happens-when-you-appear-after-the-designer-news-headlines/</link><category>read</category><tag>DN,翻译文章,译系列</tag><pubDate>2014-11-25T12:00:00.000Z</pubDate><description>本文原文来自 What happens when you’re #1 on Designer News , 内容主要是介绍了一个上周的DN头条产品, 在DN的首位占据了大概12个小时的时间, 获得了48的赞和16个评论, 然后他们分析了这一段时间的一些数据, 很有意思, 值得一看哦~
-
-一些背景数据: DN目前大约有17000个注册用户, 主要受众是设计圈~
-
-总体指标:
-
-一些关于直接来自DN的用户总体指标:
-
-1900 用户5600 PV平均一次访问时长: 1:40min蹦失率: 60%
-
-其他一些结果:
-
-而因为一些看客们在社交媒体上分享了我们的网站, 所以我们实际获得了更多的访问者, 甚至在某个blog中露了一次脸:
-
-SitePoint的报道(带来了500的访问者)大约50条Tweets来自Google+的100位访问者来自facebook的1000位访问者PV的峰值达到了80/min
-
-有几个大牛也在twitter上转载了关于我们的产品推文.
-
-用户的其他属性:
-
-DN的用户基本是30岁左右, 来自美国本土的MacBook用户, 通常使用的也都是Chrome(当然他们中多数都厌恶IE, 哈哈. PS: who doesn’t?):
-
-OS: 83% Mac, 11%  windowsMobile:  95% Desktop, 4% Mobile, 1% TabletBrowser: 88% Chrome, 11% Safari, … , 0% IE!!!Coutries: 40% 美国, 10%的英国, 5%的加拿大, 4%的德国, 4%的瑞士;Language: 85%的英语;
-
- 
-
-如上~
-
-博主说:
-
-对于一个小产品或者说初始项目而言, 这种小站或者特定细分的垂直站的推广也是不容小觑的哦~ 不过从用户属性来说, DN这种垂直站点的用户属性确实非常突出, 集中啊.
 </description><source>TaoAlpha</source><author>TaoALpha</author></item></channel></rss>
