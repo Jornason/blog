@@ -1,4 +1,74 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-24T03:41:03.499Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>FeedPusher Pre-Alpha-Release</title><link>http://taoalpha.me/blog/2016/01/23/tech-feedpusher-pre-release/</link><category>tech</category><tag>FeedPusher,NodeJS</tag><pubDate>2016-01-24T02:26:45.000Z</pubDate><description>As getting close the the end of the winter break, I’m almost ready to release the alpha version of new feedpusher :).
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-25T04:11:27.583Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ Ugly Number Problems</title><link>http://taoalpha.me/blog/2016/01/25/oj-oj-ugly-number-problems/</link><category>OJ</category><tag>LeetCode,Numbers</tag><pubDate>2016-01-25T07:09:04.000Z</pubDate><description>263. Ugly NumberQuestionWrite a program to check whether a given number is an ugly number.
+Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 6, 8 are ugly while 14 is not ugly since it includes another prime factor 7.
+Note that 1 is typically treated as an ugly number.
+LeetCode263. Ugly Number
+Tags: Math, Easy
+AnswersI think there is only one way to solve this problem efficiently, which is based on the math fact of this problem.
+Based on the definition, if we keep dividing the number by 2, 3 or 5, and finally we get 1, then it should be a ugly number, otherwise it would be something else.
+1234567891011121314/** * @param &amp;#123;number&amp;#125; num * @return &amp;#123;boolean&amp;#125; */var isUgly = function(num) &amp;#123;  // num is not prime and divide by 2, 3, 5   if(num&amp;lt;1)&amp;#123;return false&amp;#125;  if(num === 1)&amp;#123;return true&amp;#125;  num = num % 5 === 0 ? num / 5 : (num % 3 === 0) ? (num / 3) : (num % 2 === 0) ? (num / 2) : &quot;true&quot;;  if(num === &quot;true&quot;)&amp;#123;    return false;  &amp;#125;  return isUgly(num)&amp;#125;;
+Runtime: 208 ms
+We can simplify above code with an for and while loop.
+123456789101112/** * @param &amp;#123;number&amp;#125; num * @return &amp;#123;boolean&amp;#125; */var isUgly = function(num) &amp;#123;  for (var p of [2, 3, 5])&amp;#123;    while (num &amp;amp;&amp;amp; num % p == 0) &amp;#123;      num /= p;    &amp;#125;  &amp;#125;  return num == 1;&amp;#125;;
+Runtime: 224 ms
+264. Ugly Number IIQuestionWrite a program to find the n-th ugly number.
+Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 is the sequence of the first 10 ugly numbers.
+Note that 1 is typically treated as an ugly number.
+LeetCode264. Ugly Number II
+Tags: Dynamic Programming, Heap, Math, Medium
+AnswersUsing isUgly123456789101112131415161718192021222324252627/** * @param &amp;#123;number&amp;#125; n * @return &amp;#123;number&amp;#125; */var nthUglyNumber = function(n) &amp;#123;    console.log(n)    if(n &amp;lt;= 0) return false; // get rid of corner cases     if(n == 1) return 1; // base case    var count=1,i=0,num = 1;    for(i = 1;count &amp;lt;= n;i++)&amp;#123;        if(isUgly(i))&amp;#123;            count ++;            num = i;        &amp;#125;    &amp;#125;    return num&amp;#125;;var isUgly = function(num) &amp;#123;  // num is not prime and divide by 2, 3, 5   if(num&amp;lt;1)&amp;#123;return false&amp;#125;  if(num === 1)&amp;#123;return true&amp;#125;  num = num % 5 === 0 ? num / 5 : (num % 3 === 0) ? (num / 3) : (num % 2 === 0) ? (num / 2) : &quot;true&quot;;  if(num === &quot;true&quot;)&amp;#123;    return false;  &amp;#125;  return isUgly(num)&amp;#125;;
+Sadly, it will be TLE since it is so slow….
+DPThis is a classic DP problem if you treat every n-th is a status, and we can find:
+
+f(0) = 1
+f(1) = min(f(0)2,f(0)3,f(0)*5)
+f(2) = min(f(1)2,f(0)3,f(0)*5)…
+
+Just be careful about the number like 6, since it can be got from 23 or 32, so we need update both pointers stand for 2 and 3.
+123456789101112131415161718/** * @param &amp;#123;number&amp;#125; n * @return &amp;#123;number&amp;#125; */var nthUglyNumber = function(n) &amp;#123;  if(n &amp;lt;= 0) return false; // get rid of corner cases   if(n == 1) return 1; // base case  var p2 = 0, p3 = 0, p5 = 0; //pointers for 2, 3, 5  var f = [];  f[0] = 1;  for(var i  = 1; i &amp;lt; n ; i ++)&amp;#123;    f[i] = Math.min(f[p2]*2,f[p3]*3,f[p5]*5);    if(f[i] == f[p2]*2) p2++;     if(f[i] == f[p3]*3) p3++;    if(f[i] == f[p5]*5) p5++;  &amp;#125;  return f[n-1];&amp;#125;;
+Runtime: 212 ms
+313. Super Ugly NumberQuestionWrite a program to find the nth super ugly number.
+Super ugly numbers are positive numbers whose all prime factors are in the given prime list primes of size k. For example, [1, 2, 4, 7, 8, 13, 14, 16, 19, 26, 28, 32] is the sequence of the first 12 super ugly numbers given primes = [2, 7, 13, 19] of size 4.
+Note:(1) 1 is a super ugly number for any given primes.(2) The given numbers in primes are in ascending order.(3) 0 &amp;lt; k ≤ 100, 0 &amp;lt; n ≤ 106, 0 &amp;lt; primes[i] &amp;lt; 1000.
+LeetCode313. Super Ugly Number
+Tags: Math, Heap, Medium
+AnswersDPWe can use same code as before, just replace the hardcode 2,3,5 with a prime list.
+12345678910111213141516171819202122232425/** * @param &amp;#123;number&amp;#125; n * @param &amp;#123;number[]&amp;#125; primes * @return &amp;#123;number&amp;#125; */var nthSuperUglyNumber = function(n, primes) &amp;#123;  if(n &amp;lt;= 0) return false; // get rid of corner cases   if(n == 1) return 1; // base case  var p = [];  for(var i = 0;i&amp;lt;primes.length;i++)&amp;#123;    p[i] = &amp;#123;      prime : primes[i],      count:0    &amp;#125;;  &amp;#125;  var f = [];  f[0] = 1;  for(var i  = 1; i &amp;lt; n ; i ++)&amp;#123;    f[i] = Math.min.apply(null,p.map( (a) =&amp;gt; &amp;#123; return f[a.count]*a.prime &amp;#125; ) );    for(j = 0;j&amp;lt;p.length;j++)&amp;#123;      if(f[p[j].count]*p[j].prime == f[i]) p[j].count ++;     &amp;#125;  &amp;#125;  return f[n-1];&amp;#125;;
+Runtime: 404 ms
+HeapAs usally, though I got accepted for the dp solution, but it is so slow… So I open the discussion and look through some best votes answers, find this nice solution:
+12345678910111213141516171819202122232425/** * @param &amp;#123;number&amp;#125; n * @param &amp;#123;number[]&amp;#125; primes * @return &amp;#123;number&amp;#125; */var nthSuperUglyNumber = function(n, primes) &amp;#123;  var res = [1],      idxs = [],      i,j;  for (i = 1; i &amp;lt; n; i++) &amp;#123;    res[i] = Math.pow(2,31) - 1;    for (j = 0; j &amp;lt; primes.length; j++)&amp;#123;      idxs[j] = idxs[j] || 0;      res[i] = Math.min(res[i],primes[j] * res[idxs[j]]);    &amp;#125;    for (j = 0; j &amp;lt; idxs.length; j++)&amp;#123;      if (res[i] == primes[j] * res[idxs[j]]) &amp;#123;        idxs[j] = idxs[j] || 0;        idxs[j] ++;      &amp;#125;    &amp;#125;  &amp;#125;  return res[n-1]&amp;#125;
+Runtime: 276 ms
+Actually it is pretty much the same as the DP solution… but much faster. 
+We actually can combine the two for loops into one to speed up again:
+123456789101112131415161718192021var nthSuperUglyNumber = function(n, primes) &amp;#123;  var res = [],      idxs = [],      vals = new Array(primes.length+1).join(1).split('').map(parseFloat),      i,j,next = 1;    for (i = 0; i &amp;lt; n; i++) &amp;#123;    res[i] = next;    next = Math.pow(2,31) - 1;    for (j = 0; j &amp;lt; primes.length; j++)&amp;#123;      // skip duplicate and avoid extra multiplication      if (vals[j] == res[i]) &amp;#123;        idxs[j] = idxs[j] || 0;        vals[j] = res[idxs[j]++] * primes[j];      &amp;#125;      next = Math.min(next,vals[j]);    &amp;#125;  &amp;#125;  return res[n-1]&amp;#125;
+Runtime: 232 ms
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>High-Performance Browser Networking .1.Preface</title><link>http://taoalpha.me/blog/2014/07/24/read-yi-high-performance-browser-networking-1-preface/</link><category>read</category><tag>技术文章,浏览器性能,翻译文章,译系列</tag><pubDate>2014-07-24T11:00:00.000Z</pubDate><description>chrome一直以极速著称, 当然这和webkit内核有很大的关系, 但是本身chrome在网络处理上也有着非常多的优化方案, 综合了这些优化和本身优质的内核属性, chrome才能实现如今的极速~ 
+进入正文前, 先介绍下原文或者说原书的作者: Ilya Grigorik.
+Ilya是google的一个网络性能开发工程师, 其在很多方面都有杰出的成绩~ 有兴趣的可以去大神的github上看看大神都在做什么项目, 顺带能观摩学习下大神的代码~
+==================================正文=============================
+前言–Steve Sounders, Head Performance Engineer, Google, 2013
+“优秀的开发者知道如何做, 伟大的开发者知道为什么这么做.”
+我们一直都以此名言勉励自己. 我们都希望成为那个知道而且可以解释我们所使用系统的底层原理的人. 但是, 如果你是一个网页开发者, 你可能反而要走相反的路子.
+网页开发者现在变得越来越细分. 你是什么类型的开发者呢? 前端? 后端? 韵味? 大数据分析? UI/UX(交互设计)? 存储? 视频? 信息流? 我还可以给这个长长的列表中加入性能工程师这一细分领域. 
+我们很多时候很难平衡技术的基础学习和前沿领域的了解. 但是, 如果我们不能了解这些基础知识, 我们的知识系统一定很空洞, 很浅薄. 仅仅知道一个技术手段的顶层使用是不够的, 尤其是在面对一些复杂的问题时, 一旦出现了一些莫名其妙的问题, 那么依赖的还是掌握底层原理的人.
+这也是为什么本书(High Performance Browser Networking)如此重要了. 如果你是一个网页开发者, 那么你的基础知识就是网络以及网络协议基于的金字塔结构: TCP-TLS-UDP-HTTP以及其他一些东东. 这其中的每一个协议都有其自身的性能属性特点和优化方法, 而为了创建高性能的应用, 你就需要去了解网络的工作形式, 为什么是这样的而不是那样的~
+感谢上苍, 你已经找到了如何阅读本书的方法. 我真希望在我开始网络编程之路时能够有这本书啊. 当初完全依靠那些懂得网络原理的前辈的言传身教以及自己硬啃那些说明指导才一步步走到现在的. HPBN一书集合了一个网络界的前辈–Ilya Grigorik–他把自己对网络的方方面面了解都融合集成到了这本书中.
+在本书中, Ilya详尽解释了许多关于网络的原理性知识: 比如为什么延迟(latency)是性能的绊脚石. 为什么TCP并不总是最好的传送机制以及UDP可能是你更好的选择. 还有为什么链接复用是个非常关键的优化. 紧接着他更进一步的提供了很多提升网络性能的具体方法. 想要减少延迟? 尽可能在里客户端更近的服务器端中断会话. 想要提升链接的复用? 启用链接的长效性. 就是这种如何做和为什么这么做的结合让本书传达的知识更有可操作性.
+Ilya 阐述了网络的基本原理并且基于此介绍了很多协议和浏览器方面的前沿知识. HTTP 2.0的有点也有所介绍. 回顾了XHR以及它的局限性, 和由此引发的跨域资源共享问题的介绍.Server-Sent Events, WebSockets, 和 WebRTC 也都所涉及, 带我们领略了一些浏览器网络的最前沿.
+本书的两大核心就是基础原理和前沿知识. 性能是帮助我们理解网络的根本, 并将之转化到性能是如何影响到我们的网页和用户的. 它把复杂的概念转化成了我们可以真正用于提升优化自己网站并创造更好的用户体验的工具. 这一点很重要, 这也是你为什么要阅读本身的重要原因.
+浏览器是当下受众面最广的部署平台了: 它出现在每一台智能手机, 平板, 笔记本, 台机和每一个介于其中形式的载体上. 实际上, 从目前设备的涨势来看, 我们预期2020年的时候入网设备能够达到200亿–至少有一个浏览器而且至少可以接入wifi或者信号基站. 而平台的形式, 设备的厂商, 以及操作系统的版本都不是问题, 每一个设备都至少会有一个网页浏览器, 而浏览器本身功能也在越发丰富了.
+我们如何看到的浏览器已经和过去的老版本有了千差万别, 这得益于进来的一系列创新: HTML, CSS形成的展示层, JavaScript作为web集成的新语言被引入, 以及HTML5的提出和其新的API都在继续提升着新平台提供高性能应用的能力. 当今再没有别的技术或者平台能够做到这样, 这么的面向全部人类, 同时这也是如今各种机会, 创新频出的领域.
+实际上, 再没有比浏览器内部的网络基础机构更适合阐述网络的快速迭代和创新了. 历史上, 我们曾经受限于简单的HTTP请求式交互, 而如今, 我们拥有了更加丰富的机制, 可以实现更加有效的信息流传递, 双向而实时的交流, 自定义应用协议的传递以及一对一的视频会议, 各方之间的数据直接传输等等, 只需要JavaScript, 足矣.
+最终结果? 不计其数的联网设备, 已有服务和新服务中不断壮大的用户基数, 以及对高性能应用的高需求. 速度一直都是一个功能特点, 甚至对一些应用而言, 它是决胜功能点, 而一个高性能的网页应用也需要一个对浏览器如何工作以及和网络的交互有扎实, 基础的了解的人, 这也是本书的受众.
+About this Book(关于本书)
+我们的目的是能够覆盖到每一个应该了解网络是如何工作的开发者: 我们使用的是哪一种协议, 它有什么局限性, 如何最大化的优化你的性能来使用你的网络, 以及浏览器提供了什么样的网络特性来让你使用.
+在此过程中, 我们会深入的了解TCP, UDP以及TLS协议, 以及如何去针对性的优化我们的应用和基础结构. 接着我们会深入的了解下无线和移动网是如何工作的–就是无线电波这家伙, 比较难懂–还会讨论一些它对我们设计和搭建我们自己的应用的启发. 最后, 我们们仔细剖析一下HTTP协议是如何工作的, 并调查下浏览器中许多新的,让你兴奋的网络特性:
+    即将到来的HTTP 2.0的改善;    新XHR的特点和能力;    结合Server-Send Events的数据流    使用WebScoket的双向沟通;    点对点的视频和音频沟通–WebRTC;    点对点的数据交互–DataChannel
+
+理解每一个字节都是如何传递的,以及每个传递过程和协议的属性对我们创建高性能应用都是至关重要的知识. 毕竟, 如果我们的应用卡死在网络上, 那么无论怎么渲染, JS或者其他的优化方式都是没有意义的. 我们的目标是通过近可能最大的提升网络性能而减少等待的时间.
+HPBN一书将会是任何一个乐于研究优化传递和应用性能的开发者的菜, 更广面的, 任何一个不满足于一个简单的checklist, 而是想要了解浏览器和底层协议是如何工作的, 有着强烈好奇心的人, 都是本书的受众. 其中如何做以及为什么做会交替进行: 我们将会覆盖到很多实际的建议, 帮助你更好的进行配置和架构规划, 我们还会探究下每一种优化方法的益处和代价.
+Conventions Used in This Book(本书使用的一些习惯表达)
+    斜体: 代表新术语, URLs, email地址, 文件名或者文件扩展名;    Constant width:Used for program listings, as well as within paragraphs to refer to program elements such as variable or function names, databases, data types, environment variables, statements, and keywords.    Constant width bold: Shows commands or other text that should be typed literally by the user.    Constant width italic: Shows text that should be replaced with user-supplied values or by values determined by context.后面三个和两种tip的形式都无法在本译文中体现, 所以就不管了哈…Source links:    Preface Part1    Preface Part2
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>FeedPusher Pre-Alpha-Release</title><link>http://taoalpha.me/blog/2016/01/23/tech-feedpusher-pre-release/</link><category>tech</category><tag>FeedPusher,NodeJS</tag><pubDate>2016-01-24T02:26:45.000Z</pubDate><description>As getting close the the end of the winter break, I’m almost ready to release the alpha version of new feedpusher :).
 Here is some declaration before I release the first version :)
 
 Instead of a public service, the first one or maybe several versions would be invitation only since the the service host on my raspberry pi, can not handle too many requests;
@@ -676,126 +746,6 @@ Others: others;
 Be Consistent;
 
 SummaryThis book is pretty short with all valueable content. Strongly recommend after you get familiar with all basic css concepts.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (4)</title><link>http://taoalpha.me/blog/2015/06/23/read-javascript-the-definitive-guide-4/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-23T07:00:00.000Z</pubDate><description>概述第六版和第五版的最大区别在于ECMAScript 5的引入, 这是目前发布的最新的js版本, 有着最新的属性和函数, 目前主流浏览器基本都已经完全支持. 本文为阅读5-9章内容的笔记总结, 主要是覆盖了JS中的语句和典型对象.
-阅读笔记Chapter 5 - Statements
-switch/case中使用的是===进行比较判断的, 而不是==;
-with带入scope chain的对象只有读取权限, 没有写入功能, 即with后, 可以获取其代入的对象, 但其内声明的变量都依然归于gloabl或者local之中;
-debugger是ECMAScript 5引入的一个新的statement, 起主要作用是和浏览器结合使用, 用于创建断点以便查错使用;
-use strict也是ECMAScript 5引入的, 严格来说不算statement而是directive, 不过两者很是相近; 其使用必须位于js整体的起始位置或者是一个function主体的起始位置;
-use strict的使用会开启代码的strict mode, 为了提升效率, 错误追踪以及更好的安全性, 其语法要求会更加严格, 简单列举如下:
-停用with语句;
-所有变量必须声明才能调用;
-所有独立声明的函数而非对象的方法定义的, 其this域都默认为undefined, 而函数如果通过apply,call调用, 其this域为传入对象;
-对未声明变量的赋值或者不能写入的对象进行写入, 都会抛出异常;
-eval调用会自动创建临时局部scope, 不再能直接对母域新建声明了;
-arguments成为传入参数的硬拷贝, 和传入参数名之间不在绝对相等, 即改变一方不会引起另一方的改变, 同时停用其caller,callee方法;
-delete用于变量, 函数或者函数参数的时候会抛出异常, 操作对象的某个未声明属性也会抛出异常;
-对象(包括函数)创建中不能出现同名属性(参数);
-直接声明的八进制数是不允许的(即0开头的数字);
-eval,arguments作为keywords对待, 不能赋值, 或赋予其他变量, 也不能用于identifier;
-
-
-
-
-Chapter 6 - Objects
-Property Attributes (ECMAScript 5之后引入可自定义配置, 之前默认三者皆有.)
-writable: 可赋值;
-enumerable: 可递归;
-configurable: 可配置 - 可删除也可修改;
-
-
-Object Attributes
-portotype: 指向当前对象的属性继承对象;
-class: 指代对象所属类别;
-extensible: 指示当前对象是否能够新增属性 (ECMAScript 5引入);
-
-
-Object Categories and Property Types:
-native object: js中内置的对象, 包含Arrays, functions, dates, regular expressions等;
-host object: 由js运行环境所定义的对象, 比如常见的浏览器, 就包含了HTMLElement对象;
-user-defined: 执行js代码的时候创建的对象;
-own property: 直接由对象中定义的属性;
-inherited property: 由对象的prototype object继承来的属性;
-
-
-Prototype:
-任何一个对象(除了Object.protytpe)的出现都必然包含了第二个对象的存在: new Array() =&amp;gt; Array.prototype;
-Object.prototype是唯一一个没有母继承的对象了, 它是最顶部的类;
-类似new Array() =&amp;gt; Array.prototype =&amp;gt; Object.prototype这样的两个prototype就组成了Array的prototype chain;
-Object.create() 是ECMAScript 5引入的新的创建对象的方法, 其接受两个参数, 第一个参数会作为新建对象的prototype传入, 第二个则是用来描述新对象的属性的. 如果你传入null, 则新建对象是完全没有prototype的, 只有Object.create(Object.prototype)才是等价于我们常用的{} or new Object();
-获取某个object的未定义属性将返回undefined, 但是获取undefined或者null的某个属性则会抛出异常;
-
-
-getter &amp;amp;&amp;amp; setter
-ECMAScript 5新引入的两个accessor properties, 分别对应某个属性的调用和赋值;
-只有setter的属性只有写入权限, 只有getter的属性则是只读权限;
-
-
-property attributes
-value, writable, enumerable, and configurable
-对应的accessor property: get, set, enumerable, and configurable
-Object.getOwnPropertyDescriptor(object_name, property_name) 获取某个属性的特征描述;
-Object.defineProperty(object_name, property_name,{property_attribute:attribute_value}) 对某个属性设定其特征描述;
-
-
-
-下例即为利用Object.defineProperty自定义的一个extend()函数:
-123456789101112131415161718192021222324252627282930// Example 6-3. Copying property attributes/** Add a nonenumerable extend() method to Object.prototype.* This method extends the object on which it is called by copying properties* from the object passed as its argument. All property attributes are* copied, not just the property value. All own properties (even non-* enumerable ones) of the argument object are copied unless a property* with the same name already exists in the target object. */Object.defineProperty(Object.prototype,  &quot;extend&quot;,  &amp;#123;    writable: true,    enumerable: false,    configurable: true,    value: function(o) &amp;#123;      // Define Object.prototype.extend      // Make it nonenumerable      // Its value is this function      // Get all own props, even nonenumerable ones      var names = Object.getOwnPropertyNames(o); // Loop through them      for(var i = 0; i &amp;lt; names.length; i++) &amp;#123;        // Skip props already in this object        if (names[i] in this) continue;        // Get property description from o        var desc = Object.getOwnPropertyDescriptor(o,names[i]);        // Use it to create property on this Object.defineProperty(this, names[i], desc);      &amp;#125;    &amp;#125;  &amp;#125;);
-
-Object Attributes;
-Object.getPrototypeOf() ECMAScript 5引入, 可用于获取某个对象的prototype;
-p.isPrototypeOf() 同上, 用于判断某个对象是否为另一个对象的prototype;
-Object.isExtensible(),Object.preventExtensions()则分别是用于判断一个object是否是可扩展的, 以及禁止其可扩展性的(此操作不可复原);
-Object.seal()类似Object.preventExtensions(), 不过它同时禁掉了properties的configurable属性,Object.isSealed()则是对应用于判断是否sealed的函数;
-Object.freeze()比Object.seal()还要严格,所有属性都变为可读了, 对应的查询函数为:Object.isFrozen();
-Object.preventExtensions(),Object.seal(),Object.freeze()都是只针对当前object而言的;
-class属性目前基本没啥用, 有点等价或者说更细化的typeOf or instanceOf了;
-
-
-
-Chapter 7 - Arrays这里主要记录ECMAScript 5引入的一些新的方法, 3已有的可以查看 阅读笔记-2
-
-forEach(value,index,array_itself): array自身的循环调用函数, 相当于for(i in array_name){}, 区别在于其不支持break等可以跳出循环的语句, 如果你想要提前结束循环, 就需要通过try/catch包裹并利用抛出异常来结束循环;
-map(): 也算是循环的一种, 遍历每个元素并传递给传入的函数, 最终返回一个新数组;
-filter(): 顾名思义, 这是对数组进行筛选的, 值得一提的是filter()会自动跳过空白,所以对于稀疏数组通过filter()可以去除所有空白, 在加上undefined判断, 就可以去除所有空值了;
-every() 和 some(): every()是当数组每个元素都使传入函数为真的时候返回真, some()则是只要一个为真即返回为真, 需要注意的事, 对于空数组, every()会返回真, 而some()会返回为假;
-reduce(function,initial_value) 和 reduceRight(): 通过执行传入函数而对数组元素进行整合,计算,判断, 最终返回一个结果: var max = a.reduce(function(x,y) { return (x&amp;gt;y)?x:y; });即返回数组的最大值; reduceRight()与reduce()一致, 只是循环顺序相反, 从右到左; 当没有声明初始值时, 采用第一个执行元素作为初始值;
-indexOf() 和 lastIndexOf: 顾名思义, 获取数组中某个元素的index, 前者获取首个匹配元素的index, 后者获取最后一个匹配元素的index;
-
-Chapter 8 - Functions
-Functions的调用有四种:
-直接调用;
-作为对象的方法调用;
-作为constructor调用;
-通过call,apply方法调用(间接调用);
-
-
-call() 和 apply:
-call和apply都是间接调用的方法, 允许一个函数临时客串为某个object的方法;
-一定程度上, 可以等价于o.m = f;o.m();delete o.m;
-其接受的第一个参数会成为函数运行的this域, 如果是非strict mode下, 传入null/undefined则会自动将global作为this, 而如果传入的是primitive datatype, 则自动转为对应的wrapper object, 即string =&amp;gt; String;
-call和apply的区别主要体现在后面的参数上, 前者以分散元素传入, 后者则以整体数组形式传入, 所以用apply可以把原本只支持不定长参数的函数转换为接受数组的函数:var biggest = Math.max.apply(Math, array_of_numbers);;
-apply对类array元素处理方式同array元素;
-
-
-bind(): 很是类似call和apply, 本质也是把某个函数作为某个对象的方法调用, 实现则是通过把object和function绑定, 形成一个新函数从而每次调用新函数都等价于调用了object.funtion, bind接受多个参数, 其首个以后的参数都会作为this域成员代入函数中, 并按序成为函数自身的参数function f(y,z) { return this.x + y + z };var g = f.bind({x:1}, 2);g(3) // 2被赋予了y, 新的3则给了z;
-higher-order function: 作用于另一个函数之上的函数;
-
-partial and memoization 这两个都是function programing中常用的方法:
-
-partial: 类似bind()这种会把传入参数默认分配到函数自身的部分接受参数上的做法就是partial application;
-memoization: 将函数运行过程的计算结果缓存起来的方式;
-
-
-
-123456789101112131415161718192021222324function array(a, n) &amp;#123; return Array.prototype.slice.call(a, n || 0); &amp;#125;// 用以处理类array元素(转为真正的array)function partial(f /*, ... */) &amp;#123;  var args = arguments;  // 存储partial的参数  return function() &amp;#123;    var a = array(args, 1);    // 取出首位以后的参数    var i=0, j=0;    for(; i &amp;lt; a.length; i++)      if (a[i] === undefined) a[i] = arguments[j++];      // 这里的arguments是第二层参数      // 将空元素逐个替换成第二层参数里的值, j自动随着执行+1    a = a.concat(array(arguments, j))    // 组成新的参数数组    return f.apply(this, a);    // 调用f函数, 并传入参数a  &amp;#125;;&amp;#125;var f = function(x,y,z)&amp;#123;return x*y*z&amp;#125;partial(f,undefined,2)(1,3)// x:1,y:2,z:3
-123456789101112131415// Return a memoized version of f.// It only works if arguments to f all have distinct string representations.function memoize(f) &amp;#123;  var cache = &amp;#123;&amp;#125;;  return function() &amp;#123;    var key = arguments.length + Array.prototype.join.call(arguments,&quot;,&quot;);    if (key in cache) return cache[key];    else return cache[key] = f.apply(this, arguments);  &amp;#125;;&amp;#125;// 应用方式类似;var factorial = memoize(function(n) &amp;#123;return (n &amp;lt;= 1) ? 1 : n * factorial(n-1); &amp;#125;);factorial(5) // 此时会自动缓存4,3,2的阶乘值. 对于一些复杂的运算, 如此可以很好的加快运算速度.
-Chapter 9 - Classes and Modules除了 阅读笔记-2中包含的, 由于ECMAScript 5所引入的那些object property自然都可以应用到新的class中, 从而创建更为复杂有效的函数. 其实js中目前不存在class这个关键词, 所以其模仿的class, 说白了就是一个复杂一些的函数对象.
-而因为其内容驳杂繁多, 我么会在后面的应用中有很多实践的机会, 这里就不一一描述了.
-参考资料
-JavaScript the Definitive Guide 6th edition
-Functional Javascript
-
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (5)</title><link>http://taoalpha.me/blog/2015/06/24/read-javascript-the-definitive-guide-5/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-24T08:00:00.000Z</pubDate><description>概述在十到十二章中, 第十章的正则表达式内容最为丰富, 也是目前应用即为广泛的内容之一. 不过这里也主要是结合js的应用, 实际上正则表达式本身就是一个很值得研究的话题, 有不少书都在谈这个话题, 我后面要读的书目中恰巧就有这么一本, 后面会更加详细的学习以下正则表达式的方方面面.
 十一章算是非常前沿, 高端或者说冷门的点了, 随着浏览器的盛行以及技术的进步, 安全问题始终都是一个很重视的点, 而在这种攻防演练中也促进了js本身的进步, 而主流浏览器本身更是走在了js的最前沿. 各种新的属性都是由他们引入而逐渐成为标准的;
 十二章主要是对走出浏览器的JS做了一个简单的介绍, 而NodeJS的大名在近几年在前后端, 全端领域都可谓是人尽皆知. 我也会在之后阅读相关书籍的时候做更详细的笔记记录.
@@ -984,6 +934,212 @@ JavaScript the Definitive Guide 6th edition
 Can I Use …
 host and hostname
 
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (1)</title><link>http://taoalpha.me/blog/2015/06/28/read-coffeescript-programming-with-jquery-rails-and-nodejs/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-28T04:00:00.000Z</pubDate><description>SummaryThe notes I took while I was learning the ‘CoffeeScript’. If you are a real beginner with ‘CoffeeScript’, I suggest you start with another book called “The Little Book on CoffeeScript”, it’s better for beginners. And after that, this one is definitely your best choice.
+CoffeeScript is a language which complies to JavaScript. Like the sass or scss to css except that CoffeeScript is not compatible with javascript. So you can not mix the javascript syntax with the CoffeeScript.
+This note is mainly about the fist chapter of the book, a nice introduction for CoffeeScript including the basic syntax.
+
+And to improve my english, I think i will start writing english notes for the english books. ^_^
+
+NotesCoffeeScript is pretty popular in the community of JavaScript for its simplicity, elegant and readable. Now let us dive into it.
+Instead of  listing the keywords and statements used in CoffeeScript one by one, it would better we learn CoffeeScript from comparing the difference between the CoffeeScript and JavaScript.
+CoffeeScript fix some ugly stuffs in JavaScript
+CoffeeScript removes most of the semicolons and the curly braces which used a lot in JavaScript, gives us a clearly view of the code, but you can still use the semicolons if you want, and you still have to use the semicolons if you want to put multiple statements in single one;
+CoffeeScript learns a lot from ruby and python. Like this one: it uses whitespace or indentation, more accurately, to delimit the code blocks instead of braces.
+CoffeeScript removes a lot of parenthesis for many statements and functions, like if..else, while loops and functions with single string parameter. But this is optional, you can still use them if you want. Notice: you will need parenthesis if you want to call a function without any parameters)
+Function: as the first class object in JavaScript, CoffeeScript also does a lot improvements for it.
+If you write js, you will know that the syntax is really ugly when you want to write a anonymous function. Now you can make it pretty beautiful with CoffeeScript;
+CoffeeScript also saves you a lot keystrokes for defining the functions;
+so what are the rules?
+Replace the function keyword with -&amp;gt;;
+Drop the parenthesis if there is no argument for the function;
+Put the arguments enclosed with parenthesis in front of the -&amp;gt;, and if the argument has a default value, you can set it in the parenthesis;
+Drop the curly braces and use indentation for the function body;
+Automatically return the last expression of the function, but if you need return something before, you still need to use the return;
+
+
+
+
+
+1234567891011121314151617 -&amp;gt; alert 'hi there!'# the code above won't self-initiating, if you want to do that, you need use parenthesis or the `do` keyword like below:# (-&amp;gt; alert 'hi there!')()# do -&amp;gt; alert 'hi there!'square = (n=1) -&amp;gt; n * n# function using splats# this is an alternative way for using Array.prototype.slice()gpaScoreAverage = (scores...) -&amp;gt;  total = scores.reduce (a, b) -&amp;gt; a + b  total / scores.lengthalert gpaScoreAverage(65,78,81)scores = [78, 75, 79]alert gpaScoreAverage(scores...)
+1234567891011121314151617181920212223242526272829303132333435var square;(function()&amp;#123;  return alert(&quot;hi there!&quot;);&amp;#125;);/* the code in comments above will compile to:(function()&amp;#123;  if (n == null) &amp;#123;    n = 1;  &amp;#125;  return alert(&quot;hi there!&quot;);&amp;#125;)();*/square = function(n) &amp;#123;  return n * n;&amp;#125;;// [].slice.call(arguments,0) ==&amp;gt;  Array.prototype.slice.call(arguments,0)var gpaScoreAverage, scores,  slice = [].slice;gpaScoreAverage = function() &amp;#123;  var scores, total;  scores = 1 &amp;lt;= arguments.length ? slice.call(arguments, 0) : [];  // get the single score value or a list of the scores  total = scores.reduce(function(a, b) &amp;#123;    return a + b;  &amp;#125;);  return total / scores.length;&amp;#125;;alert(gpaScoreAverage(65, 78, 81));scores = [78, 75, 79];alert(gpaScoreAverage.apply(null, scores));
+CoffeeScript saves you a lot of keystrokes
+CoffeeScript will declare the variables you need at the top of the function for you automatically. So that means you can’t create the global variables in a function like you can do in JavaScript, actually you can’t use the var keyword in CoffeeScript. &amp;lt;= many people agree that omitting the var keyword makes the variables become global is a really bad desgin…
+Object:
+CoffeeScript supports the class keyword, and it will create a closure to build the class;
+Use the constructor to initialize some private properties, or just omit it;
+Every function you define in a class will be added to the object as a prototype method;
+Use @ as a shortcut for this;
+fat arrow: When you want to use this in previous scope instead of the new scope, you need the fat arrow : =&amp;gt;;
+Use super to call the parent’s method (same name, so just pass the parameter);
+Use :: as a shortcut for .prototype, so you can extend your prototype as this:Vehicle::stop =-&amp;gt; alert &amp;#39;stop&amp;#39;;
+
+
+
+123456789101112131415161718192021222324252627282930313233class Vehicle  # Use the constructor to initialize some private properties  # Use @ as this  constructor: -&amp;gt;    @c = 1  drive: (km) -&amp;gt;    alert &quot;Drove #&amp;#123;km&amp;#125; kilometres&quot;class Car extends Vehicle constructor: -&amp;gt;   @odometer = 0 drive: (km) -&amp;gt;   @odometer += km   super km name:&quot;John Doe&quot; driver: (msg) -&amp;gt;   @msg = msg whoisdriver: -&amp;gt;   @msg()car = new Carcar.drive 5alert &quot;Odometer is at #&amp;#123;car.odometer&amp;#125;&quot;class Person  constructor: (name)-&amp;gt;    @name = name    @mycar = new Car()    @mycar.driver =&amp;gt; alert &quot;#&amp;#123;@name&amp;#125;&quot;mike = new Person &quot;Mike&quot;# use `=&amp;gt;` to show mike's name instead of the default `john doe` set in Carmike.mycar.whoisdriver()
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364var Car, Person, Vehicle, car, mike,  extend = function(child, parent) &amp;#123; for (var key in parent) &amp;#123; if (hasProp.call(parent, key)) child[key] = parent[key]; &amp;#125; function ctor() &amp;#123; this.constructor = child; &amp;#125; ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; &amp;#125;,  hasProp = &amp;#123;&amp;#125;.hasOwnProperty;Vehicle = (function() &amp;#123;  function Vehicle() &amp;#123;    this.c = 1;  &amp;#125;  Vehicle.prototype.drive = function(km) &amp;#123;    return alert(&quot;Drove &quot; + km + &quot; kilometres&quot;);  &amp;#125;;  return Vehicle;&amp;#125;)();Car = (function(superClass) &amp;#123;  extend(Car, superClass);  function Car() &amp;#123;    this.odometer = 0;  &amp;#125;  Car.prototype.drive = function(km) &amp;#123;    this.odometer += km;    return Car.__super__.drive.call(this, km);  &amp;#125;;  Car.prototype.name = &quot;John Doe&quot;;  Car.prototype.driver = function(msg) &amp;#123;    return this.msg = msg;  &amp;#125;;  Car.prototype.whoisdriver = function() &amp;#123;    return this.msg();  &amp;#125;;  return Car;&amp;#125;)(Vehicle);car = new Car;car.drive(5);alert(&quot;Odometer is at &quot; + car.odometer);Person = (function() &amp;#123;  function Person(name) &amp;#123;    this.name = name;    this.mycar = new Car();    this.mycar.driver((function(_this) &amp;#123;      return function() &amp;#123;        return alert(&quot;&quot; + _this.name);      &amp;#125;;    &amp;#125;)(this));  &amp;#125;  return Person;&amp;#125;)();mike = new Person(&quot;Mike&quot;);mike.mycar.whoisdriver();
+Other Good Things
+CoffeeScript will quote reserved words automatically if you use them in your literal object;
+You can also drop the comma when you define your literal array or literal object only if you put one property per line, you can drop the braces for object, but you need them for array;
+Use #{variable_name} to concatenate the string and variables instead of +, but only use them enclosing with double-quote, the single-quote strings are literal, borrowed from ruby;
+CoffeeScript will always convert the == and != to === and !==;
+Use the existential operator: ? to check whether a variable exists and has a value or not(means not null or undefined);
+Also use the soak: ?. as a shortcut for ternary statement;
+Support some new keywords like unless, the opposite to if;
+Use plain english aliases for some of the logical operators: is for ===,isnt for !==,not for !,and for &amp;amp;&amp;amp;,or for ||,true can also be yes, or on,false can be no or off;
+Support assign multiple values at once;
+CoffeeScript replaces the case in switch with when ... then, so you can forget about the break, and it also replaces the default with else;
+CoffeeScript supports the chained comparisions: 61 &amp;gt; a &amp;gt; 39;
+You can use ### to comment multiple lines. The biggest difference between ### and # is former one will be part of generated javascript;
+
+1234567891011121314151617b=1if a? &amp;amp;&amp;amp; b?  alert &quot;a.c equals to #&amp;#123;a?.c&amp;#125;&quot;[city, state, country] = [&quot;!2&quot;,&quot;24&quot;,&quot;2&quot;]# or function which returns an object with the same structure as you described before the `=`&amp;#123;address: &amp;#123;street: myStreet,room: myRoom&amp;#125;&amp;#125; = getAddress()### =&amp;gt;var b;b = 1;// since we declared the b before, we only need to check if b is null.if ((typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null) &amp;amp;&amp;amp; (b != null)) &amp;#123;  alert(&quot;a.c equals to &quot; + (typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null ? a.c : void 0));&amp;#125;var city, country, myRoom, myStreet, ref, ref1, state;ref = [&quot;!2&quot;, &quot;24&quot;, &quot;2&quot;], city = ref[0], state = ref[1], country = ref[2];ref1 = getAddress().address, myStreet = ref1.street, myRoom = ref1.room;###
+Special for List
+List: CoffeeScript borrowed a lot list comprehensions from python[ x*2 for x in object_name ] and ruby.
+while: it works nearly the same as in javascript except that it has an opposite keyword in CoffeeScript: until and both of them can be used as expression and will return a array;
+for: the standard statement is [action or mapping] for [selector] in [collection] when [condition] by [step]. Last by following with a number would affect the loop step(`i++``);
+[f_number..l_number]: it will create a array with numbers between the fist number and the last number, you can use ...(3 dots) to make the array only contains the numbers in between;
+of: for key-value pairs of an object, you can use of to loop them through;
+
+
+
+1234567891011121314151617181920212223242526272829303132333435363738394041times = [0..2](n*times while times -= 1).pop()### =&amp;gt; var times; times = [0, 1, 2];((function() &amp;#123;  var results;  results = [];  while (times -= 1) &amp;#123;    results.push(n * times);  &amp;#125;  return results;&amp;#125;)()).pop();###alert x for x in flavors when x != 'h' by 2###=&amp;gt;var x, i, len;for (i = 0, len = flavors.length; i &amp;lt; len; i+=2) &amp;#123;  x = flavors[i];  if (x !== 'h') &amp;#123;    alert(x);  &amp;#125;&amp;#125;###ages = john: 25 peter: 26 joan: 23alert &quot;#&amp;#123;name&amp;#125; is #&amp;#123;age&amp;#125; years old&quot; for name, age of ages###=&amp;gt;var age, ages, name;ages = &amp;#123;  john: 25,  peter: 26,  joan: 23&amp;#125;;for (name in ages) &amp;#123;  age = ages[name];  alert(name + &quot; is &quot; + age + &quot; years old&quot;);&amp;#125;###
+Digest
+For JavaScript:
+Every class in JS is a function object;
+Only function object has the default prototype, so the normal objects like literal string, number or even string created from String(),any objects created by functions, they all don’t have the default prototype;
+But every object has a default constructor which is exactly the function object who create it;
+
+
+For CoffeeScript:
+If there is only one line in the body, you can move it in front of the condition &amp;lt;= while/until/for/if...
+
+
+
+Puzzle
+Q1: In the second code example above, CoffeeScript create a default extend function for us:
+
+123456789101112131415161718192021var extend = function(child, parent) &amp;#123;  for (var key in parent) &amp;#123;      if (hasProp.call(parent, key)) child[key] = parent[key];  &amp;#125;  // Start from here  function ctor() &amp;#123;      this.constructor = child;  &amp;#125;  ctor.prototype = parent.prototype;  child.prototype = new ctor();  // End  // Just cannot understand the codes above...  // Why we need another function as the child's prototype? We have already copied all the properties from parent, or we just need a beautiful prototype chain? `Car &amp;lt;= ctor() &amp;lt;= Vehicle() &amp;lt;= Object` compared to `Car &amp;lt;= Car &amp;lt;= Object()`.  // Then why not we just use the child.prototype = new parent() ??? we can still get a good prototype chain. `Car &amp;lt;= Vehicle &amp;lt;= Vehicle &amp;lt;= Object`.  child.__super__ = parent.prototype;  return child;&amp;#125;,hasProp = &amp;#123;&amp;#125;.hasOwnProperty;
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (3)</title><link>http://taoalpha.me/blog/2015/06/22/read-javascript-the-definitive-guide-3/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-22T04:00:00.000Z</pubDate><description>概述先说点不相关的… 为了更好的阅读, 所以以后读书笔记相关的博文都会分拆成4个部分:
+
+概述: 算是阅读总结摘要以及类似这段话之类的声明介绍等等;
+阅读笔记: 这部分主要以阅读过程中的记录为主, 会比较杂, 基本算是逐点记录, 评判相对主观;
+心得: 这部分则主要为笔记的延伸, 算是对笔记的一种补充或者说自己的阅读理解消化所得, 有时候也会覆盖到一些使用架桥等等;
+谜题: 这里主要记录一些没有完全理解的部分, 会加上自己的猜测解答, 当弄懂后会更新正解;
+
+DONE.
+本篇是博主重新翻阅了”JavaScript the Definitive Guide(第六版)”的前4章内容(之前 阅读笔记-2均是第五版的)后的读书笔记以及心得体会. 内容主要覆盖js的基本用法, 考虑到重复, 这里主要是在上两篇的基础上查漏补缺.
+阅读笔记Chapter 2 - 基础知识JS能识别的whitespaces:
+常规空格: \u0020 # 即url中常见的%20
+Tab(制表符): \u0009 # js中常见的\t
+Vertical Tab: \u000B # \v
+Form Feed(翻页/页码分隔符): \u000C # \f
+Nonbreaking Space(不间断空格): \u00A0  # 通常在html中用来阻止默认连续多空格自动归一的性质(auto collapsing)而使用&amp;amp;nbsp;, 同时因为软件处理的需要, 使用&amp;amp;nbsp;能够防止相应的处理器将普通空格转为行分隔;
+Byte order mark: \uFEFF
+any character in Unicode category Zs
+
+JS能识别的line terminators:
+line feed: \u000A # \n
+carriage return: \u000D # \r
+line separator: \u2028
+paragraph separator: \u2029
+
+值得一说的是, js是支持unicode作为indentifier的合法字符的, 但是上述这些则不在其中.
+JS的”Unicode Escape Sequences”类似”\u00E9”这种结构的字符在js都代表一种特殊的字符:”unicode”. 如果你在js中使用这些字符, js会自动将其编译为对应的字符(如果是在js的注释中, 则不会编译, 而是以ascii对待), 比如: 示例就会编译为”é”. 而在js中, 这种对等关系是支持的, 即 &amp;quot;\u00E9&amp;quot; === &amp;quot;é&amp;quot;是为真的.
+但是一定要慎用… 因为unicode变化过多, 有时候输出看起来一样的字符, 其本质不一定一样: &amp;quot;e\u0301&amp;quot;的输出也是”é”, 但是它相当于是&amp;quot;e&amp;quot;+&amp;quot;\u0301&amp;quot;组成的.
+JS中的&amp;quot;;&amp;quot;在JS中, &amp;quot;;&amp;quot;作为语句结尾并不是必须的, 只有当多语句同行的时候, &amp;quot;;&amp;quot;才是必须的. 当你没有&amp;quot;;&amp;quot;的时候, js会自动为你添加合适的&amp;quot;;&amp;quot;. 通常它会自动将它没有&amp;quot;;&amp;quot;无法解析代码时候遇到的换行处加以&amp;quot;;&amp;quot;(除了类似return,break, ++, –等, 它会自动将其后的行分隔符作为&amp;quot;;&amp;quot;对待.):
+1234567var aa=3console.log(a)// output: 3// js在第一个换行处识别了其语句分割的意义, 但是在 a = 3 的两个分割处都因为它可以识别合并后的语句所以没有作为`&quot;;&quot;`处理.
+但是上述的成功不意味着js的智能, 更多时候如果我们不合适的使用&amp;quot;;&amp;quot;, 会造成很多奇怪的问题的, 比如以(, [, /, +, -为起始的语句很可能会被误认为是前一语句的延续. 所以通常来说, js的编码还是比较鼓励使用&amp;quot;;&amp;quot;作为语句结尾的.
+Chapter 3 - 数据类型Number:
+Global viriables: Infinity,NaN
+Global Objects: Math,Number
+
+Tips:
+
+NaN 具有唯一性, 其不等于任意值, 包括它自己, 0/0会产生’NaN’, 但是0/0 != NaN, 如果需要判断一个变量是不是NaN, 需要使用isNaN()这个内置的函数;
+Infinity &amp;lt;==&amp;gt; Number.POSITIVE_INFINITY &amp;lt;==&amp;gt; 1/0
+-Infinity &amp;lt;==&amp;gt; Number.NEGATIVE_INFINITY &amp;lt;==&amp;gt; -1/0
+Binary Floating-Point会导致小数级错误, 比如0.3-0.2 != 0.2-0.1, 这个属于计算机本身因为二进制编码的原因所致, 所以在比较数字大小的时候要格外小心;
+
+String:
+immutable ordered sequence of 16-bit values
+
+Tips:
+
+string的长度都是按照16-bit来计算的, 所以当如果一个字符超过了16-bit, 则会按照多的计算. 比如: e - \ud835\udc52, 就需要按照两个16bit计算, 即其长度应为:”2”
+从ECMAScript 5之后就允许string跨行定义了, 只需要在换行的地方加上一个反斜杠\, 即可.
+转义字符\如果加在普通字符前, 不会产生任何效果;
+typeof null =&amp;gt; Object , typeof undefined =&amp;gt; undefined;
+null == undefined, null!==undefined =&amp;gt; True
+
+类型转换javascript是一个很宽松的语言, 我们不需要预先定义变量类型, 而在运算以及执行过程中, js也会自动的帮助我们进行类型转换, 当然为了更好的借助这一特点, 了解下图中的js转换类型的规则还是非常有必要的.
+
+其中object转换 primitive datatype 的话, 一般会按照如下步骤进行:
+
+首先会默认调用toString()函数, 你可以自行定义这一函数, 如果toString()返回结果正常, 则转换结束;
+如果toString()未定义, 或者返回结果非primitive datatype的话, 会自动调用valueOf()函数, 同上一步;
+而如果两个都没找到, 那么js将会抛出TypeError;
+
+而根据要转换的是string还是number而交换1,2两步( string 的话先调用toString(), 且返回值必然会转为string; 如果是number的话, 则先找valueOf(), 返回结果为number). 当然至于boolean的话, 所有的object转换到boolean都是true.
+Array转换string的时候默认的toString()就是一个join()调用~ Function的话, 则也可以自己定义toString()函数.
+Tips:
+
+x + “” // Same as String(x)
++x // Same as Number(x). You may also see x-0
+!!x // Same as Boolean(x). Note double !
+在ECMAScript 5的strict模式下, 所有变量君需要声明才能赋值, 否则会报错;
+
+Chapter 4: Expressions and Operators
+上图为按照优先级顺序排列下来的操作符(横线分隔的同一组块之间的级别相同).
+Tips:
+
+运算顺序不影响赋值顺序, 赋值顺序始终都是严格从左到右的, 比如:h = x+y+z, 那么赋值顺序始终都是h-&amp;gt;x-&amp;gt;y-&amp;gt;z; 通常情况下, 这一赋值顺序不会影响之后的计算顺序, 对结果基本没什么影响, 除了一种情况:
+如果前变量的赋值会影响到后面变量的值的话, 比如共用同一个变量, 那么这种情况下, 赋值顺序就可能会对结果产生一定的影响了. 最简单的例子就是z = 2;y = function(){z = 3;return 1};, 因为y是一个函数, 而它的执行会改变z的值, 所以y()+z和z+y()的结果就是不相同的.
+
+“+”运算符中的类型转换:
+
+string优先, 只要有两个操作数中有一个是string或者是有toString()的object, 那么其都会按照string来进行链接运算;
+除非两个都是非string, 才会进行加法运算;
+当”+”作为单操作数时, 则意味着将操作数向number类型转换;
+
+
+&amp;amp;&amp;amp;运算符如果第一个为false, 则不执行第二条判断, 所以可以用这个方法来代替if: (a==b) &amp;amp;&amp;amp; alert(&amp;quot;a equals b&amp;quot;)就相当于if(a==b) alert(&amp;quot;a equals b&amp;quot;).
+
+!(p &amp;amp;&amp;amp; q) === !p || !q
+!(p || q) === !p &amp;amp;&amp;amp; !q
+a op= b 和 a = a op b通常是等价的, 除非a本身的重复赋值会有副作用, 比如 a[i++] += 1和a[i++] = a[i++] +1就不一样, 因为后者前后两个i不同了.
+eval()函数会继承当前的scope, 除非eval()被赋予某个新的reference, 那样的话只会使用global的scope;
+void操作数很少用到, 它是个单操作数的操作符, 其用法就是丢弃操作数的返回结果, 然后返回 undefined…
+
+心得whitespaces 和 line terminators通常在js里面我们使用\s来统一代表所有其可以识别的whitespace, line terminators. 如下例:
+1234567var k = 'asd \t asdasd \na asd \f asda dad\rasd\u2028asd\u2029\u00A0'k// output 里面有两个换行的符号, 我这里为了演示方便就不换行了k.replace(/\n/g,'-')// 同上,里面的&quot;\r&quot;我也不换行了k.replace(/\s/g,'-')// output: &quot;asd---asdasd--a-asd---asda-dad-asd-asd--&quot;
+因为在console中输出的时候是不换行的, 所以有时候单单看console输出的话, 类似这种编码问题所致的错误就找不出来, 为了省事, 我们可以统一使用\s来代表所有此类符号.
+谜题Q: 按照正常来说Number.MAX_VALUE加上一个数应该就会自动转为Infinity, 但实际上, 测试过程中发现, 只有当Number.MAX_VALUE加上一个足够大的数后才会等与Infinity, 这是为什么?
+1234567Number.MAX_VALUE// output: 1.7976931348623157e+308Number.MAX_VALUE +1// output: 1.7976931348623157e+308...Number.MAX_VALUE + Math.pow(10,1000)// output: Infinity
+正解: the sum is computed and rounded to the nearest representable value using IEEE 754 round-to-nearest mode. If the magnitude is too large to represent, the operation overflows and the result is then an infinity of appropriate sign.
+
+IEEE 754
+In the following two rounding-direction attributes, an infinitely precise result with magnitude at least bemax ( b − ½ b^(1-p) ) shall round to ∞ with no change in sign; here emax and p are determined by the destination format (see 3.3). With:
+
+roundTiesToEven: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with an even least significant digit shall be delivered
+
+roundTiesToAway: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with larger magnitude shall be delivered.
+
+
+
+ECMAScript does not specify which of the round-to-nearest, but it doesn’t matter here because both gives the same result. The number in ECMAScript is “double”, in which
+
+b = 2
+emax = 1023
+p = 53,
+
+_so the result must be at least 2^1024 - 2^970 ~ 1.7976931348623158 × 10^308 in order to round to infinity. Otherwise it will just round to MAX_VALUE, because that is the closer than Infinity.Notice that MAX_VALUE = 21024 - 2971, so you need to add at least 2^971 - 2^970 = 2^970 ~ 9.979202 × 10^291 in order to get infinity._
+Q: &amp;#39;0&amp;#39; == false 是 true, 为什么 null == false 就是 false呢?
+猜测解释: ==这样的是比较value的, 而 null转换为boolean类型为false, 并不意味着两者的value是相同的. ==只会比较value, 而不会进行转换. 也即true, false两个boolean类型的其value也是1,0. 而null和undefined的value则不同, 前者为空, 后者为无.
+参考资料:
+JavaScript the Definitive Guide 6th edition
+Unicode Property
+List of Unicode Characters
+编码历史介绍
+
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (7)</title><link>http://taoalpha.me/blog/2015/06/26/read-javascript-the-definitive-guide-7/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-26T06:00:00.000Z</pubDate><description>概述阅读笔记Chapter 15 - Scripting Documents
 Selecting:
 document.getElementById(id): 通过id, 一个id对应一个元素;
@@ -1109,177 +1265,46 @@ Chapter 20 - Client-Side Storage我在早先做chrome插件详见我的portfolio
 参考资料
 JavaScript the Definitive Guide 6th edition 我现在就去写导入工具… 今天就到这里吧, 明天算是最后一篇就能完结本书啦~
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (3)</title><link>http://taoalpha.me/blog/2015/06/22/read-javascript-the-definitive-guide-3/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-22T04:00:00.000Z</pubDate><description>概述先说点不相关的… 为了更好的阅读, 所以以后读书笔记相关的博文都会分拆成4个部分:
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (2)</title><link>http://taoalpha.me/blog/2015/06/18/read-javascript-the-definitive-guide-2/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-18T10:00:00.000Z</pubDate><description>概述作为JS中的一等公民, function(函数)始终是JS的核心中的核心. 所以这里单独用一篇笔记来记录JavaScript: the definitive Guide一书第八章的内容. 主要介绍了函数的定义, 作用域, 参数, 声明以及执行等基础知识, 另外也着重介绍了其高级用法中的closure. 我将自己觉得重要的, 值得记录的部分都作为心得摘抄如下:
+心得arguments对象对每一个function而言, 都自动会有一个内置的arguments对象, 用它就可以访问传入的参数了. 通常来说arguments对象我们只会用在不定长传参的函数上, 但arguments本身带有的一个函数却是可以在某些时刻发挥重要作用的~ 这个函数就是callee函数:
+12345678// 递归自我调用函数在解决一些问题的时候是很常用的, 而通常情况下我们都会在函数内调用本函数名即可, 但是如果我们需要实现自我调用的函数正好是一个无名函数呢?// arguments.callee 即调用当前执行的函数function(x)&amp;#123;return x*arguments.callee(x-1)&amp;#125;// 如上, 就实现了一个很简单的&amp;gt;2阶乘计算了
+需要特别注意的就是callee作为arguments对象的一个方法, 是可以跟随arguments作为参数传递的, 而且其作为参数的时候保持其所指代函数不变.
+既然说到arguments, 就多说两句喽. 首先arguments算是一个类array的object. 它本身具有array的一些特性, 比如可以直接调用length函数(通常的object是不能通过.length直接调用获取长度的, 需要使用Object.keys(object_name).length才能获得). 但是它本身和array.length有很大的差别, 其中最大的一个差别就是: 无法通过.length直接更改数组长度.
+123456var a = [1,3,4]a.length = 5console.log(a)// output: [1,3,4,undefined x 2](function(x)&amp;#123;arguments.length = 5;console.log(arguments)&amp;#125;)(10,1,2)// output: [10,1,2]
+可以看到通过对arguments.length直接赋值, 并不会影响其本身的长度, 这一点和array本身有很大的差别.
+PS. 上述示例是增加长度, 其实缩减长度也是一样的, 多余的元素会被自动删除. 所以, 通过直接向array.length赋值也算是一个修改array长度的方法喽~
+PSS. 通常如果一个函数接受参数比较多的时候, 为了预防因为参数顺序而产生的问题, 可以采取传json格式的object作为参数, 这样就能够通过key而不根据顺序获取参数了.
+Function的property请先看下述代码:
+1234567891011f.temp = &quot;test&quot;function f(x)&amp;#123;  console.log(arguments.length);  console.log(arguments.callee.length);  console.log(f.temp);&amp;#125;f(1,2)// output: 2 1 &quot;test&quot;
+首先, 我们看一下我们前两个输出值:
+  如上所述,arguments.length即代表传入参数的数量, 我们传入了两个参数, 所以这里输出2, 没有任何问题. 那么后面的arguments.callee.length又是什么呢? 为什么它输出的是1呢? 
+  根据之前的介绍, 我们当知道arguments.callee是代指当前的函数f(), 那么对应的arguments.callee.length即我们的函数f的length了. 对于Function这个对象而言, 它所拥有的length这一属性特指其声明的参数数量, 我们应该知道JavaScript作为一个很宽松的语言, 其函数定义后接受的参数是不定长的, 即便传入参数与函数声明的参数不相等也是不会抛出异常的, 那么有时候我们需要获取确保函数接受的参数和其声明的参数数量一致, 就可以使用函数自身的length属性来实现;
+其次, 我们自定义了一个f的属性temp, 但是我们实在函数定义之前赋予这个属性的, 为什么依然能够在函数运行中输出呢? 
+  这主要是因为js的执行顺序所致. js在载入执行过程中, 首先会将内部声明的函数都定义之后才会正式由上至下的逐次执行. 所以这里虽然我们把f.temp写在了函数定义之前, 但是js执行过程中, 还是首先定义了函数f, 接着才开始运行我们的f.temp赋值语句. 自然就不会报错说f没有定义了~
+PS. 其实不止是Function, 即便是普通的变量声明, 也是编译和执行分开进行的, 比如var a = 2;也是拆解为var a; a = 2两步执行的, 而声明都是发生在编译过程, 待编译过程全部结束后, 才会由上到下一次执行, 这也是为什么, 单纯的声明可以出现在代码的任意部位都不会影响其所在作用域的生效, 不会爆出not defined的错误;
+reserved word, identifier, keyword这三个作为基础知识, 可以说是每门语言都共通的概念,  但很多时候我们都不会用到或者不会特意去区分这三个名词, 而最近因为看原版书, 经常会出现三个词的交叉, 所以这里特别google了以下, 试图总结下三者的区别:
 
-概述: 算是阅读总结摘要以及类似这段话之类的声明介绍等等;
-阅读笔记: 这部分主要以阅读过程中的记录为主, 会比较杂, 基本算是逐点记录, 评判相对主观;
-心得: 这部分则主要为笔记的延伸, 算是对笔记的一种补充或者说自己的阅读理解消化所得, 有时候也会覆盖到一些使用架桥等等;
-谜题: 这里主要记录一些没有完全理解的部分, 会加上自己的猜测解答, 当弄懂后会更新正解;
+identifier: 通常我们把我们定义的变量名, 函数名, 类名, 标签名,宏定义名, 类型名等称为identifier, 取其标识之意, 用以作为其名称以便代用;
+reserved word: 与identifier相对, reserved word则是指由语言规定而保留的一些词, 这些词有着特定的用途而不能被用作identifier;
+keyword: 作为语言语法的组成部分之一, keyword通常都会有着特定的含义, 绝大多数的keyword都是reserved word, 但也有少量语法中存在keyword不是reserved word的情况, 比如fortran就没有reserved word的概念, 它的所有keyword都可以用作identifier;
 
-DONE.
-本篇是博主重新翻阅了”JavaScript the Definitive Guide(第六版)”的前4章内容(之前 阅读笔记-2均是第五版的)后的读书笔记以及心得体会. 内容主要覆盖js的基本用法, 考虑到重复, 这里主要是在上两篇的基础上查漏补缺.
-阅读笔记Chapter 2 - 基础知识JS能识别的whitespaces:
-常规空格: \u0020 # 即url中常见的%20
-Tab(制表符): \u0009 # js中常见的\t
-Vertical Tab: \u000B # \v
-Form Feed(翻页/页码分隔符): \u000C # \f
-Nonbreaking Space(不间断空格): \u00A0  # 通常在html中用来阻止默认连续多空格自动归一的性质(auto collapsing)而使用&amp;amp;nbsp;, 同时因为软件处理的需要, 使用&amp;amp;nbsp;能够防止相应的处理器将普通空格转为行分隔;
-Byte order mark: \uFEFF
-any character in Unicode category Zs
+reserved word和keyword确实在很大程度上是共同的, 除了上述说的类似fortran语言这种情况外, 也存在reserved word不是keyword的情况, 比如java中的goto就是一个reserved word, 但本身又不是一个keyword, 所以可以说goto这个词基本在java中是完全废弃的~ 那他们为啥要定义这个goto呢?? 有一种说法是这样情况通常是为未来版本预留的~ 还有一种说法是JVM作者James Gosling最初加了goto的支持, 但后来发现完全没必要, 就又去掉了, 但是为了兼容性问题,也一直没有把goto从reserved word此表中删去.
+PS. 很多时候也有人完全不区分reserved word和keyword的区别, 完全等同二者为”不能用来做identifier的词”.
+closure - 闭包在javascript中, 一个function由两部分组成: 函数执行的代码以及代码执行的环境. 而这两个组合到一起后也有个专属的名称, 即closure. 不过单独一个独立函数的closure并没有什么值得说的意义, 因为其执行的环境, 即我们称之为scope的东西, 随着函数的执行开始与结束会自动的被创建并清理掉, 所以通常情况下closure都单指在嵌套函数中. 当存在嵌套的函数时, 并且函数之外存在一个reference指向函数的话, 事情就变得好玩多了:
+12345678910111213141516171819202122232425262728function f()&amp;#123;  var id = 1;  return function()&amp;#123;console.log(id++)&amp;#125;&amp;#125;f()();f()();f()()// output: 1,1,1// 每次我们调用`f()`,都会自动创建一个包含了其局部变量`id`的对象, 而嵌套的函数`f()()`会自动继承母函数的作用域;// 但每次随着调用结束, 因为没有任何外部引用, 所以创建的对象都会自动的被回收, 如此就导致每次调用`f()()`都会输出1了;var k = f();k();k();k()// output: 1,2,3// 同样是调用`f()`, 但是我们首先引入了一个新的变量`k`引用`f()`函数; // 这样随着`f()`的调用和结束, 其创建的`call`对象(即包含了局部变量id的那个对象)就因为还存在外部引用而得以保留// 所以后面连续调用`k()`的过程中, 本身的嵌套函数就始终共享着`call`对象的作用域, 如此每次输出的时候都是先获取了局部变量id, 然后在执行`id++`,所以输出为1,2,3// 不喜欢`f()()`这种调用方式, 也不想单独创建新变量来增加引用? 当然可以, 只需要借助下`anonymous function`即可:var f = (function()&amp;#123;    var id = 1;    return function()&amp;#123;console.log(id++)&amp;#125;  &amp;#125;)();f();f();f()// output: 1,2,3// `anonymous function`是自执行的函数, 这里相当于把之前的`var k = f()`以及`f()`的声明定义合二为一了.
+可以说上述基本就是closure最基本的内容了, 而closure作为js的高级用法之一, 掌握了它, 你就能做很多有意思的操作了. 一个简单的例子就是: 你可以参照closure的原理来模拟实现浏览器探查元素(inspector)的breakpoint功能.
+因为原作trimpath上的文章已经无法访问, 所以转载了一个类似的如下, 略作了简单的修改(加了几句更友好的提示和显示每一步的运算结果):
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061// This function implements a breakpoint. It repeatedly prompts the user// for an expression, evaluates it with the supplied self-inspecting closure,// and displays the result.  It is the closure that provides access to the// scope to be inspected, so each function must supply its own closure.// // Inspired by Steve Yen's breakpoint() function at// http://trimpath.com/project/wiki/TrimBreakpoint//function inspect(inspector, title) &amp;#123;    var expression, result;    // You can use a breakpoint to turn off subsequent breakpoints by    // creating a property named &quot;ignore&quot; on this function.    if (&quot;ignore&quot; in arguments.callee) return;    while(true) &amp;#123;        // Figure out how to prompt the user        var message = &quot;&quot;;        // If we were given a title, display that first        if (title) message = title + &quot;\n&quot;;        // If we've already evaluated an expression, display it and its value        if (expression) message += &quot;\n&quot; + expression + &quot; ==&amp;gt; &quot; + result + &quot;\n&quot;;        else expression = &quot;&quot;;        // We always display at least a basic prompt:        message += &quot;Enter an expression to evaluate, or just click cancel to see the next step of current calculation.&quot;;        // Get the user's input, displaying our prompt and using the        // last expression as the default value this time.        expression = prompt(message, expression);        // If the user didn't enter anything (or clicked Cancel),        // they're done and so we return, ending the breakpoint.        if (!expression) return;        // Otherwise, use the supplied closure to evaluate the expression        // in the scope that is being inspected.         // The result will be displayed on the next iteration.        result = inspector(expression);    &amp;#125;&amp;#125;function factorial(n) &amp;#123;        var inspector = function(x) &amp;#123;                return eval(x);        &amp;#125;        inspect (inspector, &quot;Entering factorial()&quot;);        var result = 1;        while (n &amp;gt; 1)&amp;#123;                result = result * n;                n--;                inspect(inspector, &quot;factorial() loop with current result:&quot;+result);        &amp;#125;        inspect(inspector, &quot;Exiting factorial()&quot;);        return result;&amp;#125;inspect(function (x) &amp;#123;return eval(x);&amp;#125;, 'Hello')factorial(5)// 通过closure, 它就可以检测factorial执行的各个环节, 从而更容易的找到你在不同环节的问题.
+虽然closure让你可以写出更加复杂的js代码, 但是本身closure的使用还是要慎重的, 因为closure需要存储函数对象在内存中而不销毁, 所以如果函数主体庞大, 那么对于内存的压力和运行性能都是会有影响的~
+Function constructor类似Array, String等都有着一个对应的类, 可以允许你通过new来创建对象. Function也有自己对应的Function()类, 可以通过:new Function()来创建函数, 其接收不定长参数, 最后一个参数始终作为函数运行主体. 不过通常来说这种方法定义函数远没有我们常用的function关键词来的方便, 所以使用上倒是少了很多~ 不过有几点还是值得注意的:
 
-JS能识别的line terminators:
-line feed: \u000A # \n
-carriage return: \u000D # \r
-line separator: \u2028
-paragraph separator: \u2029
+new ClassFunction() 是把function作为constructor的一种用法, 你可以简单的理解为: var cc = new ClassFunction(params) ==&amp;gt; var cc = new Object();ClassFunction.call(cc,params)
+new Function()不接收函数名参数, 即其创建的都是anonymous function;
+new Function()不继承作用域, 几遍其是在嵌套函数中定义, 也只继承global域, 不会继承上层函数的作用域;
 
-值得一说的是, js是支持unicode作为indentifier的合法字符的, 但是上述这些则不在其中.
-JS的”Unicode Escape Sequences”类似”\u00E9”这种结构的字符在js都代表一种特殊的字符:”unicode”. 如果你在js中使用这些字符, js会自动将其编译为对应的字符(如果是在js的注释中, 则不会编译, 而是以ascii对待), 比如: 示例就会编译为”é”. 而在js中, 这种对等关系是支持的, 即 &amp;quot;\u00E9&amp;quot; === &amp;quot;é&amp;quot;是为真的.
-但是一定要慎用… 因为unicode变化过多, 有时候输出看起来一样的字符, 其本质不一定一样: &amp;quot;e\u0301&amp;quot;的输出也是”é”, 但是它相当于是&amp;quot;e&amp;quot;+&amp;quot;\u0301&amp;quot;组成的.
-JS中的&amp;quot;;&amp;quot;在JS中, &amp;quot;;&amp;quot;作为语句结尾并不是必须的, 只有当多语句同行的时候, &amp;quot;;&amp;quot;才是必须的. 当你没有&amp;quot;;&amp;quot;的时候, js会自动为你添加合适的&amp;quot;;&amp;quot;. 通常它会自动将它没有&amp;quot;;&amp;quot;无法解析代码时候遇到的换行处加以&amp;quot;;&amp;quot;(除了类似return,break, ++, –等, 它会自动将其后的行分隔符作为&amp;quot;;&amp;quot;对待.):
-1234567var aa=3console.log(a)// output: 3// js在第一个换行处识别了其语句分割的意义, 但是在 a = 3 的两个分割处都因为它可以识别合并后的语句所以没有作为`&quot;;&quot;`处理.
-但是上述的成功不意味着js的智能, 更多时候如果我们不合适的使用&amp;quot;;&amp;quot;, 会造成很多奇怪的问题的, 比如以(, [, /, +, -为起始的语句很可能会被误认为是前一语句的延续. 所以通常来说, js的编码还是比较鼓励使用&amp;quot;;&amp;quot;作为语句结尾的.
-Chapter 3 - 数据类型Number:
-Global viriables: Infinity,NaN
-Global Objects: Math,Number
-
-Tips:
-
-NaN 具有唯一性, 其不等于任意值, 包括它自己, 0/0会产生’NaN’, 但是0/0 != NaN, 如果需要判断一个变量是不是NaN, 需要使用isNaN()这个内置的函数;
-Infinity &amp;lt;==&amp;gt; Number.POSITIVE_INFINITY &amp;lt;==&amp;gt; 1/0
--Infinity &amp;lt;==&amp;gt; Number.NEGATIVE_INFINITY &amp;lt;==&amp;gt; -1/0
-Binary Floating-Point会导致小数级错误, 比如0.3-0.2 != 0.2-0.1, 这个属于计算机本身因为二进制编码的原因所致, 所以在比较数字大小的时候要格外小心;
-
-String:
-immutable ordered sequence of 16-bit values
-
-Tips:
-
-string的长度都是按照16-bit来计算的, 所以当如果一个字符超过了16-bit, 则会按照多的计算. 比如: e - \ud835\udc52, 就需要按照两个16bit计算, 即其长度应为:”2”
-从ECMAScript 5之后就允许string跨行定义了, 只需要在换行的地方加上一个反斜杠\, 即可.
-转义字符\如果加在普通字符前, 不会产生任何效果;
-typeof null =&amp;gt; Object , typeof undefined =&amp;gt; undefined;
-null == undefined, null!==undefined =&amp;gt; True
-
-类型转换javascript是一个很宽松的语言, 我们不需要预先定义变量类型, 而在运算以及执行过程中, js也会自动的帮助我们进行类型转换, 当然为了更好的借助这一特点, 了解下图中的js转换类型的规则还是非常有必要的.
-
-其中object转换 primitive datatype 的话, 一般会按照如下步骤进行:
-
-首先会默认调用toString()函数, 你可以自行定义这一函数, 如果toString()返回结果正常, 则转换结束;
-如果toString()未定义, 或者返回结果非primitive datatype的话, 会自动调用valueOf()函数, 同上一步;
-而如果两个都没找到, 那么js将会抛出TypeError;
-
-而根据要转换的是string还是number而交换1,2两步( string 的话先调用toString(), 且返回值必然会转为string; 如果是number的话, 则先找valueOf(), 返回结果为number). 当然至于boolean的话, 所有的object转换到boolean都是true.
-Array转换string的时候默认的toString()就是一个join()调用~ Function的话, 则也可以自己定义toString()函数.
-Tips:
-
-x + “” // Same as String(x)
-+x // Same as Number(x). You may also see x-0
-!!x // Same as Boolean(x). Note double !
-在ECMAScript 5的strict模式下, 所有变量君需要声明才能赋值, 否则会报错;
-
-Chapter 4: Expressions and Operators
-上图为按照优先级顺序排列下来的操作符(横线分隔的同一组块之间的级别相同).
-Tips:
-
-运算顺序不影响赋值顺序, 赋值顺序始终都是严格从左到右的, 比如:h = x+y+z, 那么赋值顺序始终都是h-&amp;gt;x-&amp;gt;y-&amp;gt;z; 通常情况下, 这一赋值顺序不会影响之后的计算顺序, 对结果基本没什么影响, 除了一种情况:
-如果前变量的赋值会影响到后面变量的值的话, 比如共用同一个变量, 那么这种情况下, 赋值顺序就可能会对结果产生一定的影响了. 最简单的例子就是z = 2;y = function(){z = 3;return 1};, 因为y是一个函数, 而它的执行会改变z的值, 所以y()+z和z+y()的结果就是不相同的.
-
-“+”运算符中的类型转换:
-
-string优先, 只要有两个操作数中有一个是string或者是有toString()的object, 那么其都会按照string来进行链接运算;
-除非两个都是非string, 才会进行加法运算;
-当”+”作为单操作数时, 则意味着将操作数向number类型转换;
-
-
-&amp;amp;&amp;amp;运算符如果第一个为false, 则不执行第二条判断, 所以可以用这个方法来代替if: (a==b) &amp;amp;&amp;amp; alert(&amp;quot;a equals b&amp;quot;)就相当于if(a==b) alert(&amp;quot;a equals b&amp;quot;).
-
-!(p &amp;amp;&amp;amp; q) === !p || !q
-!(p || q) === !p &amp;amp;&amp;amp; !q
-a op= b 和 a = a op b通常是等价的, 除非a本身的重复赋值会有副作用, 比如 a[i++] += 1和a[i++] = a[i++] +1就不一样, 因为后者前后两个i不同了.
-eval()函数会继承当前的scope, 除非eval()被赋予某个新的reference, 那样的话只会使用global的scope;
-void操作数很少用到, 它是个单操作数的操作符, 其用法就是丢弃操作数的返回结果, 然后返回 undefined…
-
-心得whitespaces 和 line terminators通常在js里面我们使用\s来统一代表所有其可以识别的whitespace, line terminators. 如下例:
-1234567var k = 'asd \t asdasd \na asd \f asda dad\rasd\u2028asd\u2029\u00A0'k// output 里面有两个换行的符号, 我这里为了演示方便就不换行了k.replace(/\n/g,'-')// 同上,里面的&quot;\r&quot;我也不换行了k.replace(/\s/g,'-')// output: &quot;asd---asdasd--a-asd---asda-dad-asd-asd--&quot;
-因为在console中输出的时候是不换行的, 所以有时候单单看console输出的话, 类似这种编码问题所致的错误就找不出来, 为了省事, 我们可以统一使用\s来代表所有此类符号.
-谜题Q: 按照正常来说Number.MAX_VALUE加上一个数应该就会自动转为Infinity, 但实际上, 测试过程中发现, 只有当Number.MAX_VALUE加上一个足够大的数后才会等与Infinity, 这是为什么?
-1234567Number.MAX_VALUE// output: 1.7976931348623157e+308Number.MAX_VALUE +1// output: 1.7976931348623157e+308...Number.MAX_VALUE + Math.pow(10,1000)// output: Infinity
-正解: the sum is computed and rounded to the nearest representable value using IEEE 754 round-to-nearest mode. If the magnitude is too large to represent, the operation overflows and the result is then an infinity of appropriate sign.
-
-IEEE 754
-In the following two rounding-direction attributes, an infinitely precise result with magnitude at least bemax ( b − ½ b^(1-p) ) shall round to ∞ with no change in sign; here emax and p are determined by the destination format (see 3.3). With:
-
-roundTiesToEven: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with an even least significant digit shall be delivered
-
-roundTiesToAway: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with larger magnitude shall be delivered.
-
-
-
-ECMAScript does not specify which of the round-to-nearest, but it doesn’t matter here because both gives the same result. The number in ECMAScript is “double”, in which
-
-b = 2
-emax = 1023
-p = 53,
-
-_so the result must be at least 2^1024 - 2^970 ~ 1.7976931348623158 × 10^308 in order to round to infinity. Otherwise it will just round to MAX_VALUE, because that is the closer than Infinity.Notice that MAX_VALUE = 21024 - 2971, so you need to add at least 2^971 - 2^970 = 2^970 ~ 9.979202 × 10^291 in order to get infinity._
-Q: &amp;#39;0&amp;#39; == false 是 true, 为什么 null == false 就是 false呢?
-猜测解释: ==这样的是比较value的, 而 null转换为boolean类型为false, 并不意味着两者的value是相同的. ==只会比较value, 而不会进行转换. 也即true, false两个boolean类型的其value也是1,0. 而null和undefined的value则不同, 前者为空, 后者为无.
-参考资料:
-JavaScript the Definitive Guide 6th edition
-Unicode Property
-List of Unicode Characters
-编码历史介绍
-
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
-Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
-NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
-jQueryjQuery is the most popular js module people used in their websites or webapps. And using jQuery with CoffeeScript is just like javascript. jQuery is javascript, after all.
-Want to use CoffeeScript with jQuery? Just do it and follow the rules we learn from the basic syntax part. Here I list several examples and if you look it closely, you will find everything you have already known if you read the first chapter carefully. The author of the book shows us another complex examples: TodoMVC in CoffeeScript.
-BTW: TodoMVC is a great project which shows you how to write a todo app in all kinds of tools and frameworks.
-1234567891011121314151617181920212223242526272829303132333435363738394041$ -&amp;gt;  do some  do another### =&amp;gt;$(function() &amp;#123;  some();  return another();&amp;#125;);That's just like the $(document).ready(function()&amp;#123;&amp;#125;)#### A function using ajax to send mail, which is a new feature I will add to my blog in a few days :)@sendMail = (msg)-&amp;gt;  $.ajax    type: 'POST'    url: 'https://mandrillapp.com/api/1.0/messages/send.json'    data:      'key': ''      'message':        'from_email': msg.sender_mail        'from_name' : msg.sender_name        'to': [            &amp;#123;              'email': ''              'name': 'TaoAlpha'              'type': 'to'            &amp;#125;          ]        'autotext': 'true'        'subject': msg.subject        'html': msg.content  .done (response)-&amp;gt;    showAlert(&quot;success&quot;,&quot;Thanks for your contribution!&quot;)  .fail (data)-&amp;gt;    showAlert(&quot;fail&quot;,&quot;Sorry! Failed to send the email. Please retry!&quot;)# another function to get unique result from an array of objectsArray::getObjectUnique = (id) -&amp;gt;  a=b=[];  add = (data) -&amp;gt; b.push data[id];data  (add i for i in @ when b.indexOf(i[id]) == -1 )
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748// You can see that you have saved a lot of keystrokes and the codes look more clean and beautiful.// Because coffeescript doesn't support declare global variables directly, and if we want to use the function in other script, we need to declare it into the `this` scope.this.sendMail = function(msg) &amp;#123;  return $.ajax(&amp;#123;    type: 'POST',    url: 'https://mandrillapp.com/api/1.0/messages/send.json',    data: &amp;#123;      'key': '',      'message': &amp;#123;        'from_email': msg.sender_mail,        'from_name': msg.sender_name,        'to': [          &amp;#123;            'email': '',            'name': 'TaoAlpha',            'type': 'to'          &amp;#125;        ],        'autotext': 'true',        'subject': msg.subject,        'html': msg.content      &amp;#125;    &amp;#125;  &amp;#125;).done(function(response) &amp;#123;    return showAlert(&quot;success&quot;, &quot;Thanks for your contribution!&quot;);  &amp;#125;).fail(function(data) &amp;#123;    return showAlert(&quot;fail&quot;, &quot;Sorry! Failed to send the email. Please retry!&quot;);  &amp;#125;);&amp;#125;;# get unque result for array of objectsArray.prototype.getObjectUnique = function(id) &amp;#123;  var a, add, b, i, j, len, results;  a = b = [];  add = function(data) &amp;#123;    b.push(data[id]);    return data;  &amp;#125;;  results = [];  for (j = 0, len = this.length; j &amp;lt; len; j++) &amp;#123;    i = this[j];    if (b.indexOf(i[id]) === -1) &amp;#123;      results.push(add(i));    &amp;#125;  &amp;#125;  return results;&amp;#125;;
-RailsRuby on Rails is a web framework that came around in 2004. And it soon became quite popular. Actually many people believe that Rails saved the ruby…
-Check this:How to download and install Rails if you haven’t installed it.
-Rails’s principles
-Convention over configuration
-
-
-Rails is designed to assume that the programmer will follow certain known conventions, which if used, provide great benefit and much less need to configure the framework.That means that the framework makes assumptions on how a typical application should be built and structured and it doesn’t try to be overly flexible and configurable. This helps you spend less time on mundane tasks like configuring and wiring up an application architecture and more time on actually building your app.
-
-
-Don’t repeat yourself, or DRY
-
-
-Every piece of knowledge must have a single, unambiguous, and authoritative representation within a system.Rails strives to remove duplication and boilerplate wherever it can.
-
-How to use Rails with CoffeeScriptLuckily, after Rails 3.1, you don’t need do anything to let Rails support CoffeeScript. It has already become part of rails! And also, rails has changed its default js library to jQuery.
-So what you need to do if you want to use coffeescript with rails? Nothing but learn rails!
-Just like the author said in the book: “If you haven’t done so already, I encourage you to spend some more time learning Rails as well as Ruby, and immersing yourself in the wonderful communities they support.”
-Node.jsNode is fantastic. It changes something. Before node, javascript was mostly run inside browsers. Now it just came out and gave web developers a chance to become a full-stack!
-Features of Node
-Event-driven
-
-
-The Node.js framework only allows non-blocking, asynchronous I/O. This means that any I/O operation that is accessing an external resource, such as the operating system, a database, or a network resource must happen asynchronously.
-
-
-Fast and scalable
-
-
-The V8 JavaScript engine(created by google and used in chrome) used by Node.js is highly optimized for performance, thus making Node.js applications very fast. The fact that Node is non-blocking will ensure that your applications will be able to handle many concurrent client requests without using a lot of system resources.
-
-
-Node is not Rails
-
-
-Rails strives to be a full-stack solution to building web applications, whereas Node.js is more of a low-level system for writing any type of fast and scalable network application.
-
-Node and CoffeeScriptWant to write coffeescript in node? It’s easy, all you need is a module named CoffeeScript. And like many other languages, node has several frameworks people built for web development, like: Express.
-The core about how to use coffeescript with nodejs is to use the --watch for coffee command in node. It will automatically compile all file end with coffee into js when there is a change made into these files.
-And just like jQuery, you just follow the rules and write your code.
-DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
-That’s all. Thanks!
+谜题12345678910111213var name = &quot;The Window&quot;;var object = &amp;#123;  name : &quot;My Object&quot;,  getNameFunc : function()&amp;#123;    console.log(this);    return function()&amp;#123;      return this.name;    &amp;#125;;  &amp;#125;&amp;#125;;console.log(object.getNameFunc()());// output: Object&amp;#123;name:&quot;My Object&quot;&amp;#125;; &quot;The Window&quot;
+上述定义中, 为什么嵌套函数没有继承上层函数的this呢? 反而继承了全局的this?
+猜测解答: this这个关键字是个比较特殊的关键字, 它具有一个很有趣的特点就是: 当一个函数作为函数而不是方法来调用的时候, this指向的是全局对象, 只有当它是方法的时候, 其指向的才是所属对象; 题目来源阮一峰博客. 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (8)</title><link>http://taoalpha.me/blog/2015/06/27/read-javascript-the-definitive-guide-8/</link><category>read</category><tag>js,reding notes</tag><pubDate>2015-06-27T12:00:00.000Z</pubDate><description>概述先说题外话: 昨天读到中途转去忙把以前的旧文章移植过来, 昨夜就已完成, 主要通过python解析了导出来的xml文本, 然后获取对应的时间信息和url信息组成符合jekyll规则的文件名, 再利用文本拼接出每个文件中固有的头和主体, 本来计划用html2text来把每个博文转为markdown, 不过后来源码有些问题, 对部分博文识别不好, 我也没时间细改, 所以就干脆拼接了html到主体中去.
 主要导入了当初写的Patch系列和针对UX写的翻译系列. 分别归类到了Tech和DandP目录下. 有兴趣的可查看之~
 今天来继续完结JavaScript: the Definitive Guide一书.
@@ -1423,90 +1448,6 @@ Web Sockets: 一种相对http来说的新网络协议;
 参考资料
 JavaScript the Definitive Guide 6th edition
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (1)</title><link>http://taoalpha.me/blog/2015/06/28/read-coffeescript-programming-with-jquery-rails-and-nodejs/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-28T04:00:00.000Z</pubDate><description>SummaryThe notes I took while I was learning the ‘CoffeeScript’. If you are a real beginner with ‘CoffeeScript’, I suggest you start with another book called “The Little Book on CoffeeScript”, it’s better for beginners. And after that, this one is definitely your best choice.
-CoffeeScript is a language which complies to JavaScript. Like the sass or scss to css except that CoffeeScript is not compatible with javascript. So you can not mix the javascript syntax with the CoffeeScript.
-This note is mainly about the fist chapter of the book, a nice introduction for CoffeeScript including the basic syntax.
-
-And to improve my english, I think i will start writing english notes for the english books. ^_^
-
-NotesCoffeeScript is pretty popular in the community of JavaScript for its simplicity, elegant and readable. Now let us dive into it.
-Instead of  listing the keywords and statements used in CoffeeScript one by one, it would better we learn CoffeeScript from comparing the difference between the CoffeeScript and JavaScript.
-CoffeeScript fix some ugly stuffs in JavaScript
-CoffeeScript removes most of the semicolons and the curly braces which used a lot in JavaScript, gives us a clearly view of the code, but you can still use the semicolons if you want, and you still have to use the semicolons if you want to put multiple statements in single one;
-CoffeeScript learns a lot from ruby and python. Like this one: it uses whitespace or indentation, more accurately, to delimit the code blocks instead of braces.
-CoffeeScript removes a lot of parenthesis for many statements and functions, like if..else, while loops and functions with single string parameter. But this is optional, you can still use them if you want. Notice: you will need parenthesis if you want to call a function without any parameters)
-Function: as the first class object in JavaScript, CoffeeScript also does a lot improvements for it.
-If you write js, you will know that the syntax is really ugly when you want to write a anonymous function. Now you can make it pretty beautiful with CoffeeScript;
-CoffeeScript also saves you a lot keystrokes for defining the functions;
-so what are the rules?
-Replace the function keyword with -&amp;gt;;
-Drop the parenthesis if there is no argument for the function;
-Put the arguments enclosed with parenthesis in front of the -&amp;gt;, and if the argument has a default value, you can set it in the parenthesis;
-Drop the curly braces and use indentation for the function body;
-Automatically return the last expression of the function, but if you need return something before, you still need to use the return;
-
-
-
-
-
-1234567891011121314151617 -&amp;gt; alert 'hi there!'# the code above won't self-initiating, if you want to do that, you need use parenthesis or the `do` keyword like below:# (-&amp;gt; alert 'hi there!')()# do -&amp;gt; alert 'hi there!'square = (n=1) -&amp;gt; n * n# function using splats# this is an alternative way for using Array.prototype.slice()gpaScoreAverage = (scores...) -&amp;gt;  total = scores.reduce (a, b) -&amp;gt; a + b  total / scores.lengthalert gpaScoreAverage(65,78,81)scores = [78, 75, 79]alert gpaScoreAverage(scores...)
-1234567891011121314151617181920212223242526272829303132333435var square;(function()&amp;#123;  return alert(&quot;hi there!&quot;);&amp;#125;);/* the code in comments above will compile to:(function()&amp;#123;  if (n == null) &amp;#123;    n = 1;  &amp;#125;  return alert(&quot;hi there!&quot;);&amp;#125;)();*/square = function(n) &amp;#123;  return n * n;&amp;#125;;// [].slice.call(arguments,0) ==&amp;gt;  Array.prototype.slice.call(arguments,0)var gpaScoreAverage, scores,  slice = [].slice;gpaScoreAverage = function() &amp;#123;  var scores, total;  scores = 1 &amp;lt;= arguments.length ? slice.call(arguments, 0) : [];  // get the single score value or a list of the scores  total = scores.reduce(function(a, b) &amp;#123;    return a + b;  &amp;#125;);  return total / scores.length;&amp;#125;;alert(gpaScoreAverage(65, 78, 81));scores = [78, 75, 79];alert(gpaScoreAverage.apply(null, scores));
-CoffeeScript saves you a lot of keystrokes
-CoffeeScript will declare the variables you need at the top of the function for you automatically. So that means you can’t create the global variables in a function like you can do in JavaScript, actually you can’t use the var keyword in CoffeeScript. &amp;lt;= many people agree that omitting the var keyword makes the variables become global is a really bad desgin…
-Object:
-CoffeeScript supports the class keyword, and it will create a closure to build the class;
-Use the constructor to initialize some private properties, or just omit it;
-Every function you define in a class will be added to the object as a prototype method;
-Use @ as a shortcut for this;
-fat arrow: When you want to use this in previous scope instead of the new scope, you need the fat arrow : =&amp;gt;;
-Use super to call the parent’s method (same name, so just pass the parameter);
-Use :: as a shortcut for .prototype, so you can extend your prototype as this:Vehicle::stop =-&amp;gt; alert &amp;#39;stop&amp;#39;;
-
-
-
-123456789101112131415161718192021222324252627282930313233class Vehicle  # Use the constructor to initialize some private properties  # Use @ as this  constructor: -&amp;gt;    @c = 1  drive: (km) -&amp;gt;    alert &quot;Drove #&amp;#123;km&amp;#125; kilometres&quot;class Car extends Vehicle constructor: -&amp;gt;   @odometer = 0 drive: (km) -&amp;gt;   @odometer += km   super km name:&quot;John Doe&quot; driver: (msg) -&amp;gt;   @msg = msg whoisdriver: -&amp;gt;   @msg()car = new Carcar.drive 5alert &quot;Odometer is at #&amp;#123;car.odometer&amp;#125;&quot;class Person  constructor: (name)-&amp;gt;    @name = name    @mycar = new Car()    @mycar.driver =&amp;gt; alert &quot;#&amp;#123;@name&amp;#125;&quot;mike = new Person &quot;Mike&quot;# use `=&amp;gt;` to show mike's name instead of the default `john doe` set in Carmike.mycar.whoisdriver()
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364var Car, Person, Vehicle, car, mike,  extend = function(child, parent) &amp;#123; for (var key in parent) &amp;#123; if (hasProp.call(parent, key)) child[key] = parent[key]; &amp;#125; function ctor() &amp;#123; this.constructor = child; &amp;#125; ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; &amp;#125;,  hasProp = &amp;#123;&amp;#125;.hasOwnProperty;Vehicle = (function() &amp;#123;  function Vehicle() &amp;#123;    this.c = 1;  &amp;#125;  Vehicle.prototype.drive = function(km) &amp;#123;    return alert(&quot;Drove &quot; + km + &quot; kilometres&quot;);  &amp;#125;;  return Vehicle;&amp;#125;)();Car = (function(superClass) &amp;#123;  extend(Car, superClass);  function Car() &amp;#123;    this.odometer = 0;  &amp;#125;  Car.prototype.drive = function(km) &amp;#123;    this.odometer += km;    return Car.__super__.drive.call(this, km);  &amp;#125;;  Car.prototype.name = &quot;John Doe&quot;;  Car.prototype.driver = function(msg) &amp;#123;    return this.msg = msg;  &amp;#125;;  Car.prototype.whoisdriver = function() &amp;#123;    return this.msg();  &amp;#125;;  return Car;&amp;#125;)(Vehicle);car = new Car;car.drive(5);alert(&quot;Odometer is at &quot; + car.odometer);Person = (function() &amp;#123;  function Person(name) &amp;#123;    this.name = name;    this.mycar = new Car();    this.mycar.driver((function(_this) &amp;#123;      return function() &amp;#123;        return alert(&quot;&quot; + _this.name);      &amp;#125;;    &amp;#125;)(this));  &amp;#125;  return Person;&amp;#125;)();mike = new Person(&quot;Mike&quot;);mike.mycar.whoisdriver();
-Other Good Things
-CoffeeScript will quote reserved words automatically if you use them in your literal object;
-You can also drop the comma when you define your literal array or literal object only if you put one property per line, you can drop the braces for object, but you need them for array;
-Use #{variable_name} to concatenate the string and variables instead of +, but only use them enclosing with double-quote, the single-quote strings are literal, borrowed from ruby;
-CoffeeScript will always convert the == and != to === and !==;
-Use the existential operator: ? to check whether a variable exists and has a value or not(means not null or undefined);
-Also use the soak: ?. as a shortcut for ternary statement;
-Support some new keywords like unless, the opposite to if;
-Use plain english aliases for some of the logical operators: is for ===,isnt for !==,not for !,and for &amp;amp;&amp;amp;,or for ||,true can also be yes, or on,false can be no or off;
-Support assign multiple values at once;
-CoffeeScript replaces the case in switch with when ... then, so you can forget about the break, and it also replaces the default with else;
-CoffeeScript supports the chained comparisions: 61 &amp;gt; a &amp;gt; 39;
-You can use ### to comment multiple lines. The biggest difference between ### and # is former one will be part of generated javascript;
-
-1234567891011121314151617b=1if a? &amp;amp;&amp;amp; b?  alert &quot;a.c equals to #&amp;#123;a?.c&amp;#125;&quot;[city, state, country] = [&quot;!2&quot;,&quot;24&quot;,&quot;2&quot;]# or function which returns an object with the same structure as you described before the `=`&amp;#123;address: &amp;#123;street: myStreet,room: myRoom&amp;#125;&amp;#125; = getAddress()### =&amp;gt;var b;b = 1;// since we declared the b before, we only need to check if b is null.if ((typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null) &amp;amp;&amp;amp; (b != null)) &amp;#123;  alert(&quot;a.c equals to &quot; + (typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null ? a.c : void 0));&amp;#125;var city, country, myRoom, myStreet, ref, ref1, state;ref = [&quot;!2&quot;, &quot;24&quot;, &quot;2&quot;], city = ref[0], state = ref[1], country = ref[2];ref1 = getAddress().address, myStreet = ref1.street, myRoom = ref1.room;###
-Special for List
-List: CoffeeScript borrowed a lot list comprehensions from python[ x*2 for x in object_name ] and ruby.
-while: it works nearly the same as in javascript except that it has an opposite keyword in CoffeeScript: until and both of them can be used as expression and will return a array;
-for: the standard statement is [action or mapping] for [selector] in [collection] when [condition] by [step]. Last by following with a number would affect the loop step(`i++``);
-[f_number..l_number]: it will create a array with numbers between the fist number and the last number, you can use ...(3 dots) to make the array only contains the numbers in between;
-of: for key-value pairs of an object, you can use of to loop them through;
-
-
-
-1234567891011121314151617181920212223242526272829303132333435363738394041times = [0..2](n*times while times -= 1).pop()### =&amp;gt; var times; times = [0, 1, 2];((function() &amp;#123;  var results;  results = [];  while (times -= 1) &amp;#123;    results.push(n * times);  &amp;#125;  return results;&amp;#125;)()).pop();###alert x for x in flavors when x != 'h' by 2###=&amp;gt;var x, i, len;for (i = 0, len = flavors.length; i &amp;lt; len; i+=2) &amp;#123;  x = flavors[i];  if (x !== 'h') &amp;#123;    alert(x);  &amp;#125;&amp;#125;###ages = john: 25 peter: 26 joan: 23alert &quot;#&amp;#123;name&amp;#125; is #&amp;#123;age&amp;#125; years old&quot; for name, age of ages###=&amp;gt;var age, ages, name;ages = &amp;#123;  john: 25,  peter: 26,  joan: 23&amp;#125;;for (name in ages) &amp;#123;  age = ages[name];  alert(name + &quot; is &quot; + age + &quot; years old&quot;);&amp;#125;###
-Digest
-For JavaScript:
-Every class in JS is a function object;
-Only function object has the default prototype, so the normal objects like literal string, number or even string created from String(),any objects created by functions, they all don’t have the default prototype;
-But every object has a default constructor which is exactly the function object who create it;
-
-
-For CoffeeScript:
-If there is only one line in the body, you can move it in front of the condition &amp;lt;= while/until/for/if...
-
-
-
-Puzzle
-Q1: In the second code example above, CoffeeScript create a default extend function for us:
-
-123456789101112131415161718192021var extend = function(child, parent) &amp;#123;  for (var key in parent) &amp;#123;      if (hasProp.call(parent, key)) child[key] = parent[key];  &amp;#125;  // Start from here  function ctor() &amp;#123;      this.constructor = child;  &amp;#125;  ctor.prototype = parent.prototype;  child.prototype = new ctor();  // End  // Just cannot understand the codes above...  // Why we need another function as the child's prototype? We have already copied all the properties from parent, or we just need a beautiful prototype chain? `Car &amp;lt;= ctor() &amp;lt;= Vehicle() &amp;lt;= Object` compared to `Car &amp;lt;= Car &amp;lt;= Object()`.  // Then why not we just use the child.prototype = new parent() ??? we can still get a good prototype chain. `Car &amp;lt;= Vehicle &amp;lt;= Vehicle &amp;lt;= Object`.  child.__super__ = parent.prototype;  return child;&amp;#125;,hasProp = &amp;#123;&amp;#125;.hasOwnProperty;
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript 阅读阶梯清单</title><link>http://taoalpha.me/blog/2015/06/10/read-must-read-list-of-javascript/</link><category>read</category><tag>js</tag><pubDate>2015-06-10T09:00:00.000Z</pubDate><description>缘起今天翻完了Getting Good With JavaScript, 对于其精华浓缩的设计很欣赏, 很适合有一定无基础或者有一定基础但觉得野路子出身想要夯实一下的人读. 而在文末的Appendix A中作者提到的这个 Rey Bango’s Must-Read list of JavaScript 确实在是本书的又一大收获. 特转来分享~
 基础入门所谓入门自然是以打牢基础为目的, 所以下列书都是以基础概念为主, 算是领路之书(考虑到国情需要, 我都尽可能替换为豆瓣链接了):
 
@@ -1545,46 +1486,55 @@ JavaScript Weekly Newsletter
 YUI Theatre
 Rey Bango 作者本人哈哈
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (2)</title><link>http://taoalpha.me/blog/2015/06/18/read-javascript-the-definitive-guide-2/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-18T10:00:00.000Z</pubDate><description>概述作为JS中的一等公民, function(函数)始终是JS的核心中的核心. 所以这里单独用一篇笔记来记录JavaScript: the definitive Guide一书第八章的内容. 主要介绍了函数的定义, 作用域, 参数, 声明以及执行等基础知识, 另外也着重介绍了其高级用法中的closure. 我将自己觉得重要的, 值得记录的部分都作为心得摘抄如下:
-心得arguments对象对每一个function而言, 都自动会有一个内置的arguments对象, 用它就可以访问传入的参数了. 通常来说arguments对象我们只会用在不定长传参的函数上, 但arguments本身带有的一个函数却是可以在某些时刻发挥重要作用的~ 这个函数就是callee函数:
-12345678// 递归自我调用函数在解决一些问题的时候是很常用的, 而通常情况下我们都会在函数内调用本函数名即可, 但是如果我们需要实现自我调用的函数正好是一个无名函数呢?// arguments.callee 即调用当前执行的函数function(x)&amp;#123;return x*arguments.callee(x-1)&amp;#125;// 如上, 就实现了一个很简单的&amp;gt;2阶乘计算了
-需要特别注意的就是callee作为arguments对象的一个方法, 是可以跟随arguments作为参数传递的, 而且其作为参数的时候保持其所指代函数不变.
-既然说到arguments, 就多说两句喽. 首先arguments算是一个类array的object. 它本身具有array的一些特性, 比如可以直接调用length函数(通常的object是不能通过.length直接调用获取长度的, 需要使用Object.keys(object_name).length才能获得). 但是它本身和array.length有很大的差别, 其中最大的一个差别就是: 无法通过.length直接更改数组长度.
-123456var a = [1,3,4]a.length = 5console.log(a)// output: [1,3,4,undefined x 2](function(x)&amp;#123;arguments.length = 5;console.log(arguments)&amp;#125;)(10,1,2)// output: [10,1,2]
-可以看到通过对arguments.length直接赋值, 并不会影响其本身的长度, 这一点和array本身有很大的差别.
-PS. 上述示例是增加长度, 其实缩减长度也是一样的, 多余的元素会被自动删除. 所以, 通过直接向array.length赋值也算是一个修改array长度的方法喽~
-PSS. 通常如果一个函数接受参数比较多的时候, 为了预防因为参数顺序而产生的问题, 可以采取传json格式的object作为参数, 这样就能够通过key而不根据顺序获取参数了.
-Function的property请先看下述代码:
-1234567891011f.temp = &quot;test&quot;function f(x)&amp;#123;  console.log(arguments.length);  console.log(arguments.callee.length);  console.log(f.temp);&amp;#125;f(1,2)// output: 2 1 &quot;test&quot;
-首先, 我们看一下我们前两个输出值:
-  如上所述,arguments.length即代表传入参数的数量, 我们传入了两个参数, 所以这里输出2, 没有任何问题. 那么后面的arguments.callee.length又是什么呢? 为什么它输出的是1呢? 
-  根据之前的介绍, 我们当知道arguments.callee是代指当前的函数f(), 那么对应的arguments.callee.length即我们的函数f的length了. 对于Function这个对象而言, 它所拥有的length这一属性特指其声明的参数数量, 我们应该知道JavaScript作为一个很宽松的语言, 其函数定义后接受的参数是不定长的, 即便传入参数与函数声明的参数不相等也是不会抛出异常的, 那么有时候我们需要获取确保函数接受的参数和其声明的参数数量一致, 就可以使用函数自身的length属性来实现;
-其次, 我们自定义了一个f的属性temp, 但是我们实在函数定义之前赋予这个属性的, 为什么依然能够在函数运行中输出呢? 
-  这主要是因为js的执行顺序所致. js在载入执行过程中, 首先会将内部声明的函数都定义之后才会正式由上至下的逐次执行. 所以这里虽然我们把f.temp写在了函数定义之前, 但是js执行过程中, 还是首先定义了函数f, 接着才开始运行我们的f.temp赋值语句. 自然就不会报错说f没有定义了~
-PS. 其实不止是Function, 即便是普通的变量声明, 也是编译和执行分开进行的, 比如var a = 2;也是拆解为var a; a = 2两步执行的, 而声明都是发生在编译过程, 待编译过程全部结束后, 才会由上到下一次执行, 这也是为什么, 单纯的声明可以出现在代码的任意部位都不会影响其所在作用域的生效, 不会爆出not defined的错误;
-reserved word, identifier, keyword这三个作为基础知识, 可以说是每门语言都共通的概念,  但很多时候我们都不会用到或者不会特意去区分这三个名词, 而最近因为看原版书, 经常会出现三个词的交叉, 所以这里特别google了以下, 试图总结下三者的区别:
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
+Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
+NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
+jQueryjQuery is the most popular js module people used in their websites or webapps. And using jQuery with CoffeeScript is just like javascript. jQuery is javascript, after all.
+Want to use CoffeeScript with jQuery? Just do it and follow the rules we learn from the basic syntax part. Here I list several examples and if you look it closely, you will find everything you have already known if you read the first chapter carefully. The author of the book shows us another complex examples: TodoMVC in CoffeeScript.
+BTW: TodoMVC is a great project which shows you how to write a todo app in all kinds of tools and frameworks.
+1234567891011121314151617181920212223242526272829303132333435363738394041$ -&amp;gt;  do some  do another### =&amp;gt;$(function() &amp;#123;  some();  return another();&amp;#125;);That's just like the $(document).ready(function()&amp;#123;&amp;#125;)#### A function using ajax to send mail, which is a new feature I will add to my blog in a few days :)@sendMail = (msg)-&amp;gt;  $.ajax    type: 'POST'    url: 'https://mandrillapp.com/api/1.0/messages/send.json'    data:      'key': ''      'message':        'from_email': msg.sender_mail        'from_name' : msg.sender_name        'to': [            &amp;#123;              'email': ''              'name': 'TaoAlpha'              'type': 'to'            &amp;#125;          ]        'autotext': 'true'        'subject': msg.subject        'html': msg.content  .done (response)-&amp;gt;    showAlert(&quot;success&quot;,&quot;Thanks for your contribution!&quot;)  .fail (data)-&amp;gt;    showAlert(&quot;fail&quot;,&quot;Sorry! Failed to send the email. Please retry!&quot;)# another function to get unique result from an array of objectsArray::getObjectUnique = (id) -&amp;gt;  a=b=[];  add = (data) -&amp;gt; b.push data[id];data  (add i for i in @ when b.indexOf(i[id]) == -1 )
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748// You can see that you have saved a lot of keystrokes and the codes look more clean and beautiful.// Because coffeescript doesn't support declare global variables directly, and if we want to use the function in other script, we need to declare it into the `this` scope.this.sendMail = function(msg) &amp;#123;  return $.ajax(&amp;#123;    type: 'POST',    url: 'https://mandrillapp.com/api/1.0/messages/send.json',    data: &amp;#123;      'key': '',      'message': &amp;#123;        'from_email': msg.sender_mail,        'from_name': msg.sender_name,        'to': [          &amp;#123;            'email': '',            'name': 'TaoAlpha',            'type': 'to'          &amp;#125;        ],        'autotext': 'true',        'subject': msg.subject,        'html': msg.content      &amp;#125;    &amp;#125;  &amp;#125;).done(function(response) &amp;#123;    return showAlert(&quot;success&quot;, &quot;Thanks for your contribution!&quot;);  &amp;#125;).fail(function(data) &amp;#123;    return showAlert(&quot;fail&quot;, &quot;Sorry! Failed to send the email. Please retry!&quot;);  &amp;#125;);&amp;#125;;# get unque result for array of objectsArray.prototype.getObjectUnique = function(id) &amp;#123;  var a, add, b, i, j, len, results;  a = b = [];  add = function(data) &amp;#123;    b.push(data[id]);    return data;  &amp;#125;;  results = [];  for (j = 0, len = this.length; j &amp;lt; len; j++) &amp;#123;    i = this[j];    if (b.indexOf(i[id]) === -1) &amp;#123;      results.push(add(i));    &amp;#125;  &amp;#125;  return results;&amp;#125;;
+RailsRuby on Rails is a web framework that came around in 2004. And it soon became quite popular. Actually many people believe that Rails saved the ruby…
+Check this:How to download and install Rails if you haven’t installed it.
+Rails’s principles
+Convention over configuration
 
-identifier: 通常我们把我们定义的变量名, 函数名, 类名, 标签名,宏定义名, 类型名等称为identifier, 取其标识之意, 用以作为其名称以便代用;
-reserved word: 与identifier相对, reserved word则是指由语言规定而保留的一些词, 这些词有着特定的用途而不能被用作identifier;
-keyword: 作为语言语法的组成部分之一, keyword通常都会有着特定的含义, 绝大多数的keyword都是reserved word, 但也有少量语法中存在keyword不是reserved word的情况, 比如fortran就没有reserved word的概念, 它的所有keyword都可以用作identifier;
 
-reserved word和keyword确实在很大程度上是共同的, 除了上述说的类似fortran语言这种情况外, 也存在reserved word不是keyword的情况, 比如java中的goto就是一个reserved word, 但本身又不是一个keyword, 所以可以说goto这个词基本在java中是完全废弃的~ 那他们为啥要定义这个goto呢?? 有一种说法是这样情况通常是为未来版本预留的~ 还有一种说法是JVM作者James Gosling最初加了goto的支持, 但后来发现完全没必要, 就又去掉了, 但是为了兼容性问题,也一直没有把goto从reserved word此表中删去.
-PS. 很多时候也有人完全不区分reserved word和keyword的区别, 完全等同二者为”不能用来做identifier的词”.
-closure - 闭包在javascript中, 一个function由两部分组成: 函数执行的代码以及代码执行的环境. 而这两个组合到一起后也有个专属的名称, 即closure. 不过单独一个独立函数的closure并没有什么值得说的意义, 因为其执行的环境, 即我们称之为scope的东西, 随着函数的执行开始与结束会自动的被创建并清理掉, 所以通常情况下closure都单指在嵌套函数中. 当存在嵌套的函数时, 并且函数之外存在一个reference指向函数的话, 事情就变得好玩多了:
-12345678910111213141516171819202122232425262728function f()&amp;#123;  var id = 1;  return function()&amp;#123;console.log(id++)&amp;#125;&amp;#125;f()();f()();f()()// output: 1,1,1// 每次我们调用`f()`,都会自动创建一个包含了其局部变量`id`的对象, 而嵌套的函数`f()()`会自动继承母函数的作用域;// 但每次随着调用结束, 因为没有任何外部引用, 所以创建的对象都会自动的被回收, 如此就导致每次调用`f()()`都会输出1了;var k = f();k();k();k()// output: 1,2,3// 同样是调用`f()`, 但是我们首先引入了一个新的变量`k`引用`f()`函数; // 这样随着`f()`的调用和结束, 其创建的`call`对象(即包含了局部变量id的那个对象)就因为还存在外部引用而得以保留// 所以后面连续调用`k()`的过程中, 本身的嵌套函数就始终共享着`call`对象的作用域, 如此每次输出的时候都是先获取了局部变量id, 然后在执行`id++`,所以输出为1,2,3// 不喜欢`f()()`这种调用方式, 也不想单独创建新变量来增加引用? 当然可以, 只需要借助下`anonymous function`即可:var f = (function()&amp;#123;    var id = 1;    return function()&amp;#123;console.log(id++)&amp;#125;  &amp;#125;)();f();f();f()// output: 1,2,3// `anonymous function`是自执行的函数, 这里相当于把之前的`var k = f()`以及`f()`的声明定义合二为一了.
-可以说上述基本就是closure最基本的内容了, 而closure作为js的高级用法之一, 掌握了它, 你就能做很多有意思的操作了. 一个简单的例子就是: 你可以参照closure的原理来模拟实现浏览器探查元素(inspector)的breakpoint功能.
-因为原作trimpath上的文章已经无法访问, 所以转载了一个类似的如下, 略作了简单的修改(加了几句更友好的提示和显示每一步的运算结果):
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061// This function implements a breakpoint. It repeatedly prompts the user// for an expression, evaluates it with the supplied self-inspecting closure,// and displays the result.  It is the closure that provides access to the// scope to be inspected, so each function must supply its own closure.// // Inspired by Steve Yen's breakpoint() function at// http://trimpath.com/project/wiki/TrimBreakpoint//function inspect(inspector, title) &amp;#123;    var expression, result;    // You can use a breakpoint to turn off subsequent breakpoints by    // creating a property named &quot;ignore&quot; on this function.    if (&quot;ignore&quot; in arguments.callee) return;    while(true) &amp;#123;        // Figure out how to prompt the user        var message = &quot;&quot;;        // If we were given a title, display that first        if (title) message = title + &quot;\n&quot;;        // If we've already evaluated an expression, display it and its value        if (expression) message += &quot;\n&quot; + expression + &quot; ==&amp;gt; &quot; + result + &quot;\n&quot;;        else expression = &quot;&quot;;        // We always display at least a basic prompt:        message += &quot;Enter an expression to evaluate, or just click cancel to see the next step of current calculation.&quot;;        // Get the user's input, displaying our prompt and using the        // last expression as the default value this time.        expression = prompt(message, expression);        // If the user didn't enter anything (or clicked Cancel),        // they're done and so we return, ending the breakpoint.        if (!expression) return;        // Otherwise, use the supplied closure to evaluate the expression        // in the scope that is being inspected.         // The result will be displayed on the next iteration.        result = inspector(expression);    &amp;#125;&amp;#125;function factorial(n) &amp;#123;        var inspector = function(x) &amp;#123;                return eval(x);        &amp;#125;        inspect (inspector, &quot;Entering factorial()&quot;);        var result = 1;        while (n &amp;gt; 1)&amp;#123;                result = result * n;                n--;                inspect(inspector, &quot;factorial() loop with current result:&quot;+result);        &amp;#125;        inspect(inspector, &quot;Exiting factorial()&quot;);        return result;&amp;#125;inspect(function (x) &amp;#123;return eval(x);&amp;#125;, 'Hello')factorial(5)// 通过closure, 它就可以检测factorial执行的各个环节, 从而更容易的找到你在不同环节的问题.
-虽然closure让你可以写出更加复杂的js代码, 但是本身closure的使用还是要慎重的, 因为closure需要存储函数对象在内存中而不销毁, 所以如果函数主体庞大, 那么对于内存的压力和运行性能都是会有影响的~
-Function constructor类似Array, String等都有着一个对应的类, 可以允许你通过new来创建对象. Function也有自己对应的Function()类, 可以通过:new Function()来创建函数, 其接收不定长参数, 最后一个参数始终作为函数运行主体. 不过通常来说这种方法定义函数远没有我们常用的function关键词来的方便, 所以使用上倒是少了很多~ 不过有几点还是值得注意的:
+Rails is designed to assume that the programmer will follow certain known conventions, which if used, provide great benefit and much less need to configure the framework.That means that the framework makes assumptions on how a typical application should be built and structured and it doesn’t try to be overly flexible and configurable. This helps you spend less time on mundane tasks like configuring and wiring up an application architecture and more time on actually building your app.
 
-new ClassFunction() 是把function作为constructor的一种用法, 你可以简单的理解为: var cc = new ClassFunction(params) ==&amp;gt; var cc = new Object();ClassFunction.call(cc,params)
-new Function()不接收函数名参数, 即其创建的都是anonymous function;
-new Function()不继承作用域, 几遍其是在嵌套函数中定义, 也只继承global域, 不会继承上层函数的作用域;
 
-谜题12345678910111213var name = &quot;The Window&quot;;var object = &amp;#123;  name : &quot;My Object&quot;,  getNameFunc : function()&amp;#123;    console.log(this);    return function()&amp;#123;      return this.name;    &amp;#125;;  &amp;#125;&amp;#125;;console.log(object.getNameFunc()());// output: Object&amp;#123;name:&quot;My Object&quot;&amp;#125;; &quot;The Window&quot;
-上述定义中, 为什么嵌套函数没有继承上层函数的this呢? 反而继承了全局的this?
-猜测解答: this这个关键字是个比较特殊的关键字, 它具有一个很有趣的特点就是: 当一个函数作为函数而不是方法来调用的时候, this指向的是全局对象, 只有当它是方法的时候, 其指向的才是所属对象; 题目来源阮一峰博客. 
+Don’t repeat yourself, or DRY
+
+
+Every piece of knowledge must have a single, unambiguous, and authoritative representation within a system.Rails strives to remove duplication and boilerplate wherever it can.
+
+How to use Rails with CoffeeScriptLuckily, after Rails 3.1, you don’t need do anything to let Rails support CoffeeScript. It has already become part of rails! And also, rails has changed its default js library to jQuery.
+So what you need to do if you want to use coffeescript with rails? Nothing but learn rails!
+Just like the author said in the book: “If you haven’t done so already, I encourage you to spend some more time learning Rails as well as Ruby, and immersing yourself in the wonderful communities they support.”
+Node.jsNode is fantastic. It changes something. Before node, javascript was mostly run inside browsers. Now it just came out and gave web developers a chance to become a full-stack!
+Features of Node
+Event-driven
+
+
+The Node.js framework only allows non-blocking, asynchronous I/O. This means that any I/O operation that is accessing an external resource, such as the operating system, a database, or a network resource must happen asynchronously.
+
+
+Fast and scalable
+
+
+The V8 JavaScript engine(created by google and used in chrome) used by Node.js is highly optimized for performance, thus making Node.js applications very fast. The fact that Node is non-blocking will ensure that your applications will be able to handle many concurrent client requests without using a lot of system resources.
+
+
+Node is not Rails
+
+
+Rails strives to be a full-stack solution to building web applications, whereas Node.js is more of a low-level system for writing any type of fast and scalable network application.
+
+Node and CoffeeScriptWant to write coffeescript in node? It’s easy, all you need is a module named CoffeeScript. And like many other languages, node has several frameworks people built for web development, like: Express.
+The core about how to use coffeescript with nodejs is to use the --watch for coffee command in node. It will automatically compile all file end with coffee into js when there is a change made into these files.
+And just like jQuery, you just follow the rules and write your code.
+DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
+That’s all. Thanks!
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (1)</title><link>http://taoalpha.me/blog/2015/06/17/read-reading-javascript-the-definitive-guide-1/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-17T10:00:00.000Z</pubDate><description>概述“JavaScript: the definitive guide”可谓是JS入门必读数目之一了. 今天正好读到第7章, 做一简单总结. 前7章的内容都集中在JS中的基本知识上, 包含了:
 
 数据类型: 最简单的primitive datatypes: string, number, boolean , 两个空值类型: null, undefined(通常认为空值类型属于promitive的一种),以及稍微复杂点的: object类型;
@@ -1624,6 +1574,126 @@ shift, unshift和pop,push基本类似, 不同的地方在于操作的位置和�
 1234567891011121314151617181920var a = [1,2,3]// a.length == 3a[-1.2] = &quot;hehe&quot;a// output: [1,2,3]  where is a[-1.2] ?a[-1.2]// output: &quot;hehe&quot;  WTF???a.length// output: 3 ??console.log(a)// output: [1,2,3,-1.2:'hehe']console.log(a.length)// output: 3a instanceof Array// ouput: Truea[&quot;h&quot;] = &quot;hh&quot;a// output: [1,2,3]console.log(a)// output: [1,2,3,-1.2:&quot;hehe&quot;,h:&quot;hh&quot;]
 问题: a依然还是一个Array(亦或者不是?), 但用json定义的方式赋值的那几个值还是有效的, 可获取的, 但是为什么直接print出来的时候没有这些值呢, 甚至长度都不包含定义的这几个指? 为什么console.log()可以打出来呢?
 猜测解释: a最初被定义为array, 但是却被json方式传值, 存储到了其内存中, 但是调用a时依然按照array来打印, 所以会自动滤除掉不符合array的几个值(只会按照index来找值). 但是console.log()是打出来其存储内容, 所以就按照其内存存储形式打印出来了.
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (4)</title><link>http://taoalpha.me/blog/2015/06/23/read-javascript-the-definitive-guide-4/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-23T07:00:00.000Z</pubDate><description>概述第六版和第五版的最大区别在于ECMAScript 5的引入, 这是目前发布的最新的js版本, 有着最新的属性和函数, 目前主流浏览器基本都已经完全支持. 本文为阅读5-9章内容的笔记总结, 主要是覆盖了JS中的语句和典型对象.
+阅读笔记Chapter 5 - Statements
+switch/case中使用的是===进行比较判断的, 而不是==;
+with带入scope chain的对象只有读取权限, 没有写入功能, 即with后, 可以获取其代入的对象, 但其内声明的变量都依然归于gloabl或者local之中;
+debugger是ECMAScript 5引入的一个新的statement, 起主要作用是和浏览器结合使用, 用于创建断点以便查错使用;
+use strict也是ECMAScript 5引入的, 严格来说不算statement而是directive, 不过两者很是相近; 其使用必须位于js整体的起始位置或者是一个function主体的起始位置;
+use strict的使用会开启代码的strict mode, 为了提升效率, 错误追踪以及更好的安全性, 其语法要求会更加严格, 简单列举如下:
+停用with语句;
+所有变量必须声明才能调用;
+所有独立声明的函数而非对象的方法定义的, 其this域都默认为undefined, 而函数如果通过apply,call调用, 其this域为传入对象;
+对未声明变量的赋值或者不能写入的对象进行写入, 都会抛出异常;
+eval调用会自动创建临时局部scope, 不再能直接对母域新建声明了;
+arguments成为传入参数的硬拷贝, 和传入参数名之间不在绝对相等, 即改变一方不会引起另一方的改变, 同时停用其caller,callee方法;
+delete用于变量, 函数或者函数参数的时候会抛出异常, 操作对象的某个未声明属性也会抛出异常;
+对象(包括函数)创建中不能出现同名属性(参数);
+直接声明的八进制数是不允许的(即0开头的数字);
+eval,arguments作为keywords对待, 不能赋值, 或赋予其他变量, 也不能用于identifier;
+
+
+
+
+Chapter 6 - Objects
+Property Attributes (ECMAScript 5之后引入可自定义配置, 之前默认三者皆有.)
+writable: 可赋值;
+enumerable: 可递归;
+configurable: 可配置 - 可删除也可修改;
+
+
+Object Attributes
+portotype: 指向当前对象的属性继承对象;
+class: 指代对象所属类别;
+extensible: 指示当前对象是否能够新增属性 (ECMAScript 5引入);
+
+
+Object Categories and Property Types:
+native object: js中内置的对象, 包含Arrays, functions, dates, regular expressions等;
+host object: 由js运行环境所定义的对象, 比如常见的浏览器, 就包含了HTMLElement对象;
+user-defined: 执行js代码的时候创建的对象;
+own property: 直接由对象中定义的属性;
+inherited property: 由对象的prototype object继承来的属性;
+
+
+Prototype:
+任何一个对象(除了Object.protytpe)的出现都必然包含了第二个对象的存在: new Array() =&amp;gt; Array.prototype;
+Object.prototype是唯一一个没有母继承的对象了, 它是最顶部的类;
+类似new Array() =&amp;gt; Array.prototype =&amp;gt; Object.prototype这样的两个prototype就组成了Array的prototype chain;
+Object.create() 是ECMAScript 5引入的新的创建对象的方法, 其接受两个参数, 第一个参数会作为新建对象的prototype传入, 第二个则是用来描述新对象的属性的. 如果你传入null, 则新建对象是完全没有prototype的, 只有Object.create(Object.prototype)才是等价于我们常用的{} or new Object();
+获取某个object的未定义属性将返回undefined, 但是获取undefined或者null的某个属性则会抛出异常;
+
+
+getter &amp;amp;&amp;amp; setter
+ECMAScript 5新引入的两个accessor properties, 分别对应某个属性的调用和赋值;
+只有setter的属性只有写入权限, 只有getter的属性则是只读权限;
+
+
+property attributes
+value, writable, enumerable, and configurable
+对应的accessor property: get, set, enumerable, and configurable
+Object.getOwnPropertyDescriptor(object_name, property_name) 获取某个属性的特征描述;
+Object.defineProperty(object_name, property_name,{property_attribute:attribute_value}) 对某个属性设定其特征描述;
+
+
+
+下例即为利用Object.defineProperty自定义的一个extend()函数:
+123456789101112131415161718192021222324252627282930// Example 6-3. Copying property attributes/** Add a nonenumerable extend() method to Object.prototype.* This method extends the object on which it is called by copying properties* from the object passed as its argument. All property attributes are* copied, not just the property value. All own properties (even non-* enumerable ones) of the argument object are copied unless a property* with the same name already exists in the target object. */Object.defineProperty(Object.prototype,  &quot;extend&quot;,  &amp;#123;    writable: true,    enumerable: false,    configurable: true,    value: function(o) &amp;#123;      // Define Object.prototype.extend      // Make it nonenumerable      // Its value is this function      // Get all own props, even nonenumerable ones      var names = Object.getOwnPropertyNames(o); // Loop through them      for(var i = 0; i &amp;lt; names.length; i++) &amp;#123;        // Skip props already in this object        if (names[i] in this) continue;        // Get property description from o        var desc = Object.getOwnPropertyDescriptor(o,names[i]);        // Use it to create property on this Object.defineProperty(this, names[i], desc);      &amp;#125;    &amp;#125;  &amp;#125;);
+
+Object Attributes;
+Object.getPrototypeOf() ECMAScript 5引入, 可用于获取某个对象的prototype;
+p.isPrototypeOf() 同上, 用于判断某个对象是否为另一个对象的prototype;
+Object.isExtensible(),Object.preventExtensions()则分别是用于判断一个object是否是可扩展的, 以及禁止其可扩展性的(此操作不可复原);
+Object.seal()类似Object.preventExtensions(), 不过它同时禁掉了properties的configurable属性,Object.isSealed()则是对应用于判断是否sealed的函数;
+Object.freeze()比Object.seal()还要严格,所有属性都变为可读了, 对应的查询函数为:Object.isFrozen();
+Object.preventExtensions(),Object.seal(),Object.freeze()都是只针对当前object而言的;
+class属性目前基本没啥用, 有点等价或者说更细化的typeOf or instanceOf了;
+
+
+
+Chapter 7 - Arrays这里主要记录ECMAScript 5引入的一些新的方法, 3已有的可以查看 阅读笔记-2
+
+forEach(value,index,array_itself): array自身的循环调用函数, 相当于for(i in array_name){}, 区别在于其不支持break等可以跳出循环的语句, 如果你想要提前结束循环, 就需要通过try/catch包裹并利用抛出异常来结束循环;
+map(): 也算是循环的一种, 遍历每个元素并传递给传入的函数, 最终返回一个新数组;
+filter(): 顾名思义, 这是对数组进行筛选的, 值得一提的是filter()会自动跳过空白,所以对于稀疏数组通过filter()可以去除所有空白, 在加上undefined判断, 就可以去除所有空值了;
+every() 和 some(): every()是当数组每个元素都使传入函数为真的时候返回真, some()则是只要一个为真即返回为真, 需要注意的事, 对于空数组, every()会返回真, 而some()会返回为假;
+reduce(function,initial_value) 和 reduceRight(): 通过执行传入函数而对数组元素进行整合,计算,判断, 最终返回一个结果: var max = a.reduce(function(x,y) { return (x&amp;gt;y)?x:y; });即返回数组的最大值; reduceRight()与reduce()一致, 只是循环顺序相反, 从右到左; 当没有声明初始值时, 采用第一个执行元素作为初始值;
+indexOf() 和 lastIndexOf: 顾名思义, 获取数组中某个元素的index, 前者获取首个匹配元素的index, 后者获取最后一个匹配元素的index;
+
+Chapter 8 - Functions
+Functions的调用有四种:
+直接调用;
+作为对象的方法调用;
+作为constructor调用;
+通过call,apply方法调用(间接调用);
+
+
+call() 和 apply:
+call和apply都是间接调用的方法, 允许一个函数临时客串为某个object的方法;
+一定程度上, 可以等价于o.m = f;o.m();delete o.m;
+其接受的第一个参数会成为函数运行的this域, 如果是非strict mode下, 传入null/undefined则会自动将global作为this, 而如果传入的是primitive datatype, 则自动转为对应的wrapper object, 即string =&amp;gt; String;
+call和apply的区别主要体现在后面的参数上, 前者以分散元素传入, 后者则以整体数组形式传入, 所以用apply可以把原本只支持不定长参数的函数转换为接受数组的函数:var biggest = Math.max.apply(Math, array_of_numbers);;
+apply对类array元素处理方式同array元素;
+
+
+bind(): 很是类似call和apply, 本质也是把某个函数作为某个对象的方法调用, 实现则是通过把object和function绑定, 形成一个新函数从而每次调用新函数都等价于调用了object.funtion, bind接受多个参数, 其首个以后的参数都会作为this域成员代入函数中, 并按序成为函数自身的参数function f(y,z) { return this.x + y + z };var g = f.bind({x:1}, 2);g(3) // 2被赋予了y, 新的3则给了z;
+higher-order function: 作用于另一个函数之上的函数;
+
+partial and memoization 这两个都是function programing中常用的方法:
+
+partial: 类似bind()这种会把传入参数默认分配到函数自身的部分接受参数上的做法就是partial application;
+memoization: 将函数运行过程的计算结果缓存起来的方式;
+
+
+
+123456789101112131415161718192021222324function array(a, n) &amp;#123; return Array.prototype.slice.call(a, n || 0); &amp;#125;// 用以处理类array元素(转为真正的array)function partial(f /*, ... */) &amp;#123;  var args = arguments;  // 存储partial的参数  return function() &amp;#123;    var a = array(args, 1);    // 取出首位以后的参数    var i=0, j=0;    for(; i &amp;lt; a.length; i++)      if (a[i] === undefined) a[i] = arguments[j++];      // 这里的arguments是第二层参数      // 将空元素逐个替换成第二层参数里的值, j自动随着执行+1    a = a.concat(array(arguments, j))    // 组成新的参数数组    return f.apply(this, a);    // 调用f函数, 并传入参数a  &amp;#125;;&amp;#125;var f = function(x,y,z)&amp;#123;return x*y*z&amp;#125;partial(f,undefined,2)(1,3)// x:1,y:2,z:3
+123456789101112131415// Return a memoized version of f.// It only works if arguments to f all have distinct string representations.function memoize(f) &amp;#123;  var cache = &amp;#123;&amp;#125;;  return function() &amp;#123;    var key = arguments.length + Array.prototype.join.call(arguments,&quot;,&quot;);    if (key in cache) return cache[key];    else return cache[key] = f.apply(this, arguments);  &amp;#125;;&amp;#125;// 应用方式类似;var factorial = memoize(function(n) &amp;#123;return (n &amp;lt;= 1) ? 1 : n * factorial(n-1); &amp;#125;);factorial(5) // 此时会自动缓存4,3,2的阶乘值. 对于一些复杂的运算, 如此可以很好的加快运算速度.
+Chapter 9 - Classes and Modules除了 阅读笔记-2中包含的, 由于ECMAScript 5所引入的那些object property自然都可以应用到新的class中, 从而创建更为复杂有效的函数. 其实js中目前不存在class这个关键词, 所以其模仿的class, 说白了就是一个复杂一些的函数对象.
+而因为其内容驳杂繁多, 我么会在后面的应用中有很多实践的机会, 这里就不一一描述了.
+参考资料
+JavaScript the Definitive Guide 6th edition
+Functional Javascript
+
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>像TED一样演讲</title><link>http://taoalpha.me/blog/2015/06/25/read-speaking-like-people-on-ted/</link><category>read</category><tag>reading notes,speaking</tag><pubDate>2015-06-25T09:00:00.000Z</pubDate><description>概要今天顺带读完了这本”像TED一样演讲”, 作者上一部和演讲相关的书是”乔布斯的魔力演讲”. 归纳了下书中的核心点, 记录分享给大家. 这一类的书干货其实能占到全书1/10就已经算不错了~ 所以一般看起来也比较快.
 阅读笔记情感共鸣
 释放你内心的热情 =&amp;gt; 热情可以传染;
@@ -1849,29 +1919,4 @@ TestingYou should write testing!!!
 Code Conventions for the JavaScript Programming LanguageAll coved by two styles I list above.
 SummaryCompared to google’s old style guide, airbnb’s style guide has much more valuable new ES6 styles, if you are an active ES6 users, I strongly suggest you use airbnb’s style !!!
 Even you are a solo worker, you should use some common styles, it is a good habit and you should have.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Using @font-face</title><link>http://taoalpha.me/blog/2014/07/15/read-yi-using-font-face/</link><category>read</category><tag>CSS,font-face,翻译文章,译系列</tag><pubDate>2014-07-15T10:00:00.000Z</pubDate><description>如下例:
-123456789@font-face &amp;#123;  font-family: 'MyWebFont';  src: url('webfont.eot'); /* IE9 Compat Modes */  src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */       url('webfont.woff') format('woff'), /* Modern Browsers */       url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */       url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */&amp;#125;
-由于如今WOFF是如此之火, 你也可以简化使用:
-123456@font-face &amp;#123;  font-family: 'MyWebFont';  src: url('myfont.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */       url('myfont.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */&amp;#125;
-其实只用WOFF也可以的, 目前基本主流浏览器都能支持了.
-然后你就可以在其他元素中使用这一属性了~ 比如:
-1234body &amp;#123;  font-family: 'MyWebFont', Fallback, sans-serif;&amp;#125;
-讲讲font-face的历史吧, @font-face是用于加载以及使用你自定义的字体而出现的, 针对的就是如今浏览器有权限使用的系统已有的有限字体. 这里有个系统预装字体的详情介绍.
-说到性能. 一般我们认为字体文件都是非常巨大的, 同时还会让你的网站增加很多额外的请求, 这些都会拖慢你的站点速度. 所以在使用之前请务必确保你考虑清楚.
-如果你确实要使用自定义字体, 有一种更好的更负责的方式是尽可能的加载足够少的字母和样式种类. 比如, 如果你使用google fonts, 只需要引入一些特定的组合即可:
-123@import url(http://fonts.googleapis.com/css?family=Averia+Sans+Libre:400,300italic,700);
-甚至可以缩减引入的字符数量.
-相比于性能, @font-face似乎经常出现各式各样的bug…比如这种, 这种,还有这种…
-关于字体格式, 倒是有几种, 每种都还有些历史.
-  WOFF    Web Open Font Format. 是专为网络使用而创造的, 由Mozilla和一些其他组织共同发展起来的, WOFF字体通常比其他格式字体加载的更快, 主要是因为他们使用了比OTF和TTF更加压缩的结构, 这种结构中还能包含一些meta信息和license信息, 目前来说WOFF应该是最大的赢家了, 主流的浏览器基本都已经能够支持了.    SVG/SVGZ    Scalable Vector Graphic(Font). SVG是一种字体的矢量化过程, 主要可以让体积变的更小, 同时也能够用于移动设备. 这个字体格式是4.1版本以下的Safari浏览器唯一支持的字体格式了. 目前来说SVG依然不能被Firefox, IE以及IE 移动版支持. Firefox主要精力都在支持WOFF了~ 天知道他们什么时候支持SVG… SVGZ是SVG的再压缩版本.    EOT    Embedded Open Type. 这一格式是由微软从15年前创造的(真正意义上@font-face的源头). 也是唯一一种IE8以及以下版本支持在@font-face中使用的格式了.    OTF/TTF    OpenType Font 和 TrueType Font. 在一定程度上WOFF格式的出现也是因为这些格式可以很容易被复制, 无论合法与否. 同时, OpenType的某些特性(比如手写字体等)比较吸引设计师们.  
-
-
-字体服务有很多, 主要就是提供那些你可能无权使用的字体, 从而让你的使用合法化. 主要有以下这些:
-  Cloud Typography  Typekit  Fontdeck  Webtype  Typotheque  Fontspring  WebINK  Fonts.com  Google Fonts  Font Squirrel
-
-
-
-想要对比下这些服务的好坏?
-Source Link:  CSS Tricks
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>It’s Not UX vs. UI, It’s UX &amp; UI</title><link>http://taoalpha.me/blog/2014/11/13/read-t-its-not-ux-vs-ui-its-ux-ui/</link><category>read</category><tag>UI,UX,关于HCI,翻译文章,设计,译系列</tag><pubDate>2014-11-13T08:00:00.000Z</pubDate><description>UX和UI并不是对立的Chris Bank of UXPin –  一个线框图和原型制作工具 – 对比了以下网页设计和用户体验, 解释了为什么我们有时候默认要先创建一个UI, 然后利用UI来塑造整体的UX.  如果想要了解下利用33个公司的例子所进行的分析, 可以前往阅读: 网页设计界面典型实例.网页用户体验(UX)是用来描述人们对一个网站所获得一种感受的这么一种抽象概念. 而用户界面(UI)则是在这个体验过程中, 用户所与之交互的界面.当设计一个网站时, 你希望你的UX能够尽可能的正面, 积极 – 你希望你的用户能够享受这一浏览过程, 这也是网站全部的意义所在. 但是你不能只是简单的说”让我们提升一下我们网站的UX吧”, 就好像你不能随便的对一个事业说”来让我们多赚点钱吧”. 只有我们用以创造体验的方法, 即用户界面这个媒介来提升我们的体验.来源: UX is not UI通常对网站而言, 一个公司的设计团队都是通过在UI上下功夫来提升UX的. 菜单选项啊, 按钮啊, 文本啊, 图像啊, 视频啊等等, 这些摆放在页面上的元素, 是组成这个界面的各个部分, 也是我们所需要精雕细琢的地方. 而这些都是UX的组成部分, 他们的使用直接影响着最终用户的体验.我们会结合一些UI的实例来解释种种可以帮助你题解为什么一个好的UX依赖于一个好的UI的方法, 并且会更进一步的解释为什么创造一个UI要比创造一种UX来的容易.网页用户界面究竟是什么?又不是什么?就网页这个情景下, 什么是UI呢? 假设设计师在管理内容方式上, 支持用户选择拖拽文件作为一种管理内容的方式. 这就是UI. 而假设一个用户相比竞品更喜欢这个网站, 因为他喜欢它的简洁, 在上面听歌更加享受. 那么, 这就是UX.正如在 2014网页UI最佳实例的讨论中,  网页UI是网页组成元素的设计, 展示以及操作方式的组合. 通常来讲, 这些的表现形式是多样的, 因为它们笼统的包含了设计师所能够放入网页的所有东西, 但是幸运的是, Usability.gov, 一个领先的UX规范, 实例等资源整合的网站,  用一种简便而又方便的方式归类如下:Input(输入) – 文本类输入域, 时间日期类输入域, 下拉列表, 复选框, 列表框, 可点击按钮, 转换键等Navigation(导航) – 幻灯片, 搜索输入域, 翻页导航, 侧边栏, 标签, 图标等Sharing(分享) – 好友列表, 关注按钮, 喜欢按钮, 分享按钮, 邀请好友Information(信息) – 文本域, 提示框, 信息框, 提醒, 图标, 进度条, 窗口等比如, 在 OS X Yosemite: 为最好的UI努力一文中. 虽然Yosemite是一个操作系统(而不是网站), 但是其UI背后的原理依然是可以用到网页设计中的. 他们在可点击按钮上所达到的视觉效果让用户在使用系统的时候非常享受, 而它的侧边栏则让用户能够看到更多窗口背后的内容(?), 而它的提醒中心则在完全不打乱当前工作流的情况下提供了你所需要知道的信息.最重要的是, 正如Apple在他们的UI设计规范中所陈述的, 这些元素都帮助他们完成了”自定义功能以及一个独到的用户体验”. Yosemite UI最终的目标是允许用户能够快乐的使用这个功能强大的系统, 而不至于因为系统的复杂而受挫.要让UI的效果看得到UI和UX是完全不同的概念, 但是又有着不可否认的联系.如在 2014 网页界面设计示例中, Google Play掌握了拖拽这一UI技术. 在他们的网站上, 用户可以拖拽歌曲到一个播放列表, 然后拖拽他们进行排序. 最终的结果是, UX因为用户所需要做的仅仅是告诉App他们想要听什么歌曲然后就可以轻松的听歌了而得到了很大的提升. 利用这种方式, 仅仅是一个UI的引入(拖拽)就提升了整个用户体验, 为什么呢? 因为更加方便, 更加可定制化了. 接下来我们说个不这么直接的例子. 假设你的很多用户都过早的离开了你的网站, 因为他们不想要注册来使用某些功能. 这显然是一个UX的问题, 因为这是体验导致用户提前离开, 但是你可能会发现其根源还是在UI上. 假设你当前的登录环节有太多的登录信息需要填写. 在这种情况下, 那么快速进入(“lazy signup”)的UI模式可能会是一种解决办法. 这可以让用户不需要注册也能访问绝大多数的站点内容. 而在一段时间的自由访问后, 他们就有可能决定去创建一个账户, 尤其是在他们发现有一些功能是仅对注册成员开放的情况下.AirBnB在吸引新用户的时候采取的就是这个策略. 用户如果是非注册成员, 那么也是可以像注册成员那样浏览绝大多数的帖子, 从而让他们也能看到AirBnB所拥有的各种有趣的东西. 但是, 一旦他们发现了一个他们想要预订的房子, 那么他们就需要一个账户才能预订.如果UX是通过UI来体现的, 那么UI就是通过设计环节, 比如速描, 线框, 原型制作等来创造的. 线框和原型就是一些简单的线条, 是设计师们在创造真正的网站之前所制作的设计蓝图. 通常是从手绘在纸巾上的草稿, 然后用类似 UXPin和Balsamiq等工具制作出来的数字原型.  这可以说是最重要的环节了, 设计师们必须系统的, 在理论上想清楚什么样的UI将会创造出预期的体验. 就如同建造一栋房屋, 你不能在蓝图还没想清楚的情况下就动手施工了.想要进一步了解线框原型的, 可以前往 线框原型规范.我们为什么要创建用户界面而不是用户体验呢Shawn Borsky, Rivet Games的UI/UX首席设计师,  告诫我们UX不仅仅是UI的结果. 据他所说, UX是”一个品牌的核武器”, 而一个品牌本身则是”一个人对公司或者组织的所有感受的累积”. 这就使得一个全面的UX绝不仅仅是UI的目标, 而是所有, 用户和这个组织所进行的交互的综合目标.一个网站的每一个细节都会对它的用户体验以及用户从而形成的对这个网站的印象有所影响 – 但是网站设计师往往是不能直接控制这种体验的. 就如同下面这副画所描述的, 我们很容易把自己的焦点只集中到UI上, 毕竟UI是有形的(就好比勺子一样), 而UX这种体验的东西是无形的(就好比一顿早餐的愉悦感一样).同样的, 如果你正在做一个重要的晚餐, 你可能会想在其中花很多的心思, 不是吗? 你手选出最好的调料, 选用最佳的食谱, 然后小心的按照上面说的一步步完成,  甚至最后你会在盘子中心放上一个漂亮的装饰来营造一个好的氛围. 那么, 网站也是如此, 你希望能够把每个部分都能够设计的足够完美, 让你的每个访客都能够愉快的浏览. 你可能会花费几个小时甚至几天的时间来设计, 准备这道菜, 但这只是最顿完美的晚餐的一部分. 这也是为什么只有当你装着UX在怀里的时候再去注意UI的细节才有价值.如果一个UI是你花心思, 集中注意力, 很小心的制作的, 那么它一定能够在UX中得到体现. 如果一个UI是你花了一点功夫赶出来的, 或者里面有一些大的疏忽, 那么UX也会反映出来的. 一个关于UI有疏忽的例子就是iPhone上的Shift键(虽然我们谈论的是网页设计, 但是移动设备在UI和UX的问题上也不能免俗的):上面的图片中, 哪个Shift键是激活状态的, 哪个不是呢? 在上面的键盘示意图中, 有些键始终都是灰色背景, 有些则始终都是白色背景, 但是Shift键这两种背景都有, 依赖于它的状态是否是激活的. 这是一个非常糟糕的设计, 虽然所有功能都正常, 而且用户依然可以使用Shift键. 但是结果呢? 用户(如在UXPin)经常不得不删掉刚打的词, 从新打过, 这让我们非常不爽… 也就产生了非常不好的用户体验.(说实话, 上面到底哪个是激活态?! 在UXPin, 我们使用iPhone已经6年了, 但我们始终没搞清楚这个…)再比如一个在 网页UI最佳实例中的示例, 哪怕是流行站点如LivingSocial中也存在着非常糟糕的UI设计:这是你在首次进入网站时看到的一个弹框. 问题在于… 完全没有取消的选项. 这意味着那些谨慎的用户们, 因为不愿意提供自己的邮箱, 就只能立刻离开了. 可能这也算是一个迫使用户提供自己的邮箱的一个国际惯例了… 但是你真的愿意自己的网站的体验和这个傻缺的一样?如今, 注意到UI上没啥大问题–配色也不错, 按钮看起来也很有点击欲望 – 但是用户体验很恶心已经是一个非常重要的事情了. 这也算是虽然有好的UI但是却没有好的体验的典型例子了. Marcin Treder, UXPin的CEO, 相信一个糟糕的用户体验只能在特定目标下有限度的接受. “有时候你会看到那种有着长长的, 复杂的表格, 所有的标签都左对齐着, 这是一种很糟糕的阅读体验”, Treder 说”但是另一方面, 你通过这种方法能够避免那些胡乱填的人从而能够获得比较好的数据质量, 而这也正式你的目标所在.”我们正在挑选一些 糟糕的UI设计样例, 仅仅是因为这些比较容易被注意到, 而且也比号的设计更有趣不是吗? 这也是因为一个好的UI, 是那种你感觉不到的好. 就好像一个好的电影让你看的都忘记自己在电影院里, 一个好的UI也会让用户沉浸其中而不会注意到的. 甚至都没有注意到创造出这么好的UX的UI.UI是如何塑造UX的理论讲的差不多了, 我们接下来看看UI选择是如何直接影响UX的吧.上述例子都是关于UI是如何影响UX的粗略描述, 想要看一个更加细节性的解释, 可以看看 2014网页UI设计模式虽然UI塑造了UX, 但是你首先要做的事情还是决定好UX, 然后再去找对应的UI. 类似的, 如果你的UX有问题, 那么最好的方法和确认问题所在就是去UI上找问题, 并且修正它.学习用户体验的用户体验要理解UX和UI之间的区别仅仅才刚开始 – 建立一个好的网站的关键依赖于你对这两个概念之间的联系的逐步了解. 虽然很多网页设计是割裂且独立的, 但是UX和UI多数情况下是直接联系在一起的.如上所示, 想要创建一个有效的用户体验需要很多东西, 远不止是视觉. 视觉和听觉设计只是UI设计的一小部分元素. 当你无法制你网站的UX时, 你可以试试控制你的UI – 确保你有一个好的UX预期然后恰当的设计你的UI.强烈推荐查阅: 网页UI最佳实例Source:    原文链接: It’s Not UX vs UI, It’s UX &amp;amp; UI
 </description><source>TaoAlpha</source><author>TaoALpha</author></item></channel></rss>
