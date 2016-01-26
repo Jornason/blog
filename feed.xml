@@ -1,4 +1,38 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-25T04:11:27.583Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ Ugly Number Problems</title><link>http://taoalpha.me/blog/2016/01/25/oj-oj-ugly-number-problems/</link><category>OJ</category><tag>LeetCode,Numbers</tag><pubDate>2016-01-25T07:09:04.000Z</pubDate><description>263. Ugly NumberQuestionWrite a program to check whether a given number is an ugly number.
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-26T21:34:25.559Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ Remove Duplicate Letters</title><link>http://taoalpha.me/blog/2016/01/26/oj-oj-remove-duplicate-letters/</link><category>OJ</category><tag>Greedy,LeetCode</tag><pubDate>2016-01-26T23:26:53.000Z</pubDate><description>316. Remove Duplicate LettersQuestionGiven a string which contains only lowercase letters, remove duplicate letters so that every letter appear once and only once. You must make sure your result is the smallest in lexicographical order among all possible results.
+Example:Given “bcabc”Return “abc”
+Given “cbacdcbc”Return “acdb”
+LeetCode316. Remove Duplicate Letters My Submissions Question
+Tags: Medium, Stack, Greedy
+AnswersGreedy
+Greedy algorithm is an algorithm that follows the problem solving heuristic of making the locally optimal choice at each stage with the hope of finding a global optimum. In many problems, a greedy strategy does not in general produce an optimal solution, but nonetheless a greedy heuristic may yield locally optimal solutions that approximate a global optimal solution in a reasonable time.
+
+Classic problem is the coin changes problem: determine minimum number of coins to give while making change.
+This problem can also be solved with greedy algorithm, we just need to determine the local optimal choice first: 
+
+We need find the current smallest letter in the string and put it into our result, smallest means that smallest one that could be put into the result;
+
+Now question is how we determine the smallest letter:
+
+Condition 1: the letter is smaller than every letter appeared before it and it only appear once, then it would be our smallest, like “cbacb”, the “a” will be our current smallest;
+Condition 2: the letter only appeared once and the smallest letter should be the first smallest letter before this letter, like “cbdcb”, so the “b” will be our current smallest;
+
+1234567891011121314151617181920212223242526272829/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;string&amp;#125; */var removeDuplicateLetters = function(s) &amp;#123;  var i,j,res = &quot;&quot;;  while (s !== &quot;&quot;) &amp;#123;    var countMap = &amp;#123;&amp;#125;;    // build the countMap for current string    for (i = 0; i &amp;lt; s.length; i++) &amp;#123;      countMap[s[i]] = countMap[s[i]] || 0;      countMap[s[i]] ++;    &amp;#125;    var smallestPos = 0;    for (i = 0; i &amp;lt; s.length; i++) &amp;#123;      if (s[smallestPos] &amp;gt; s[i]) &amp;#123;        // update the smallest number        smallestPos = i      &amp;#125;      // until find the letter only appeared once, and we will get the index of our smallest letter      if (countMap[s[i]] == 1) break;      countMap[s[i]] --;    &amp;#125;    // put the letter into our result string    res += s[smallestPos];    s = s.slice(smallestPos+1).replace(new RegExp(s[smallestPos],&quot;g&quot;),&quot;&quot;)  &amp;#125;  return res&amp;#125;;
+Runtime: 244 ms
+If we build the countMap with 0 default before we do the count part, it can speed up a little.
+12345678910111213141516171819202122232425262728293031/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;string&amp;#125; */var removeDuplicateLetters = function(s) &amp;#123;  var i,j,res = &quot;&quot;;  while (s !== &quot;&quot;) &amp;#123;    var countMap = &amp;#123;&amp;#125;;    // build the countMap for current string    for (i = 0; i &amp;lt; 26; i++) &amp;#123;       countMap[String.fromCharCode(i + 97)] = 0    &amp;#125;    for (i = 0; i &amp;lt; s.length; i++) &amp;#123;      countMap[s[i]] ++;    &amp;#125;    var smallestPos = 0;    for (i = 0; i &amp;lt; s.length; i++) &amp;#123;      if (s[smallestPos] &amp;gt; s[i]) &amp;#123;        // update the smallest number        smallestPos = i      &amp;#125;      // until find the letter only appeared once, and we will get the index of our smallest letter      if (countMap[s[i]] == 1) break;      countMap[s[i]] --;    &amp;#125;    // put the letter into our result string    res += s[smallestPos];    s = s.slice(smallestPos+1).replace(new RegExp(s[smallestPos],&quot;g&quot;),&quot;&quot;)  &amp;#125;  return res&amp;#125;;
+Runtime: 196 ms
+And of course you can use recursion instead of iterator to do it, but it should be slower than iteration way.
+StackThis is a solution I found from the discussion: C++ solution using stack
+12345678910111213141516171819202122232425262728293031/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;string&amp;#125; */var removeDuplicateLetters = function(s) &amp;#123;  var cnts = &amp;#123;&amp;#125;, stack = [], isVisited = &amp;#123;&amp;#125;;  var i,j;  // build count mapper   for (i = 0; i &amp;lt; 26; i++) &amp;#123;     cnts[String.fromCharCode(i + 97)] = 0  &amp;#125;  for (i = 0; i &amp;lt; s.length; i++) &amp;#123;    cnts[s[i]] ++  &amp;#125;  for (i = 0; i &amp;lt; s.length; i++) &amp;#123;    cnts[s[i]] --;    if (isVisited[s[i]]) continue;    while (s[i] &amp;lt; stack[0] &amp;amp;&amp;amp; cnts[stack[0]]) &amp;#123;      // if the letter is smaller than previous smaller letter(stack[0]) and we still have some stack[0] after this letter,      // Then we remove it from the stack      isVisited[stack[0]] = false;      stack.shift();    &amp;#125;    // put the smaller one we find into the stack    stack.unshift(s[i]);    isVisited[s[i]] = true;  &amp;#125;  return stack.reverse().join(&quot;&quot;)&amp;#125;
+Runtime: 192 ms
+This is so comlicated to figure out… I don’t think I can come up with this solution during any interview… maybe I can after I finish the Algoithm Class of this semester.
+Another WayEasy to understand iterative Java solution has a really nice and easy to understand solution for this problem.
+
+find out the last appeared position for each letter; c - 7 b - 6 a - 2 d - 4find out the smallest index from the map in step 1 (a - 2);the first letter in the final result must be the smallest letter from index 0 to index 2;repeat step 2 to 3 to find out remaining letters.
+
+123456789101112131415161718192021222324252627282930313233343536373839/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;string&amp;#125; */var removeDuplicateLetters = function(s) &amp;#123;  var countMap = &amp;#123;&amp;#125;, res = [];  var i,j;  // build count mapper with letter-last index  for (i = 0; i &amp;lt; s.length; i++) &amp;#123;    countMap[s[i]] = i  &amp;#125;  // loop and try to find the smallest letter between each interval of last index, start from 0  var len = Object.keys(countMap).length,      begin = 0,      end = findMinLastIdx(countMap);  for (i = 0; i &amp;lt; len; i++) &amp;#123;    var minChar = &quot;z&quot;;    for (j = begin; j &amp;lt;= end; j++) &amp;#123;      if (countMap[s[j]] &amp;gt; -1 &amp;amp;&amp;amp; s[j] &amp;lt; minChar) &amp;#123;        minChar = s[j];        begin = j + 1;      &amp;#125;    &amp;#125;    res[i] = minChar;    countMap[minChar] = -1    end = findMinLastIdx(countMap);  &amp;#125;  return res.join(&quot;&quot;)&amp;#125;var findMinLastIdx = (countMap) =&amp;gt; &amp;#123;  var min = Math.pow(2,31)-1;  for(var item in countMap)&amp;#123;    if(countMap[item]!=-1)&amp;#123;      min = Math.min(countMap[item],min)    &amp;#125;  &amp;#125;  return min&amp;#125;
+Runtime: 192 ms
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>OJ Ugly Number Problems</title><link>http://taoalpha.me/blog/2016/01/25/oj-oj-ugly-number-problems/</link><category>OJ</category><tag>LeetCode,Numbers</tag><pubDate>2016-01-25T07:09:04.000Z</pubDate><description>263. Ugly NumberQuestionWrite a program to check whether a given number is an ugly number.
 Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 6, 8 are ugly while 14 is not ugly since it includes another prime factor 7.
 Note that 1 is typically treated as an ugly number.
 LeetCode263. Ugly Number
@@ -825,6 +859,139 @@ Chapter 12 - Server-Side JavaScript随着js的发展, 慢慢的超出了其本�
 参考文献:
 JavaScript the Definitive Guide 6th edition
 
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
+Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
+NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
+jQueryjQuery is the most popular js module people used in their websites or webapps. And using jQuery with CoffeeScript is just like javascript. jQuery is javascript, after all.
+Want to use CoffeeScript with jQuery? Just do it and follow the rules we learn from the basic syntax part. Here I list several examples and if you look it closely, you will find everything you have already known if you read the first chapter carefully. The author of the book shows us another complex examples: TodoMVC in CoffeeScript.
+BTW: TodoMVC is a great project which shows you how to write a todo app in all kinds of tools and frameworks.
+1234567891011121314151617181920212223242526272829303132333435363738394041$ -&amp;gt;  do some  do another### =&amp;gt;$(function() &amp;#123;  some();  return another();&amp;#125;);That's just like the $(document).ready(function()&amp;#123;&amp;#125;)#### A function using ajax to send mail, which is a new feature I will add to my blog in a few days :)@sendMail = (msg)-&amp;gt;  $.ajax    type: 'POST'    url: 'https://mandrillapp.com/api/1.0/messages/send.json'    data:      'key': ''      'message':        'from_email': msg.sender_mail        'from_name' : msg.sender_name        'to': [            &amp;#123;              'email': ''              'name': 'TaoAlpha'              'type': 'to'            &amp;#125;          ]        'autotext': 'true'        'subject': msg.subject        'html': msg.content  .done (response)-&amp;gt;    showAlert(&quot;success&quot;,&quot;Thanks for your contribution!&quot;)  .fail (data)-&amp;gt;    showAlert(&quot;fail&quot;,&quot;Sorry! Failed to send the email. Please retry!&quot;)# another function to get unique result from an array of objectsArray::getObjectUnique = (id) -&amp;gt;  a=b=[];  add = (data) -&amp;gt; b.push data[id];data  (add i for i in @ when b.indexOf(i[id]) == -1 )
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748// You can see that you have saved a lot of keystrokes and the codes look more clean and beautiful.// Because coffeescript doesn't support declare global variables directly, and if we want to use the function in other script, we need to declare it into the `this` scope.this.sendMail = function(msg) &amp;#123;  return $.ajax(&amp;#123;    type: 'POST',    url: 'https://mandrillapp.com/api/1.0/messages/send.json',    data: &amp;#123;      'key': '',      'message': &amp;#123;        'from_email': msg.sender_mail,        'from_name': msg.sender_name,        'to': [          &amp;#123;            'email': '',            'name': 'TaoAlpha',            'type': 'to'          &amp;#125;        ],        'autotext': 'true',        'subject': msg.subject,        'html': msg.content      &amp;#125;    &amp;#125;  &amp;#125;).done(function(response) &amp;#123;    return showAlert(&quot;success&quot;, &quot;Thanks for your contribution!&quot;);  &amp;#125;).fail(function(data) &amp;#123;    return showAlert(&quot;fail&quot;, &quot;Sorry! Failed to send the email. Please retry!&quot;);  &amp;#125;);&amp;#125;;# get unque result for array of objectsArray.prototype.getObjectUnique = function(id) &amp;#123;  var a, add, b, i, j, len, results;  a = b = [];  add = function(data) &amp;#123;    b.push(data[id]);    return data;  &amp;#125;;  results = [];  for (j = 0, len = this.length; j &amp;lt; len; j++) &amp;#123;    i = this[j];    if (b.indexOf(i[id]) === -1) &amp;#123;      results.push(add(i));    &amp;#125;  &amp;#125;  return results;&amp;#125;;
+RailsRuby on Rails is a web framework that came around in 2004. And it soon became quite popular. Actually many people believe that Rails saved the ruby…
+Check this:How to download and install Rails if you haven’t installed it.
+Rails’s principles
+Convention over configuration
+
+
+Rails is designed to assume that the programmer will follow certain known conventions, which if used, provide great benefit and much less need to configure the framework.That means that the framework makes assumptions on how a typical application should be built and structured and it doesn’t try to be overly flexible and configurable. This helps you spend less time on mundane tasks like configuring and wiring up an application architecture and more time on actually building your app.
+
+
+Don’t repeat yourself, or DRY
+
+
+Every piece of knowledge must have a single, unambiguous, and authoritative representation within a system.Rails strives to remove duplication and boilerplate wherever it can.
+
+How to use Rails with CoffeeScriptLuckily, after Rails 3.1, you don’t need do anything to let Rails support CoffeeScript. It has already become part of rails! And also, rails has changed its default js library to jQuery.
+So what you need to do if you want to use coffeescript with rails? Nothing but learn rails!
+Just like the author said in the book: “If you haven’t done so already, I encourage you to spend some more time learning Rails as well as Ruby, and immersing yourself in the wonderful communities they support.”
+Node.jsNode is fantastic. It changes something. Before node, javascript was mostly run inside browsers. Now it just came out and gave web developers a chance to become a full-stack!
+Features of Node
+Event-driven
+
+
+The Node.js framework only allows non-blocking, asynchronous I/O. This means that any I/O operation that is accessing an external resource, such as the operating system, a database, or a network resource must happen asynchronously.
+
+
+Fast and scalable
+
+
+The V8 JavaScript engine(created by google and used in chrome) used by Node.js is highly optimized for performance, thus making Node.js applications very fast. The fact that Node is non-blocking will ensure that your applications will be able to handle many concurrent client requests without using a lot of system resources.
+
+
+Node is not Rails
+
+
+Rails strives to be a full-stack solution to building web applications, whereas Node.js is more of a low-level system for writing any type of fast and scalable network application.
+
+Node and CoffeeScriptWant to write coffeescript in node? It’s easy, all you need is a module named CoffeeScript. And like many other languages, node has several frameworks people built for web development, like: Express.
+The core about how to use coffeescript with nodejs is to use the --watch for coffee command in node. It will automatically compile all file end with coffee into js when there is a change made into these files.
+And just like jQuery, you just follow the rules and write your code.
+DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
+That’s all. Thanks!
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (1)</title><link>http://taoalpha.me/blog/2015/06/28/read-coffeescript-programming-with-jquery-rails-and-nodejs/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-28T04:00:00.000Z</pubDate><description>SummaryThe notes I took while I was learning the ‘CoffeeScript’. If you are a real beginner with ‘CoffeeScript’, I suggest you start with another book called “The Little Book on CoffeeScript”, it’s better for beginners. And after that, this one is definitely your best choice.
+CoffeeScript is a language which complies to JavaScript. Like the sass or scss to css except that CoffeeScript is not compatible with javascript. So you can not mix the javascript syntax with the CoffeeScript.
+This note is mainly about the fist chapter of the book, a nice introduction for CoffeeScript including the basic syntax.
+
+And to improve my english, I think i will start writing english notes for the english books. ^_^
+
+NotesCoffeeScript is pretty popular in the community of JavaScript for its simplicity, elegant and readable. Now let us dive into it.
+Instead of  listing the keywords and statements used in CoffeeScript one by one, it would better we learn CoffeeScript from comparing the difference between the CoffeeScript and JavaScript.
+CoffeeScript fix some ugly stuffs in JavaScript
+CoffeeScript removes most of the semicolons and the curly braces which used a lot in JavaScript, gives us a clearly view of the code, but you can still use the semicolons if you want, and you still have to use the semicolons if you want to put multiple statements in single one;
+CoffeeScript learns a lot from ruby and python. Like this one: it uses whitespace or indentation, more accurately, to delimit the code blocks instead of braces.
+CoffeeScript removes a lot of parenthesis for many statements and functions, like if..else, while loops and functions with single string parameter. But this is optional, you can still use them if you want. Notice: you will need parenthesis if you want to call a function without any parameters)
+Function: as the first class object in JavaScript, CoffeeScript also does a lot improvements for it.
+If you write js, you will know that the syntax is really ugly when you want to write a anonymous function. Now you can make it pretty beautiful with CoffeeScript;
+CoffeeScript also saves you a lot keystrokes for defining the functions;
+so what are the rules?
+Replace the function keyword with -&amp;gt;;
+Drop the parenthesis if there is no argument for the function;
+Put the arguments enclosed with parenthesis in front of the -&amp;gt;, and if the argument has a default value, you can set it in the parenthesis;
+Drop the curly braces and use indentation for the function body;
+Automatically return the last expression of the function, but if you need return something before, you still need to use the return;
+
+
+
+
+
+1234567891011121314151617 -&amp;gt; alert 'hi there!'# the code above won't self-initiating, if you want to do that, you need use parenthesis or the `do` keyword like below:# (-&amp;gt; alert 'hi there!')()# do -&amp;gt; alert 'hi there!'square = (n=1) -&amp;gt; n * n# function using splats# this is an alternative way for using Array.prototype.slice()gpaScoreAverage = (scores...) -&amp;gt;  total = scores.reduce (a, b) -&amp;gt; a + b  total / scores.lengthalert gpaScoreAverage(65,78,81)scores = [78, 75, 79]alert gpaScoreAverage(scores...)
+1234567891011121314151617181920212223242526272829303132333435var square;(function()&amp;#123;  return alert(&quot;hi there!&quot;);&amp;#125;);/* the code in comments above will compile to:(function()&amp;#123;  if (n == null) &amp;#123;    n = 1;  &amp;#125;  return alert(&quot;hi there!&quot;);&amp;#125;)();*/square = function(n) &amp;#123;  return n * n;&amp;#125;;// [].slice.call(arguments,0) ==&amp;gt;  Array.prototype.slice.call(arguments,0)var gpaScoreAverage, scores,  slice = [].slice;gpaScoreAverage = function() &amp;#123;  var scores, total;  scores = 1 &amp;lt;= arguments.length ? slice.call(arguments, 0) : [];  // get the single score value or a list of the scores  total = scores.reduce(function(a, b) &amp;#123;    return a + b;  &amp;#125;);  return total / scores.length;&amp;#125;;alert(gpaScoreAverage(65, 78, 81));scores = [78, 75, 79];alert(gpaScoreAverage.apply(null, scores));
+CoffeeScript saves you a lot of keystrokes
+CoffeeScript will declare the variables you need at the top of the function for you automatically. So that means you can’t create the global variables in a function like you can do in JavaScript, actually you can’t use the var keyword in CoffeeScript. &amp;lt;= many people agree that omitting the var keyword makes the variables become global is a really bad desgin…
+Object:
+CoffeeScript supports the class keyword, and it will create a closure to build the class;
+Use the constructor to initialize some private properties, or just omit it;
+Every function you define in a class will be added to the object as a prototype method;
+Use @ as a shortcut for this;
+fat arrow: When you want to use this in previous scope instead of the new scope, you need the fat arrow : =&amp;gt;;
+Use super to call the parent’s method (same name, so just pass the parameter);
+Use :: as a shortcut for .prototype, so you can extend your prototype as this:Vehicle::stop =-&amp;gt; alert &amp;#39;stop&amp;#39;;
+
+
+
+123456789101112131415161718192021222324252627282930313233class Vehicle  # Use the constructor to initialize some private properties  # Use @ as this  constructor: -&amp;gt;    @c = 1  drive: (km) -&amp;gt;    alert &quot;Drove #&amp;#123;km&amp;#125; kilometres&quot;class Car extends Vehicle constructor: -&amp;gt;   @odometer = 0 drive: (km) -&amp;gt;   @odometer += km   super km name:&quot;John Doe&quot; driver: (msg) -&amp;gt;   @msg = msg whoisdriver: -&amp;gt;   @msg()car = new Carcar.drive 5alert &quot;Odometer is at #&amp;#123;car.odometer&amp;#125;&quot;class Person  constructor: (name)-&amp;gt;    @name = name    @mycar = new Car()    @mycar.driver =&amp;gt; alert &quot;#&amp;#123;@name&amp;#125;&quot;mike = new Person &quot;Mike&quot;# use `=&amp;gt;` to show mike's name instead of the default `john doe` set in Carmike.mycar.whoisdriver()
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364var Car, Person, Vehicle, car, mike,  extend = function(child, parent) &amp;#123; for (var key in parent) &amp;#123; if (hasProp.call(parent, key)) child[key] = parent[key]; &amp;#125; function ctor() &amp;#123; this.constructor = child; &amp;#125; ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; &amp;#125;,  hasProp = &amp;#123;&amp;#125;.hasOwnProperty;Vehicle = (function() &amp;#123;  function Vehicle() &amp;#123;    this.c = 1;  &amp;#125;  Vehicle.prototype.drive = function(km) &amp;#123;    return alert(&quot;Drove &quot; + km + &quot; kilometres&quot;);  &amp;#125;;  return Vehicle;&amp;#125;)();Car = (function(superClass) &amp;#123;  extend(Car, superClass);  function Car() &amp;#123;    this.odometer = 0;  &amp;#125;  Car.prototype.drive = function(km) &amp;#123;    this.odometer += km;    return Car.__super__.drive.call(this, km);  &amp;#125;;  Car.prototype.name = &quot;John Doe&quot;;  Car.prototype.driver = function(msg) &amp;#123;    return this.msg = msg;  &amp;#125;;  Car.prototype.whoisdriver = function() &amp;#123;    return this.msg();  &amp;#125;;  return Car;&amp;#125;)(Vehicle);car = new Car;car.drive(5);alert(&quot;Odometer is at &quot; + car.odometer);Person = (function() &amp;#123;  function Person(name) &amp;#123;    this.name = name;    this.mycar = new Car();    this.mycar.driver((function(_this) &amp;#123;      return function() &amp;#123;        return alert(&quot;&quot; + _this.name);      &amp;#125;;    &amp;#125;)(this));  &amp;#125;  return Person;&amp;#125;)();mike = new Person(&quot;Mike&quot;);mike.mycar.whoisdriver();
+Other Good Things
+CoffeeScript will quote reserved words automatically if you use them in your literal object;
+You can also drop the comma when you define your literal array or literal object only if you put one property per line, you can drop the braces for object, but you need them for array;
+Use #{variable_name} to concatenate the string and variables instead of +, but only use them enclosing with double-quote, the single-quote strings are literal, borrowed from ruby;
+CoffeeScript will always convert the == and != to === and !==;
+Use the existential operator: ? to check whether a variable exists and has a value or not(means not null or undefined);
+Also use the soak: ?. as a shortcut for ternary statement;
+Support some new keywords like unless, the opposite to if;
+Use plain english aliases for some of the logical operators: is for ===,isnt for !==,not for !,and for &amp;amp;&amp;amp;,or for ||,true can also be yes, or on,false can be no or off;
+Support assign multiple values at once;
+CoffeeScript replaces the case in switch with when ... then, so you can forget about the break, and it also replaces the default with else;
+CoffeeScript supports the chained comparisions: 61 &amp;gt; a &amp;gt; 39;
+You can use ### to comment multiple lines. The biggest difference between ### and # is former one will be part of generated javascript;
+
+1234567891011121314151617b=1if a? &amp;amp;&amp;amp; b?  alert &quot;a.c equals to #&amp;#123;a?.c&amp;#125;&quot;[city, state, country] = [&quot;!2&quot;,&quot;24&quot;,&quot;2&quot;]# or function which returns an object with the same structure as you described before the `=`&amp;#123;address: &amp;#123;street: myStreet,room: myRoom&amp;#125;&amp;#125; = getAddress()### =&amp;gt;var b;b = 1;// since we declared the b before, we only need to check if b is null.if ((typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null) &amp;amp;&amp;amp; (b != null)) &amp;#123;  alert(&quot;a.c equals to &quot; + (typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null ? a.c : void 0));&amp;#125;var city, country, myRoom, myStreet, ref, ref1, state;ref = [&quot;!2&quot;, &quot;24&quot;, &quot;2&quot;], city = ref[0], state = ref[1], country = ref[2];ref1 = getAddress().address, myStreet = ref1.street, myRoom = ref1.room;###
+Special for List
+List: CoffeeScript borrowed a lot list comprehensions from python[ x*2 for x in object_name ] and ruby.
+while: it works nearly the same as in javascript except that it has an opposite keyword in CoffeeScript: until and both of them can be used as expression and will return a array;
+for: the standard statement is [action or mapping] for [selector] in [collection] when [condition] by [step]. Last by following with a number would affect the loop step(`i++``);
+[f_number..l_number]: it will create a array with numbers between the fist number and the last number, you can use ...(3 dots) to make the array only contains the numbers in between;
+of: for key-value pairs of an object, you can use of to loop them through;
+
+
+
+1234567891011121314151617181920212223242526272829303132333435363738394041times = [0..2](n*times while times -= 1).pop()### =&amp;gt; var times; times = [0, 1, 2];((function() &amp;#123;  var results;  results = [];  while (times -= 1) &amp;#123;    results.push(n * times);  &amp;#125;  return results;&amp;#125;)()).pop();###alert x for x in flavors when x != 'h' by 2###=&amp;gt;var x, i, len;for (i = 0, len = flavors.length; i &amp;lt; len; i+=2) &amp;#123;  x = flavors[i];  if (x !== 'h') &amp;#123;    alert(x);  &amp;#125;&amp;#125;###ages = john: 25 peter: 26 joan: 23alert &quot;#&amp;#123;name&amp;#125; is #&amp;#123;age&amp;#125; years old&quot; for name, age of ages###=&amp;gt;var age, ages, name;ages = &amp;#123;  john: 25,  peter: 26,  joan: 23&amp;#125;;for (name in ages) &amp;#123;  age = ages[name];  alert(name + &quot; is &quot; + age + &quot; years old&quot;);&amp;#125;###
+Digest
+For JavaScript:
+Every class in JS is a function object;
+Only function object has the default prototype, so the normal objects like literal string, number or even string created from String(),any objects created by functions, they all don’t have the default prototype;
+But every object has a default constructor which is exactly the function object who create it;
+
+
+For CoffeeScript:
+If there is only one line in the body, you can move it in front of the condition &amp;lt;= while/until/for/if...
+
+
+
+Puzzle
+Q1: In the second code example above, CoffeeScript create a default extend function for us:
+
+123456789101112131415161718192021var extend = function(child, parent) &amp;#123;  for (var key in parent) &amp;#123;      if (hasProp.call(parent, key)) child[key] = parent[key];  &amp;#125;  // Start from here  function ctor() &amp;#123;      this.constructor = child;  &amp;#125;  ctor.prototype = parent.prototype;  child.prototype = new ctor();  // End  // Just cannot understand the codes above...  // Why we need another function as the child's prototype? We have already copied all the properties from parent, or we just need a beautiful prototype chain? `Car &amp;lt;= ctor() &amp;lt;= Vehicle() &amp;lt;= Object` compared to `Car &amp;lt;= Car &amp;lt;= Object()`.  // Then why not we just use the child.prototype = new parent() ??? we can still get a good prototype chain. `Car &amp;lt;= Vehicle &amp;lt;= Vehicle &amp;lt;= Object`.  child.__super__ = parent.prototype;  return child;&amp;#125;,hasProp = &amp;#123;&amp;#125;.hasOwnProperty;
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (6)</title><link>http://taoalpha.me/blog/2015/06/25/read-javascript-the-definitive-guide-6/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-25T10:00:00.000Z</pubDate><description>概述正式进入本书第二部分的内容, 核心主要围绕在浏览器内的js. 包含了最基本的使用方式, 方法, 因浏览器而增加的各种属性方法, 操作css, dom的方法, 以及常用的一些js框架, 库等, 同时还包含了目前浏览器大热的安全领域.
 阅读笔记Chapter 13 - JavaScript in Web Browsers
 异步:
@@ -934,211 +1101,40 @@ JavaScript the Definitive Guide 6th edition
 Can I Use …
 host and hostname
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (1)</title><link>http://taoalpha.me/blog/2015/06/28/read-coffeescript-programming-with-jquery-rails-and-nodejs/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-28T04:00:00.000Z</pubDate><description>SummaryThe notes I took while I was learning the ‘CoffeeScript’. If you are a real beginner with ‘CoffeeScript’, I suggest you start with another book called “The Little Book on CoffeeScript”, it’s better for beginners. And after that, this one is definitely your best choice.
-CoffeeScript is a language which complies to JavaScript. Like the sass or scss to css except that CoffeeScript is not compatible with javascript. So you can not mix the javascript syntax with the CoffeeScript.
-This note is mainly about the fist chapter of the book, a nice introduction for CoffeeScript including the basic syntax.
-
-And to improve my english, I think i will start writing english notes for the english books. ^_^
-
-NotesCoffeeScript is pretty popular in the community of JavaScript for its simplicity, elegant and readable. Now let us dive into it.
-Instead of  listing the keywords and statements used in CoffeeScript one by one, it would better we learn CoffeeScript from comparing the difference between the CoffeeScript and JavaScript.
-CoffeeScript fix some ugly stuffs in JavaScript
-CoffeeScript removes most of the semicolons and the curly braces which used a lot in JavaScript, gives us a clearly view of the code, but you can still use the semicolons if you want, and you still have to use the semicolons if you want to put multiple statements in single one;
-CoffeeScript learns a lot from ruby and python. Like this one: it uses whitespace or indentation, more accurately, to delimit the code blocks instead of braces.
-CoffeeScript removes a lot of parenthesis for many statements and functions, like if..else, while loops and functions with single string parameter. But this is optional, you can still use them if you want. Notice: you will need parenthesis if you want to call a function without any parameters)
-Function: as the first class object in JavaScript, CoffeeScript also does a lot improvements for it.
-If you write js, you will know that the syntax is really ugly when you want to write a anonymous function. Now you can make it pretty beautiful with CoffeeScript;
-CoffeeScript also saves you a lot keystrokes for defining the functions;
-so what are the rules?
-Replace the function keyword with -&amp;gt;;
-Drop the parenthesis if there is no argument for the function;
-Put the arguments enclosed with parenthesis in front of the -&amp;gt;, and if the argument has a default value, you can set it in the parenthesis;
-Drop the curly braces and use indentation for the function body;
-Automatically return the last expression of the function, but if you need return something before, you still need to use the return;
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>像TED一样演讲</title><link>http://taoalpha.me/blog/2015/06/25/read-speaking-like-people-on-ted/</link><category>read</category><tag>reading notes,speaking</tag><pubDate>2015-06-25T09:00:00.000Z</pubDate><description>概要今天顺带读完了这本”像TED一样演讲”, 作者上一部和演讲相关的书是”乔布斯的魔力演讲”. 归纳了下书中的核心点, 记录分享给大家. 这一类的书干货其实能占到全书1/10就已经算不错了~ 所以一般看起来也比较快.
+阅读笔记情感共鸣
+释放你内心的热情 =&amp;gt; 热情可以传染;
+掌握讲故事的艺术 =&amp;gt; 故事可以刺激并吸引人脑的注意力, 拉近你与听众的距离;
+与演讲主题相关的个人故事;
+与演讲主题相关的他人故事;
+关于产品或者品牌的某个故事;
 
 
+让演讲好像好友交谈一样自然;
 
+制造新奇
+给人们一个看世界的新视角;
+设计让观众惊掉下巴的环节 =&amp;gt; 触发神经学家所说的讲情绪, 让记忆更加深刻;
+用幽默给你的演讲加分;
 
+令人难忘
+严格遵守18分钟的时间规则 =&amp;gt; 有约束才有创造力;
+抓住观众吸引力的魔法, 多感官体验 =&amp;gt; 让内容视觉化;
+表现最真实的自己;
 
-1234567891011121314151617 -&amp;gt; alert 'hi there!'# the code above won't self-initiating, if you want to do that, you need use parenthesis or the `do` keyword like below:# (-&amp;gt; alert 'hi there!')()# do -&amp;gt; alert 'hi there!'square = (n=1) -&amp;gt; n * n# function using splats# this is an alternative way for using Array.prototype.slice()gpaScoreAverage = (scores...) -&amp;gt;  total = scores.reduce (a, b) -&amp;gt; a + b  total / scores.lengthalert gpaScoreAverage(65,78,81)scores = [78, 75, 79]alert gpaScoreAverage(scores...)
-1234567891011121314151617181920212223242526272829303132333435var square;(function()&amp;#123;  return alert(&quot;hi there!&quot;);&amp;#125;);/* the code in comments above will compile to:(function()&amp;#123;  if (n == null) &amp;#123;    n = 1;  &amp;#125;  return alert(&quot;hi there!&quot;);&amp;#125;)();*/square = function(n) &amp;#123;  return n * n;&amp;#125;;// [].slice.call(arguments,0) ==&amp;gt;  Array.prototype.slice.call(arguments,0)var gpaScoreAverage, scores,  slice = [].slice;gpaScoreAverage = function() &amp;#123;  var scores, total;  scores = 1 &amp;lt;= arguments.length ? slice.call(arguments, 0) : [];  // get the single score value or a list of the scores  total = scores.reduce(function(a, b) &amp;#123;    return a + b;  &amp;#125;);  return total / scores.length;&amp;#125;;alert(gpaScoreAverage(65, 78, 81));scores = [78, 75, 79];alert(gpaScoreAverage.apply(null, scores));
-CoffeeScript saves you a lot of keystrokes
-CoffeeScript will declare the variables you need at the top of the function for you automatically. So that means you can’t create the global variables in a function like you can do in JavaScript, actually you can’t use the var keyword in CoffeeScript. &amp;lt;= many people agree that omitting the var keyword makes the variables become global is a really bad desgin…
-Object:
-CoffeeScript supports the class keyword, and it will create a closure to build the class;
-Use the constructor to initialize some private properties, or just omit it;
-Every function you define in a class will be added to the object as a prototype method;
-Use @ as a shortcut for this;
-fat arrow: When you want to use this in previous scope instead of the new scope, you need the fat arrow : =&amp;gt;;
-Use super to call the parent’s method (same name, so just pass the parameter);
-Use :: as a shortcut for .prototype, so you can extend your prototype as this:Vehicle::stop =-&amp;gt; alert &amp;#39;stop&amp;#39;;
-
-
-
-123456789101112131415161718192021222324252627282930313233class Vehicle  # Use the constructor to initialize some private properties  # Use @ as this  constructor: -&amp;gt;    @c = 1  drive: (km) -&amp;gt;    alert &quot;Drove #&amp;#123;km&amp;#125; kilometres&quot;class Car extends Vehicle constructor: -&amp;gt;   @odometer = 0 drive: (km) -&amp;gt;   @odometer += km   super km name:&quot;John Doe&quot; driver: (msg) -&amp;gt;   @msg = msg whoisdriver: -&amp;gt;   @msg()car = new Carcar.drive 5alert &quot;Odometer is at #&amp;#123;car.odometer&amp;#125;&quot;class Person  constructor: (name)-&amp;gt;    @name = name    @mycar = new Car()    @mycar.driver =&amp;gt; alert &quot;#&amp;#123;@name&amp;#125;&quot;mike = new Person &quot;Mike&quot;# use `=&amp;gt;` to show mike's name instead of the default `john doe` set in Carmike.mycar.whoisdriver()
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364var Car, Person, Vehicle, car, mike,  extend = function(child, parent) &amp;#123; for (var key in parent) &amp;#123; if (hasProp.call(parent, key)) child[key] = parent[key]; &amp;#125; function ctor() &amp;#123; this.constructor = child; &amp;#125; ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; &amp;#125;,  hasProp = &amp;#123;&amp;#125;.hasOwnProperty;Vehicle = (function() &amp;#123;  function Vehicle() &amp;#123;    this.c = 1;  &amp;#125;  Vehicle.prototype.drive = function(km) &amp;#123;    return alert(&quot;Drove &quot; + km + &quot; kilometres&quot;);  &amp;#125;;  return Vehicle;&amp;#125;)();Car = (function(superClass) &amp;#123;  extend(Car, superClass);  function Car() &amp;#123;    this.odometer = 0;  &amp;#125;  Car.prototype.drive = function(km) &amp;#123;    this.odometer += km;    return Car.__super__.drive.call(this, km);  &amp;#125;;  Car.prototype.name = &quot;John Doe&quot;;  Car.prototype.driver = function(msg) &amp;#123;    return this.msg = msg;  &amp;#125;;  Car.prototype.whoisdriver = function() &amp;#123;    return this.msg();  &amp;#125;;  return Car;&amp;#125;)(Vehicle);car = new Car;car.drive(5);alert(&quot;Odometer is at &quot; + car.odometer);Person = (function() &amp;#123;  function Person(name) &amp;#123;    this.name = name;    this.mycar = new Car();    this.mycar.driver((function(_this) &amp;#123;      return function() &amp;#123;        return alert(&quot;&quot; + _this.name);      &amp;#125;;    &amp;#125;)(this));  &amp;#125;  return Person;&amp;#125;)();mike = new Person(&quot;Mike&quot;);mike.mycar.whoisdriver();
-Other Good Things
-CoffeeScript will quote reserved words automatically if you use them in your literal object;
-You can also drop the comma when you define your literal array or literal object only if you put one property per line, you can drop the braces for object, but you need them for array;
-Use #{variable_name} to concatenate the string and variables instead of +, but only use them enclosing with double-quote, the single-quote strings are literal, borrowed from ruby;
-CoffeeScript will always convert the == and != to === and !==;
-Use the existential operator: ? to check whether a variable exists and has a value or not(means not null or undefined);
-Also use the soak: ?. as a shortcut for ternary statement;
-Support some new keywords like unless, the opposite to if;
-Use plain english aliases for some of the logical operators: is for ===,isnt for !==,not for !,and for &amp;amp;&amp;amp;,or for ||,true can also be yes, or on,false can be no or off;
-Support assign multiple values at once;
-CoffeeScript replaces the case in switch with when ... then, so you can forget about the break, and it also replaces the default with else;
-CoffeeScript supports the chained comparisions: 61 &amp;gt; a &amp;gt; 39;
-You can use ### to comment multiple lines. The biggest difference between ### and # is former one will be part of generated javascript;
-
-1234567891011121314151617b=1if a? &amp;amp;&amp;amp; b?  alert &quot;a.c equals to #&amp;#123;a?.c&amp;#125;&quot;[city, state, country] = [&quot;!2&quot;,&quot;24&quot;,&quot;2&quot;]# or function which returns an object with the same structure as you described before the `=`&amp;#123;address: &amp;#123;street: myStreet,room: myRoom&amp;#125;&amp;#125; = getAddress()### =&amp;gt;var b;b = 1;// since we declared the b before, we only need to check if b is null.if ((typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null) &amp;amp;&amp;amp; (b != null)) &amp;#123;  alert(&quot;a.c equals to &quot; + (typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null ? a.c : void 0));&amp;#125;var city, country, myRoom, myStreet, ref, ref1, state;ref = [&quot;!2&quot;, &quot;24&quot;, &quot;2&quot;], city = ref[0], state = ref[1], country = ref[2];ref1 = getAddress().address, myStreet = ref1.street, myRoom = ref1.room;###
-Special for List
-List: CoffeeScript borrowed a lot list comprehensions from python[ x*2 for x in object_name ] and ruby.
-while: it works nearly the same as in javascript except that it has an opposite keyword in CoffeeScript: until and both of them can be used as expression and will return a array;
-for: the standard statement is [action or mapping] for [selector] in [collection] when [condition] by [step]. Last by following with a number would affect the loop step(`i++``);
-[f_number..l_number]: it will create a array with numbers between the fist number and the last number, you can use ...(3 dots) to make the array only contains the numbers in between;
-of: for key-value pairs of an object, you can use of to loop them through;
-
-
-
-1234567891011121314151617181920212223242526272829303132333435363738394041times = [0..2](n*times while times -= 1).pop()### =&amp;gt; var times; times = [0, 1, 2];((function() &amp;#123;  var results;  results = [];  while (times -= 1) &amp;#123;    results.push(n * times);  &amp;#125;  return results;&amp;#125;)()).pop();###alert x for x in flavors when x != 'h' by 2###=&amp;gt;var x, i, len;for (i = 0, len = flavors.length; i &amp;lt; len; i+=2) &amp;#123;  x = flavors[i];  if (x !== 'h') &amp;#123;    alert(x);  &amp;#125;&amp;#125;###ages = john: 25 peter: 26 joan: 23alert &quot;#&amp;#123;name&amp;#125; is #&amp;#123;age&amp;#125; years old&quot; for name, age of ages###=&amp;gt;var age, ages, name;ages = &amp;#123;  john: 25,  peter: 26,  joan: 23&amp;#125;;for (name in ages) &amp;#123;  age = ages[name];  alert(name + &quot; is &quot; + age + &quot; years old&quot;);&amp;#125;###
-Digest
-For JavaScript:
-Every class in JS is a function object;
-Only function object has the default prototype, so the normal objects like literal string, number or even string created from String(),any objects created by functions, they all don’t have the default prototype;
-But every object has a default constructor which is exactly the function object who create it;
-
-
-For CoffeeScript:
-If there is only one line in the body, you can move it in front of the condition &amp;lt;= while/until/for/if...
-
-
-
-Puzzle
-Q1: In the second code example above, CoffeeScript create a default extend function for us:
-
-123456789101112131415161718192021var extend = function(child, parent) &amp;#123;  for (var key in parent) &amp;#123;      if (hasProp.call(parent, key)) child[key] = parent[key];  &amp;#125;  // Start from here  function ctor() &amp;#123;      this.constructor = child;  &amp;#125;  ctor.prototype = parent.prototype;  child.prototype = new ctor();  // End  // Just cannot understand the codes above...  // Why we need another function as the child's prototype? We have already copied all the properties from parent, or we just need a beautiful prototype chain? `Car &amp;lt;= ctor() &amp;lt;= Vehicle() &amp;lt;= Object` compared to `Car &amp;lt;= Car &amp;lt;= Object()`.  // Then why not we just use the child.prototype = new parent() ??? we can still get a good prototype chain. `Car &amp;lt;= Vehicle &amp;lt;= Vehicle &amp;lt;= Object`.  child.__super__ = parent.prototype;  return child;&amp;#125;,hasProp = &amp;#123;&amp;#125;.hasOwnProperty;
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (3)</title><link>http://taoalpha.me/blog/2015/06/22/read-javascript-the-definitive-guide-3/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-22T04:00:00.000Z</pubDate><description>概述先说点不相关的… 为了更好的阅读, 所以以后读书笔记相关的博文都会分拆成4个部分:
-
-概述: 算是阅读总结摘要以及类似这段话之类的声明介绍等等;
-阅读笔记: 这部分主要以阅读过程中的记录为主, 会比较杂, 基本算是逐点记录, 评判相对主观;
-心得: 这部分则主要为笔记的延伸, 算是对笔记的一种补充或者说自己的阅读理解消化所得, 有时候也会覆盖到一些使用架桥等等;
-谜题: 这里主要记录一些没有完全理解的部分, 会加上自己的猜测解答, 当弄懂后会更新正解;
-
-DONE.
-本篇是博主重新翻阅了”JavaScript the Definitive Guide(第六版)”的前4章内容(之前 阅读笔记-2均是第五版的)后的读书笔记以及心得体会. 内容主要覆盖js的基本用法, 考虑到重复, 这里主要是在上两篇的基础上查漏补缺.
-阅读笔记Chapter 2 - 基础知识JS能识别的whitespaces:
-常规空格: \u0020 # 即url中常见的%20
-Tab(制表符): \u0009 # js中常见的\t
-Vertical Tab: \u000B # \v
-Form Feed(翻页/页码分隔符): \u000C # \f
-Nonbreaking Space(不间断空格): \u00A0  # 通常在html中用来阻止默认连续多空格自动归一的性质(auto collapsing)而使用&amp;amp;nbsp;, 同时因为软件处理的需要, 使用&amp;amp;nbsp;能够防止相应的处理器将普通空格转为行分隔;
-Byte order mark: \uFEFF
-any character in Unicode category Zs
-
-JS能识别的line terminators:
-line feed: \u000A # \n
-carriage return: \u000D # \r
-line separator: \u2028
-paragraph separator: \u2029
-
-值得一说的是, js是支持unicode作为indentifier的合法字符的, 但是上述这些则不在其中.
-JS的”Unicode Escape Sequences”类似”\u00E9”这种结构的字符在js都代表一种特殊的字符:”unicode”. 如果你在js中使用这些字符, js会自动将其编译为对应的字符(如果是在js的注释中, 则不会编译, 而是以ascii对待), 比如: 示例就会编译为”é”. 而在js中, 这种对等关系是支持的, 即 &amp;quot;\u00E9&amp;quot; === &amp;quot;é&amp;quot;是为真的.
-但是一定要慎用… 因为unicode变化过多, 有时候输出看起来一样的字符, 其本质不一定一样: &amp;quot;e\u0301&amp;quot;的输出也是”é”, 但是它相当于是&amp;quot;e&amp;quot;+&amp;quot;\u0301&amp;quot;组成的.
-JS中的&amp;quot;;&amp;quot;在JS中, &amp;quot;;&amp;quot;作为语句结尾并不是必须的, 只有当多语句同行的时候, &amp;quot;;&amp;quot;才是必须的. 当你没有&amp;quot;;&amp;quot;的时候, js会自动为你添加合适的&amp;quot;;&amp;quot;. 通常它会自动将它没有&amp;quot;;&amp;quot;无法解析代码时候遇到的换行处加以&amp;quot;;&amp;quot;(除了类似return,break, ++, –等, 它会自动将其后的行分隔符作为&amp;quot;;&amp;quot;对待.):
-1234567var aa=3console.log(a)// output: 3// js在第一个换行处识别了其语句分割的意义, 但是在 a = 3 的两个分割处都因为它可以识别合并后的语句所以没有作为`&quot;;&quot;`处理.
-但是上述的成功不意味着js的智能, 更多时候如果我们不合适的使用&amp;quot;;&amp;quot;, 会造成很多奇怪的问题的, 比如以(, [, /, +, -为起始的语句很可能会被误认为是前一语句的延续. 所以通常来说, js的编码还是比较鼓励使用&amp;quot;;&amp;quot;作为语句结尾的.
-Chapter 3 - 数据类型Number:
-Global viriables: Infinity,NaN
-Global Objects: Math,Number
-
-Tips:
-
-NaN 具有唯一性, 其不等于任意值, 包括它自己, 0/0会产生’NaN’, 但是0/0 != NaN, 如果需要判断一个变量是不是NaN, 需要使用isNaN()这个内置的函数;
-Infinity &amp;lt;==&amp;gt; Number.POSITIVE_INFINITY &amp;lt;==&amp;gt; 1/0
--Infinity &amp;lt;==&amp;gt; Number.NEGATIVE_INFINITY &amp;lt;==&amp;gt; -1/0
-Binary Floating-Point会导致小数级错误, 比如0.3-0.2 != 0.2-0.1, 这个属于计算机本身因为二进制编码的原因所致, 所以在比较数字大小的时候要格外小心;
-
-String:
-immutable ordered sequence of 16-bit values
-
-Tips:
-
-string的长度都是按照16-bit来计算的, 所以当如果一个字符超过了16-bit, 则会按照多的计算. 比如: e - \ud835\udc52, 就需要按照两个16bit计算, 即其长度应为:”2”
-从ECMAScript 5之后就允许string跨行定义了, 只需要在换行的地方加上一个反斜杠\, 即可.
-转义字符\如果加在普通字符前, 不会产生任何效果;
-typeof null =&amp;gt; Object , typeof undefined =&amp;gt; undefined;
-null == undefined, null!==undefined =&amp;gt; True
-
-类型转换javascript是一个很宽松的语言, 我们不需要预先定义变量类型, 而在运算以及执行过程中, js也会自动的帮助我们进行类型转换, 当然为了更好的借助这一特点, 了解下图中的js转换类型的规则还是非常有必要的.
-
-其中object转换 primitive datatype 的话, 一般会按照如下步骤进行:
-
-首先会默认调用toString()函数, 你可以自行定义这一函数, 如果toString()返回结果正常, 则转换结束;
-如果toString()未定义, 或者返回结果非primitive datatype的话, 会自动调用valueOf()函数, 同上一步;
-而如果两个都没找到, 那么js将会抛出TypeError;
-
-而根据要转换的是string还是number而交换1,2两步( string 的话先调用toString(), 且返回值必然会转为string; 如果是number的话, 则先找valueOf(), 返回结果为number). 当然至于boolean的话, 所有的object转换到boolean都是true.
-Array转换string的时候默认的toString()就是一个join()调用~ Function的话, 则也可以自己定义toString()函数.
-Tips:
-
-x + “” // Same as String(x)
-+x // Same as Number(x). You may also see x-0
-!!x // Same as Boolean(x). Note double !
-在ECMAScript 5的strict模式下, 所有变量君需要声明才能赋值, 否则会报错;
-
-Chapter 4: Expressions and Operators
-上图为按照优先级顺序排列下来的操作符(横线分隔的同一组块之间的级别相同).
-Tips:
-
-运算顺序不影响赋值顺序, 赋值顺序始终都是严格从左到右的, 比如:h = x+y+z, 那么赋值顺序始终都是h-&amp;gt;x-&amp;gt;y-&amp;gt;z; 通常情况下, 这一赋值顺序不会影响之后的计算顺序, 对结果基本没什么影响, 除了一种情况:
-如果前变量的赋值会影响到后面变量的值的话, 比如共用同一个变量, 那么这种情况下, 赋值顺序就可能会对结果产生一定的影响了. 最简单的例子就是z = 2;y = function(){z = 3;return 1};, 因为y是一个函数, 而它的执行会改变z的值, 所以y()+z和z+y()的结果就是不相同的.
-
-“+”运算符中的类型转换:
-
-string优先, 只要有两个操作数中有一个是string或者是有toString()的object, 那么其都会按照string来进行链接运算;
-除非两个都是非string, 才会进行加法运算;
-当”+”作为单操作数时, 则意味着将操作数向number类型转换;
-
-
-&amp;amp;&amp;amp;运算符如果第一个为false, 则不执行第二条判断, 所以可以用这个方法来代替if: (a==b) &amp;amp;&amp;amp; alert(&amp;quot;a equals b&amp;quot;)就相当于if(a==b) alert(&amp;quot;a equals b&amp;quot;).
-
-!(p &amp;amp;&amp;amp; q) === !p || !q
-!(p || q) === !p &amp;amp;&amp;amp; !q
-a op= b 和 a = a op b通常是等价的, 除非a本身的重复赋值会有副作用, 比如 a[i++] += 1和a[i++] = a[i++] +1就不一样, 因为后者前后两个i不同了.
-eval()函数会继承当前的scope, 除非eval()被赋予某个新的reference, 那样的话只会使用global的scope;
-void操作数很少用到, 它是个单操作数的操作符, 其用法就是丢弃操作数的返回结果, 然后返回 undefined…
-
-心得whitespaces 和 line terminators通常在js里面我们使用\s来统一代表所有其可以识别的whitespace, line terminators. 如下例:
-1234567var k = 'asd \t asdasd \na asd \f asda dad\rasd\u2028asd\u2029\u00A0'k// output 里面有两个换行的符号, 我这里为了演示方便就不换行了k.replace(/\n/g,'-')// 同上,里面的&quot;\r&quot;我也不换行了k.replace(/\s/g,'-')// output: &quot;asd---asdasd--a-asd---asda-dad-asd-asd--&quot;
-因为在console中输出的时候是不换行的, 所以有时候单单看console输出的话, 类似这种编码问题所致的错误就找不出来, 为了省事, 我们可以统一使用\s来代表所有此类符号.
-谜题Q: 按照正常来说Number.MAX_VALUE加上一个数应该就会自动转为Infinity, 但实际上, 测试过程中发现, 只有当Number.MAX_VALUE加上一个足够大的数后才会等与Infinity, 这是为什么?
-1234567Number.MAX_VALUE// output: 1.7976931348623157e+308Number.MAX_VALUE +1// output: 1.7976931348623157e+308...Number.MAX_VALUE + Math.pow(10,1000)// output: Infinity
-正解: the sum is computed and rounded to the nearest representable value using IEEE 754 round-to-nearest mode. If the magnitude is too large to represent, the operation overflows and the result is then an infinity of appropriate sign.
-
-IEEE 754
-In the following two rounding-direction attributes, an infinitely precise result with magnitude at least bemax ( b − ½ b^(1-p) ) shall round to ∞ with no change in sign; here emax and p are determined by the destination format (see 3.3). With:
-
-roundTiesToEven: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with an even least significant digit shall be delivered
-
-roundTiesToAway: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with larger magnitude shall be delivered.
-
-
-
-ECMAScript does not specify which of the round-to-nearest, but it doesn’t matter here because both gives the same result. The number in ECMAScript is “double”, in which
-
-b = 2
-emax = 1023
-p = 53,
-
-_so the result must be at least 2^1024 - 2^970 ~ 1.7976931348623158 × 10^308 in order to round to infinity. Otherwise it will just round to MAX_VALUE, because that is the closer than Infinity.Notice that MAX_VALUE = 21024 - 2971, so you need to add at least 2^971 - 2^970 = 2^970 ~ 9.979202 × 10^291 in order to get infinity._
-Q: &amp;#39;0&amp;#39; == false 是 true, 为什么 null == false 就是 false呢?
-猜测解释: ==这样的是比较value的, 而 null转换为boolean类型为false, 并不意味着两者的value是相同的. ==只会比较value, 而不会进行转换. 也即true, false两个boolean类型的其value也是1,0. 而null和undefined的value则不同, 前者为空, 后者为无.
-参考资料:
-JavaScript the Definitive Guide 6th edition
-Unicode Property
-List of Unicode Characters
-编码历史介绍
+书中涉及到的TED(部分)
+Bryan Stevenson: We need to talk about an injustice
+Dan Ariely: Our buggy moral code
+Truly sustainable economic development
+Jennifer Granholm: A clean energy proposal – race to the top!
+Amy Cuddy: Your body language shapes who you are
+Robert Ballard: The astonishing hidden world of the deep ocean
+Hans Rosling: The best stats you’ve ever seen
+Mary Roach: 10 things you didn’t know about orgasm
+Bill Gates: Mosquitos, malaria and education
+Jill Bolte Taylor: My stroke of insight
+Stephen Hawking: Questioning the universe
+David Christian: The history of our world in 18 minutes
 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (7)</title><link>http://taoalpha.me/blog/2015/06/26/read-javascript-the-definitive-guide-7/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-26T06:00:00.000Z</pubDate><description>概述阅读笔记Chapter 15 - Scripting Documents
 Selecting:
@@ -1265,46 +1261,6 @@ Chapter 20 - Client-Side Storage我在早先做chrome插件详见我的portfolio
 参考资料
 JavaScript the Definitive Guide 6th edition 我现在就去写导入工具… 今天就到这里吧, 明天算是最后一篇就能完结本书啦~
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (2)</title><link>http://taoalpha.me/blog/2015/06/18/read-javascript-the-definitive-guide-2/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-18T10:00:00.000Z</pubDate><description>概述作为JS中的一等公民, function(函数)始终是JS的核心中的核心. 所以这里单独用一篇笔记来记录JavaScript: the definitive Guide一书第八章的内容. 主要介绍了函数的定义, 作用域, 参数, 声明以及执行等基础知识, 另外也着重介绍了其高级用法中的closure. 我将自己觉得重要的, 值得记录的部分都作为心得摘抄如下:
-心得arguments对象对每一个function而言, 都自动会有一个内置的arguments对象, 用它就可以访问传入的参数了. 通常来说arguments对象我们只会用在不定长传参的函数上, 但arguments本身带有的一个函数却是可以在某些时刻发挥重要作用的~ 这个函数就是callee函数:
-12345678// 递归自我调用函数在解决一些问题的时候是很常用的, 而通常情况下我们都会在函数内调用本函数名即可, 但是如果我们需要实现自我调用的函数正好是一个无名函数呢?// arguments.callee 即调用当前执行的函数function(x)&amp;#123;return x*arguments.callee(x-1)&amp;#125;// 如上, 就实现了一个很简单的&amp;gt;2阶乘计算了
-需要特别注意的就是callee作为arguments对象的一个方法, 是可以跟随arguments作为参数传递的, 而且其作为参数的时候保持其所指代函数不变.
-既然说到arguments, 就多说两句喽. 首先arguments算是一个类array的object. 它本身具有array的一些特性, 比如可以直接调用length函数(通常的object是不能通过.length直接调用获取长度的, 需要使用Object.keys(object_name).length才能获得). 但是它本身和array.length有很大的差别, 其中最大的一个差别就是: 无法通过.length直接更改数组长度.
-123456var a = [1,3,4]a.length = 5console.log(a)// output: [1,3,4,undefined x 2](function(x)&amp;#123;arguments.length = 5;console.log(arguments)&amp;#125;)(10,1,2)// output: [10,1,2]
-可以看到通过对arguments.length直接赋值, 并不会影响其本身的长度, 这一点和array本身有很大的差别.
-PS. 上述示例是增加长度, 其实缩减长度也是一样的, 多余的元素会被自动删除. 所以, 通过直接向array.length赋值也算是一个修改array长度的方法喽~
-PSS. 通常如果一个函数接受参数比较多的时候, 为了预防因为参数顺序而产生的问题, 可以采取传json格式的object作为参数, 这样就能够通过key而不根据顺序获取参数了.
-Function的property请先看下述代码:
-1234567891011f.temp = &quot;test&quot;function f(x)&amp;#123;  console.log(arguments.length);  console.log(arguments.callee.length);  console.log(f.temp);&amp;#125;f(1,2)// output: 2 1 &quot;test&quot;
-首先, 我们看一下我们前两个输出值:
-  如上所述,arguments.length即代表传入参数的数量, 我们传入了两个参数, 所以这里输出2, 没有任何问题. 那么后面的arguments.callee.length又是什么呢? 为什么它输出的是1呢? 
-  根据之前的介绍, 我们当知道arguments.callee是代指当前的函数f(), 那么对应的arguments.callee.length即我们的函数f的length了. 对于Function这个对象而言, 它所拥有的length这一属性特指其声明的参数数量, 我们应该知道JavaScript作为一个很宽松的语言, 其函数定义后接受的参数是不定长的, 即便传入参数与函数声明的参数不相等也是不会抛出异常的, 那么有时候我们需要获取确保函数接受的参数和其声明的参数数量一致, 就可以使用函数自身的length属性来实现;
-其次, 我们自定义了一个f的属性temp, 但是我们实在函数定义之前赋予这个属性的, 为什么依然能够在函数运行中输出呢? 
-  这主要是因为js的执行顺序所致. js在载入执行过程中, 首先会将内部声明的函数都定义之后才会正式由上至下的逐次执行. 所以这里虽然我们把f.temp写在了函数定义之前, 但是js执行过程中, 还是首先定义了函数f, 接着才开始运行我们的f.temp赋值语句. 自然就不会报错说f没有定义了~
-PS. 其实不止是Function, 即便是普通的变量声明, 也是编译和执行分开进行的, 比如var a = 2;也是拆解为var a; a = 2两步执行的, 而声明都是发生在编译过程, 待编译过程全部结束后, 才会由上到下一次执行, 这也是为什么, 单纯的声明可以出现在代码的任意部位都不会影响其所在作用域的生效, 不会爆出not defined的错误;
-reserved word, identifier, keyword这三个作为基础知识, 可以说是每门语言都共通的概念,  但很多时候我们都不会用到或者不会特意去区分这三个名词, 而最近因为看原版书, 经常会出现三个词的交叉, 所以这里特别google了以下, 试图总结下三者的区别:
-
-identifier: 通常我们把我们定义的变量名, 函数名, 类名, 标签名,宏定义名, 类型名等称为identifier, 取其标识之意, 用以作为其名称以便代用;
-reserved word: 与identifier相对, reserved word则是指由语言规定而保留的一些词, 这些词有着特定的用途而不能被用作identifier;
-keyword: 作为语言语法的组成部分之一, keyword通常都会有着特定的含义, 绝大多数的keyword都是reserved word, 但也有少量语法中存在keyword不是reserved word的情况, 比如fortran就没有reserved word的概念, 它的所有keyword都可以用作identifier;
-
-reserved word和keyword确实在很大程度上是共同的, 除了上述说的类似fortran语言这种情况外, 也存在reserved word不是keyword的情况, 比如java中的goto就是一个reserved word, 但本身又不是一个keyword, 所以可以说goto这个词基本在java中是完全废弃的~ 那他们为啥要定义这个goto呢?? 有一种说法是这样情况通常是为未来版本预留的~ 还有一种说法是JVM作者James Gosling最初加了goto的支持, 但后来发现完全没必要, 就又去掉了, 但是为了兼容性问题,也一直没有把goto从reserved word此表中删去.
-PS. 很多时候也有人完全不区分reserved word和keyword的区别, 完全等同二者为”不能用来做identifier的词”.
-closure - 闭包在javascript中, 一个function由两部分组成: 函数执行的代码以及代码执行的环境. 而这两个组合到一起后也有个专属的名称, 即closure. 不过单独一个独立函数的closure并没有什么值得说的意义, 因为其执行的环境, 即我们称之为scope的东西, 随着函数的执行开始与结束会自动的被创建并清理掉, 所以通常情况下closure都单指在嵌套函数中. 当存在嵌套的函数时, 并且函数之外存在一个reference指向函数的话, 事情就变得好玩多了:
-12345678910111213141516171819202122232425262728function f()&amp;#123;  var id = 1;  return function()&amp;#123;console.log(id++)&amp;#125;&amp;#125;f()();f()();f()()// output: 1,1,1// 每次我们调用`f()`,都会自动创建一个包含了其局部变量`id`的对象, 而嵌套的函数`f()()`会自动继承母函数的作用域;// 但每次随着调用结束, 因为没有任何外部引用, 所以创建的对象都会自动的被回收, 如此就导致每次调用`f()()`都会输出1了;var k = f();k();k();k()// output: 1,2,3// 同样是调用`f()`, 但是我们首先引入了一个新的变量`k`引用`f()`函数; // 这样随着`f()`的调用和结束, 其创建的`call`对象(即包含了局部变量id的那个对象)就因为还存在外部引用而得以保留// 所以后面连续调用`k()`的过程中, 本身的嵌套函数就始终共享着`call`对象的作用域, 如此每次输出的时候都是先获取了局部变量id, 然后在执行`id++`,所以输出为1,2,3// 不喜欢`f()()`这种调用方式, 也不想单独创建新变量来增加引用? 当然可以, 只需要借助下`anonymous function`即可:var f = (function()&amp;#123;    var id = 1;    return function()&amp;#123;console.log(id++)&amp;#125;  &amp;#125;)();f();f();f()// output: 1,2,3// `anonymous function`是自执行的函数, 这里相当于把之前的`var k = f()`以及`f()`的声明定义合二为一了.
-可以说上述基本就是closure最基本的内容了, 而closure作为js的高级用法之一, 掌握了它, 你就能做很多有意思的操作了. 一个简单的例子就是: 你可以参照closure的原理来模拟实现浏览器探查元素(inspector)的breakpoint功能.
-因为原作trimpath上的文章已经无法访问, 所以转载了一个类似的如下, 略作了简单的修改(加了几句更友好的提示和显示每一步的运算结果):
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061// This function implements a breakpoint. It repeatedly prompts the user// for an expression, evaluates it with the supplied self-inspecting closure,// and displays the result.  It is the closure that provides access to the// scope to be inspected, so each function must supply its own closure.// // Inspired by Steve Yen's breakpoint() function at// http://trimpath.com/project/wiki/TrimBreakpoint//function inspect(inspector, title) &amp;#123;    var expression, result;    // You can use a breakpoint to turn off subsequent breakpoints by    // creating a property named &quot;ignore&quot; on this function.    if (&quot;ignore&quot; in arguments.callee) return;    while(true) &amp;#123;        // Figure out how to prompt the user        var message = &quot;&quot;;        // If we were given a title, display that first        if (title) message = title + &quot;\n&quot;;        // If we've already evaluated an expression, display it and its value        if (expression) message += &quot;\n&quot; + expression + &quot; ==&amp;gt; &quot; + result + &quot;\n&quot;;        else expression = &quot;&quot;;        // We always display at least a basic prompt:        message += &quot;Enter an expression to evaluate, or just click cancel to see the next step of current calculation.&quot;;        // Get the user's input, displaying our prompt and using the        // last expression as the default value this time.        expression = prompt(message, expression);        // If the user didn't enter anything (or clicked Cancel),        // they're done and so we return, ending the breakpoint.        if (!expression) return;        // Otherwise, use the supplied closure to evaluate the expression        // in the scope that is being inspected.         // The result will be displayed on the next iteration.        result = inspector(expression);    &amp;#125;&amp;#125;function factorial(n) &amp;#123;        var inspector = function(x) &amp;#123;                return eval(x);        &amp;#125;        inspect (inspector, &quot;Entering factorial()&quot;);        var result = 1;        while (n &amp;gt; 1)&amp;#123;                result = result * n;                n--;                inspect(inspector, &quot;factorial() loop with current result:&quot;+result);        &amp;#125;        inspect(inspector, &quot;Exiting factorial()&quot;);        return result;&amp;#125;inspect(function (x) &amp;#123;return eval(x);&amp;#125;, 'Hello')factorial(5)// 通过closure, 它就可以检测factorial执行的各个环节, 从而更容易的找到你在不同环节的问题.
-虽然closure让你可以写出更加复杂的js代码, 但是本身closure的使用还是要慎重的, 因为closure需要存储函数对象在内存中而不销毁, 所以如果函数主体庞大, 那么对于内存的压力和运行性能都是会有影响的~
-Function constructor类似Array, String等都有着一个对应的类, 可以允许你通过new来创建对象. Function也有自己对应的Function()类, 可以通过:new Function()来创建函数, 其接收不定长参数, 最后一个参数始终作为函数运行主体. 不过通常来说这种方法定义函数远没有我们常用的function关键词来的方便, 所以使用上倒是少了很多~ 不过有几点还是值得注意的:
-
-new ClassFunction() 是把function作为constructor的一种用法, 你可以简单的理解为: var cc = new ClassFunction(params) ==&amp;gt; var cc = new Object();ClassFunction.call(cc,params)
-new Function()不接收函数名参数, 即其创建的都是anonymous function;
-new Function()不继承作用域, 几遍其是在嵌套函数中定义, 也只继承global域, 不会继承上层函数的作用域;
-
-谜题12345678910111213var name = &quot;The Window&quot;;var object = &amp;#123;  name : &quot;My Object&quot;,  getNameFunc : function()&amp;#123;    console.log(this);    return function()&amp;#123;      return this.name;    &amp;#125;;  &amp;#125;&amp;#125;;console.log(object.getNameFunc()());// output: Object&amp;#123;name:&quot;My Object&quot;&amp;#125;; &quot;The Window&quot;
-上述定义中, 为什么嵌套函数没有继承上层函数的this呢? 反而继承了全局的this?
-猜测解答: this这个关键字是个比较特殊的关键字, 它具有一个很有趣的特点就是: 当一个函数作为函数而不是方法来调用的时候, this指向的是全局对象, 只有当它是方法的时候, 其指向的才是所属对象; 题目来源阮一峰博客. 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (8)</title><link>http://taoalpha.me/blog/2015/06/27/read-javascript-the-definitive-guide-8/</link><category>read</category><tag>js,reding notes</tag><pubDate>2015-06-27T12:00:00.000Z</pubDate><description>概述先说题外话: 昨天读到中途转去忙把以前的旧文章移植过来, 昨夜就已完成, 主要通过python解析了导出来的xml文本, 然后获取对应的时间信息和url信息组成符合jekyll规则的文件名, 再利用文本拼接出每个文件中固有的头和主体, 本来计划用html2text来把每个博文转为markdown, 不过后来源码有些问题, 对部分博文识别不好, 我也没时间细改, 所以就干脆拼接了html到主体中去.
 主要导入了当初写的Patch系列和针对UX写的翻译系列. 分别归类到了Tech和DandP目录下. 有兴趣的可查看之~
 今天来继续完结JavaScript: the Definitive Guide一书.
@@ -1486,55 +1442,46 @@ JavaScript Weekly Newsletter
 YUI Theatre
 Rey Bango 作者本人哈哈
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
-Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
-NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
-jQueryjQuery is the most popular js module people used in their websites or webapps. And using jQuery with CoffeeScript is just like javascript. jQuery is javascript, after all.
-Want to use CoffeeScript with jQuery? Just do it and follow the rules we learn from the basic syntax part. Here I list several examples and if you look it closely, you will find everything you have already known if you read the first chapter carefully. The author of the book shows us another complex examples: TodoMVC in CoffeeScript.
-BTW: TodoMVC is a great project which shows you how to write a todo app in all kinds of tools and frameworks.
-1234567891011121314151617181920212223242526272829303132333435363738394041$ -&amp;gt;  do some  do another### =&amp;gt;$(function() &amp;#123;  some();  return another();&amp;#125;);That's just like the $(document).ready(function()&amp;#123;&amp;#125;)#### A function using ajax to send mail, which is a new feature I will add to my blog in a few days :)@sendMail = (msg)-&amp;gt;  $.ajax    type: 'POST'    url: 'https://mandrillapp.com/api/1.0/messages/send.json'    data:      'key': ''      'message':        'from_email': msg.sender_mail        'from_name' : msg.sender_name        'to': [            &amp;#123;              'email': ''              'name': 'TaoAlpha'              'type': 'to'            &amp;#125;          ]        'autotext': 'true'        'subject': msg.subject        'html': msg.content  .done (response)-&amp;gt;    showAlert(&quot;success&quot;,&quot;Thanks for your contribution!&quot;)  .fail (data)-&amp;gt;    showAlert(&quot;fail&quot;,&quot;Sorry! Failed to send the email. Please retry!&quot;)# another function to get unique result from an array of objectsArray::getObjectUnique = (id) -&amp;gt;  a=b=[];  add = (data) -&amp;gt; b.push data[id];data  (add i for i in @ when b.indexOf(i[id]) == -1 )
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748// You can see that you have saved a lot of keystrokes and the codes look more clean and beautiful.// Because coffeescript doesn't support declare global variables directly, and if we want to use the function in other script, we need to declare it into the `this` scope.this.sendMail = function(msg) &amp;#123;  return $.ajax(&amp;#123;    type: 'POST',    url: 'https://mandrillapp.com/api/1.0/messages/send.json',    data: &amp;#123;      'key': '',      'message': &amp;#123;        'from_email': msg.sender_mail,        'from_name': msg.sender_name,        'to': [          &amp;#123;            'email': '',            'name': 'TaoAlpha',            'type': 'to'          &amp;#125;        ],        'autotext': 'true',        'subject': msg.subject,        'html': msg.content      &amp;#125;    &amp;#125;  &amp;#125;).done(function(response) &amp;#123;    return showAlert(&quot;success&quot;, &quot;Thanks for your contribution!&quot;);  &amp;#125;).fail(function(data) &amp;#123;    return showAlert(&quot;fail&quot;, &quot;Sorry! Failed to send the email. Please retry!&quot;);  &amp;#125;);&amp;#125;;# get unque result for array of objectsArray.prototype.getObjectUnique = function(id) &amp;#123;  var a, add, b, i, j, len, results;  a = b = [];  add = function(data) &amp;#123;    b.push(data[id]);    return data;  &amp;#125;;  results = [];  for (j = 0, len = this.length; j &amp;lt; len; j++) &amp;#123;    i = this[j];    if (b.indexOf(i[id]) === -1) &amp;#123;      results.push(add(i));    &amp;#125;  &amp;#125;  return results;&amp;#125;;
-RailsRuby on Rails is a web framework that came around in 2004. And it soon became quite popular. Actually many people believe that Rails saved the ruby…
-Check this:How to download and install Rails if you haven’t installed it.
-Rails’s principles
-Convention over configuration
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (2)</title><link>http://taoalpha.me/blog/2015/06/18/read-javascript-the-definitive-guide-2/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-18T10:00:00.000Z</pubDate><description>概述作为JS中的一等公民, function(函数)始终是JS的核心中的核心. 所以这里单独用一篇笔记来记录JavaScript: the definitive Guide一书第八章的内容. 主要介绍了函数的定义, 作用域, 参数, 声明以及执行等基础知识, 另外也着重介绍了其高级用法中的closure. 我将自己觉得重要的, 值得记录的部分都作为心得摘抄如下:
+心得arguments对象对每一个function而言, 都自动会有一个内置的arguments对象, 用它就可以访问传入的参数了. 通常来说arguments对象我们只会用在不定长传参的函数上, 但arguments本身带有的一个函数却是可以在某些时刻发挥重要作用的~ 这个函数就是callee函数:
+12345678// 递归自我调用函数在解决一些问题的时候是很常用的, 而通常情况下我们都会在函数内调用本函数名即可, 但是如果我们需要实现自我调用的函数正好是一个无名函数呢?// arguments.callee 即调用当前执行的函数function(x)&amp;#123;return x*arguments.callee(x-1)&amp;#125;// 如上, 就实现了一个很简单的&amp;gt;2阶乘计算了
+需要特别注意的就是callee作为arguments对象的一个方法, 是可以跟随arguments作为参数传递的, 而且其作为参数的时候保持其所指代函数不变.
+既然说到arguments, 就多说两句喽. 首先arguments算是一个类array的object. 它本身具有array的一些特性, 比如可以直接调用length函数(通常的object是不能通过.length直接调用获取长度的, 需要使用Object.keys(object_name).length才能获得). 但是它本身和array.length有很大的差别, 其中最大的一个差别就是: 无法通过.length直接更改数组长度.
+123456var a = [1,3,4]a.length = 5console.log(a)// output: [1,3,4,undefined x 2](function(x)&amp;#123;arguments.length = 5;console.log(arguments)&amp;#125;)(10,1,2)// output: [10,1,2]
+可以看到通过对arguments.length直接赋值, 并不会影响其本身的长度, 这一点和array本身有很大的差别.
+PS. 上述示例是增加长度, 其实缩减长度也是一样的, 多余的元素会被自动删除. 所以, 通过直接向array.length赋值也算是一个修改array长度的方法喽~
+PSS. 通常如果一个函数接受参数比较多的时候, 为了预防因为参数顺序而产生的问题, 可以采取传json格式的object作为参数, 这样就能够通过key而不根据顺序获取参数了.
+Function的property请先看下述代码:
+1234567891011f.temp = &quot;test&quot;function f(x)&amp;#123;  console.log(arguments.length);  console.log(arguments.callee.length);  console.log(f.temp);&amp;#125;f(1,2)// output: 2 1 &quot;test&quot;
+首先, 我们看一下我们前两个输出值:
+  如上所述,arguments.length即代表传入参数的数量, 我们传入了两个参数, 所以这里输出2, 没有任何问题. 那么后面的arguments.callee.length又是什么呢? 为什么它输出的是1呢? 
+  根据之前的介绍, 我们当知道arguments.callee是代指当前的函数f(), 那么对应的arguments.callee.length即我们的函数f的length了. 对于Function这个对象而言, 它所拥有的length这一属性特指其声明的参数数量, 我们应该知道JavaScript作为一个很宽松的语言, 其函数定义后接受的参数是不定长的, 即便传入参数与函数声明的参数不相等也是不会抛出异常的, 那么有时候我们需要获取确保函数接受的参数和其声明的参数数量一致, 就可以使用函数自身的length属性来实现;
+其次, 我们自定义了一个f的属性temp, 但是我们实在函数定义之前赋予这个属性的, 为什么依然能够在函数运行中输出呢? 
+  这主要是因为js的执行顺序所致. js在载入执行过程中, 首先会将内部声明的函数都定义之后才会正式由上至下的逐次执行. 所以这里虽然我们把f.temp写在了函数定义之前, 但是js执行过程中, 还是首先定义了函数f, 接着才开始运行我们的f.temp赋值语句. 自然就不会报错说f没有定义了~
+PS. 其实不止是Function, 即便是普通的变量声明, 也是编译和执行分开进行的, 比如var a = 2;也是拆解为var a; a = 2两步执行的, 而声明都是发生在编译过程, 待编译过程全部结束后, 才会由上到下一次执行, 这也是为什么, 单纯的声明可以出现在代码的任意部位都不会影响其所在作用域的生效, 不会爆出not defined的错误;
+reserved word, identifier, keyword这三个作为基础知识, 可以说是每门语言都共通的概念,  但很多时候我们都不会用到或者不会特意去区分这三个名词, 而最近因为看原版书, 经常会出现三个词的交叉, 所以这里特别google了以下, 试图总结下三者的区别:
 
+identifier: 通常我们把我们定义的变量名, 函数名, 类名, 标签名,宏定义名, 类型名等称为identifier, 取其标识之意, 用以作为其名称以便代用;
+reserved word: 与identifier相对, reserved word则是指由语言规定而保留的一些词, 这些词有着特定的用途而不能被用作identifier;
+keyword: 作为语言语法的组成部分之一, keyword通常都会有着特定的含义, 绝大多数的keyword都是reserved word, 但也有少量语法中存在keyword不是reserved word的情况, 比如fortran就没有reserved word的概念, 它的所有keyword都可以用作identifier;
 
-Rails is designed to assume that the programmer will follow certain known conventions, which if used, provide great benefit and much less need to configure the framework.That means that the framework makes assumptions on how a typical application should be built and structured and it doesn’t try to be overly flexible and configurable. This helps you spend less time on mundane tasks like configuring and wiring up an application architecture and more time on actually building your app.
+reserved word和keyword确实在很大程度上是共同的, 除了上述说的类似fortran语言这种情况外, 也存在reserved word不是keyword的情况, 比如java中的goto就是一个reserved word, 但本身又不是一个keyword, 所以可以说goto这个词基本在java中是完全废弃的~ 那他们为啥要定义这个goto呢?? 有一种说法是这样情况通常是为未来版本预留的~ 还有一种说法是JVM作者James Gosling最初加了goto的支持, 但后来发现完全没必要, 就又去掉了, 但是为了兼容性问题,也一直没有把goto从reserved word此表中删去.
+PS. 很多时候也有人完全不区分reserved word和keyword的区别, 完全等同二者为”不能用来做identifier的词”.
+closure - 闭包在javascript中, 一个function由两部分组成: 函数执行的代码以及代码执行的环境. 而这两个组合到一起后也有个专属的名称, 即closure. 不过单独一个独立函数的closure并没有什么值得说的意义, 因为其执行的环境, 即我们称之为scope的东西, 随着函数的执行开始与结束会自动的被创建并清理掉, 所以通常情况下closure都单指在嵌套函数中. 当存在嵌套的函数时, 并且函数之外存在一个reference指向函数的话, 事情就变得好玩多了:
+12345678910111213141516171819202122232425262728function f()&amp;#123;  var id = 1;  return function()&amp;#123;console.log(id++)&amp;#125;&amp;#125;f()();f()();f()()// output: 1,1,1// 每次我们调用`f()`,都会自动创建一个包含了其局部变量`id`的对象, 而嵌套的函数`f()()`会自动继承母函数的作用域;// 但每次随着调用结束, 因为没有任何外部引用, 所以创建的对象都会自动的被回收, 如此就导致每次调用`f()()`都会输出1了;var k = f();k();k();k()// output: 1,2,3// 同样是调用`f()`, 但是我们首先引入了一个新的变量`k`引用`f()`函数; // 这样随着`f()`的调用和结束, 其创建的`call`对象(即包含了局部变量id的那个对象)就因为还存在外部引用而得以保留// 所以后面连续调用`k()`的过程中, 本身的嵌套函数就始终共享着`call`对象的作用域, 如此每次输出的时候都是先获取了局部变量id, 然后在执行`id++`,所以输出为1,2,3// 不喜欢`f()()`这种调用方式, 也不想单独创建新变量来增加引用? 当然可以, 只需要借助下`anonymous function`即可:var f = (function()&amp;#123;    var id = 1;    return function()&amp;#123;console.log(id++)&amp;#125;  &amp;#125;)();f();f();f()// output: 1,2,3// `anonymous function`是自执行的函数, 这里相当于把之前的`var k = f()`以及`f()`的声明定义合二为一了.
+可以说上述基本就是closure最基本的内容了, 而closure作为js的高级用法之一, 掌握了它, 你就能做很多有意思的操作了. 一个简单的例子就是: 你可以参照closure的原理来模拟实现浏览器探查元素(inspector)的breakpoint功能.
+因为原作trimpath上的文章已经无法访问, 所以转载了一个类似的如下, 略作了简单的修改(加了几句更友好的提示和显示每一步的运算结果):
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061// This function implements a breakpoint. It repeatedly prompts the user// for an expression, evaluates it with the supplied self-inspecting closure,// and displays the result.  It is the closure that provides access to the// scope to be inspected, so each function must supply its own closure.// // Inspired by Steve Yen's breakpoint() function at// http://trimpath.com/project/wiki/TrimBreakpoint//function inspect(inspector, title) &amp;#123;    var expression, result;    // You can use a breakpoint to turn off subsequent breakpoints by    // creating a property named &quot;ignore&quot; on this function.    if (&quot;ignore&quot; in arguments.callee) return;    while(true) &amp;#123;        // Figure out how to prompt the user        var message = &quot;&quot;;        // If we were given a title, display that first        if (title) message = title + &quot;\n&quot;;        // If we've already evaluated an expression, display it and its value        if (expression) message += &quot;\n&quot; + expression + &quot; ==&amp;gt; &quot; + result + &quot;\n&quot;;        else expression = &quot;&quot;;        // We always display at least a basic prompt:        message += &quot;Enter an expression to evaluate, or just click cancel to see the next step of current calculation.&quot;;        // Get the user's input, displaying our prompt and using the        // last expression as the default value this time.        expression = prompt(message, expression);        // If the user didn't enter anything (or clicked Cancel),        // they're done and so we return, ending the breakpoint.        if (!expression) return;        // Otherwise, use the supplied closure to evaluate the expression        // in the scope that is being inspected.         // The result will be displayed on the next iteration.        result = inspector(expression);    &amp;#125;&amp;#125;function factorial(n) &amp;#123;        var inspector = function(x) &amp;#123;                return eval(x);        &amp;#125;        inspect (inspector, &quot;Entering factorial()&quot;);        var result = 1;        while (n &amp;gt; 1)&amp;#123;                result = result * n;                n--;                inspect(inspector, &quot;factorial() loop with current result:&quot;+result);        &amp;#125;        inspect(inspector, &quot;Exiting factorial()&quot;);        return result;&amp;#125;inspect(function (x) &amp;#123;return eval(x);&amp;#125;, 'Hello')factorial(5)// 通过closure, 它就可以检测factorial执行的各个环节, 从而更容易的找到你在不同环节的问题.
+虽然closure让你可以写出更加复杂的js代码, 但是本身closure的使用还是要慎重的, 因为closure需要存储函数对象在内存中而不销毁, 所以如果函数主体庞大, 那么对于内存的压力和运行性能都是会有影响的~
+Function constructor类似Array, String等都有着一个对应的类, 可以允许你通过new来创建对象. Function也有自己对应的Function()类, 可以通过:new Function()来创建函数, 其接收不定长参数, 最后一个参数始终作为函数运行主体. 不过通常来说这种方法定义函数远没有我们常用的function关键词来的方便, 所以使用上倒是少了很多~ 不过有几点还是值得注意的:
 
+new ClassFunction() 是把function作为constructor的一种用法, 你可以简单的理解为: var cc = new ClassFunction(params) ==&amp;gt; var cc = new Object();ClassFunction.call(cc,params)
+new Function()不接收函数名参数, 即其创建的都是anonymous function;
+new Function()不继承作用域, 几遍其是在嵌套函数中定义, 也只继承global域, 不会继承上层函数的作用域;
 
-Don’t repeat yourself, or DRY
-
-
-Every piece of knowledge must have a single, unambiguous, and authoritative representation within a system.Rails strives to remove duplication and boilerplate wherever it can.
-
-How to use Rails with CoffeeScriptLuckily, after Rails 3.1, you don’t need do anything to let Rails support CoffeeScript. It has already become part of rails! And also, rails has changed its default js library to jQuery.
-So what you need to do if you want to use coffeescript with rails? Nothing but learn rails!
-Just like the author said in the book: “If you haven’t done so already, I encourage you to spend some more time learning Rails as well as Ruby, and immersing yourself in the wonderful communities they support.”
-Node.jsNode is fantastic. It changes something. Before node, javascript was mostly run inside browsers. Now it just came out and gave web developers a chance to become a full-stack!
-Features of Node
-Event-driven
-
-
-The Node.js framework only allows non-blocking, asynchronous I/O. This means that any I/O operation that is accessing an external resource, such as the operating system, a database, or a network resource must happen asynchronously.
-
-
-Fast and scalable
-
-
-The V8 JavaScript engine(created by google and used in chrome) used by Node.js is highly optimized for performance, thus making Node.js applications very fast. The fact that Node is non-blocking will ensure that your applications will be able to handle many concurrent client requests without using a lot of system resources.
-
-
-Node is not Rails
-
-
-Rails strives to be a full-stack solution to building web applications, whereas Node.js is more of a low-level system for writing any type of fast and scalable network application.
-
-Node and CoffeeScriptWant to write coffeescript in node? It’s easy, all you need is a module named CoffeeScript. And like many other languages, node has several frameworks people built for web development, like: Express.
-The core about how to use coffeescript with nodejs is to use the --watch for coffee command in node. It will automatically compile all file end with coffee into js when there is a change made into these files.
-And just like jQuery, you just follow the rules and write your code.
-DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
-That’s all. Thanks!
+谜题12345678910111213var name = &quot;The Window&quot;;var object = &amp;#123;  name : &quot;My Object&quot;,  getNameFunc : function()&amp;#123;    console.log(this);    return function()&amp;#123;      return this.name;    &amp;#125;;  &amp;#125;&amp;#125;;console.log(object.getNameFunc()());// output: Object&amp;#123;name:&quot;My Object&quot;&amp;#125;; &quot;The Window&quot;
+上述定义中, 为什么嵌套函数没有继承上层函数的this呢? 反而继承了全局的this?
+猜测解答: this这个关键字是个比较特殊的关键字, 它具有一个很有趣的特点就是: 当一个函数作为函数而不是方法来调用的时候, this指向的是全局对象, 只有当它是方法的时候, 其指向的才是所属对象; 题目来源阮一峰博客. 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (1)</title><link>http://taoalpha.me/blog/2015/06/17/read-reading-javascript-the-definitive-guide-1/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-17T10:00:00.000Z</pubDate><description>概述“JavaScript: the definitive guide”可谓是JS入门必读数目之一了. 今天正好读到第7章, 做一简单总结. 前7章的内容都集中在JS中的基本知识上, 包含了:
 
 数据类型: 最简单的primitive datatypes: string, number, boolean , 两个空值类型: null, undefined(通常认为空值类型属于promitive的一种),以及稍微复杂点的: object类型;
@@ -1574,6 +1521,128 @@ shift, unshift和pop,push基本类似, 不同的地方在于操作的位置和�
 1234567891011121314151617181920var a = [1,2,3]// a.length == 3a[-1.2] = &quot;hehe&quot;a// output: [1,2,3]  where is a[-1.2] ?a[-1.2]// output: &quot;hehe&quot;  WTF???a.length// output: 3 ??console.log(a)// output: [1,2,3,-1.2:'hehe']console.log(a.length)// output: 3a instanceof Array// ouput: Truea[&quot;h&quot;] = &quot;hh&quot;a// output: [1,2,3]console.log(a)// output: [1,2,3,-1.2:&quot;hehe&quot;,h:&quot;hh&quot;]
 问题: a依然还是一个Array(亦或者不是?), 但用json定义的方式赋值的那几个值还是有效的, 可获取的, 但是为什么直接print出来的时候没有这些值呢, 甚至长度都不包含定义的这几个指? 为什么console.log()可以打出来呢?
 猜测解释: a最初被定义为array, 但是却被json方式传值, 存储到了其内存中, 但是调用a时依然按照array来打印, 所以会自动滤除掉不符合array的几个值(只会按照index来找值). 但是console.log()是打出来其存储内容, 所以就按照其内存存储形式打印出来了.
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (3)</title><link>http://taoalpha.me/blog/2015/06/22/read-javascript-the-definitive-guide-3/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-22T04:00:00.000Z</pubDate><description>概述先说点不相关的… 为了更好的阅读, 所以以后读书笔记相关的博文都会分拆成4个部分:
+
+概述: 算是阅读总结摘要以及类似这段话之类的声明介绍等等;
+阅读笔记: 这部分主要以阅读过程中的记录为主, 会比较杂, 基本算是逐点记录, 评判相对主观;
+心得: 这部分则主要为笔记的延伸, 算是对笔记的一种补充或者说自己的阅读理解消化所得, 有时候也会覆盖到一些使用架桥等等;
+谜题: 这里主要记录一些没有完全理解的部分, 会加上自己的猜测解答, 当弄懂后会更新正解;
+
+DONE.
+本篇是博主重新翻阅了”JavaScript the Definitive Guide(第六版)”的前4章内容(之前 阅读笔记-2均是第五版的)后的读书笔记以及心得体会. 内容主要覆盖js的基本用法, 考虑到重复, 这里主要是在上两篇的基础上查漏补缺.
+阅读笔记Chapter 2 - 基础知识JS能识别的whitespaces:
+常规空格: \u0020 # 即url中常见的%20
+Tab(制表符): \u0009 # js中常见的\t
+Vertical Tab: \u000B # \v
+Form Feed(翻页/页码分隔符): \u000C # \f
+Nonbreaking Space(不间断空格): \u00A0  # 通常在html中用来阻止默认连续多空格自动归一的性质(auto collapsing)而使用&amp;amp;nbsp;, 同时因为软件处理的需要, 使用&amp;amp;nbsp;能够防止相应的处理器将普通空格转为行分隔;
+Byte order mark: \uFEFF
+any character in Unicode category Zs
+
+JS能识别的line terminators:
+line feed: \u000A # \n
+carriage return: \u000D # \r
+line separator: \u2028
+paragraph separator: \u2029
+
+值得一说的是, js是支持unicode作为indentifier的合法字符的, 但是上述这些则不在其中.
+JS的”Unicode Escape Sequences”类似”\u00E9”这种结构的字符在js都代表一种特殊的字符:”unicode”. 如果你在js中使用这些字符, js会自动将其编译为对应的字符(如果是在js的注释中, 则不会编译, 而是以ascii对待), 比如: 示例就会编译为”é”. 而在js中, 这种对等关系是支持的, 即 &amp;quot;\u00E9&amp;quot; === &amp;quot;é&amp;quot;是为真的.
+但是一定要慎用… 因为unicode变化过多, 有时候输出看起来一样的字符, 其本质不一定一样: &amp;quot;e\u0301&amp;quot;的输出也是”é”, 但是它相当于是&amp;quot;e&amp;quot;+&amp;quot;\u0301&amp;quot;组成的.
+JS中的&amp;quot;;&amp;quot;在JS中, &amp;quot;;&amp;quot;作为语句结尾并不是必须的, 只有当多语句同行的时候, &amp;quot;;&amp;quot;才是必须的. 当你没有&amp;quot;;&amp;quot;的时候, js会自动为你添加合适的&amp;quot;;&amp;quot;. 通常它会自动将它没有&amp;quot;;&amp;quot;无法解析代码时候遇到的换行处加以&amp;quot;;&amp;quot;(除了类似return,break, ++, –等, 它会自动将其后的行分隔符作为&amp;quot;;&amp;quot;对待.):
+1234567var aa=3console.log(a)// output: 3// js在第一个换行处识别了其语句分割的意义, 但是在 a = 3 的两个分割处都因为它可以识别合并后的语句所以没有作为`&quot;;&quot;`处理.
+但是上述的成功不意味着js的智能, 更多时候如果我们不合适的使用&amp;quot;;&amp;quot;, 会造成很多奇怪的问题的, 比如以(, [, /, +, -为起始的语句很可能会被误认为是前一语句的延续. 所以通常来说, js的编码还是比较鼓励使用&amp;quot;;&amp;quot;作为语句结尾的.
+Chapter 3 - 数据类型Number:
+Global viriables: Infinity,NaN
+Global Objects: Math,Number
+
+Tips:
+
+NaN 具有唯一性, 其不等于任意值, 包括它自己, 0/0会产生’NaN’, 但是0/0 != NaN, 如果需要判断一个变量是不是NaN, 需要使用isNaN()这个内置的函数;
+Infinity &amp;lt;==&amp;gt; Number.POSITIVE_INFINITY &amp;lt;==&amp;gt; 1/0
+-Infinity &amp;lt;==&amp;gt; Number.NEGATIVE_INFINITY &amp;lt;==&amp;gt; -1/0
+Binary Floating-Point会导致小数级错误, 比如0.3-0.2 != 0.2-0.1, 这个属于计算机本身因为二进制编码的原因所致, 所以在比较数字大小的时候要格外小心;
+
+String:
+immutable ordered sequence of 16-bit values
+
+Tips:
+
+string的长度都是按照16-bit来计算的, 所以当如果一个字符超过了16-bit, 则会按照多的计算. 比如: e - \ud835\udc52, 就需要按照两个16bit计算, 即其长度应为:”2”
+从ECMAScript 5之后就允许string跨行定义了, 只需要在换行的地方加上一个反斜杠\, 即可.
+转义字符\如果加在普通字符前, 不会产生任何效果;
+typeof null =&amp;gt; Object , typeof undefined =&amp;gt; undefined;
+null == undefined, null!==undefined =&amp;gt; True
+
+类型转换javascript是一个很宽松的语言, 我们不需要预先定义变量类型, 而在运算以及执行过程中, js也会自动的帮助我们进行类型转换, 当然为了更好的借助这一特点, 了解下图中的js转换类型的规则还是非常有必要的.
+
+其中object转换 primitive datatype 的话, 一般会按照如下步骤进行:
+
+首先会默认调用toString()函数, 你可以自行定义这一函数, 如果toString()返回结果正常, 则转换结束;
+如果toString()未定义, 或者返回结果非primitive datatype的话, 会自动调用valueOf()函数, 同上一步;
+而如果两个都没找到, 那么js将会抛出TypeError;
+
+而根据要转换的是string还是number而交换1,2两步( string 的话先调用toString(), 且返回值必然会转为string; 如果是number的话, 则先找valueOf(), 返回结果为number). 当然至于boolean的话, 所有的object转换到boolean都是true.
+Array转换string的时候默认的toString()就是一个join()调用~ Function的话, 则也可以自己定义toString()函数.
+Tips:
+
+x + “” // Same as String(x)
++x // Same as Number(x). You may also see x-0
+!!x // Same as Boolean(x). Note double !
+在ECMAScript 5的strict模式下, 所有变量君需要声明才能赋值, 否则会报错;
+
+Chapter 4: Expressions and Operators
+上图为按照优先级顺序排列下来的操作符(横线分隔的同一组块之间的级别相同).
+Tips:
+
+运算顺序不影响赋值顺序, 赋值顺序始终都是严格从左到右的, 比如:h = x+y+z, 那么赋值顺序始终都是h-&amp;gt;x-&amp;gt;y-&amp;gt;z; 通常情况下, 这一赋值顺序不会影响之后的计算顺序, 对结果基本没什么影响, 除了一种情况:
+如果前变量的赋值会影响到后面变量的值的话, 比如共用同一个变量, 那么这种情况下, 赋值顺序就可能会对结果产生一定的影响了. 最简单的例子就是z = 2;y = function(){z = 3;return 1};, 因为y是一个函数, 而它的执行会改变z的值, 所以y()+z和z+y()的结果就是不相同的.
+
+“+”运算符中的类型转换:
+
+string优先, 只要有两个操作数中有一个是string或者是有toString()的object, 那么其都会按照string来进行链接运算;
+除非两个都是非string, 才会进行加法运算;
+当”+”作为单操作数时, 则意味着将操作数向number类型转换;
+
+
+&amp;amp;&amp;amp;运算符如果第一个为false, 则不执行第二条判断, 所以可以用这个方法来代替if: (a==b) &amp;amp;&amp;amp; alert(&amp;quot;a equals b&amp;quot;)就相当于if(a==b) alert(&amp;quot;a equals b&amp;quot;).
+
+!(p &amp;amp;&amp;amp; q) === !p || !q
+!(p || q) === !p &amp;amp;&amp;amp; !q
+a op= b 和 a = a op b通常是等价的, 除非a本身的重复赋值会有副作用, 比如 a[i++] += 1和a[i++] = a[i++] +1就不一样, 因为后者前后两个i不同了.
+eval()函数会继承当前的scope, 除非eval()被赋予某个新的reference, 那样的话只会使用global的scope;
+void操作数很少用到, 它是个单操作数的操作符, 其用法就是丢弃操作数的返回结果, 然后返回 undefined…
+
+心得whitespaces 和 line terminators通常在js里面我们使用\s来统一代表所有其可以识别的whitespace, line terminators. 如下例:
+1234567var k = 'asd \t asdasd \na asd \f asda dad\rasd\u2028asd\u2029\u00A0'k// output 里面有两个换行的符号, 我这里为了演示方便就不换行了k.replace(/\n/g,'-')// 同上,里面的&quot;\r&quot;我也不换行了k.replace(/\s/g,'-')// output: &quot;asd---asdasd--a-asd---asda-dad-asd-asd--&quot;
+因为在console中输出的时候是不换行的, 所以有时候单单看console输出的话, 类似这种编码问题所致的错误就找不出来, 为了省事, 我们可以统一使用\s来代表所有此类符号.
+谜题Q: 按照正常来说Number.MAX_VALUE加上一个数应该就会自动转为Infinity, 但实际上, 测试过程中发现, 只有当Number.MAX_VALUE加上一个足够大的数后才会等与Infinity, 这是为什么?
+1234567Number.MAX_VALUE// output: 1.7976931348623157e+308Number.MAX_VALUE +1// output: 1.7976931348623157e+308...Number.MAX_VALUE + Math.pow(10,1000)// output: Infinity
+正解: the sum is computed and rounded to the nearest representable value using IEEE 754 round-to-nearest mode. If the magnitude is too large to represent, the operation overflows and the result is then an infinity of appropriate sign.
+
+IEEE 754
+In the following two rounding-direction attributes, an infinitely precise result with magnitude at least bemax ( b − ½ b^(1-p) ) shall round to ∞ with no change in sign; here emax and p are determined by the destination format (see 3.3). With:
+
+roundTiesToEven: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with an even least significant digit shall be delivered
+
+roundTiesToAway: the floating-point number nearest to the infinitely precise result shall be delivered; if the two nearest floating-point numbers bracketing an unrepresentable infinitely precise result are equally near, the one with larger magnitude shall be delivered.
+
+
+
+ECMAScript does not specify which of the round-to-nearest, but it doesn’t matter here because both gives the same result. The number in ECMAScript is “double”, in which
+
+b = 2
+emax = 1023
+p = 53,
+
+_so the result must be at least 2^1024 - 2^970 ~ 1.7976931348623158 × 10^308 in order to round to infinity. Otherwise it will just round to MAX_VALUE, because that is the closer than Infinity.Notice that MAX_VALUE = 21024 - 2971, so you need to add at least 2^971 - 2^970 = 2^970 ~ 9.979202 × 10^291 in order to get infinity._
+Q: &amp;#39;0&amp;#39; == false 是 true, 为什么 null == false 就是 false呢?
+猜测解释: ==这样的是比较value的, 而 null转换为boolean类型为false, 并不意味着两者的value是相同的. ==只会比较value, 而不会进行转换. 也即true, false两个boolean类型的其value也是1,0. 而null和undefined的value则不同, 前者为空, 后者为无.
+参考资料:
+JavaScript the Definitive Guide 6th edition
+Unicode Property
+List of Unicode Characters
+编码历史介绍
+
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (4)</title><link>http://taoalpha.me/blog/2015/06/23/read-javascript-the-definitive-guide-4/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-23T07:00:00.000Z</pubDate><description>概述第六版和第五版的最大区别在于ECMAScript 5的引入, 这是目前发布的最新的js版本, 有着最新的属性和函数, 目前主流浏览器基本都已经完全支持. 本文为阅读5-9章内容的笔记总结, 主要是覆盖了JS中的语句和典型对象.
 阅读笔记Chapter 5 - Statements
 switch/case中使用的是===进行比较判断的, 而不是==;
@@ -1694,229 +1763,4 @@ Chapter 9 - Classes and Modules除了 阅读笔记-2中包含的, 由于ECMAScri
 JavaScript the Definitive Guide 6th edition
 Functional Javascript
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>像TED一样演讲</title><link>http://taoalpha.me/blog/2015/06/25/read-speaking-like-people-on-ted/</link><category>read</category><tag>reading notes,speaking</tag><pubDate>2015-06-25T09:00:00.000Z</pubDate><description>概要今天顺带读完了这本”像TED一样演讲”, 作者上一部和演讲相关的书是”乔布斯的魔力演讲”. 归纳了下书中的核心点, 记录分享给大家. 这一类的书干货其实能占到全书1/10就已经算不错了~ 所以一般看起来也比较快.
-阅读笔记情感共鸣
-释放你内心的热情 =&amp;gt; 热情可以传染;
-掌握讲故事的艺术 =&amp;gt; 故事可以刺激并吸引人脑的注意力, 拉近你与听众的距离;
-与演讲主题相关的个人故事;
-与演讲主题相关的他人故事;
-关于产品或者品牌的某个故事;
-
-
-让演讲好像好友交谈一样自然;
-
-制造新奇
-给人们一个看世界的新视角;
-设计让观众惊掉下巴的环节 =&amp;gt; 触发神经学家所说的讲情绪, 让记忆更加深刻;
-用幽默给你的演讲加分;
-
-令人难忘
-严格遵守18分钟的时间规则 =&amp;gt; 有约束才有创造力;
-抓住观众吸引力的魔法, 多感官体验 =&amp;gt; 让内容视觉化;
-表现最真实的自己;
-
-书中涉及到的TED(部分)
-Bryan Stevenson: We need to talk about an injustice
-Dan Ariely: Our buggy moral code
-Truly sustainable economic development
-Jennifer Granholm: A clean energy proposal – race to the top!
-Amy Cuddy: Your body language shapes who you are
-Robert Ballard: The astonishing hidden world of the deep ocean
-Hans Rosling: The best stats you’ve ever seen
-Mary Roach: 10 things you didn’t know about orgasm
-Bill Gates: Mosquitos, malaria and education
-Jill Bolte Taylor: My stroke of insight
-Stephen Hawking: Questioning the universe
-David Christian: The history of our world in 18 minutes
-
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript Coding Style</title><link>http://taoalpha.me/blog/2016/01/09/read-javascript-coding-style/</link><category>read</category><tag>JS,coding style</tag><pubDate>2016-01-10T01:49:12.000Z</pubDate><description>Why and What is Coding StyleCoding style is like the common styles and patterns that are used in your personal codebase or some organizations’ codebase, its purpose is making your code more readable and reusable through the entire developemnt, especially when you work in a team. Everyone can create their own coding style, there is no right or wrong among them, like you prefer 4 spaces than 2 spaces, you like to use camelCase represent the functions and variables,that’s totally fine. 
-The benefit of using the same style is obvious, it can save you a lot of time reading and modifying others’ code or even your own code. There are some styles that are pretty popular and agreed by a lot of people and team, like Google Style Guide. Being modified and updated for so many years, I believe these styles would be a better choice to choose rather than create one by yourself.
-Javascript Style GuideThere are several popular style guide for javascript, one is the part of the Google Style Guide series:  Google JavaScript Style Guide, another is created by airbnb:Airbnb JavaScript Style Guide, and also there is a Code Conventions for the JavaScript Programming Language created by the author of JavaScript: The Good Parts.
-I read them all and summarize the core parts here.
-Google JavaScript Style GuideHere I ignore all parts related to the Google Closure Compiler, if you are interested in, take a look at Closure Compiler.
-Syntax &amp;amp; Basic Concept
-var: never declare a variable without var to save you from global variables;
-semicolons: always use semicolons, sometimes the closing brackets are not enough to signal the end of the statement: Javascript never ends a statement if the next token is an infix or bracket operator;
-new: Never use wrapper objects for primitive types(like new Boolean(false), return an object!), but can use Boolean(0) to do casting, also for array and object, use literal syntax instead of new; 
-prototye: Use prototype to attach methods to an object created via new, initialize other properties within constructor,Current JavaScript engines optimize based on the “shape” of an object, adding a property to an object (including overriding a value set on the prototype) changes the shape and can degrade performance., and NEVER modify prototype of builtins like Object and Array;
-delete: Use set to null instead of delete to delete some properties, but if the number of properties of the object matters, use delete;
-closure: Be careful to use closure since it might cause memory leak;
-eval,with(){}: Just don’t use them;
-for-in-loop: Only use it to iterate the key of object/hashmap;
-quote: Use single quote &amp;#39;&amp;#39; for strings, use string concatenation if the string is too long;
-
-Naming
-CONSTANT_NAME: always use ALL_CAP_SNAKE_CASE represent the constant;
-functionName,variableName,methodName: use camelCase represent the functions and variables, methods;
-ClassName,EnumNamesLikeThis: use CamelCase represent class or enums;
-filenameslikethis.js: use plain lowercase as the name of the files;
-_private: private should be named with a trailing underscore;
-opt_: Optional function arguments start with opt_;
-global: try not to contaminate the global, can use a global object to store all variables you want to use as gloabl scope - prevent some conflicts between global and local;
-
-Comments &amp;amp; JSDocJust remmeber that comments is written for someone who isn’t familiar with the code including youself after a long time!
-Here is some resouces about the JSDoc
-TipsSome Boolean Expressions1234567891011121314151617Boolean('0') == true'0' != true0 != null0 == []0 == falseBoolean(null) == falsenull != truenull != falseBoolean(undefined) == falseundefined != trueundefined != falseBoolean([]) == true[] != true[] == falseBoolean(&amp;#123;&amp;#125;) == true&amp;#123;&amp;#125; != true&amp;#123;&amp;#125; != false
-Better For Loop1234var paragraphs = document.getElementsByTagName('p');for (var i = 0, paragraph; paragraph = paragraphs[i]; i++) &amp;#123;  doSomething(paragraph);&amp;#125;
-BE CONSISTENTAirbnb JavaScript Style GuideI will address some difference between this one and google’s.
-Syntax &amp;amp; Basic Concept
-const: Alwasy use const on references instead of var, ensure that you can not reassign your reference, Block-scoped;
-let: If you must reassign references, use let instead of var, Block-scoped;
-reserved words: don’t use reserved words as keys;
-object shorthand: use object shorthand for method and value defined in an Object, and also put all shorthands at the beginning of the object declaration;
-
-123456789101112131415161718// methodconst atom = &amp;#123;  value: 1,  addValue(value) &amp;#123;    return atom.value + value;  &amp;#125;,&amp;#125;;// value, if value and key are the same// put all shorthands at the beginning// only quote properties that are invalid identifiersconst obj = &amp;#123;  lukeSkywalker,  foo: 3,  bar: 4,  'data-blah': 5,&amp;#125;;
-
-spreads: Use ... to copy arrays: const itemsCopy = [...items]; 
-Array.from(): Use Array.from() convert an array-like object to an array;
-destructuring: Use object and array destructuring when accessing and using multiple properties of an object;
-
-123456789101112131415161718192021222324// goodfunction getFullName(user) &amp;#123;  const &amp;#123; firstName, lastName &amp;#125; = user;  return `$&amp;#123;firstName&amp;#125; $&amp;#123;lastName&amp;#125;`;&amp;#125;// bestfunction getFullName(&amp;#123; firstName, lastName &amp;#125;) &amp;#123;  return `$&amp;#123;firstName&amp;#125; $&amp;#123;lastName&amp;#125;`;&amp;#125;// array destructuringconst arr = [1, 2, 3, 4];const [first, second] = arr;// Prefer object destructuring for multiple return values to array destructuring// goodfunction processInput(input) &amp;#123;  // then a miracle occurs  return &amp;#123; left, right, top, bottom &amp;#125;;&amp;#125;// the caller selects only the data they needconst &amp;#123; left, right &amp;#125; = processInput(input);
-
-template strings: When programmatically building up strings, use template strings instead of concatenation;
-functions declarations: Use function declarations instead of function expressions, when you must use function expressions (as when passing an anonymous function), use arrow function notation;
-
-1234567891011121314151617181920212223242526272829// badconst foo = function () &amp;#123;&amp;#125;;// goodfunction foo() &amp;#123;&amp;#125;// use arrow functions as function expressions// immediately-invoked function expression (IIFE)(() =&amp;gt; &amp;#123;  console.log('Welcome to the Internet. Please follow me.');&amp;#125;)();// No function declarations should be in a block// badif (currentUser) &amp;#123;  function test() &amp;#123;    console.log('Nope.');  &amp;#125;&amp;#125;// goodlet test;if (currentUser) &amp;#123;  test = () =&amp;gt; &amp;#123;    console.log('Yup.');  &amp;#125;;&amp;#125;
-
-arguments: Don’t use it, use ...args instead;
-
-12345678910function concatenateAll(...args) &amp;#123;  return args.join('');&amp;#125;```  - `default value`: Use default parameter syntax rather than mutating function arguments, and always put default parameters last;``` javascriptfunction handleThings(name, opts = &amp;#123;&amp;#125;) &amp;#123;  // ...&amp;#125;
-
-spacing: put space between function name and the brackets and curly brackets;
-parameter: Never mutate parameters, Never reassign parameters;
-
-123456789// badfunction f1(obj) &amp;#123;  obj.key = 1;&amp;#125;;// goodfunction f2(obj) &amp;#123;  const key = Object.prototype.hasOwnProperty.call(obj, 'key') ? obj.key : 1;&amp;#125;;
-
-arrow functions: 
-If the function body consists of a single expression, omit the braces and use the implicit return. Otherwise, keep the braces and use a return statement;
-and if the expression spans over multiple lines, wrap it in parentheses;
-If your function takes a single argument and doesn’t use braces, omit the parentheses;
-
-
-
-12345678910111213141516171819// good[1, 2, 3].map(number =&amp;gt; `A string containing the $&amp;#123;number&amp;#125;.`);// bad[1, 2, 3].map(number =&amp;gt; &amp;#123;  const nextNumber = number + 1;  `A string containing the $&amp;#123;nextNumber&amp;#125;.`;&amp;#125;);// good[1, 2, 3].map( (number) =&amp;gt; &amp;#123;  const nextNumber = number + 1;  return `A string containing the $&amp;#123;nextNumber&amp;#125;.`;&amp;#125;);[1, 2, 3].map(number =&amp;gt; (  `As time went by, the string containing the $&amp;#123;number&amp;#125; became much ` +  'longer. So we needed to break it over multiple lines.'));
-
-class: Always use class. Avoid manipulating prototype directly;
-extends: Use extends for inheritance;
-methods: Methods can return this to help with method chaining;
-
-123456// goodclass PeekableQueue extends Queue &amp;#123;  peek() &amp;#123;    return this._queue[0];  &amp;#125;&amp;#125;
-
-import: Always use modules (import/export) over a non-standard module system. You can always transpile to your preferred module system, which means don’t use require etc;
-Do not use wildcard imports;
-And do not export directly from an import;
-
-
-
-1234567891011121314// badimport * as AirbnbStyleGuide from './AirbnbStyleGuide';// goodimport AirbnbStyleGuide from './AirbnbStyleGuide';// bad// filename es6.jsexport &amp;#123; es6 as default &amp;#125; from './airbnbStyleGuide';// good// filename es6.jsimport &amp;#123; es6 &amp;#125; from './AirbnbStyleGuide';export default es6;
-
-iterators and generators:
-Don’t use iterators. Prefer JavaScript’s higher-order functions like map() and reduce() instead of loops like for-of;
-Don’t use generators for now.
-
-
-
-123456789101112131415161718const numbers = [1, 2, 3, 4, 5];// badlet sum = 0;for (let num of numbers) &amp;#123;  sum += num;&amp;#125;sum === 15;// goodlet sum = 0;numbers.forEach((num) =&amp;gt; sum += num);sum === 15;// best (use the functional force)const sum = numbers.reduce((total, num) =&amp;gt; total + num, 0);sum === 15;
-
-properties:
-
-Use dot notation when accessing properties;
-Use subscript notation [] when accessing properties with a variable;
-
-
-variables:
-
-Always use const to declare variables. Not doing so will result in global variables. We want to avoid polluting the global namespace. Captain Planet warned us of that;
-Use one const declaration per variable;
-Group all your consts and then group all your lets;
-Assign variables where you need them, but place them in a reasonable place;
-
-
-hoisting:
-
-var declarations get hoisted to the top of their scope, their assignment does not; 
-const and let declarations are blessed with a new concept called Temporal Dead Zones (TDZ);
-It’s important to know why typeof is no longer safe;
-Anonymous function expressions hoist their variable name, but not the function assignment;
-Named function expressions hoist the variable name, not the function name or the function body;
-Function declarations hoist their name and the function body;
-
-
-
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950// using const and letfunction example() &amp;#123;  console.log(declaredButNotAssigned); // =&amp;gt; throws a ReferenceError  console.log(typeof declaredButNotAssigned); // =&amp;gt; throws a ReferenceError  const declaredButNotAssigned = true;&amp;#125;// assignment will not be hoistedfunction example() &amp;#123;  console.log(anonymous); // =&amp;gt; undefined  anonymous(); // =&amp;gt; TypeError anonymous is not a function  var anonymous = function () &amp;#123;    console.log('anonymous function expression');  &amp;#125;;&amp;#125;function example() &amp;#123;  console.log(named); // =&amp;gt; undefined  named(); // =&amp;gt; TypeError named is not a function  superPower(); // =&amp;gt; ReferenceError superPower is not defined  var named = function superPower() &amp;#123;    console.log('Flying');  &amp;#125;;&amp;#125;// the same is true when the function name// is the same as the variable name.function example() &amp;#123;  console.log(named); // =&amp;gt; undefined  named(); // =&amp;gt; TypeError named is not a function  var named = function named() &amp;#123;    console.log('named');  &amp;#125;&amp;#125;// BUT! Function declarations hoist their name and the function body.function example() &amp;#123;  superPower(); // =&amp;gt; Flying  function superPower() &amp;#123;    console.log('Flying');  &amp;#125;&amp;#125;
-
-Comparison Operators &amp;amp; Equality:
-Use === and !== over == and !=;
-Conditional statements such as the if statement evaluate their expression using coercion with the ToBoolean abstract method and always follow these simple rules:
-Objects evaluate to true
-Undefined evaluates to false
-Null evaluates to false
-Booleans evaluate to the value of the boolean
-Numbers evaluate to false if +0, -0, or NaN, otherwise true
-Strings evaluate to false if an empty string ‘’, otherwise true
-
-
-
-
-
-Comments
-Use /** ... */ for multi-line comments. Include a description, specify types and values for all parameters and return values;
-Use // for single line comments. Place single line comments on a newline above the subject of the comment. Put an empty line before the comment unless it’s on the first line of a block;
-Prefixing your comments with FIXME or TODO helps other developers quickly understand if you’re pointing out a problem that needs to be revisited, or if you’re suggesting a solution to the problem that needs to be implemented. These are different than regular comments because they are actionable. The actions are FIXME – need to figure this out or TODO – need to implement;
-
-12345678910111213/** * make() returns a new element * based on the passed in tag name * * @param &amp;#123;String&amp;#125; tag * @return &amp;#123;Element&amp;#125; element */function make(tag) &amp;#123;  // ...stuff...  return element;&amp;#125;
-Spaces
-Use soft tabs set to 2 spaces;
-Place 1 space before the leading brace;
-Place 1 space before the opening parenthesis in control statements (if, while etc.). Place no space between the argument list and the function name in function calls and declarations;
-Set off operators with spaces;
-End files with a single newline character;
-Use indentation when making long method chains. Use a leading dot, which emphasizes that the line is a method call, not a new statement;
-Leave a blank line after blocks and before the next statement;
-Do not pad your blocks with blank lines;
-Do not add spaces inside parentheses;
-Do not add spaces inside brackets;
-Add spaces inside curly braces;
-Avoid having lines of code that are longer than 100 characters (including whitespace);
-
-Commas and Semicolons
-Leading commas: NOPE;
-Additional trailing comma: Yup;
-Always use semicolons;
-
-12345// good (guards against the function becoming an argument when two files with IIFEs are concatenated);(() =&amp;gt; &amp;#123;  const name = 'Skywalker';  return name;&amp;#125;)();
-Type Casting &amp;amp; Coercion
-Perform type coercion at the beginning of the statement, use String,Number etc instead of other tricky methods;
-If for whatever reason you are doing something wild and parseInt is your bottleneck and need to use Bitshift for performance reasons, leave a comment explaining why and what you’re doing;
-Be careful when using bitshift operations. Numbers are represented as 64-bit values, but Bitshift operations always return a 32-bit integer (source). Bitshift can lead to unexpected behavior for integer values larger than 32 bits;
-
-12345678910// good/** * parseInt was the reason my code was slow. * Bitshifting the String to coerce it to a * Number made it a lot faster. */const val = inputValue &amp;gt;&amp;gt; 0;// be careful2147483649 &amp;gt;&amp;gt; 0 //=&amp;gt; -2147483647
-Naming
-Avoid single letter names. Be descriptive with your naming;
-Use camelCase when naming objects, functions, and instances;
-Use PascalCase when naming constructors or classes;
-Use a leading underscore _ when naming private properties;
-Don’t save references to this. Use arrow functions or Function#bind;
-If your file exports a single class, your filename should be exactly the name of the class;
-Use camelCase when you export-default a function. Your filename should be identical to your function’s name;
-Use PascalCase when you export a singleton / function library / bare object;
-
-1234567891011121314// badfunction foo() &amp;#123;  const that = this;  return function () &amp;#123;    console.log(that);  &amp;#125;;&amp;#125;// goodfunction foo() &amp;#123;  return () =&amp;gt; &amp;#123;    console.log(this);  &amp;#125;;&amp;#125;
-Accessors
-Accessor functions for properties are not required;
-If you do make accessor functions use getVal() and setVal(‘hello’);
-If the property is a boolean, use isVal() or hasVal();
-It’s okay to create get() and set() functions, but be consistent;
-
-jQuery
-Prefix jQuery object variables with a $;
-Cache jQuery lookups;
-For DOM queries use Cascading $(&amp;#39;.sidebar ul&amp;#39;) or parent &amp;gt; child $(&amp;#39;.sidebar &amp;gt; ul&amp;#39;);
-Use find with scoped jQuery object queries;
-
-1234567891011// goodfunction setSidebar() &amp;#123;  const $sidebar = $('.sidebar');  $sidebar.hide();  // ...stuff...  $sidebar.css(&amp;#123;    'background-color': 'pink'  &amp;#125;);&amp;#125;
-TestingYou should write testing!!!
-Code Conventions for the JavaScript Programming LanguageAll coved by two styles I list above.
-SummaryCompared to google’s old style guide, airbnb’s style guide has much more valuable new ES6 styles, if you are an active ES6 users, I strongly suggest you use airbnb’s style !!!
-Even you are a solo worker, you should use some common styles, it is a good habit and you should have.
 </description><source>TaoAlpha</source><author>TaoALpha</author></item></channel></rss>
