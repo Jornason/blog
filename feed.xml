@@ -1,4 +1,41 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-26T21:34:25.559Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ Remove Duplicate Letters</title><link>http://taoalpha.me/blog/2016/01/26/oj-oj-remove-duplicate-letters/</link><category>OJ</category><tag>Greedy,LeetCode</tag><pubDate>2016-01-26T23:26:53.000Z</pubDate><description>316. Remove Duplicate LettersQuestionGiven a string which contains only lowercase letters, remove duplicate letters so that every letter appear once and only once. You must make sure your result is the smallest in lexicographical order among all possible results.
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-01-31T15:26:52.319Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ Calculator Problems</title><link>http://taoalpha.me/blog/2016/01/30/oj-oj-calculator-problems/</link><category>OJ</category><tag>LeetCode,Stack</tag><pubDate>2016-01-31T01:18:18.000Z</pubDate><description>224    Basic CalculatorQuestionImplement a basic calculator to evaluate a simple expression string.
+The expression string may contain open ( and closing parentheses ), the plus + or minus sign -, non-negative integers and empty spaces .
+You may assume that the given expression is always valid.
+Some examples:“1 + 1” = 2“ 2-1 + 2 “ = 3“(1+(4+5+2)-3)+(6+8)” = 23
+Note: Do not use the eval built-in library function.
+LeetCode224	Basic Calculator
+Tags: Stack, Math, Medium
+AnswersTwo StackFirst, we can use two stack, one stores numbers, the other stores the operators, and once we got the “)”, we start to pop elements and operators to calculate.
+123456789101112131415161718192021222324252627282930313233343536373839404142434445/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;number&amp;#125; */var calculate = function(s) &amp;#123;  var nums = [], ops = [], number = 0, i;  //s = s.replace(/ /g,&quot;&quot;); // skip all spaces with replace first  for(i = 0; i &amp;lt; s.length; i++)&amp;#123;    if(s[i] == &quot; &quot;) continue; // skip all spaces    var c = s[i];    if (c == '(' || c == '+' || c == '-') &amp;#123;      // push all operators into ops and go to next position      ops.push(c);       continue;    &amp;#125;    if (c == ')') &amp;#123;      // remove the remaining &quot;(&quot;      ops.pop();    &amp;#125;else if(s[i] != &quot; &quot;  &amp;amp;&amp;amp; Number.isInteger(Number(c)))&amp;#123;      // for digits, combine them to get our operands      // Number(&quot; &quot;) will be converted to 0 and return true for isInteger()      number = number*10 + Number(c);      if (i + 1 &amp;lt; s.length &amp;amp;&amp;amp; s[i+1] != &quot; &quot; &amp;amp;&amp;amp; Number.isInteger(Number(s[i+1]))) continue;      // make sure we got all digits for one operand, and no out of bound      nums.push(number);  // push the operand to our nums      number = 0;    &amp;#125;        if (ops.length == 0 || ops[ops.length-1] == &quot;(&quot;) continue;  // skip if no operators or we have finish all in this pair of parentheses      // get our operator and operands    var op2 = nums.pop(),        op = ops.pop();        // do the calculate with second operand    if (op == &quot;+&quot;) &amp;#123;      nums[nums.length-1] += op2;    &amp;#125;else if (op == &quot;-&quot;) &amp;#123;      nums[nums.length-1] -= op2;    &amp;#125;  &amp;#125;  return nums.pop()  // now our nums should only have our result&amp;#125;
+Runtime: 168 ms - 180 ms
+One StackPrevious solution we use a second stack store the operators, but actually we don’t need to do that. If we separate the whole expression into several small parts, then everytime we find a parentheses, we just store the previous result after calculation to the stack, and solve the inner part first.
+And in order to do this way, we need initialize the result to 0.
+1234567891011121314151617181920212223242526272829303132333435363738/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;number&amp;#125; */var calculate = function(s) &amp;#123;  var stack = [],i,sign = 1,result = 0, number = 0;  for (i = 0; i &amp;lt; s.length; i++) &amp;#123;    var c = s[i];    if (c != &quot; &quot; &amp;amp;&amp;amp; Number.isInteger(Number(c))) &amp;#123;      number = 10*number + Number(c)    &amp;#125; else if (c == &quot;+&quot;) &amp;#123;      result += sign * number;      sign = 1;  // keep the positive sign      number = 0;  // clear the number after calculation    &amp;#125; else if (c == &quot;-&quot;) &amp;#123;      result += sign * number;      number = 0;      sign = -1;  // make sure now we have a negative operator, this will affect the last result of next number    &amp;#125; else if (c == &quot;(&quot;) &amp;#123;      // result += sign*number;  // make sure our result including the last number, actually a open parenthese would always follow another operator like + or -, and we already clear the number      // now we need store the result to stack      stack.push(result);      stack.push(sign);  // store the sign, used for next operand (previous result +/- wait for next result)      result = 0;  // clear the result and solve the inner part      sign = 1;  // reinitialize the sign    &amp;#125; else if (c == &quot;)&quot;) &amp;#123;      // now we finish the inner part      result += sign*number;  // the end parenthese always follow a number      result *= stack.pop();  // determine it is - or + this result      result += stack.pop();  // now add the previous result      number = 0;  // clear the number    &amp;#125;  &amp;#125;  if (number != 0) &amp;#123;    result += sign * number;  // in case we only have a number without any operators  &amp;#125;  return result;&amp;#125;
+Runtime: 176 ms
+227. Basic Calculator IIQuestionImplement a basic calculator to evaluate a simple expression string.
+The expression string contains only non-negative integers, +, -, *, / operators and empty spaces . The integer division should truncate toward zero.
+You may assume that the given expression is always valid.
+Some examples:“3+2*2” = 7“ 3/2 “ = 1“ 3+5 / 2 “ = 5
+Note: Do not use the eval built-in library function.
+LeetCode227. Basic Calculator II
+Tags: String, Medium
+AnswersDirect Updating StackSince we don’t have parentheses which make this question much easier, we can just keep calculating all the * and /, then store all results into the stack, and also store the - with second operator as a negative number, then we just need to sum all the stack to get our final answer.
+In order to deal with the first number, we could prepend the expression with a “0+”, so we initialize the first number as 0 and first operator as “+”.
+123456789101112131415161718192021222324252627282930313233/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;number&amp;#125; */ var calculate = function(s) &amp;#123;   var stack = [], num = 0, c = &quot;+&quot;, i;   for (i = 0; i &amp;lt; s.length+1; i++) &amp;#123;     if (s[i] == &quot; &quot;) continue;  // skip all spaces     if (Number.isInteger(Number(s[i]))) &amp;#123;       num = 10 * num + Number(s[i]);       continue;     &amp;#125;else if (c == &quot;+&quot;) &amp;#123;       stack.push(num);     &amp;#125;else if (c == &quot;-&quot;) &amp;#123;       stack.push(-num);     &amp;#125;else if (c == &quot;*&quot;) &amp;#123;       stack.push(stack.pop()*num);  // do the calculation!     &amp;#125;else if (c == &quot;/&quot;) &amp;#123;       // be careful about the negative number, since we only need the integer part       var temp = stack.pop();       if (temp &amp;lt; 0) &amp;#123;         temp = Math.ceil(temp/num);       &amp;#125;else&amp;#123;         temp = Math.floor(temp/num);       &amp;#125;       stack.push(temp);     &amp;#125;     num = 0;     c = s[i];  // always store the precious closest operator before current number   &amp;#125;   stack.push(num);   return stack.reduce( (sum,v) =&amp;gt; sum += v )&amp;#125;
+Runtime: 236 ms
+Previous code would have an “out of bound” issue, but js just doesn’t have this kind of error…
+You can remove the continue after getting the number, and change the condition for second part with:
+12345if (!Number.isInteger(Number(s[i])) || i == s.length - 1) &amp;#123;  ...  num = 0;  c = s[i];&amp;#125;
+Runtime: 200 ms
+No StackSame idea, but we don’t need the stack, we just keep the previous result and always add the current result to the previous result whenever we can.123456789101112131415161718192021222324252627282930/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;number&amp;#125; */var calculate = function(s) &amp;#123;  var result = 0, cur_res = 0, op = '+', pos;  s = s.replace(/ /g,'');  for(pos = 0; pos &amp;lt; s.length;) &amp;#123;    if (Number.isInteger(Number(s[pos]))) &amp;#123;      var tmp = Number(s[pos]);      while(pos++ &amp;lt; s.length &amp;amp;&amp;amp; Number.isInteger(Number(s[pos]))) &amp;#123;        tmp = tmp*10 + Number(s[pos]);      &amp;#125;      switch (op) &amp;#123;        case '+' : cur_res += tmp; break;        case '-' : cur_res -= tmp; break;        case '*' : cur_res *= tmp; break;        case '/' : cur_res = cur_res &amp;lt;= 0 ? Math.ceil(cur_res / tmp) : Math.floor(cur_res / tmp); break;      &amp;#125;    &amp;#125;else &amp;#123;      if(s[pos] == '+' || s[pos] == '-') &amp;#123;        result += cur_res;        cur_res = 0;      &amp;#125;      op = s[pos++];    &amp;#125;  &amp;#125;  return result + cur_res;&amp;#125;
+Runtime: 196 ms
+CalculatorQuestionSo if we combine the two problems together, we can make a simple calculator that can do basic calculation.
+AnswerThe basic idea is convert the infix notation to Polish notation or Reverse Polish notation and store them into a stack, then we can just use stack to calculate the result.
+Here is the origin solution from leetcode
+Here is the reverse polish notation on wikipedia
+12345678910111213141516171819202122232425262728293031323334353637383940414243/** * @param &amp;#123;string&amp;#125; s * @return &amp;#123;number&amp;#125; */var calculate = function(s) &amp;#123;  s = &quot;(&quot; + s.replace(/ /g,'') + &quot;)&quot;;  var nums = [], ops = [], i, curNum = 0;  for (i = 0; i &amp;lt; s.length; i++) &amp;#123;    var c = s[i];    if (Number.isInteger(Number(c))) &amp;#123;      curNum = 10*curNum + Number(c);    &amp;#125; else if (c == &quot;(&quot;) &amp;#123;      ops.push(&quot;(&quot;);      ops.push(&quot;+&quot;);    &amp;#125; else &amp;#123;      var topOp = ops[ops.length-1];      switch (topOp) &amp;#123;        case &quot;*&quot;:        case &quot;/&quot;:          curNum = topOp == &quot;/&quot; ? Math.floor(nums.pop()/curNum) : nums.pop() * curNum;          ops.pop();      &amp;#125;      switch (c) &amp;#123;        case &quot;)&quot;:          if (ops[ops.length-1] == &quot;-&quot;) &amp;#123;            curNum = -curNum;          &amp;#125;          ops.pop();          while (ops[ops.length-1] != &quot;(&quot;) &amp;#123;            curNum += ops.pop() == &quot;-&quot; ? -nums.pop() : nums.pop();          &amp;#125;          ops.pop();  // skip &quot;(&quot;          break        default:          ops.push(c);          nums.push(curNum);          curNum = 0;      &amp;#125;    &amp;#125;  &amp;#125;  return curNum&amp;#125;
+Runtime: 184 ms for Basic Calculator IRuntime: 196 ms for Basic Calculator II
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>OJ Remove Duplicate Letters</title><link>http://taoalpha.me/blog/2016/01/26/oj-oj-remove-duplicate-letters/</link><category>OJ</category><tag>Greedy,LeetCode</tag><pubDate>2016-01-26T23:26:53.000Z</pubDate><description>316. Remove Duplicate LettersQuestionGiven a string which contains only lowercase letters, remove duplicate letters so that every letter appear once and only once. You must make sure your result is the smallest in lexicographical order among all possible results.
 Example:Given “bcabc”Return “abc”
 Given “cbacdcbc”Return “acdb”
 LeetCode316. Remove Duplicate Letters My Submissions Question
@@ -780,85 +817,6 @@ Others: others;
 Be Consistent;
 
 SummaryThis book is pretty short with all valueable content. Strongly recommend after you get familiar with all basic css concepts.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (5)</title><link>http://taoalpha.me/blog/2015/06/24/read-javascript-the-definitive-guide-5/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-24T08:00:00.000Z</pubDate><description>概述在十到十二章中, 第十章的正则表达式内容最为丰富, 也是目前应用即为广泛的内容之一. 不过这里也主要是结合js的应用, 实际上正则表达式本身就是一个很值得研究的话题, 有不少书都在谈这个话题, 我后面要读的书目中恰巧就有这么一本, 后面会更加详细的学习以下正则表达式的方方面面.
-十一章算是非常前沿, 高端或者说冷门的点了, 随着浏览器的盛行以及技术的进步, 安全问题始终都是一个很重视的点, 而在这种攻防演练中也促进了js本身的进步, 而主流浏览器本身更是走在了js的最前沿. 各种新的属性都是由他们引入而逐渐成为标准的;
-十二章主要是对走出浏览器的JS做了一个简单的介绍, 而NodeJS的大名在近几年在前后端, 全端领域都可谓是人尽皆知. 我也会在之后阅读相关书籍的时候做更详细的笔记记录.
-阅读笔记Chapter 10 - Pattern Matching Regular Expressions
-normal repetition characters:
-{m,n} 匹配m-n次;
-{m,} 匹配至少m次;
-{m} 匹配恰好m次;
-? 匹配0或1次;
-+ 匹配1或多次;
-* 匹配0或多次;
-
-
-Nongreedy repetition:
-??, +?, *? 在常规的匹配后加上?就能让匹配尽可能发生的短, 它会在允许范围内, 找到尽可能短的匹配;
-
-
-Alternation, Grouping, Reference:
-| 表示匹配前者或者后者;
-(...) 成组, 以组的形式来使用*,+,?等, 同时会记录组的匹配以用于Reference;
-(?:...) 只是成组, 不记录匹配, 不能用于reference, 也不算做reference的序号中去;
-\n 引用, n表示序号, 从1开始, 代表之前第几个group的匹配, 用于匹配开头结尾相同且多样的有奇效:/([&amp;#39;&amp;quot;])[^&amp;#39;&amp;quot;]*\1/ 匹配单引号或者双引号内的内容;
-需要注意的就是, reference不能用于[]的character class之中!
-
-
-anchor characters:
-^: 匹配开头;
-$: 匹配结尾;
-\b: 匹配词边界, /\bJava\b/ =&amp;gt; Java
-\B: 匹配非词边界, /\B[Ss]cript\B/ =&amp;gt; JavaScript, postscript...
-?=p: 表示内容需要匹配p规则,但是返回的命中中不包含这部分;
-?!p: 表示内容不匹配p规则;
-
-
-flags:
-i: 大小写敏感, 即区分大小写;
-g: 全局匹配, 默认是匹配首个;
-m: 多行匹配;
-
-
-String Methods for Pattern Matching:
-search(): 返回匹配词的位置或者-1代表无返回;
-replace(): 支持正则匹配替换, 同时支持替换时使用$n代表是正则匹配的引用, 比如text.replace(/&amp;quot;([^&amp;quot;]*)&amp;quot;/g, &amp;#39;“$1”&amp;#39;);即替换&amp;quot;&amp;quot;为“”;
-match(): 返回包含了匹配的结果, 返回结构为数组格式;
-split(): 接受正则匹配作为其分隔符, 比如: &amp;quot;1, 2, 3&amp;quot;.split(/\s*,\s*/); =&amp;gt; [&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;], 就去掉了本来直接split()多余的空格;
-
-
-RegExp prototype method:
-exec(): 基本等同match(), 不过接受的是string类型去匹配, 而由正则去调用, 当表达式加了全局flag后, exec()每次执行会记录其上次匹配的位置并从此开始新的匹配, 比如:var pattern = /Java/g;pattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).indexpattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).index就会相继输出0,28两个位置;
-test(): 用以检测表达式是否匹配了传入的string, 其执行逻辑(g模式下记录上次匹配位置)和exec()一样;
-
-
-
-Chapter 11 - JavaScript Subsets and Extensions本章主要介绍一些目前主流浏览器支持但是还没有写入JavaScript官方版本中的一些js语言的子集(非官方版本)和扩展属性:
-
-subsets: 通常是为了确保不确定安全性的代码能够安全的运行而出现的(除了Crockford’s JavaScript: The Good Parts);
-ADsafe, 最早一个因为安全因素设计的子集语言, 会禁止对绝大多数全局变量的访问;
-dojox.secure: 算是Dojo toolkit的一个扩展;
-Caja: 其包含了两个子集, 一个是Cajita, 比较严格, 类似ADsafe 和 dojox.secure; 还有个是Valija, 则比较接近如今ECMAScript 5的strict mode了;
-Microsoft Web Sandbox;
-FBJS: facebook使用的一个自己;通常子集都需要对应一个verifier, 来确保代码符合其要求;
-
-
-extensions:
-const: 声明常量, 比如: const pi = 3.14;;
-let: 块变量声明, 相当于缩小版的var, 作用域仅存活在最近的一个块结构里, 你可以用{}来自行创建一个block;
-destructing: 允许多变量结构化赋值: let [x,y] = [1,2];let [r,theta] = polar(1.0, 1.0); function polar(x,y){...};甚至这种all = [first,second] = [1,2,3,4]; 或者这种let transparent = {r:0.0, g:0.0, b:0.0, a:1.0}; let {r:red, g:green, b:blue} = transparent;;
-for/each: 和for/in循环不同, for/each遍历对象的属性值而不是属性名, 且可操作类array对象;
-for/in: 从js 1.7(mozilla的js引擎版本号)开始, for/in也不局限在array和常规object了, 只要是可循环的元素都可以使用了;
-yield: 从python中引入的;
-Array Comprehensions:  还是从Python中借用的, let evensquares = [x*x for (x in range(0,10)) if (x % 2 === 0)];
-try/catch: 支持多catch;
-
-
-
-Chapter 12 - Server-Side JavaScript随着js的发展, 慢慢的超出了其本身的作用域: 浏览器. 随着Google V8引擎为js包入了unix的常用API: files,processes,streams,sockets等, js开始走出浏览器进入server端了. 正式命名为Node.JS. 想来很多人可能都听过, 因为后面我的数目中也包含了相关的书, 且本章内容也没见过太多, 所以就一起留到以后吧~
-参考文献:
-JavaScript the Definitive Guide 6th edition
-
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
 Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
 NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
@@ -992,6 +950,120 @@ Puzzle
 Q1: In the second code example above, CoffeeScript create a default extend function for us:
 
 123456789101112131415161718192021var extend = function(child, parent) &amp;#123;  for (var key in parent) &amp;#123;      if (hasProp.call(parent, key)) child[key] = parent[key];  &amp;#125;  // Start from here  function ctor() &amp;#123;      this.constructor = child;  &amp;#125;  ctor.prototype = parent.prototype;  child.prototype = new ctor();  // End  // Just cannot understand the codes above...  // Why we need another function as the child's prototype? We have already copied all the properties from parent, or we just need a beautiful prototype chain? `Car &amp;lt;= ctor() &amp;lt;= Vehicle() &amp;lt;= Object` compared to `Car &amp;lt;= Car &amp;lt;= Object()`.  // Then why not we just use the child.prototype = new parent() ??? we can still get a good prototype chain. `Car &amp;lt;= Vehicle &amp;lt;= Vehicle &amp;lt;= Object`.  child.__super__ = parent.prototype;  return child;&amp;#125;,hasProp = &amp;#123;&amp;#125;.hasOwnProperty;
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (5)</title><link>http://taoalpha.me/blog/2015/06/24/read-javascript-the-definitive-guide-5/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-24T08:00:00.000Z</pubDate><description>概述在十到十二章中, 第十章的正则表达式内容最为丰富, 也是目前应用即为广泛的内容之一. 不过这里也主要是结合js的应用, 实际上正则表达式本身就是一个很值得研究的话题, 有不少书都在谈这个话题, 我后面要读的书目中恰巧就有这么一本, 后面会更加详细的学习以下正则表达式的方方面面.
+十一章算是非常前沿, 高端或者说冷门的点了, 随着浏览器的盛行以及技术的进步, 安全问题始终都是一个很重视的点, 而在这种攻防演练中也促进了js本身的进步, 而主流浏览器本身更是走在了js的最前沿. 各种新的属性都是由他们引入而逐渐成为标准的;
+十二章主要是对走出浏览器的JS做了一个简单的介绍, 而NodeJS的大名在近几年在前后端, 全端领域都可谓是人尽皆知. 我也会在之后阅读相关书籍的时候做更详细的笔记记录.
+阅读笔记Chapter 10 - Pattern Matching Regular Expressions
+normal repetition characters:
+{m,n} 匹配m-n次;
+{m,} 匹配至少m次;
+{m} 匹配恰好m次;
+? 匹配0或1次;
++ 匹配1或多次;
+* 匹配0或多次;
+
+
+Nongreedy repetition:
+??, +?, *? 在常规的匹配后加上?就能让匹配尽可能发生的短, 它会在允许范围内, 找到尽可能短的匹配;
+
+
+Alternation, Grouping, Reference:
+| 表示匹配前者或者后者;
+(...) 成组, 以组的形式来使用*,+,?等, 同时会记录组的匹配以用于Reference;
+(?:...) 只是成组, 不记录匹配, 不能用于reference, 也不算做reference的序号中去;
+\n 引用, n表示序号, 从1开始, 代表之前第几个group的匹配, 用于匹配开头结尾相同且多样的有奇效:/([&amp;#39;&amp;quot;])[^&amp;#39;&amp;quot;]*\1/ 匹配单引号或者双引号内的内容;
+需要注意的就是, reference不能用于[]的character class之中!
+
+
+anchor characters:
+^: 匹配开头;
+$: 匹配结尾;
+\b: 匹配词边界, /\bJava\b/ =&amp;gt; Java
+\B: 匹配非词边界, /\B[Ss]cript\B/ =&amp;gt; JavaScript, postscript...
+?=p: 表示内容需要匹配p规则,但是返回的命中中不包含这部分;
+?!p: 表示内容不匹配p规则;
+
+
+flags:
+i: 大小写敏感, 即区分大小写;
+g: 全局匹配, 默认是匹配首个;
+m: 多行匹配;
+
+
+String Methods for Pattern Matching:
+search(): 返回匹配词的位置或者-1代表无返回;
+replace(): 支持正则匹配替换, 同时支持替换时使用$n代表是正则匹配的引用, 比如text.replace(/&amp;quot;([^&amp;quot;]*)&amp;quot;/g, &amp;#39;“$1”&amp;#39;);即替换&amp;quot;&amp;quot;为“”;
+match(): 返回包含了匹配的结果, 返回结构为数组格式;
+split(): 接受正则匹配作为其分隔符, 比如: &amp;quot;1, 2, 3&amp;quot;.split(/\s*,\s*/); =&amp;gt; [&amp;quot;1&amp;quot;,&amp;quot;2&amp;quot;,&amp;quot;3&amp;quot;], 就去掉了本来直接split()多余的空格;
+
+
+RegExp prototype method:
+exec(): 基本等同match(), 不过接受的是string类型去匹配, 而由正则去调用, 当表达式加了全局flag后, exec()每次执行会记录其上次匹配的位置并从此开始新的匹配, 比如:var pattern = /Java/g;pattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).indexpattern.exec(&amp;quot;JavaScript is more fun than Java!&amp;quot;).index就会相继输出0,28两个位置;
+test(): 用以检测表达式是否匹配了传入的string, 其执行逻辑(g模式下记录上次匹配位置)和exec()一样;
+
+
+
+Chapter 11 - JavaScript Subsets and Extensions本章主要介绍一些目前主流浏览器支持但是还没有写入JavaScript官方版本中的一些js语言的子集(非官方版本)和扩展属性:
+
+subsets: 通常是为了确保不确定安全性的代码能够安全的运行而出现的(除了Crockford’s JavaScript: The Good Parts);
+ADsafe, 最早一个因为安全因素设计的子集语言, 会禁止对绝大多数全局变量的访问;
+dojox.secure: 算是Dojo toolkit的一个扩展;
+Caja: 其包含了两个子集, 一个是Cajita, 比较严格, 类似ADsafe 和 dojox.secure; 还有个是Valija, 则比较接近如今ECMAScript 5的strict mode了;
+Microsoft Web Sandbox;
+FBJS: facebook使用的一个自己;通常子集都需要对应一个verifier, 来确保代码符合其要求;
+
+
+extensions:
+const: 声明常量, 比如: const pi = 3.14;;
+let: 块变量声明, 相当于缩小版的var, 作用域仅存活在最近的一个块结构里, 你可以用{}来自行创建一个block;
+destructing: 允许多变量结构化赋值: let [x,y] = [1,2];let [r,theta] = polar(1.0, 1.0); function polar(x,y){...};甚至这种all = [first,second] = [1,2,3,4]; 或者这种let transparent = {r:0.0, g:0.0, b:0.0, a:1.0}; let {r:red, g:green, b:blue} = transparent;;
+for/each: 和for/in循环不同, for/each遍历对象的属性值而不是属性名, 且可操作类array对象;
+for/in: 从js 1.7(mozilla的js引擎版本号)开始, for/in也不局限在array和常规object了, 只要是可循环的元素都可以使用了;
+yield: 从python中引入的;
+Array Comprehensions:  还是从Python中借用的, let evensquares = [x*x for (x in range(0,10)) if (x % 2 === 0)];
+try/catch: 支持多catch;
+
+
+
+Chapter 12 - Server-Side JavaScript随着js的发展, 慢慢的超出了其本身的作用域: 浏览器. 随着Google V8引擎为js包入了unix的常用API: files,processes,streams,sockets等, js开始走出浏览器进入server端了. 正式命名为Node.JS. 想来很多人可能都听过, 因为后面我的数目中也包含了相关的书, 且本章内容也没见过太多, 所以就一起留到以后吧~
+参考文献:
+JavaScript the Definitive Guide 6th edition
+
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>像TED一样演讲</title><link>http://taoalpha.me/blog/2015/06/25/read-speaking-like-people-on-ted/</link><category>read</category><tag>reading notes,speaking</tag><pubDate>2015-06-25T09:00:00.000Z</pubDate><description>概要今天顺带读完了这本”像TED一样演讲”, 作者上一部和演讲相关的书是”乔布斯的魔力演讲”. 归纳了下书中的核心点, 记录分享给大家. 这一类的书干货其实能占到全书1/10就已经算不错了~ 所以一般看起来也比较快.
+阅读笔记情感共鸣
+释放你内心的热情 =&amp;gt; 热情可以传染;
+掌握讲故事的艺术 =&amp;gt; 故事可以刺激并吸引人脑的注意力, 拉近你与听众的距离;
+与演讲主题相关的个人故事;
+与演讲主题相关的他人故事;
+关于产品或者品牌的某个故事;
+
+
+让演讲好像好友交谈一样自然;
+
+制造新奇
+给人们一个看世界的新视角;
+设计让观众惊掉下巴的环节 =&amp;gt; 触发神经学家所说的讲情绪, 让记忆更加深刻;
+用幽默给你的演讲加分;
+
+令人难忘
+严格遵守18分钟的时间规则 =&amp;gt; 有约束才有创造力;
+抓住观众吸引力的魔法, 多感官体验 =&amp;gt; 让内容视觉化;
+表现最真实的自己;
+
+书中涉及到的TED(部分)
+Bryan Stevenson: We need to talk about an injustice
+Dan Ariely: Our buggy moral code
+Truly sustainable economic development
+Jennifer Granholm: A clean energy proposal – race to the top!
+Amy Cuddy: Your body language shapes who you are
+Robert Ballard: The astonishing hidden world of the deep ocean
+Hans Rosling: The best stats you’ve ever seen
+Mary Roach: 10 things you didn’t know about orgasm
+Bill Gates: Mosquitos, malaria and education
+Jill Bolte Taylor: My stroke of insight
+Stephen Hawking: Questioning the universe
+David Christian: The history of our world in 18 minutes
+
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (6)</title><link>http://taoalpha.me/blog/2015/06/25/read-javascript-the-definitive-guide-6/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-25T10:00:00.000Z</pubDate><description>概述正式进入本书第二部分的内容, 核心主要围绕在浏览器内的js. 包含了最基本的使用方式, 方法, 因浏览器而增加的各种属性方法, 操作css, dom的方法, 以及常用的一些js框架, 库等, 同时还包含了目前浏览器大热的安全领域.
 阅读笔记Chapter 13 - JavaScript in Web Browsers
 异步:
@@ -1100,41 +1172,6 @@ Q: 在测试same-origin的时候, 发现有些网站可以设定子域名的docu
 JavaScript the Definitive Guide 6th edition
 Can I Use …
 host and hostname
-
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>像TED一样演讲</title><link>http://taoalpha.me/blog/2015/06/25/read-speaking-like-people-on-ted/</link><category>read</category><tag>reading notes,speaking</tag><pubDate>2015-06-25T09:00:00.000Z</pubDate><description>概要今天顺带读完了这本”像TED一样演讲”, 作者上一部和演讲相关的书是”乔布斯的魔力演讲”. 归纳了下书中的核心点, 记录分享给大家. 这一类的书干货其实能占到全书1/10就已经算不错了~ 所以一般看起来也比较快.
-阅读笔记情感共鸣
-释放你内心的热情 =&amp;gt; 热情可以传染;
-掌握讲故事的艺术 =&amp;gt; 故事可以刺激并吸引人脑的注意力, 拉近你与听众的距离;
-与演讲主题相关的个人故事;
-与演讲主题相关的他人故事;
-关于产品或者品牌的某个故事;
-
-
-让演讲好像好友交谈一样自然;
-
-制造新奇
-给人们一个看世界的新视角;
-设计让观众惊掉下巴的环节 =&amp;gt; 触发神经学家所说的讲情绪, 让记忆更加深刻;
-用幽默给你的演讲加分;
-
-令人难忘
-严格遵守18分钟的时间规则 =&amp;gt; 有约束才有创造力;
-抓住观众吸引力的魔法, 多感官体验 =&amp;gt; 让内容视觉化;
-表现最真实的自己;
-
-书中涉及到的TED(部分)
-Bryan Stevenson: We need to talk about an injustice
-Dan Ariely: Our buggy moral code
-Truly sustainable economic development
-Jennifer Granholm: A clean energy proposal – race to the top!
-Amy Cuddy: Your body language shapes who you are
-Robert Ballard: The astonishing hidden world of the deep ocean
-Hans Rosling: The best stats you’ve ever seen
-Mary Roach: 10 things you didn’t know about orgasm
-Bill Gates: Mosquitos, malaria and education
-Jill Bolte Taylor: My stroke of insight
-Stephen Hawking: Questioning the universe
-David Christian: The history of our world in 18 minutes
 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (7)</title><link>http://taoalpha.me/blog/2015/06/26/read-javascript-the-definitive-guide-7/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-26T06:00:00.000Z</pubDate><description>概述阅读笔记Chapter 15 - Scripting Documents
 Selecting:
@@ -1404,44 +1441,6 @@ Web Sockets: 一种相对http来说的新网络协议;
 参考资料
 JavaScript the Definitive Guide 6th edition
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript 阅读阶梯清单</title><link>http://taoalpha.me/blog/2015/06/10/read-must-read-list-of-javascript/</link><category>read</category><tag>js</tag><pubDate>2015-06-10T09:00:00.000Z</pubDate><description>缘起今天翻完了Getting Good With JavaScript, 对于其精华浓缩的设计很欣赏, 很适合有一定无基础或者有一定基础但觉得野路子出身想要夯实一下的人读. 而在文末的Appendix A中作者提到的这个 Rey Bango’s Must-Read list of JavaScript 确实在是本书的又一大收获. 特转来分享~
-基础入门所谓入门自然是以打牢基础为目的, 所以下列书都是以基础概念为主, 算是领路之书(考虑到国情需要, 我都尽可能替换为豆瓣链接了):
-
-JavaScript: The Good Parts
-Professional JavaScript for Web Developers (Wrox Programmer to Programmer)
-ppk on JavaScript, 1/e
-Beginning JavaScript with DOM Scripting and Ajax: From Novice to Professional (Beginning: from Novice to Professional) 
-Eloquent JavaScript
-
-初窥门径一旦你入了门, 就可以修炼中级秘术了~ 可以看到有两条中级秘术和入门级是一样的, 哈 这就和基础功打的够扎实, 基本拳脚也能当秘术使唤的~
-
-Professional JavaScript for Web Developers (Wrox Programmer to Programmer) 
-JavaScript: The Definitive Guide 
-Eloquent JavaScript - Online 
-DOM Scripting: Web Design with JavaScript and the Document Object Model
-
-高手之路一旦确保自己有了一个牢靠的基础后, 我们就可以开启自己的高手之路了.
-
-High Performance JavaScript (Build Faster Web Application Interfaces)
-Object-Oriented JavaScript: Create scalable, reusable high-quality JavaScript applications and libraries
-JavaScript Patterns
-Pragmatic Guide to JavaScript
-Pro JavaScript Techniques
-JavaScript Rocks
-Secrets of the JavaScript Ninja
-
-造物主模式下面这些就是正儿八经的神级模式了… 当你已经把javascript里里外外摸得门清的时候, 就可以试试调整下面的了… 有一种去看汇编原理的感觉了… 开始研究底层源码了…
-
-Standard ECMA-262 ECMAScript Language Specification 3rd edition (December 1999) – PDF File
-Standard ECMA-262 ECMAScript Language Specification 5th edition (December 2009)
-
-JS相关blog分享除了书籍之外, 作者还推荐了一些可以订阅查看的博客~ 我根据其目前存活情况, 主题变更情况简单筛选了下(多数都已经失效了)~
-
-DailyJS - 强烈赞同, 很值得订阅!
-JavaScript Weekly Newsletter
-YUI Theatre
-Rey Bango 作者本人哈哈
-
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (2)</title><link>http://taoalpha.me/blog/2015/06/18/read-javascript-the-definitive-guide-2/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-18T10:00:00.000Z</pubDate><description>概述作为JS中的一等公民, function(函数)始终是JS的核心中的核心. 所以这里单独用一篇笔记来记录JavaScript: the definitive Guide一书第八章的内容. 主要介绍了函数的定义, 作用域, 参数, 声明以及执行等基础知识, 另外也着重介绍了其高级用法中的closure. 我将自己觉得重要的, 值得记录的部分都作为心得摘抄如下:
 心得arguments对象对每一个function而言, 都自动会有一个内置的arguments对象, 用它就可以访问传入的参数了. 通常来说arguments对象我们只会用在不定长传参的函数上, 但arguments本身带有的一个函数却是可以在某些时刻发挥重要作用的~ 这个函数就是callee函数:
 12345678// 递归自我调用函数在解决一些问题的时候是很常用的, 而通常情况下我们都会在函数内调用本函数名即可, 但是如果我们需要实现自我调用的函数正好是一个无名函数呢?// arguments.callee 即调用当前执行的函数function(x)&amp;#123;return x*arguments.callee(x-1)&amp;#125;// 如上, 就实现了一个很简单的&amp;gt;2阶乘计算了
@@ -1482,6 +1481,44 @@ new Function()不继承作用域, 几遍其是在嵌套函数中定义, 也只�
 谜题12345678910111213var name = &quot;The Window&quot;;var object = &amp;#123;  name : &quot;My Object&quot;,  getNameFunc : function()&amp;#123;    console.log(this);    return function()&amp;#123;      return this.name;    &amp;#125;;  &amp;#125;&amp;#125;;console.log(object.getNameFunc()());// output: Object&amp;#123;name:&quot;My Object&quot;&amp;#125;; &quot;The Window&quot;
 上述定义中, 为什么嵌套函数没有继承上层函数的this呢? 反而继承了全局的this?
 猜测解答: this这个关键字是个比较特殊的关键字, 它具有一个很有趣的特点就是: 当一个函数作为函数而不是方法来调用的时候, this指向的是全局对象, 只有当它是方法的时候, 其指向的才是所属对象; 题目来源阮一峰博客. 
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript 阅读阶梯清单</title><link>http://taoalpha.me/blog/2015/06/10/read-must-read-list-of-javascript/</link><category>read</category><tag>js</tag><pubDate>2015-06-10T09:00:00.000Z</pubDate><description>缘起今天翻完了Getting Good With JavaScript, 对于其精华浓缩的设计很欣赏, 很适合有一定无基础或者有一定基础但觉得野路子出身想要夯实一下的人读. 而在文末的Appendix A中作者提到的这个 Rey Bango’s Must-Read list of JavaScript 确实在是本书的又一大收获. 特转来分享~
+基础入门所谓入门自然是以打牢基础为目的, 所以下列书都是以基础概念为主, 算是领路之书(考虑到国情需要, 我都尽可能替换为豆瓣链接了):
+
+JavaScript: The Good Parts
+Professional JavaScript for Web Developers (Wrox Programmer to Programmer)
+ppk on JavaScript, 1/e
+Beginning JavaScript with DOM Scripting and Ajax: From Novice to Professional (Beginning: from Novice to Professional) 
+Eloquent JavaScript
+
+初窥门径一旦你入了门, 就可以修炼中级秘术了~ 可以看到有两条中级秘术和入门级是一样的, 哈 这就和基础功打的够扎实, 基本拳脚也能当秘术使唤的~
+
+Professional JavaScript for Web Developers (Wrox Programmer to Programmer) 
+JavaScript: The Definitive Guide 
+Eloquent JavaScript - Online 
+DOM Scripting: Web Design with JavaScript and the Document Object Model
+
+高手之路一旦确保自己有了一个牢靠的基础后, 我们就可以开启自己的高手之路了.
+
+High Performance JavaScript (Build Faster Web Application Interfaces)
+Object-Oriented JavaScript: Create scalable, reusable high-quality JavaScript applications and libraries
+JavaScript Patterns
+Pragmatic Guide to JavaScript
+Pro JavaScript Techniques
+JavaScript Rocks
+Secrets of the JavaScript Ninja
+
+造物主模式下面这些就是正儿八经的神级模式了… 当你已经把javascript里里外外摸得门清的时候, 就可以试试调整下面的了… 有一种去看汇编原理的感觉了… 开始研究底层源码了…
+
+Standard ECMA-262 ECMAScript Language Specification 3rd edition (December 1999) – PDF File
+Standard ECMA-262 ECMAScript Language Specification 5th edition (December 2009)
+
+JS相关blog分享除了书籍之外, 作者还推荐了一些可以订阅查看的博客~ 我根据其目前存活情况, 主题变更情况简单筛选了下(多数都已经失效了)~
+
+DailyJS - 强烈赞同, 很值得订阅!
+JavaScript Weekly Newsletter
+YUI Theatre
+Rey Bango 作者本人哈哈
+
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (1)</title><link>http://taoalpha.me/blog/2015/06/17/read-reading-javascript-the-definitive-guide-1/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-17T10:00:00.000Z</pubDate><description>概述“JavaScript: the definitive guide”可谓是JS入门必读数目之一了. 今天正好读到第7章, 做一简单总结. 前7章的内容都集中在JS中的基本知识上, 包含了:
 
 数据类型: 最简单的primitive datatypes: string, number, boolean , 两个空值类型: null, undefined(通常认为空值类型属于promitive的一种),以及稍微复杂点的: object类型;
@@ -1642,125 +1679,5 @@ JavaScript the Definitive Guide 6th edition
 Unicode Property
 List of Unicode Characters
 编码历史介绍
-
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (4)</title><link>http://taoalpha.me/blog/2015/06/23/read-javascript-the-definitive-guide-4/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-23T07:00:00.000Z</pubDate><description>概述第六版和第五版的最大区别在于ECMAScript 5的引入, 这是目前发布的最新的js版本, 有着最新的属性和函数, 目前主流浏览器基本都已经完全支持. 本文为阅读5-9章内容的笔记总结, 主要是覆盖了JS中的语句和典型对象.
-阅读笔记Chapter 5 - Statements
-switch/case中使用的是===进行比较判断的, 而不是==;
-with带入scope chain的对象只有读取权限, 没有写入功能, 即with后, 可以获取其代入的对象, 但其内声明的变量都依然归于gloabl或者local之中;
-debugger是ECMAScript 5引入的一个新的statement, 起主要作用是和浏览器结合使用, 用于创建断点以便查错使用;
-use strict也是ECMAScript 5引入的, 严格来说不算statement而是directive, 不过两者很是相近; 其使用必须位于js整体的起始位置或者是一个function主体的起始位置;
-use strict的使用会开启代码的strict mode, 为了提升效率, 错误追踪以及更好的安全性, 其语法要求会更加严格, 简单列举如下:
-停用with语句;
-所有变量必须声明才能调用;
-所有独立声明的函数而非对象的方法定义的, 其this域都默认为undefined, 而函数如果通过apply,call调用, 其this域为传入对象;
-对未声明变量的赋值或者不能写入的对象进行写入, 都会抛出异常;
-eval调用会自动创建临时局部scope, 不再能直接对母域新建声明了;
-arguments成为传入参数的硬拷贝, 和传入参数名之间不在绝对相等, 即改变一方不会引起另一方的改变, 同时停用其caller,callee方法;
-delete用于变量, 函数或者函数参数的时候会抛出异常, 操作对象的某个未声明属性也会抛出异常;
-对象(包括函数)创建中不能出现同名属性(参数);
-直接声明的八进制数是不允许的(即0开头的数字);
-eval,arguments作为keywords对待, 不能赋值, 或赋予其他变量, 也不能用于identifier;
-
-
-
-
-Chapter 6 - Objects
-Property Attributes (ECMAScript 5之后引入可自定义配置, 之前默认三者皆有.)
-writable: 可赋值;
-enumerable: 可递归;
-configurable: 可配置 - 可删除也可修改;
-
-
-Object Attributes
-portotype: 指向当前对象的属性继承对象;
-class: 指代对象所属类别;
-extensible: 指示当前对象是否能够新增属性 (ECMAScript 5引入);
-
-
-Object Categories and Property Types:
-native object: js中内置的对象, 包含Arrays, functions, dates, regular expressions等;
-host object: 由js运行环境所定义的对象, 比如常见的浏览器, 就包含了HTMLElement对象;
-user-defined: 执行js代码的时候创建的对象;
-own property: 直接由对象中定义的属性;
-inherited property: 由对象的prototype object继承来的属性;
-
-
-Prototype:
-任何一个对象(除了Object.protytpe)的出现都必然包含了第二个对象的存在: new Array() =&amp;gt; Array.prototype;
-Object.prototype是唯一一个没有母继承的对象了, 它是最顶部的类;
-类似new Array() =&amp;gt; Array.prototype =&amp;gt; Object.prototype这样的两个prototype就组成了Array的prototype chain;
-Object.create() 是ECMAScript 5引入的新的创建对象的方法, 其接受两个参数, 第一个参数会作为新建对象的prototype传入, 第二个则是用来描述新对象的属性的. 如果你传入null, 则新建对象是完全没有prototype的, 只有Object.create(Object.prototype)才是等价于我们常用的{} or new Object();
-获取某个object的未定义属性将返回undefined, 但是获取undefined或者null的某个属性则会抛出异常;
-
-
-getter &amp;amp;&amp;amp; setter
-ECMAScript 5新引入的两个accessor properties, 分别对应某个属性的调用和赋值;
-只有setter的属性只有写入权限, 只有getter的属性则是只读权限;
-
-
-property attributes
-value, writable, enumerable, and configurable
-对应的accessor property: get, set, enumerable, and configurable
-Object.getOwnPropertyDescriptor(object_name, property_name) 获取某个属性的特征描述;
-Object.defineProperty(object_name, property_name,{property_attribute:attribute_value}) 对某个属性设定其特征描述;
-
-
-
-下例即为利用Object.defineProperty自定义的一个extend()函数:
-123456789101112131415161718192021222324252627282930// Example 6-3. Copying property attributes/** Add a nonenumerable extend() method to Object.prototype.* This method extends the object on which it is called by copying properties* from the object passed as its argument. All property attributes are* copied, not just the property value. All own properties (even non-* enumerable ones) of the argument object are copied unless a property* with the same name already exists in the target object. */Object.defineProperty(Object.prototype,  &quot;extend&quot;,  &amp;#123;    writable: true,    enumerable: false,    configurable: true,    value: function(o) &amp;#123;      // Define Object.prototype.extend      // Make it nonenumerable      // Its value is this function      // Get all own props, even nonenumerable ones      var names = Object.getOwnPropertyNames(o); // Loop through them      for(var i = 0; i &amp;lt; names.length; i++) &amp;#123;        // Skip props already in this object        if (names[i] in this) continue;        // Get property description from o        var desc = Object.getOwnPropertyDescriptor(o,names[i]);        // Use it to create property on this Object.defineProperty(this, names[i], desc);      &amp;#125;    &amp;#125;  &amp;#125;);
-
-Object Attributes;
-Object.getPrototypeOf() ECMAScript 5引入, 可用于获取某个对象的prototype;
-p.isPrototypeOf() 同上, 用于判断某个对象是否为另一个对象的prototype;
-Object.isExtensible(),Object.preventExtensions()则分别是用于判断一个object是否是可扩展的, 以及禁止其可扩展性的(此操作不可复原);
-Object.seal()类似Object.preventExtensions(), 不过它同时禁掉了properties的configurable属性,Object.isSealed()则是对应用于判断是否sealed的函数;
-Object.freeze()比Object.seal()还要严格,所有属性都变为可读了, 对应的查询函数为:Object.isFrozen();
-Object.preventExtensions(),Object.seal(),Object.freeze()都是只针对当前object而言的;
-class属性目前基本没啥用, 有点等价或者说更细化的typeOf or instanceOf了;
-
-
-
-Chapter 7 - Arrays这里主要记录ECMAScript 5引入的一些新的方法, 3已有的可以查看 阅读笔记-2
-
-forEach(value,index,array_itself): array自身的循环调用函数, 相当于for(i in array_name){}, 区别在于其不支持break等可以跳出循环的语句, 如果你想要提前结束循环, 就需要通过try/catch包裹并利用抛出异常来结束循环;
-map(): 也算是循环的一种, 遍历每个元素并传递给传入的函数, 最终返回一个新数组;
-filter(): 顾名思义, 这是对数组进行筛选的, 值得一提的是filter()会自动跳过空白,所以对于稀疏数组通过filter()可以去除所有空白, 在加上undefined判断, 就可以去除所有空值了;
-every() 和 some(): every()是当数组每个元素都使传入函数为真的时候返回真, some()则是只要一个为真即返回为真, 需要注意的事, 对于空数组, every()会返回真, 而some()会返回为假;
-reduce(function,initial_value) 和 reduceRight(): 通过执行传入函数而对数组元素进行整合,计算,判断, 最终返回一个结果: var max = a.reduce(function(x,y) { return (x&amp;gt;y)?x:y; });即返回数组的最大值; reduceRight()与reduce()一致, 只是循环顺序相反, 从右到左; 当没有声明初始值时, 采用第一个执行元素作为初始值;
-indexOf() 和 lastIndexOf: 顾名思义, 获取数组中某个元素的index, 前者获取首个匹配元素的index, 后者获取最后一个匹配元素的index;
-
-Chapter 8 - Functions
-Functions的调用有四种:
-直接调用;
-作为对象的方法调用;
-作为constructor调用;
-通过call,apply方法调用(间接调用);
-
-
-call() 和 apply:
-call和apply都是间接调用的方法, 允许一个函数临时客串为某个object的方法;
-一定程度上, 可以等价于o.m = f;o.m();delete o.m;
-其接受的第一个参数会成为函数运行的this域, 如果是非strict mode下, 传入null/undefined则会自动将global作为this, 而如果传入的是primitive datatype, 则自动转为对应的wrapper object, 即string =&amp;gt; String;
-call和apply的区别主要体现在后面的参数上, 前者以分散元素传入, 后者则以整体数组形式传入, 所以用apply可以把原本只支持不定长参数的函数转换为接受数组的函数:var biggest = Math.max.apply(Math, array_of_numbers);;
-apply对类array元素处理方式同array元素;
-
-
-bind(): 很是类似call和apply, 本质也是把某个函数作为某个对象的方法调用, 实现则是通过把object和function绑定, 形成一个新函数从而每次调用新函数都等价于调用了object.funtion, bind接受多个参数, 其首个以后的参数都会作为this域成员代入函数中, 并按序成为函数自身的参数function f(y,z) { return this.x + y + z };var g = f.bind({x:1}, 2);g(3) // 2被赋予了y, 新的3则给了z;
-higher-order function: 作用于另一个函数之上的函数;
-
-partial and memoization 这两个都是function programing中常用的方法:
-
-partial: 类似bind()这种会把传入参数默认分配到函数自身的部分接受参数上的做法就是partial application;
-memoization: 将函数运行过程的计算结果缓存起来的方式;
-
-
-
-123456789101112131415161718192021222324function array(a, n) &amp;#123; return Array.prototype.slice.call(a, n || 0); &amp;#125;// 用以处理类array元素(转为真正的array)function partial(f /*, ... */) &amp;#123;  var args = arguments;  // 存储partial的参数  return function() &amp;#123;    var a = array(args, 1);    // 取出首位以后的参数    var i=0, j=0;    for(; i &amp;lt; a.length; i++)      if (a[i] === undefined) a[i] = arguments[j++];      // 这里的arguments是第二层参数      // 将空元素逐个替换成第二层参数里的值, j自动随着执行+1    a = a.concat(array(arguments, j))    // 组成新的参数数组    return f.apply(this, a);    // 调用f函数, 并传入参数a  &amp;#125;;&amp;#125;var f = function(x,y,z)&amp;#123;return x*y*z&amp;#125;partial(f,undefined,2)(1,3)// x:1,y:2,z:3
-123456789101112131415// Return a memoized version of f.// It only works if arguments to f all have distinct string representations.function memoize(f) &amp;#123;  var cache = &amp;#123;&amp;#125;;  return function() &amp;#123;    var key = arguments.length + Array.prototype.join.call(arguments,&quot;,&quot;);    if (key in cache) return cache[key];    else return cache[key] = f.apply(this, arguments);  &amp;#125;;&amp;#125;// 应用方式类似;var factorial = memoize(function(n) &amp;#123;return (n &amp;lt;= 1) ? 1 : n * factorial(n-1); &amp;#125;);factorial(5) // 此时会自动缓存4,3,2的阶乘值. 对于一些复杂的运算, 如此可以很好的加快运算速度.
-Chapter 9 - Classes and Modules除了 阅读笔记-2中包含的, 由于ECMAScript 5所引入的那些object property自然都可以应用到新的class中, 从而创建更为复杂有效的函数. 其实js中目前不存在class这个关键词, 所以其模仿的class, 说白了就是一个复杂一些的函数对象.
-而因为其内容驳杂繁多, 我么会在后面的应用中有很多实践的机会, 这里就不一一描述了.
-参考资料
-JavaScript the Definitive Guide 6th edition
-Functional Javascript
 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item></channel></rss>
