@@ -183,7 +183,7 @@ window.randomTags = function (flag) {
 // Create random image for image frame.
 window.randomImage = function (path) {
   var topwallppr = "https://api.desktoppr.co/1/wallpapers/random";
-  var dailywallppr = "http://www.dailywallppr.com/img/#{Math.floor(Math.random()*2320+1)}.jpg";
+  var dailywallppr = "https://www.dailywallppr.com/img/#{Math.floor(Math.random()*2320+1)}.jpg";
   $.ajax({
     url: topwallppr,
     dataType: "jsonp",

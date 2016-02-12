@@ -1,4 +1,26 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-02-10T06:01:27.936Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>Feedpusher Close Alpha</title><link>http://taoalpha.me/blog/2016/02/10/tech-feedpusher-close-alpha/</link><category>tech</category><tag>FeedPusher,MongoDB</tag><pubDate>2016-02-10T10:48:07.000Z</pubDate><description>Due to a big bug in MongoDB &amp;lt; 2.6 version, I lost maybe 20% data… The bug is pretty famous back to that time :) Caused by the limitation of MongoDB(16MB)…Since I set up all the server on my raspberry pi, the only available version of MongoDB for it is 2.1.1… so sad… I don’t know why I can not export all data to my local.. I can only export like 80% percent of them… still haven’t figured out why …
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-02-12T15:25:21.609Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>Add SSL to your github pages with customized domain</title><link>http://taoalpha.me/blog/2016/02/11/tech-add-ssl-to-your-github-pages-with-customized-domain/</link><category>tech</category><tag>DNS,Github Pages,SSL</tag><pubDate>2016-02-11T22:45:06.000Z</pubDate><description>Since Google announced that HTTPS as a ranking signal, all the webmasters including the people like me owns a personal website starts considering moving from HTTP to HTTPS.
+There are plenty of ways to add SSL to your website, most of host service providers will provide the SSL for you, you just need to pay for it :). If you don’t want to pay and also can access your server from SSH, you may try Let’s Encrypt which is a free and open certificate authority.
+If you are using github pages, you should be fine already since github pages has already supported HTTPS since 2014/4 GitHub Pages Now (Sorta) Supports HTTPS, So Use It.
+But if you are using customized domain, you need to do some leg work to make it support SSL, and free. :)
+SSLWhat is SSL (Secure Sockets Layer) ? According to google: 
+
+SSL is the standard security technology for establishing an encrypted link between a web server and a browser. This link ensures that all data passed between the web server and browsers remain private and integral.
+
+About how to encrypt the data, you can check here to read more).
+CloudFlareCloudFlare is like a service that help you improve the performance of your website, like dynamic dns, analytics … and security like SSL. So it is the easiest way to move your website to HTTPS
+Moving to HTTPSHere is a really good post about how to move the HTTP to HTTPS. Set Up SSL on Github Pages With Custom Domains for Free
+I just summarize some important steps as follow:
+
+Sign up in CloudFlare
+Add your site
+Confirm the records including the A and CNAME (you can add some new or delete some wrong ones)
+Get the new nameserver from cloudflare
+Replace the nameserver in your domain provider(where you buy the domain from)
+Sit and wait
+
+Default as HTTPSIf you want to redirect all your users to HTTPS version, you can achieve that with a little script:
+1234var host = &quot;yoursite.com&quot;;if ((host == window.location.host) &amp;amp;&amp;amp; (window.location.protocol != &quot;https:&quot;)) &amp;#123;  window.location.protocol = &quot;https&quot;;&amp;#125;
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>Feedpusher Close Alpha</title><link>http://taoalpha.me/blog/2016/02/10/tech-feedpusher-close-alpha/</link><category>tech</category><tag>FeedPusher,MongoDB</tag><pubDate>2016-02-10T10:48:07.000Z</pubDate><description>Due to a big bug in MongoDB &amp;lt; 2.6 version, I lost maybe 20% data… The bug is pretty famous back to that time :) Caused by the limitation of MongoDB(16MB)…Since I set up all the server on my raspberry pi, the only available version of MongoDB for it is 2.1.1… so sad… I don’t know why I can not export all data to my local.. I can only export like 80% percent of them… still haven’t figured out why …
 But anyway, this is kind of a good thing. You know, better be sooner :). And also this makes me decide to release the feedpusher as a packaged tool that you can use to built your own rss reader instead of a real service provider :)
 So I have to say: there will be no beta test for feedpusher, since I have closed the test user account… so you can not log in with that test@mail.com any more, sorry :) But I have released all source code on github(separated into two different repo: feedpusher and baby). I will clear the code and combine them into the refactor branch of feedpusher soon.
 For personal use, it will work great and provide high customizability! And in order to learn react, I will release the code with angular version and react version :)
@@ -979,161 +1001,55 @@ Unicode Property
 List of Unicode Characters
 编码历史介绍
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>像TED一样演讲</title><link>http://taoalpha.me/blog/2015/06/25/read-speaking-like-people-on-ted/</link><category>read</category><tag>reading notes,speaking</tag><pubDate>2015-06-25T09:00:00.000Z</pubDate><description>概要今天顺带读完了这本”像TED一样演讲”, 作者上一部和演讲相关的书是”乔布斯的魔力演讲”. 归纳了下书中的核心点, 记录分享给大家. 这一类的书干货其实能占到全书1/10就已经算不错了~ 所以一般看起来也比较快.
-阅读笔记情感共鸣
-释放你内心的热情 =&amp;gt; 热情可以传染;
-掌握讲故事的艺术 =&amp;gt; 故事可以刺激并吸引人脑的注意力, 拉近你与听众的距离;
-与演讲主题相关的个人故事;
-与演讲主题相关的他人故事;
-关于产品或者品牌的某个故事;
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (2)</title><link>http://taoalpha.me/blog/2015/06/30/read-coffeescript-programming-with-jquery-rails-and-nodejs-2/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-30T04:00:00.000Z</pubDate><description>SummaryAfter learned the basic syntax of CoffeeScript, I re-wrote all my blog’s js files with CoffeeScript. I have to say, practice is the best way to learn and understand one skill. Especially for coding, if you just read the book and never write a single line by yourself, you will never become a master of it or you may stick in the beginner for ever.
+Today we will finish the book. Talking about how to combine the CoffeeScript with some other web tools we use a lot: jQuery, Rails and Nodejs.
+NotesHere I just ignored the second chapter about how to install the coffeescript and nodejs in your computer, if you need some help, feel free to comment below the blog or just visit the nodejs and coffeescript to find a way yourself.
+jQueryjQuery is the most popular js module people used in their websites or webapps. And using jQuery with CoffeeScript is just like javascript. jQuery is javascript, after all.
+Want to use CoffeeScript with jQuery? Just do it and follow the rules we learn from the basic syntax part. Here I list several examples and if you look it closely, you will find everything you have already known if you read the first chapter carefully. The author of the book shows us another complex examples: TodoMVC in CoffeeScript.
+BTW: TodoMVC is a great project which shows you how to write a todo app in all kinds of tools and frameworks.
+1234567891011121314151617181920212223242526272829303132333435363738394041$ -&amp;gt;  do some  do another### =&amp;gt;$(function() &amp;#123;  some();  return another();&amp;#125;);That's just like the $(document).ready(function()&amp;#123;&amp;#125;)#### A function using ajax to send mail, which is a new feature I will add to my blog in a few days :)@sendMail = (msg)-&amp;gt;  $.ajax    type: 'POST'    url: 'https://mandrillapp.com/api/1.0/messages/send.json'    data:      'key': ''      'message':        'from_email': msg.sender_mail        'from_name' : msg.sender_name        'to': [            &amp;#123;              'email': ''              'name': 'TaoAlpha'              'type': 'to'            &amp;#125;          ]        'autotext': 'true'        'subject': msg.subject        'html': msg.content  .done (response)-&amp;gt;    showAlert(&quot;success&quot;,&quot;Thanks for your contribution!&quot;)  .fail (data)-&amp;gt;    showAlert(&quot;fail&quot;,&quot;Sorry! Failed to send the email. Please retry!&quot;)# another function to get unique result from an array of objectsArray::getObjectUnique = (id) -&amp;gt;  a=b=[];  add = (data) -&amp;gt; b.push data[id];data  (add i for i in @ when b.indexOf(i[id]) == -1 )
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748// You can see that you have saved a lot of keystrokes and the codes look more clean and beautiful.// Because coffeescript doesn't support declare global variables directly, and if we want to use the function in other script, we need to declare it into the `this` scope.this.sendMail = function(msg) &amp;#123;  return $.ajax(&amp;#123;    type: 'POST',    url: 'https://mandrillapp.com/api/1.0/messages/send.json',    data: &amp;#123;      'key': '',      'message': &amp;#123;        'from_email': msg.sender_mail,        'from_name': msg.sender_name,        'to': [          &amp;#123;            'email': '',            'name': 'TaoAlpha',            'type': 'to'          &amp;#125;        ],        'autotext': 'true',        'subject': msg.subject,        'html': msg.content      &amp;#125;    &amp;#125;  &amp;#125;).done(function(response) &amp;#123;    return showAlert(&quot;success&quot;, &quot;Thanks for your contribution!&quot;);  &amp;#125;).fail(function(data) &amp;#123;    return showAlert(&quot;fail&quot;, &quot;Sorry! Failed to send the email. Please retry!&quot;);  &amp;#125;);&amp;#125;;# get unque result for array of objectsArray.prototype.getObjectUnique = function(id) &amp;#123;  var a, add, b, i, j, len, results;  a = b = [];  add = function(data) &amp;#123;    b.push(data[id]);    return data;  &amp;#125;;  results = [];  for (j = 0, len = this.length; j &amp;lt; len; j++) &amp;#123;    i = this[j];    if (b.indexOf(i[id]) === -1) &amp;#123;      results.push(add(i));    &amp;#125;  &amp;#125;  return results;&amp;#125;;
+RailsRuby on Rails is a web framework that came around in 2004. And it soon became quite popular. Actually many people believe that Rails saved the ruby…
+Check this:How to download and install Rails if you haven’t installed it.
+Rails’s principles
+Convention over configuration
 
 
-让演讲好像好友交谈一样自然;
-
-制造新奇
-给人们一个看世界的新视角;
-设计让观众惊掉下巴的环节 =&amp;gt; 触发神经学家所说的讲情绪, 让记忆更加深刻;
-用幽默给你的演讲加分;
-
-令人难忘
-严格遵守18分钟的时间规则 =&amp;gt; 有约束才有创造力;
-抓住观众吸引力的魔法, 多感官体验 =&amp;gt; 让内容视觉化;
-表现最真实的自己;
-
-书中涉及到的TED(部分)
-Bryan Stevenson: We need to talk about an injustice
-Dan Ariely: Our buggy moral code
-Truly sustainable economic development
-Jennifer Granholm: A clean energy proposal – race to the top!
-Amy Cuddy: Your body language shapes who you are
-Robert Ballard: The astonishing hidden world of the deep ocean
-Hans Rosling: The best stats you’ve ever seen
-Mary Roach: 10 things you didn’t know about orgasm
-Bill Gates: Mosquitos, malaria and education
-Jill Bolte Taylor: My stroke of insight
-Stephen Hawking: Questioning the universe
-David Christian: The history of our world in 18 minutes
-
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (4)</title><link>http://taoalpha.me/blog/2015/06/23/read-javascript-the-definitive-guide-4/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-23T07:00:00.000Z</pubDate><description>概述第六版和第五版的最大区别在于ECMAScript 5的引入, 这是目前发布的最新的js版本, 有着最新的属性和函数, 目前主流浏览器基本都已经完全支持. 本文为阅读5-9章内容的笔记总结, 主要是覆盖了JS中的语句和典型对象.
-阅读笔记Chapter 5 - Statements
-switch/case中使用的是===进行比较判断的, 而不是==;
-with带入scope chain的对象只有读取权限, 没有写入功能, 即with后, 可以获取其代入的对象, 但其内声明的变量都依然归于gloabl或者local之中;
-debugger是ECMAScript 5引入的一个新的statement, 起主要作用是和浏览器结合使用, 用于创建断点以便查错使用;
-use strict也是ECMAScript 5引入的, 严格来说不算statement而是directive, 不过两者很是相近; 其使用必须位于js整体的起始位置或者是一个function主体的起始位置;
-use strict的使用会开启代码的strict mode, 为了提升效率, 错误追踪以及更好的安全性, 其语法要求会更加严格, 简单列举如下:
-停用with语句;
-所有变量必须声明才能调用;
-所有独立声明的函数而非对象的方法定义的, 其this域都默认为undefined, 而函数如果通过apply,call调用, 其this域为传入对象;
-对未声明变量的赋值或者不能写入的对象进行写入, 都会抛出异常;
-eval调用会自动创建临时局部scope, 不再能直接对母域新建声明了;
-arguments成为传入参数的硬拷贝, 和传入参数名之间不在绝对相等, 即改变一方不会引起另一方的改变, 同时停用其caller,callee方法;
-delete用于变量, 函数或者函数参数的时候会抛出异常, 操作对象的某个未声明属性也会抛出异常;
-对象(包括函数)创建中不能出现同名属性(参数);
-直接声明的八进制数是不允许的(即0开头的数字);
-eval,arguments作为keywords对待, 不能赋值, 或赋予其他变量, 也不能用于identifier;
+Rails is designed to assume that the programmer will follow certain known conventions, which if used, provide great benefit and much less need to configure the framework.That means that the framework makes assumptions on how a typical application should be built and structured and it doesn’t try to be overly flexible and configurable. This helps you spend less time on mundane tasks like configuring and wiring up an application architecture and more time on actually building your app.
 
 
+Don’t repeat yourself, or DRY
 
 
-Chapter 6 - Objects
-Property Attributes (ECMAScript 5之后引入可自定义配置, 之前默认三者皆有.)
-writable: 可赋值;
-enumerable: 可递归;
-configurable: 可配置 - 可删除也可修改;
+Every piece of knowledge must have a single, unambiguous, and authoritative representation within a system.Rails strives to remove duplication and boilerplate wherever it can.
+
+How to use Rails with CoffeeScriptLuckily, after Rails 3.1, you don’t need do anything to let Rails support CoffeeScript. It has already become part of rails! And also, rails has changed its default js library to jQuery.
+So what you need to do if you want to use coffeescript with rails? Nothing but learn rails!
+Just like the author said in the book: “If you haven’t done so already, I encourage you to spend some more time learning Rails as well as Ruby, and immersing yourself in the wonderful communities they support.”
+Node.jsNode is fantastic. It changes something. Before node, javascript was mostly run inside browsers. Now it just came out and gave web developers a chance to become a full-stack!
+Features of Node
+Event-driven
 
 
-Object Attributes
-portotype: 指向当前对象的属性继承对象;
-class: 指代对象所属类别;
-extensible: 指示当前对象是否能够新增属性 (ECMAScript 5引入);
+The Node.js framework only allows non-blocking, asynchronous I/O. This means that any I/O operation that is accessing an external resource, such as the operating system, a database, or a network resource must happen asynchronously.
 
 
-Object Categories and Property Types:
-native object: js中内置的对象, 包含Arrays, functions, dates, regular expressions等;
-host object: 由js运行环境所定义的对象, 比如常见的浏览器, 就包含了HTMLElement对象;
-user-defined: 执行js代码的时候创建的对象;
-own property: 直接由对象中定义的属性;
-inherited property: 由对象的prototype object继承来的属性;
+Fast and scalable
 
 
-Prototype:
-任何一个对象(除了Object.protytpe)的出现都必然包含了第二个对象的存在: new Array() =&amp;gt; Array.prototype;
-Object.prototype是唯一一个没有母继承的对象了, 它是最顶部的类;
-类似new Array() =&amp;gt; Array.prototype =&amp;gt; Object.prototype这样的两个prototype就组成了Array的prototype chain;
-Object.create() 是ECMAScript 5引入的新的创建对象的方法, 其接受两个参数, 第一个参数会作为新建对象的prototype传入, 第二个则是用来描述新对象的属性的. 如果你传入null, 则新建对象是完全没有prototype的, 只有Object.create(Object.prototype)才是等价于我们常用的{} or new Object();
-获取某个object的未定义属性将返回undefined, 但是获取undefined或者null的某个属性则会抛出异常;
+The V8 JavaScript engine(created by google and used in chrome) used by Node.js is highly optimized for performance, thus making Node.js applications very fast. The fact that Node is non-blocking will ensure that your applications will be able to handle many concurrent client requests without using a lot of system resources.
 
 
-getter &amp;amp;&amp;amp; setter
-ECMAScript 5新引入的两个accessor properties, 分别对应某个属性的调用和赋值;
-只有setter的属性只有写入权限, 只有getter的属性则是只读权限;
+Node is not Rails
 
 
-property attributes
-value, writable, enumerable, and configurable
-对应的accessor property: get, set, enumerable, and configurable
-Object.getOwnPropertyDescriptor(object_name, property_name) 获取某个属性的特征描述;
-Object.defineProperty(object_name, property_name,{property_attribute:attribute_value}) 对某个属性设定其特征描述;
+Rails strives to be a full-stack solution to building web applications, whereas Node.js is more of a low-level system for writing any type of fast and scalable network application.
 
-
-
-下例即为利用Object.defineProperty自定义的一个extend()函数:
-123456789101112131415161718192021222324252627282930// Example 6-3. Copying property attributes/** Add a nonenumerable extend() method to Object.prototype.* This method extends the object on which it is called by copying properties* from the object passed as its argument. All property attributes are* copied, not just the property value. All own properties (even non-* enumerable ones) of the argument object are copied unless a property* with the same name already exists in the target object. */Object.defineProperty(Object.prototype,  &quot;extend&quot;,  &amp;#123;    writable: true,    enumerable: false,    configurable: true,    value: function(o) &amp;#123;      // Define Object.prototype.extend      // Make it nonenumerable      // Its value is this function      // Get all own props, even nonenumerable ones      var names = Object.getOwnPropertyNames(o); // Loop through them      for(var i = 0; i &amp;lt; names.length; i++) &amp;#123;        // Skip props already in this object        if (names[i] in this) continue;        // Get property description from o        var desc = Object.getOwnPropertyDescriptor(o,names[i]);        // Use it to create property on this Object.defineProperty(this, names[i], desc);      &amp;#125;    &amp;#125;  &amp;#125;);
-
-Object Attributes;
-Object.getPrototypeOf() ECMAScript 5引入, 可用于获取某个对象的prototype;
-p.isPrototypeOf() 同上, 用于判断某个对象是否为另一个对象的prototype;
-Object.isExtensible(),Object.preventExtensions()则分别是用于判断一个object是否是可扩展的, 以及禁止其可扩展性的(此操作不可复原);
-Object.seal()类似Object.preventExtensions(), 不过它同时禁掉了properties的configurable属性,Object.isSealed()则是对应用于判断是否sealed的函数;
-Object.freeze()比Object.seal()还要严格,所有属性都变为可读了, 对应的查询函数为:Object.isFrozen();
-Object.preventExtensions(),Object.seal(),Object.freeze()都是只针对当前object而言的;
-class属性目前基本没啥用, 有点等价或者说更细化的typeOf or instanceOf了;
-
-
-
-Chapter 7 - Arrays这里主要记录ECMAScript 5引入的一些新的方法, 3已有的可以查看 阅读笔记-2
-
-forEach(value,index,array_itself): array自身的循环调用函数, 相当于for(i in array_name){}, 区别在于其不支持break等可以跳出循环的语句, 如果你想要提前结束循环, 就需要通过try/catch包裹并利用抛出异常来结束循环;
-map(): 也算是循环的一种, 遍历每个元素并传递给传入的函数, 最终返回一个新数组;
-filter(): 顾名思义, 这是对数组进行筛选的, 值得一提的是filter()会自动跳过空白,所以对于稀疏数组通过filter()可以去除所有空白, 在加上undefined判断, 就可以去除所有空值了;
-every() 和 some(): every()是当数组每个元素都使传入函数为真的时候返回真, some()则是只要一个为真即返回为真, 需要注意的事, 对于空数组, every()会返回真, 而some()会返回为假;
-reduce(function,initial_value) 和 reduceRight(): 通过执行传入函数而对数组元素进行整合,计算,判断, 最终返回一个结果: var max = a.reduce(function(x,y) { return (x&amp;gt;y)?x:y; });即返回数组的最大值; reduceRight()与reduce()一致, 只是循环顺序相反, 从右到左; 当没有声明初始值时, 采用第一个执行元素作为初始值;
-indexOf() 和 lastIndexOf: 顾名思义, 获取数组中某个元素的index, 前者获取首个匹配元素的index, 后者获取最后一个匹配元素的index;
-
-Chapter 8 - Functions
-Functions的调用有四种:
-直接调用;
-作为对象的方法调用;
-作为constructor调用;
-通过call,apply方法调用(间接调用);
-
-
-call() 和 apply:
-call和apply都是间接调用的方法, 允许一个函数临时客串为某个object的方法;
-一定程度上, 可以等价于o.m = f;o.m();delete o.m;
-其接受的第一个参数会成为函数运行的this域, 如果是非strict mode下, 传入null/undefined则会自动将global作为this, 而如果传入的是primitive datatype, 则自动转为对应的wrapper object, 即string =&amp;gt; String;
-call和apply的区别主要体现在后面的参数上, 前者以分散元素传入, 后者则以整体数组形式传入, 所以用apply可以把原本只支持不定长参数的函数转换为接受数组的函数:var biggest = Math.max.apply(Math, array_of_numbers);;
-apply对类array元素处理方式同array元素;
-
-
-bind(): 很是类似call和apply, 本质也是把某个函数作为某个对象的方法调用, 实现则是通过把object和function绑定, 形成一个新函数从而每次调用新函数都等价于调用了object.funtion, bind接受多个参数, 其首个以后的参数都会作为this域成员代入函数中, 并按序成为函数自身的参数function f(y,z) { return this.x + y + z };var g = f.bind({x:1}, 2);g(3) // 2被赋予了y, 新的3则给了z;
-higher-order function: 作用于另一个函数之上的函数;
-
-partial and memoization 这两个都是function programing中常用的方法:
-
-partial: 类似bind()这种会把传入参数默认分配到函数自身的部分接受参数上的做法就是partial application;
-memoization: 将函数运行过程的计算结果缓存起来的方式;
-
-
-
-123456789101112131415161718192021222324function array(a, n) &amp;#123; return Array.prototype.slice.call(a, n || 0); &amp;#125;// 用以处理类array元素(转为真正的array)function partial(f /*, ... */) &amp;#123;  var args = arguments;  // 存储partial的参数  return function() &amp;#123;    var a = array(args, 1);    // 取出首位以后的参数    var i=0, j=0;    for(; i &amp;lt; a.length; i++)      if (a[i] === undefined) a[i] = arguments[j++];      // 这里的arguments是第二层参数      // 将空元素逐个替换成第二层参数里的值, j自动随着执行+1    a = a.concat(array(arguments, j))    // 组成新的参数数组    return f.apply(this, a);    // 调用f函数, 并传入参数a  &amp;#125;;&amp;#125;var f = function(x,y,z)&amp;#123;return x*y*z&amp;#125;partial(f,undefined,2)(1,3)// x:1,y:2,z:3
-123456789101112131415// Return a memoized version of f.// It only works if arguments to f all have distinct string representations.function memoize(f) &amp;#123;  var cache = &amp;#123;&amp;#125;;  return function() &amp;#123;    var key = arguments.length + Array.prototype.join.call(arguments,&quot;,&quot;);    if (key in cache) return cache[key];    else return cache[key] = f.apply(this, arguments);  &amp;#125;;&amp;#125;// 应用方式类似;var factorial = memoize(function(n) &amp;#123;return (n &amp;lt;= 1) ? 1 : n * factorial(n-1); &amp;#125;);factorial(5) // 此时会自动缓存4,3,2的阶乘值. 对于一些复杂的运算, 如此可以很好的加快运算速度.
-Chapter 9 - Classes and Modules除了 阅读笔记-2中包含的, 由于ECMAScript 5所引入的那些object property自然都可以应用到新的class中, 从而创建更为复杂有效的函数. 其实js中目前不存在class这个关键词, 所以其模仿的class, 说白了就是一个复杂一些的函数对象.
-而因为其内容驳杂繁多, 我么会在后面的应用中有很多实践的机会, 这里就不一一描述了.
-参考资料
-JavaScript the Definitive Guide 6th edition
-Functional Javascript
-
+Node and CoffeeScriptWant to write coffeescript in node? It’s easy, all you need is a module named CoffeeScript. And like many other languages, node has several frameworks people built for web development, like: Express.
+The core about how to use coffeescript with nodejs is to use the --watch for coffee command in node. It will automatically compile all file end with coffee into js when there is a change made into these files.
+And just like jQuery, you just follow the rules and write your code.
+DigestCoffeeScript is a tool that can help you write js more quickly and elegant. And any platform or language you want to use coffeescript, what you need to do is following the coffeescript’s rules. There is no difference caused by platform or language.
+That’s all. Thanks!
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (5)</title><link>http://taoalpha.me/blog/2015/06/24/read-javascript-the-definitive-guide-5/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-24T08:00:00.000Z</pubDate><description>概述在十到十二章中, 第十章的正则表达式内容最为丰富, 也是目前应用即为广泛的内容之一. 不过这里也主要是结合js的应用, 实际上正则表达式本身就是一个很值得研究的话题, 有不少书都在谈这个话题, 我后面要读的书目中恰巧就有这么一本, 后面会更加详细的学习以下正则表达式的方方面面.
 十一章算是非常前沿, 高端或者说冷门的点了, 随着浏览器的盛行以及技术的进步, 安全问题始终都是一个很重视的点, 而在这种攻防演练中也促进了js本身的进步, 而主流浏览器本身更是走在了js的最前沿. 各种新的属性都是由他们引入而逐渐成为标准的;
 十二章主要是对走出浏览器的JS做了一个简单的介绍, 而NodeJS的大名在近几年在前后端, 全端领域都可谓是人尽皆知. 我也会在之后阅读相关书籍的时候做更详细的笔记记录.
@@ -1447,46 +1363,6 @@ Chapter 20 - Client-Side Storage我在早先做chrome插件详见我的portfolio
 参考资料
 JavaScript the Definitive Guide 6th edition 我现在就去写导入工具… 今天就到这里吧, 明天算是最后一篇就能完结本书啦~
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (2)</title><link>http://taoalpha.me/blog/2015/06/18/read-javascript-the-definitive-guide-2/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-18T10:00:00.000Z</pubDate><description>概述作为JS中的一等公民, function(函数)始终是JS的核心中的核心. 所以这里单独用一篇笔记来记录JavaScript: the definitive Guide一书第八章的内容. 主要介绍了函数的定义, 作用域, 参数, 声明以及执行等基础知识, 另外也着重介绍了其高级用法中的closure. 我将自己觉得重要的, 值得记录的部分都作为心得摘抄如下:
-心得arguments对象对每一个function而言, 都自动会有一个内置的arguments对象, 用它就可以访问传入的参数了. 通常来说arguments对象我们只会用在不定长传参的函数上, 但arguments本身带有的一个函数却是可以在某些时刻发挥重要作用的~ 这个函数就是callee函数:
-12345678// 递归自我调用函数在解决一些问题的时候是很常用的, 而通常情况下我们都会在函数内调用本函数名即可, 但是如果我们需要实现自我调用的函数正好是一个无名函数呢?// arguments.callee 即调用当前执行的函数function(x)&amp;#123;return x*arguments.callee(x-1)&amp;#125;// 如上, 就实现了一个很简单的&amp;gt;2阶乘计算了
-需要特别注意的就是callee作为arguments对象的一个方法, 是可以跟随arguments作为参数传递的, 而且其作为参数的时候保持其所指代函数不变.
-既然说到arguments, 就多说两句喽. 首先arguments算是一个类array的object. 它本身具有array的一些特性, 比如可以直接调用length函数(通常的object是不能通过.length直接调用获取长度的, 需要使用Object.keys(object_name).length才能获得). 但是它本身和array.length有很大的差别, 其中最大的一个差别就是: 无法通过.length直接更改数组长度.
-123456var a = [1,3,4]a.length = 5console.log(a)// output: [1,3,4,undefined x 2](function(x)&amp;#123;arguments.length = 5;console.log(arguments)&amp;#125;)(10,1,2)// output: [10,1,2]
-可以看到通过对arguments.length直接赋值, 并不会影响其本身的长度, 这一点和array本身有很大的差别.
-PS. 上述示例是增加长度, 其实缩减长度也是一样的, 多余的元素会被自动删除. 所以, 通过直接向array.length赋值也算是一个修改array长度的方法喽~
-PSS. 通常如果一个函数接受参数比较多的时候, 为了预防因为参数顺序而产生的问题, 可以采取传json格式的object作为参数, 这样就能够通过key而不根据顺序获取参数了.
-Function的property请先看下述代码:
-1234567891011f.temp = &quot;test&quot;function f(x)&amp;#123;  console.log(arguments.length);  console.log(arguments.callee.length);  console.log(f.temp);&amp;#125;f(1,2)// output: 2 1 &quot;test&quot;
-首先, 我们看一下我们前两个输出值:
-  如上所述,arguments.length即代表传入参数的数量, 我们传入了两个参数, 所以这里输出2, 没有任何问题. 那么后面的arguments.callee.length又是什么呢? 为什么它输出的是1呢? 
-  根据之前的介绍, 我们当知道arguments.callee是代指当前的函数f(), 那么对应的arguments.callee.length即我们的函数f的length了. 对于Function这个对象而言, 它所拥有的length这一属性特指其声明的参数数量, 我们应该知道JavaScript作为一个很宽松的语言, 其函数定义后接受的参数是不定长的, 即便传入参数与函数声明的参数不相等也是不会抛出异常的, 那么有时候我们需要获取确保函数接受的参数和其声明的参数数量一致, 就可以使用函数自身的length属性来实现;
-其次, 我们自定义了一个f的属性temp, 但是我们实在函数定义之前赋予这个属性的, 为什么依然能够在函数运行中输出呢? 
-  这主要是因为js的执行顺序所致. js在载入执行过程中, 首先会将内部声明的函数都定义之后才会正式由上至下的逐次执行. 所以这里虽然我们把f.temp写在了函数定义之前, 但是js执行过程中, 还是首先定义了函数f, 接着才开始运行我们的f.temp赋值语句. 自然就不会报错说f没有定义了~
-PS. 其实不止是Function, 即便是普通的变量声明, 也是编译和执行分开进行的, 比如var a = 2;也是拆解为var a; a = 2两步执行的, 而声明都是发生在编译过程, 待编译过程全部结束后, 才会由上到下一次执行, 这也是为什么, 单纯的声明可以出现在代码的任意部位都不会影响其所在作用域的生效, 不会爆出not defined的错误;
-reserved word, identifier, keyword这三个作为基础知识, 可以说是每门语言都共通的概念,  但很多时候我们都不会用到或者不会特意去区分这三个名词, 而最近因为看原版书, 经常会出现三个词的交叉, 所以这里特别google了以下, 试图总结下三者的区别:
-
-identifier: 通常我们把我们定义的变量名, 函数名, 类名, 标签名,宏定义名, 类型名等称为identifier, 取其标识之意, 用以作为其名称以便代用;
-reserved word: 与identifier相对, reserved word则是指由语言规定而保留的一些词, 这些词有着特定的用途而不能被用作identifier;
-keyword: 作为语言语法的组成部分之一, keyword通常都会有着特定的含义, 绝大多数的keyword都是reserved word, 但也有少量语法中存在keyword不是reserved word的情况, 比如fortran就没有reserved word的概念, 它的所有keyword都可以用作identifier;
-
-reserved word和keyword确实在很大程度上是共同的, 除了上述说的类似fortran语言这种情况外, 也存在reserved word不是keyword的情况, 比如java中的goto就是一个reserved word, 但本身又不是一个keyword, 所以可以说goto这个词基本在java中是完全废弃的~ 那他们为啥要定义这个goto呢?? 有一种说法是这样情况通常是为未来版本预留的~ 还有一种说法是JVM作者James Gosling最初加了goto的支持, 但后来发现完全没必要, 就又去掉了, 但是为了兼容性问题,也一直没有把goto从reserved word此表中删去.
-PS. 很多时候也有人完全不区分reserved word和keyword的区别, 完全等同二者为”不能用来做identifier的词”.
-closure - 闭包在javascript中, 一个function由两部分组成: 函数执行的代码以及代码执行的环境. 而这两个组合到一起后也有个专属的名称, 即closure. 不过单独一个独立函数的closure并没有什么值得说的意义, 因为其执行的环境, 即我们称之为scope的东西, 随着函数的执行开始与结束会自动的被创建并清理掉, 所以通常情况下closure都单指在嵌套函数中. 当存在嵌套的函数时, 并且函数之外存在一个reference指向函数的话, 事情就变得好玩多了:
-12345678910111213141516171819202122232425262728function f()&amp;#123;  var id = 1;  return function()&amp;#123;console.log(id++)&amp;#125;&amp;#125;f()();f()();f()()// output: 1,1,1// 每次我们调用`f()`,都会自动创建一个包含了其局部变量`id`的对象, 而嵌套的函数`f()()`会自动继承母函数的作用域;// 但每次随着调用结束, 因为没有任何外部引用, 所以创建的对象都会自动的被回收, 如此就导致每次调用`f()()`都会输出1了;var k = f();k();k();k()// output: 1,2,3// 同样是调用`f()`, 但是我们首先引入了一个新的变量`k`引用`f()`函数; // 这样随着`f()`的调用和结束, 其创建的`call`对象(即包含了局部变量id的那个对象)就因为还存在外部引用而得以保留// 所以后面连续调用`k()`的过程中, 本身的嵌套函数就始终共享着`call`对象的作用域, 如此每次输出的时候都是先获取了局部变量id, 然后在执行`id++`,所以输出为1,2,3// 不喜欢`f()()`这种调用方式, 也不想单独创建新变量来增加引用? 当然可以, 只需要借助下`anonymous function`即可:var f = (function()&amp;#123;    var id = 1;    return function()&amp;#123;console.log(id++)&amp;#125;  &amp;#125;)();f();f();f()// output: 1,2,3// `anonymous function`是自执行的函数, 这里相当于把之前的`var k = f()`以及`f()`的声明定义合二为一了.
-可以说上述基本就是closure最基本的内容了, 而closure作为js的高级用法之一, 掌握了它, 你就能做很多有意思的操作了. 一个简单的例子就是: 你可以参照closure的原理来模拟实现浏览器探查元素(inspector)的breakpoint功能.
-因为原作trimpath上的文章已经无法访问, 所以转载了一个类似的如下, 略作了简单的修改(加了几句更友好的提示和显示每一步的运算结果):
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061// This function implements a breakpoint. It repeatedly prompts the user// for an expression, evaluates it with the supplied self-inspecting closure,// and displays the result.  It is the closure that provides access to the// scope to be inspected, so each function must supply its own closure.// // Inspired by Steve Yen's breakpoint() function at// http://trimpath.com/project/wiki/TrimBreakpoint//function inspect(inspector, title) &amp;#123;    var expression, result;    // You can use a breakpoint to turn off subsequent breakpoints by    // creating a property named &quot;ignore&quot; on this function.    if (&quot;ignore&quot; in arguments.callee) return;    while(true) &amp;#123;        // Figure out how to prompt the user        var message = &quot;&quot;;        // If we were given a title, display that first        if (title) message = title + &quot;\n&quot;;        // If we've already evaluated an expression, display it and its value        if (expression) message += &quot;\n&quot; + expression + &quot; ==&amp;gt; &quot; + result + &quot;\n&quot;;        else expression = &quot;&quot;;        // We always display at least a basic prompt:        message += &quot;Enter an expression to evaluate, or just click cancel to see the next step of current calculation.&quot;;        // Get the user's input, displaying our prompt and using the        // last expression as the default value this time.        expression = prompt(message, expression);        // If the user didn't enter anything (or clicked Cancel),        // they're done and so we return, ending the breakpoint.        if (!expression) return;        // Otherwise, use the supplied closure to evaluate the expression        // in the scope that is being inspected.         // The result will be displayed on the next iteration.        result = inspector(expression);    &amp;#125;&amp;#125;function factorial(n) &amp;#123;        var inspector = function(x) &amp;#123;                return eval(x);        &amp;#125;        inspect (inspector, &quot;Entering factorial()&quot;);        var result = 1;        while (n &amp;gt; 1)&amp;#123;                result = result * n;                n--;                inspect(inspector, &quot;factorial() loop with current result:&quot;+result);        &amp;#125;        inspect(inspector, &quot;Exiting factorial()&quot;);        return result;&amp;#125;inspect(function (x) &amp;#123;return eval(x);&amp;#125;, 'Hello')factorial(5)// 通过closure, 它就可以检测factorial执行的各个环节, 从而更容易的找到你在不同环节的问题.
-虽然closure让你可以写出更加复杂的js代码, 但是本身closure的使用还是要慎重的, 因为closure需要存储函数对象在内存中而不销毁, 所以如果函数主体庞大, 那么对于内存的压力和运行性能都是会有影响的~
-Function constructor类似Array, String等都有着一个对应的类, 可以允许你通过new来创建对象. Function也有自己对应的Function()类, 可以通过:new Function()来创建函数, 其接收不定长参数, 最后一个参数始终作为函数运行主体. 不过通常来说这种方法定义函数远没有我们常用的function关键词来的方便, 所以使用上倒是少了很多~ 不过有几点还是值得注意的:
-
-new ClassFunction() 是把function作为constructor的一种用法, 你可以简单的理解为: var cc = new ClassFunction(params) ==&amp;gt; var cc = new Object();ClassFunction.call(cc,params)
-new Function()不接收函数名参数, 即其创建的都是anonymous function;
-new Function()不继承作用域, 几遍其是在嵌套函数中定义, 也只继承global域, 不会继承上层函数的作用域;
-
-谜题12345678910111213var name = &quot;The Window&quot;;var object = &amp;#123;  name : &quot;My Object&quot;,  getNameFunc : function()&amp;#123;    console.log(this);    return function()&amp;#123;      return this.name;    &amp;#125;;  &amp;#125;&amp;#125;;console.log(object.getNameFunc()());// output: Object&amp;#123;name:&quot;My Object&quot;&amp;#125;; &quot;The Window&quot;
-上述定义中, 为什么嵌套函数没有继承上层函数的this呢? 反而继承了全局的this?
-猜测解答: this这个关键字是个比较特殊的关键字, 它具有一个很有趣的特点就是: 当一个函数作为函数而不是方法来调用的时候, this指向的是全局对象, 只有当它是方法的时候, 其指向的才是所属对象; 题目来源阮一峰博客. 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (8)</title><link>http://taoalpha.me/blog/2015/06/27/read-javascript-the-definitive-guide-8/</link><category>read</category><tag>js,reding notes</tag><pubDate>2015-06-27T12:00:00.000Z</pubDate><description>概述先说题外话: 昨天读到中途转去忙把以前的旧文章移植过来, 昨夜就已完成, 主要通过python解析了导出来的xml文本, 然后获取对应的时间信息和url信息组成符合jekyll规则的文件名, 再利用文本拼接出每个文件中固有的头和主体, 本来计划用html2text来把每个博文转为markdown, 不过后来源码有些问题, 对部分博文识别不好, 我也没时间细改, 所以就干脆拼接了html到主体中去.
 主要导入了当初写的Patch系列和针对UX写的翻译系列. 分别归类到了Tech和DandP目录下. 有兴趣的可查看之~
 今天来继续完结JavaScript: the Definitive Guide一书.
@@ -1630,6 +1506,90 @@ Web Sockets: 一种相对http来说的新网络协议;
 参考资料
 JavaScript the Definitive Guide 6th edition
 
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (1)</title><link>http://taoalpha.me/blog/2015/06/28/read-coffeescript-programming-with-jquery-rails-and-nodejs/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-28T04:00:00.000Z</pubDate><description>SummaryThe notes I took while I was learning the ‘CoffeeScript’. If you are a real beginner with ‘CoffeeScript’, I suggest you start with another book called “The Little Book on CoffeeScript”, it’s better for beginners. And after that, this one is definitely your best choice.
+CoffeeScript is a language which complies to JavaScript. Like the sass or scss to css except that CoffeeScript is not compatible with javascript. So you can not mix the javascript syntax with the CoffeeScript.
+This note is mainly about the fist chapter of the book, a nice introduction for CoffeeScript including the basic syntax.
+
+And to improve my english, I think i will start writing english notes for the english books. ^_^
+
+NotesCoffeeScript is pretty popular in the community of JavaScript for its simplicity, elegant and readable. Now let us dive into it.
+Instead of  listing the keywords and statements used in CoffeeScript one by one, it would better we learn CoffeeScript from comparing the difference between the CoffeeScript and JavaScript.
+CoffeeScript fix some ugly stuffs in JavaScript
+CoffeeScript removes most of the semicolons and the curly braces which used a lot in JavaScript, gives us a clearly view of the code, but you can still use the semicolons if you want, and you still have to use the semicolons if you want to put multiple statements in single one;
+CoffeeScript learns a lot from ruby and python. Like this one: it uses whitespace or indentation, more accurately, to delimit the code blocks instead of braces.
+CoffeeScript removes a lot of parenthesis for many statements and functions, like if..else, while loops and functions with single string parameter. But this is optional, you can still use them if you want. Notice: you will need parenthesis if you want to call a function without any parameters)
+Function: as the first class object in JavaScript, CoffeeScript also does a lot improvements for it.
+If you write js, you will know that the syntax is really ugly when you want to write a anonymous function. Now you can make it pretty beautiful with CoffeeScript;
+CoffeeScript also saves you a lot keystrokes for defining the functions;
+so what are the rules?
+Replace the function keyword with -&amp;gt;;
+Drop the parenthesis if there is no argument for the function;
+Put the arguments enclosed with parenthesis in front of the -&amp;gt;, and if the argument has a default value, you can set it in the parenthesis;
+Drop the curly braces and use indentation for the function body;
+Automatically return the last expression of the function, but if you need return something before, you still need to use the return;
+
+
+
+
+
+1234567891011121314151617 -&amp;gt; alert 'hi there!'# the code above won't self-initiating, if you want to do that, you need use parenthesis or the `do` keyword like below:# (-&amp;gt; alert 'hi there!')()# do -&amp;gt; alert 'hi there!'square = (n=1) -&amp;gt; n * n# function using splats# this is an alternative way for using Array.prototype.slice()gpaScoreAverage = (scores...) -&amp;gt;  total = scores.reduce (a, b) -&amp;gt; a + b  total / scores.lengthalert gpaScoreAverage(65,78,81)scores = [78, 75, 79]alert gpaScoreAverage(scores...)
+1234567891011121314151617181920212223242526272829303132333435var square;(function()&amp;#123;  return alert(&quot;hi there!&quot;);&amp;#125;);/* the code in comments above will compile to:(function()&amp;#123;  if (n == null) &amp;#123;    n = 1;  &amp;#125;  return alert(&quot;hi there!&quot;);&amp;#125;)();*/square = function(n) &amp;#123;  return n * n;&amp;#125;;// [].slice.call(arguments,0) ==&amp;gt;  Array.prototype.slice.call(arguments,0)var gpaScoreAverage, scores,  slice = [].slice;gpaScoreAverage = function() &amp;#123;  var scores, total;  scores = 1 &amp;lt;= arguments.length ? slice.call(arguments, 0) : [];  // get the single score value or a list of the scores  total = scores.reduce(function(a, b) &amp;#123;    return a + b;  &amp;#125;);  return total / scores.length;&amp;#125;;alert(gpaScoreAverage(65, 78, 81));scores = [78, 75, 79];alert(gpaScoreAverage.apply(null, scores));
+CoffeeScript saves you a lot of keystrokes
+CoffeeScript will declare the variables you need at the top of the function for you automatically. So that means you can’t create the global variables in a function like you can do in JavaScript, actually you can’t use the var keyword in CoffeeScript. &amp;lt;= many people agree that omitting the var keyword makes the variables become global is a really bad desgin…
+Object:
+CoffeeScript supports the class keyword, and it will create a closure to build the class;
+Use the constructor to initialize some private properties, or just omit it;
+Every function you define in a class will be added to the object as a prototype method;
+Use @ as a shortcut for this;
+fat arrow: When you want to use this in previous scope instead of the new scope, you need the fat arrow : =&amp;gt;;
+Use super to call the parent’s method (same name, so just pass the parameter);
+Use :: as a shortcut for .prototype, so you can extend your prototype as this:Vehicle::stop =-&amp;gt; alert &amp;#39;stop&amp;#39;;
+
+
+
+123456789101112131415161718192021222324252627282930313233class Vehicle  # Use the constructor to initialize some private properties  # Use @ as this  constructor: -&amp;gt;    @c = 1  drive: (km) -&amp;gt;    alert &quot;Drove #&amp;#123;km&amp;#125; kilometres&quot;class Car extends Vehicle constructor: -&amp;gt;   @odometer = 0 drive: (km) -&amp;gt;   @odometer += km   super km name:&quot;John Doe&quot; driver: (msg) -&amp;gt;   @msg = msg whoisdriver: -&amp;gt;   @msg()car = new Carcar.drive 5alert &quot;Odometer is at #&amp;#123;car.odometer&amp;#125;&quot;class Person  constructor: (name)-&amp;gt;    @name = name    @mycar = new Car()    @mycar.driver =&amp;gt; alert &quot;#&amp;#123;@name&amp;#125;&quot;mike = new Person &quot;Mike&quot;# use `=&amp;gt;` to show mike's name instead of the default `john doe` set in Carmike.mycar.whoisdriver()
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364var Car, Person, Vehicle, car, mike,  extend = function(child, parent) &amp;#123; for (var key in parent) &amp;#123; if (hasProp.call(parent, key)) child[key] = parent[key]; &amp;#125; function ctor() &amp;#123; this.constructor = child; &amp;#125; ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; &amp;#125;,  hasProp = &amp;#123;&amp;#125;.hasOwnProperty;Vehicle = (function() &amp;#123;  function Vehicle() &amp;#123;    this.c = 1;  &amp;#125;  Vehicle.prototype.drive = function(km) &amp;#123;    return alert(&quot;Drove &quot; + km + &quot; kilometres&quot;);  &amp;#125;;  return Vehicle;&amp;#125;)();Car = (function(superClass) &amp;#123;  extend(Car, superClass);  function Car() &amp;#123;    this.odometer = 0;  &amp;#125;  Car.prototype.drive = function(km) &amp;#123;    this.odometer += km;    return Car.__super__.drive.call(this, km);  &amp;#125;;  Car.prototype.name = &quot;John Doe&quot;;  Car.prototype.driver = function(msg) &amp;#123;    return this.msg = msg;  &amp;#125;;  Car.prototype.whoisdriver = function() &amp;#123;    return this.msg();  &amp;#125;;  return Car;&amp;#125;)(Vehicle);car = new Car;car.drive(5);alert(&quot;Odometer is at &quot; + car.odometer);Person = (function() &amp;#123;  function Person(name) &amp;#123;    this.name = name;    this.mycar = new Car();    this.mycar.driver((function(_this) &amp;#123;      return function() &amp;#123;        return alert(&quot;&quot; + _this.name);      &amp;#125;;    &amp;#125;)(this));  &amp;#125;  return Person;&amp;#125;)();mike = new Person(&quot;Mike&quot;);mike.mycar.whoisdriver();
+Other Good Things
+CoffeeScript will quote reserved words automatically if you use them in your literal object;
+You can also drop the comma when you define your literal array or literal object only if you put one property per line, you can drop the braces for object, but you need them for array;
+Use #{variable_name} to concatenate the string and variables instead of +, but only use them enclosing with double-quote, the single-quote strings are literal, borrowed from ruby;
+CoffeeScript will always convert the == and != to === and !==;
+Use the existential operator: ? to check whether a variable exists and has a value or not(means not null or undefined);
+Also use the soak: ?. as a shortcut for ternary statement;
+Support some new keywords like unless, the opposite to if;
+Use plain english aliases for some of the logical operators: is for ===,isnt for !==,not for !,and for &amp;amp;&amp;amp;,or for ||,true can also be yes, or on,false can be no or off;
+Support assign multiple values at once;
+CoffeeScript replaces the case in switch with when ... then, so you can forget about the break, and it also replaces the default with else;
+CoffeeScript supports the chained comparisions: 61 &amp;gt; a &amp;gt; 39;
+You can use ### to comment multiple lines. The biggest difference between ### and # is former one will be part of generated javascript;
+
+1234567891011121314151617b=1if a? &amp;amp;&amp;amp; b?  alert &quot;a.c equals to #&amp;#123;a?.c&amp;#125;&quot;[city, state, country] = [&quot;!2&quot;,&quot;24&quot;,&quot;2&quot;]# or function which returns an object with the same structure as you described before the `=`&amp;#123;address: &amp;#123;street: myStreet,room: myRoom&amp;#125;&amp;#125; = getAddress()### =&amp;gt;var b;b = 1;// since we declared the b before, we only need to check if b is null.if ((typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null) &amp;amp;&amp;amp; (b != null)) &amp;#123;  alert(&quot;a.c equals to &quot; + (typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null ? a.c : void 0));&amp;#125;var city, country, myRoom, myStreet, ref, ref1, state;ref = [&quot;!2&quot;, &quot;24&quot;, &quot;2&quot;], city = ref[0], state = ref[1], country = ref[2];ref1 = getAddress().address, myStreet = ref1.street, myRoom = ref1.room;###
+Special for List
+List: CoffeeScript borrowed a lot list comprehensions from python[ x*2 for x in object_name ] and ruby.
+while: it works nearly the same as in javascript except that it has an opposite keyword in CoffeeScript: until and both of them can be used as expression and will return a array;
+for: the standard statement is [action or mapping] for [selector] in [collection] when [condition] by [step]. Last by following with a number would affect the loop step(`i++``);
+[f_number..l_number]: it will create a array with numbers between the fist number and the last number, you can use ...(3 dots) to make the array only contains the numbers in between;
+of: for key-value pairs of an object, you can use of to loop them through;
+
+
+
+1234567891011121314151617181920212223242526272829303132333435363738394041times = [0..2](n*times while times -= 1).pop()### =&amp;gt; var times; times = [0, 1, 2];((function() &amp;#123;  var results;  results = [];  while (times -= 1) &amp;#123;    results.push(n * times);  &amp;#125;  return results;&amp;#125;)()).pop();###alert x for x in flavors when x != 'h' by 2###=&amp;gt;var x, i, len;for (i = 0, len = flavors.length; i &amp;lt; len; i+=2) &amp;#123;  x = flavors[i];  if (x !== 'h') &amp;#123;    alert(x);  &amp;#125;&amp;#125;###ages = john: 25 peter: 26 joan: 23alert &quot;#&amp;#123;name&amp;#125; is #&amp;#123;age&amp;#125; years old&quot; for name, age of ages###=&amp;gt;var age, ages, name;ages = &amp;#123;  john: 25,  peter: 26,  joan: 23&amp;#125;;for (name in ages) &amp;#123;  age = ages[name];  alert(name + &quot; is &quot; + age + &quot; years old&quot;);&amp;#125;###
+Digest
+For JavaScript:
+Every class in JS is a function object;
+Only function object has the default prototype, so the normal objects like literal string, number or even string created from String(),any objects created by functions, they all don’t have the default prototype;
+But every object has a default constructor which is exactly the function object who create it;
+
+
+For CoffeeScript:
+If there is only one line in the body, you can move it in front of the condition &amp;lt;= while/until/for/if...
+
+
+
+Puzzle
+Q1: In the second code example above, CoffeeScript create a default extend function for us:
+
+123456789101112131415161718192021var extend = function(child, parent) &amp;#123;  for (var key in parent) &amp;#123;      if (hasProp.call(parent, key)) child[key] = parent[key];  &amp;#125;  // Start from here  function ctor() &amp;#123;      this.constructor = child;  &amp;#125;  ctor.prototype = parent.prototype;  child.prototype = new ctor();  // End  // Just cannot understand the codes above...  // Why we need another function as the child's prototype? We have already copied all the properties from parent, or we just need a beautiful prototype chain? `Car &amp;lt;= ctor() &amp;lt;= Vehicle() &amp;lt;= Object` compared to `Car &amp;lt;= Car &amp;lt;= Object()`.  // Then why not we just use the child.prototype = new parent() ??? we can still get a good prototype chain. `Car &amp;lt;= Vehicle &amp;lt;= Vehicle &amp;lt;= Object`.  child.__super__ = parent.prototype;  return child;&amp;#125;,hasProp = &amp;#123;&amp;#125;.hasOwnProperty;
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript 阅读阶梯清单</title><link>http://taoalpha.me/blog/2015/06/10/read-must-read-list-of-javascript/</link><category>read</category><tag>js</tag><pubDate>2015-06-10T09:00:00.000Z</pubDate><description>缘起今天翻完了Getting Good With JavaScript, 对于其精华浓缩的设计很欣赏, 很适合有一定无基础或者有一定基础但觉得野路子出身想要夯实一下的人读. 而在文末的Appendix A中作者提到的这个 Rey Bango’s Must-Read list of JavaScript 确实在是本书的又一大收获. 特转来分享~
 基础入门所谓入门自然是以打牢基础为目的, 所以下列书都是以基础概念为主, 算是领路之书(考虑到国情需要, 我都尽可能替换为豆瓣链接了):
 
