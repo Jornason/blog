@@ -122,12 +122,13 @@ window.updateLocation = function () {
 window.updateWeather = function (position, flag) {
   var weatherUrl = "";
   if (flag === "cityname") {
-    weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + position + "&lang=zh_cn&units=metric&APPID=dc89c84c07cb6ee8c613334dbac4959c";
+    weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + position + "&lang=zh_cn&units=metric&APPID=dc89c84c07cb6ee8c613334dbac4959c";
   } else if (flag === "cookie") {
     updateWeatherPart(position);
     return;
   } else {
-    weatherUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&lang=zh_cn&units=metric&APPID=dc89c84c07cb6ee8c613334dbac4959c";
+    // weatherUrl = "https://api.forecast.io/forecast/c49a1a7d7342cd7024ca377c47c62966/" + position.coords.latitude + "," + position.coords.longitude + "&lang=zh&exclude=minutely,hourly,daily,alerts,flags";
+    weatherUrl = "http://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&lang=zh_cn&units=metric&APPID=dc89c84c07cb6ee8c613334dbac4959c";
   }
 
   $.ajax({
@@ -136,7 +137,7 @@ window.updateWeather = function (position, flag) {
     timeout: 1000 * 3,
     success: function (data) {
       $.cookie("weatherData", JSON.stringify(data), {
-        expires: 0.05,
+        expires: 0.3,
         path: "/"
       });
       return updateWeatherPart(data);
