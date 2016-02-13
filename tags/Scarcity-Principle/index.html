@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><!-- redirect to https by default if we already have weather data--><script>if (document.cookie.search("weatherData") == -1 ){
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><!-- redirect to https by default if we already have weather data--><script>if (document.cookie.search("weatherData") == -1 && window.location.protocol != "http:"){
   window.location.protocol = "http";
 }else if (("taoalpha.me" == window.location.host) && (window.location.protocol != "https:")) {
   window.location.protocol = "https";
