@@ -122,12 +122,12 @@ window.updateLocation = function () {
 window.updateWeather = function (position, flag) {
   var weatherUrl = "";
   if (flag === "cityname") {
-    weatherUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + position + "&lang=zh_cn&units=metric&APPID=dc89c84c07cb6ee8c613334dbac4959c";
+    weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + position + "&lang=zh_cn&units=metric&APPID=dc89c84c07cb6ee8c613334dbac4959c";
   } else if (flag === "cookie") {
     updateWeatherPart(position);
     return;
   } else {
-    weatherUrl = "http://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&lang=zh_cn&units=metric&APPID=dc89c84c07cb6ee8c613334dbac4959c";
+    weatherUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&lang=zh_cn&units=metric&APPID=dc89c84c07cb6ee8c613334dbac4959c";
   }
 
   $.ajax({
@@ -189,7 +189,8 @@ window.randomImage = function (path) {
     dataType: "jsonp",
     timeout: 1000 * 3,
     success: function (data) {
-      $(".aside").css("background-image", "url(" + data.response.image.url + ")");
+      // TODO: change to https
+      $(".aside").css("background-image", "url(" + data.response.image.url.replace("http:", "https:") + ")");
       return $.cookie(path + "weatherImgUrl", data.response.image.url, {
         expires: 0.05,
         path: "/blog"
