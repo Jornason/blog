@@ -1,4 +1,33 @@
-<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-02-13T19:17:49.023Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ water problems</title><link>http://taoalpha.me/blog/2016/02/13/oj-oj-water-problems/</link><category>oj</category><tag>LeetCode,Two Pointers</tag><pubDate>2016-02-13T23:55:19.000Z</pubDate><description>11. Container With Most WaterProblemGiven n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TaoAlpha's Blog</title><link>http://taoalpha.me/blog</link><pubDate>2016-02-14T00:16:12.283Z</pubDate><description></description><language>en</language><generator>hexo</generator><item> <title>OJ Gas station</title><link>http://taoalpha.me/blog/2016/02/13/oj-oj-gas-station/</link><category>OJ</category><tag>Gas Station,LeetCode</tag><pubDate>2016-02-14T04:36:08.000Z</pubDate><description>134. Gas StationProblemThere are N gas stations along a circular route, where the amount of gas at station i is gas[i].
+You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). You begin the journey with an empty tank at one of the gas stations.
+Return the starting gas station’s index if you can travel around the circuit once, otherwise return -1.
+LeetCode134. Gas Station
+Tags: Medium, Greedy
+AnswersBrute forceThe easiest way to solve this problem will be enumerate all possible start points and check whether you can pass or not.
+Time complexity would be O(n^2).
+123456789101112131415161718192021222324252627/** * @param &amp;#123;number[]&amp;#125; gas * @param &amp;#123;number[]&amp;#125; cost * @return &amp;#123;number&amp;#125; */var canCompleteCircuit = function(gas, cost) &amp;#123;    for (i = 0; i &amp;lt; gas.length; i++) &amp;#123;        if(helper(gas,cost))&amp;#123;           return i         &amp;#125;        gas.push(gas.shift())        cost.push(cost.shift())    &amp;#125;    return -1&amp;#125;;var helper = function(gas, cost) &amp;#123;    var i,j,preGas = 0, preCost = 0;    for (i = 0; i &amp;lt; gas.length; i++) &amp;#123;        if (gas[i] + preGas &amp;lt; cost[i] + preCost) &amp;#123;            return false        &amp;#125;        preGas += gas[i];        preCost += cost[i];    &amp;#125;    return true&amp;#125;
+Runtime: TLE.
+PruningConsider about this fact: if you start from A and you could not reach C, then if you start from any gas station between A and C, could you make it to C ?
+No, you can not. Why ? I observe it. But here is a proof provided by some solutions from discussion.
+
+Say there is a point C between A and B – that is A can reach C but cannot reach B. Since A cannot reach B, the gas collected between A and B is short of the cost. Starting from A, at the time when the car reaches C, it brings in gas &amp;gt;= 0, and the car still cannot reach B. Thus if the car just starts from C, it definitely cannot reach B.
+
+Based on this affect, we can do some pruning for previous solution:
+1234567891011121314151617181920212223242526272829303132333435363738/** * @param &amp;#123;number[]&amp;#125; gas * @param &amp;#123;number[]&amp;#125; cost * @return &amp;#123;number&amp;#125; */var canCompleteCircuit = function(gas, cost) &amp;#123;  var sumGas = 0, sumCost = 0;  for (var i = 0; i &amp;lt; gas.length; i++) &amp;#123;    sumGas += gas[i];    sumCost += cost[i];  &amp;#125;  // deal with no solution condition first  if(sumGas -1-1&amp;lt; sumCost) &amp;#123;return -1&amp;#125;  // now we know there definitely is a solution here.  for (var i = 0; i &amp;lt; gas.length; i++) &amp;#123;    var temp = helper(gas.slice(i),cost.slice(i));    if(temp == &quot;DONE&quot;)&amp;#123;      // Now we have the start point that can go through all the rest gas stations      return i+temp+1    &amp;#125;    // Now we now any gas stations before temp can not make it    i = temp+i  &amp;#125;&amp;#125;;var helper = function(gas, cost) &amp;#123;  var i,j,preGas = 0, preCost = 0;  for (i = 0; i &amp;lt; gas.length; i++) &amp;#123;    if (gas[i] + preGas &amp;lt; cost[i] + preCost) &amp;#123;      // definitely can not make it from i      return i    &amp;#125;    preGas += gas[i];    preCost += cost[i];  &amp;#125;  return &quot;DONE&quot;;&amp;#125;
+Runtime: 100 ms
+Even betterSimplify the previous pruning solution with one pass. Solution from discussion.
+123456789101112131415var canCompleteCircuit = function(gas, cost) &amp;#123;  var i, tank = 0, start = 0, total = 0;  //if car fails at 'start', record the next station  for(i=0;i&amp;lt;gas.length;i++) &amp;#123;    tank += gas[i] - cost[i];  // gas left in your tank    if(tank&amp;lt;0) &amp;#123;      // you know you can not make it starting before i      start = i + 1;      total += tank;  // total gas you own along the way      tank = 0;  // reset the tank    &amp;#125;  &amp;#125;  // if the tank has fewer gas than you own, you can not make it, or you can start from current start position  return (total + tank &amp;lt; 0) ? -1 : start;&amp;#125;
+Runtime: 84-90 ms
+Two PointersStill could not figure out why this solution works… 
+123456789101112131415var canCompleteCircuit = function(gas, cost) &amp;#123;  var start = gas.length - 1,      end = 0,      sum = gas[start] - cost[start];  while (start &amp;gt; end) &amp;#123;    if (sum &amp;gt;= 0) &amp;#123;      sum += gas[end] - cost[end];      end ++;    &amp;#125; else &amp;#123;      start --;      sum += gas[start] - cost[start];    &amp;#125;  &amp;#125;  return sum &amp;gt;= 0 ? start : -1;&amp;#125;
+Runtime: 100 ms
+Gas station seriesThere is some mutation problems on this gas station problem. So I just list here to broaden your eyes: 
+Suppose you want to go on a road trip across the US. You start from New York City and would like to drive to San Francisco. 
+Now you have a roadmap with all gas station locations and their gas prices.
+You want to minimize the travel cost(gas expenses).
+DPGas Station Series
+Want to see the solution ? Check the link to see the PDF.
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>OJ water problems</title><link>http://taoalpha.me/blog/2016/02/13/oj-oj-water-problems/</link><category>OJ</category><tag>LeetCode,Two Pointers</tag><pubDate>2016-02-13T23:55:19.000Z</pubDate><description>11. Container With Most WaterProblemGiven n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
 Note: You may not slant the container.
 LeetCode11. Container With Most Water
 Tags: Array, Two Pointers, Medium
@@ -907,90 +936,171 @@ Others: others;
 Be Consistent;
 
 SummaryThis book is pretty short with all valueable content. Strongly recommend after you get familiar with all basic css concepts.
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>CoffeeScript Programming with jQuery, rails and Nodejs (1)</title><link>http://taoalpha.me/blog/2015/06/28/read-coffeescript-programming-with-jquery-rails-and-nodejs/</link><category>read</category><tag>CoffeeScript,jQuery,js,nodejs,rails,reading notes</tag><pubDate>2015-06-28T04:00:00.000Z</pubDate><description>SummaryThe notes I took while I was learning the ‘CoffeeScript’. If you are a real beginner with ‘CoffeeScript’, I suggest you start with another book called “The Little Book on CoffeeScript”, it’s better for beginners. And after that, this one is definitely your best choice.
-CoffeeScript is a language which complies to JavaScript. Like the sass or scss to css except that CoffeeScript is not compatible with javascript. So you can not mix the javascript syntax with the CoffeeScript.
-This note is mainly about the fist chapter of the book, a nice introduction for CoffeeScript including the basic syntax.
-
-And to improve my english, I think i will start writing english notes for the english books. ^_^
-
-NotesCoffeeScript is pretty popular in the community of JavaScript for its simplicity, elegant and readable. Now let us dive into it.
-Instead of  listing the keywords and statements used in CoffeeScript one by one, it would better we learn CoffeeScript from comparing the difference between the CoffeeScript and JavaScript.
-CoffeeScript fix some ugly stuffs in JavaScript
-CoffeeScript removes most of the semicolons and the curly braces which used a lot in JavaScript, gives us a clearly view of the code, but you can still use the semicolons if you want, and you still have to use the semicolons if you want to put multiple statements in single one;
-CoffeeScript learns a lot from ruby and python. Like this one: it uses whitespace or indentation, more accurately, to delimit the code blocks instead of braces.
-CoffeeScript removes a lot of parenthesis for many statements and functions, like if..else, while loops and functions with single string parameter. But this is optional, you can still use them if you want. Notice: you will need parenthesis if you want to call a function without any parameters)
-Function: as the first class object in JavaScript, CoffeeScript also does a lot improvements for it.
-If you write js, you will know that the syntax is really ugly when you want to write a anonymous function. Now you can make it pretty beautiful with CoffeeScript;
-CoffeeScript also saves you a lot keystrokes for defining the functions;
-so what are the rules?
-Replace the function keyword with -&amp;gt;;
-Drop the parenthesis if there is no argument for the function;
-Put the arguments enclosed with parenthesis in front of the -&amp;gt;, and if the argument has a default value, you can set it in the parenthesis;
-Drop the curly braces and use indentation for the function body;
-Automatically return the last expression of the function, but if you need return something before, you still need to use the return;
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (7)</title><link>http://taoalpha.me/blog/2015/06/26/read-javascript-the-definitive-guide-7/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-26T06:00:00.000Z</pubDate><description>概述阅读笔记Chapter 15 - Scripting Documents
+Selecting:
+document.getElementById(id): 通过id, 一个id对应一个元素;
+document.getElementsByName(name): 通过name, 可多个;
+document.getElementsByTagName(tagname): 通过标签名;
+document.getElementsByClassName(class_name): 通过类名;
+querySelectorAll(css_selector): 通过css的选择器, 返回所有匹配;
+querySelector(css_selector): 返回首个匹配;
 
 
+Trees of Nodes:
+parentNode: 父节点;
+childNodes: 子节点;
+firstChild, lastChild: 首个或者最后一个子节点;
+nextSibling, previousSibling: 下一或者上一兄弟姐妹节点;
+nodeType: 节点类型, Document 节点返回9, 元素节点返回1, 文本节点返回3,注释节点返回8, DocumentFragment节点返回11;
+nodeValue: 当前节点的文本内容;
+nodeName: 标签名, 大写;
 
 
-
-1234567891011121314151617 -&amp;gt; alert 'hi there!'# the code above won't self-initiating, if you want to do that, you need use parenthesis or the `do` keyword like below:# (-&amp;gt; alert 'hi there!')()# do -&amp;gt; alert 'hi there!'square = (n=1) -&amp;gt; n * n# function using splats# this is an alternative way for using Array.prototype.slice()gpaScoreAverage = (scores...) -&amp;gt;  total = scores.reduce (a, b) -&amp;gt; a + b  total / scores.lengthalert gpaScoreAverage(65,78,81)scores = [78, 75, 79]alert gpaScoreAverage(scores...)
-1234567891011121314151617181920212223242526272829303132333435var square;(function()&amp;#123;  return alert(&quot;hi there!&quot;);&amp;#125;);/* the code in comments above will compile to:(function()&amp;#123;  if (n == null) &amp;#123;    n = 1;  &amp;#125;  return alert(&quot;hi there!&quot;);&amp;#125;)();*/square = function(n) &amp;#123;  return n * n;&amp;#125;;// [].slice.call(arguments,0) ==&amp;gt;  Array.prototype.slice.call(arguments,0)var gpaScoreAverage, scores,  slice = [].slice;gpaScoreAverage = function() &amp;#123;  var scores, total;  scores = 1 &amp;lt;= arguments.length ? slice.call(arguments, 0) : [];  // get the single score value or a list of the scores  total = scores.reduce(function(a, b) &amp;#123;    return a + b;  &amp;#125;);  return total / scores.length;&amp;#125;;alert(gpaScoreAverage(65, 78, 81));scores = [78, 75, 79];alert(gpaScoreAverage.apply(null, scores));
-CoffeeScript saves you a lot of keystrokes
-CoffeeScript will declare the variables you need at the top of the function for you automatically. So that means you can’t create the global variables in a function like you can do in JavaScript, actually you can’t use the var keyword in CoffeeScript. &amp;lt;= many people agree that omitting the var keyword makes the variables become global is a really bad desgin…
-Object:
-CoffeeScript supports the class keyword, and it will create a closure to build the class;
-Use the constructor to initialize some private properties, or just omit it;
-Every function you define in a class will be added to the object as a prototype method;
-Use @ as a shortcut for this;
-fat arrow: When you want to use this in previous scope instead of the new scope, you need the fat arrow : =&amp;gt;;
-Use super to call the parent’s method (same name, so just pass the parameter);
-Use :: as a shortcut for .prototype, so you can extend your prototype as this:Vehicle::stop =-&amp;gt; alert &amp;#39;stop&amp;#39;;
+Trees of Elements: 忽略所有的文本节点和注释节点;
+firstElementChild, lastElementChild: 返回首个或者最后一个元素节点;
+nextElementSibling, previousElementSibling
+childElementCount: 返回子元素节点的个数;
 
 
-
-123456789101112131415161718192021222324252627282930313233class Vehicle  # Use the constructor to initialize some private properties  # Use @ as this  constructor: -&amp;gt;    @c = 1  drive: (km) -&amp;gt;    alert &quot;Drove #&amp;#123;km&amp;#125; kilometres&quot;class Car extends Vehicle constructor: -&amp;gt;   @odometer = 0 drive: (km) -&amp;gt;   @odometer += km   super km name:&quot;John Doe&quot; driver: (msg) -&amp;gt;   @msg = msg whoisdriver: -&amp;gt;   @msg()car = new Carcar.drive 5alert &quot;Odometer is at #&amp;#123;car.odometer&amp;#125;&quot;class Person  constructor: (name)-&amp;gt;    @name = name    @mycar = new Car()    @mycar.driver =&amp;gt; alert &quot;#&amp;#123;@name&amp;#125;&quot;mike = new Person &quot;Mike&quot;# use `=&amp;gt;` to show mike's name instead of the default `john doe` set in Carmike.mycar.whoisdriver()
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364var Car, Person, Vehicle, car, mike,  extend = function(child, parent) &amp;#123; for (var key in parent) &amp;#123; if (hasProp.call(parent, key)) child[key] = parent[key]; &amp;#125; function ctor() &amp;#123; this.constructor = child; &amp;#125; ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; &amp;#125;,  hasProp = &amp;#123;&amp;#125;.hasOwnProperty;Vehicle = (function() &amp;#123;  function Vehicle() &amp;#123;    this.c = 1;  &amp;#125;  Vehicle.prototype.drive = function(km) &amp;#123;    return alert(&quot;Drove &quot; + km + &quot; kilometres&quot;);  &amp;#125;;  return Vehicle;&amp;#125;)();Car = (function(superClass) &amp;#123;  extend(Car, superClass);  function Car() &amp;#123;    this.odometer = 0;  &amp;#125;  Car.prototype.drive = function(km) &amp;#123;    this.odometer += km;    return Car.__super__.drive.call(this, km);  &amp;#125;;  Car.prototype.name = &quot;John Doe&quot;;  Car.prototype.driver = function(msg) &amp;#123;    return this.msg = msg;  &amp;#125;;  Car.prototype.whoisdriver = function() &amp;#123;    return this.msg();  &amp;#125;;  return Car;&amp;#125;)(Vehicle);car = new Car;car.drive(5);alert(&quot;Odometer is at &quot; + car.odometer);Person = (function() &amp;#123;  function Person(name) &amp;#123;    this.name = name;    this.mycar = new Car();    this.mycar.driver((function(_this) &amp;#123;      return function() &amp;#123;        return alert(&quot;&quot; + _this.name);      &amp;#125;;    &amp;#125;)(this));  &amp;#125;  return Person;&amp;#125;)();mike = new Person(&quot;Mike&quot;);mike.mycar.whoisdriver();
-Other Good Things
-CoffeeScript will quote reserved words automatically if you use them in your literal object;
-You can also drop the comma when you define your literal array or literal object only if you put one property per line, you can drop the braces for object, but you need them for array;
-Use #{variable_name} to concatenate the string and variables instead of +, but only use them enclosing with double-quote, the single-quote strings are literal, borrowed from ruby;
-CoffeeScript will always convert the == and != to === and !==;
-Use the existential operator: ? to check whether a variable exists and has a value or not(means not null or undefined);
-Also use the soak: ?. as a shortcut for ternary statement;
-Support some new keywords like unless, the opposite to if;
-Use plain english aliases for some of the logical operators: is for ===,isnt for !==,not for !,and for &amp;amp;&amp;amp;,or for ||,true can also be yes, or on,false can be no or off;
-Support assign multiple values at once;
-CoffeeScript replaces the case in switch with when ... then, so you can forget about the break, and it also replaces the default with else;
-CoffeeScript supports the chained comparisions: 61 &amp;gt; a &amp;gt; 39;
-You can use ### to comment multiple lines. The biggest difference between ### and # is former one will be part of generated javascript;
-
-1234567891011121314151617b=1if a? &amp;amp;&amp;amp; b?  alert &quot;a.c equals to #&amp;#123;a?.c&amp;#125;&quot;[city, state, country] = [&quot;!2&quot;,&quot;24&quot;,&quot;2&quot;]# or function which returns an object with the same structure as you described before the `=`&amp;#123;address: &amp;#123;street: myStreet,room: myRoom&amp;#125;&amp;#125; = getAddress()### =&amp;gt;var b;b = 1;// since we declared the b before, we only need to check if b is null.if ((typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null) &amp;amp;&amp;amp; (b != null)) &amp;#123;  alert(&quot;a.c equals to &quot; + (typeof a !== &quot;undefined&quot; &amp;amp;&amp;amp; a !== null ? a.c : void 0));&amp;#125;var city, country, myRoom, myStreet, ref, ref1, state;ref = [&quot;!2&quot;, &quot;24&quot;, &quot;2&quot;], city = ref[0], state = ref[1], country = ref[2];ref1 = getAddress().address, myStreet = ref1.street, myRoom = ref1.room;###
-Special for List
-List: CoffeeScript borrowed a lot list comprehensions from python[ x*2 for x in object_name ] and ruby.
-while: it works nearly the same as in javascript except that it has an opposite keyword in CoffeeScript: until and both of them can be used as expression and will return a array;
-for: the standard statement is [action or mapping] for [selector] in [collection] when [condition] by [step]. Last by following with a number would affect the loop step(`i++``);
-[f_number..l_number]: it will create a array with numbers between the fist number and the last number, you can use ...(3 dots) to make the array only contains the numbers in between;
-of: for key-value pairs of an object, you can use of to loop them through;
+Attributes of Elements:
+getAttribute()
+setAttribute()
+hasAttribute()
+removeAttribute()
 
 
+Dataset Attributes: 由HTML5引入, 所有带data-前缀的属性都算是合法的html元素属性.
+Element Content:
+innerHTML
+outerHTML: 包含匹配元素自身标签;
+insertAdjacentHTML(): 允许指定插入位置beforebegin, afterbegin, beforeend or afterend;
+textContent: IE不支持
+innerText: IE支持, 功能同上;
 
-1234567891011121314151617181920212223242526272829303132333435363738394041times = [0..2](n*times while times -= 1).pop()### =&amp;gt; var times; times = [0, 1, 2];((function() &amp;#123;  var results;  results = [];  while (times -= 1) &amp;#123;    results.push(n * times);  &amp;#125;  return results;&amp;#125;)()).pop();###alert x for x in flavors when x != 'h' by 2###=&amp;gt;var x, i, len;for (i = 0, len = flavors.length; i &amp;lt; len; i+=2) &amp;#123;  x = flavors[i];  if (x !== 'h') &amp;#123;    alert(x);  &amp;#125;&amp;#125;###ages = john: 25 peter: 26 joan: 23alert &quot;#&amp;#123;name&amp;#125; is #&amp;#123;age&amp;#125; years old&quot; for name, age of ages###=&amp;gt;var age, ages, name;ages = &amp;#123;  john: 25,  peter: 26,  joan: 23&amp;#125;;for (name in ages) &amp;#123;  age = ages[name];  alert(name + &quot; is &quot; + age + &quot; years old&quot;);&amp;#125;###
-Digest
-For JavaScript:
-Every class in JS is a function object;
-Only function object has the default prototype, so the normal objects like literal string, number or even string created from String(),any objects created by functions, they all don’t have the default prototype;
-But every object has a default constructor which is exactly the function object who create it;
+
+Creating,Inserting, and Deleting Nodes
+document.createElement(tag_name)
+document.createTextNode(text): 创建文本节点;
+document.createComment(text): 创建注释节点;
+document.createDocumentFragment(): 创建孤立节点;
+node_name.cloneNode(): 复制当前节点;
+element_node.appendChild(element_node_2): 由后插入;
+element_node.insertBefore(element_node_2): 由前插入;
+removeChild(): 移除当前节点n.parentNode.removeChild(n);;
+replaceChild(): 替换
 
 
-For CoffeeScript:
-If there is only one line in the body, you can move it in front of the condition &amp;lt;= while/until/for/if...
+DocumentFragment: 孤立节点, 其没有母节点(null), 当appendChild()等操作针对其时, 操作执行对象自动变为其所有子节点, 且操作完成后, 其自身为空;
+viewport: 表示实际展示内容的窗口, 在顶层网页中为去除浏览器菜单等等之外的部分, 而在iframe中则为iframe定义的frame大小;
+document: 表示页面内容的窗口, 通常都大于viewport;
+getBoundingClientRect(): 返回节点的长宽,上下左右边界属性width,height,top,left,bottom,right, 返回的结果是基于viewport的;
+document.elementFromPoint(): 返回x,y处的元素节点 - 根据z-index, 从外到内的返回;
+scroll(), scrollTo(), scrollBy(): 窗口滚动控制, 最后的scrollBy()传入的x,y表示在原有的基础上的增加值;
+scrollIntoView(): 滚动到某个节点;
+document.forms: 获取页面中所有form元素;
+其他document属性:
+cookie
+domain
+lastModified: 修改时间;
+location: 等同于window.location
+referrer
+title
+URL: 之前提到过, 其只保存打开时的当前链接, 不随页面内的动态变化而变化;
 
 
 
-Puzzle
-Q1: In the second code example above, CoffeeScript create a default extend function for us:
+Chapter 16 - Scripting CSS
+js可以通过node.style来访问元素样式属性, 可以获取, 赋予; 而通过更加复杂的函数变化, 就可以创造出一些很棒的动效来, 在css3之前, 所有的非gif或者flash动效基本都是通过js实现的.
+window.getComputedStyle(element,&amp;quot;null or :first-line etc&amp;quot;)则可以获取某个元素(或者某个元素的伪类)的所有样式属性, 同时获取的值都会自动转为标准的绝对值(比如设定的百分比也会自动计算出来返回),但是其不能赋予;
+disableStylesheet()可以禁止某个元素的所有样式, 如果传入的是数字, 那么会按照document.styleSheets的顺序查找, 如果是string, 则作为css selector查询对应的元素;
+insertRule(rules,insert_index), deleteRule(rules) 即插入整条的结构化的css语句, IE下对应的函数为addRule(),removeRule();
+document.createStyleSheet则可以创建一个新的样式表, 等价于在head里面创建一个style标签;
 
-123456789101112131415161718192021var extend = function(child, parent) &amp;#123;  for (var key in parent) &amp;#123;      if (hasProp.call(parent, key)) child[key] = parent[key];  &amp;#125;  // Start from here  function ctor() &amp;#123;      this.constructor = child;  &amp;#125;  ctor.prototype = parent.prototype;  child.prototype = new ctor();  // End  // Just cannot understand the codes above...  // Why we need another function as the child's prototype? We have already copied all the properties from parent, or we just need a beautiful prototype chain? `Car &amp;lt;= ctor() &amp;lt;= Vehicle() &amp;lt;= Object` compared to `Car &amp;lt;= Car &amp;lt;= Object()`.  // Then why not we just use the child.prototype = new parent() ??? we can still get a good prototype chain. `Car &amp;lt;= Vehicle &amp;lt;= Vehicle &amp;lt;= Object`.  child.__super__ = parent.prototype;  return child;&amp;#125;,hasProp = &amp;#123;&amp;#125;.hasOwnProperty;
+Chapter 17 - Handling Events
+Events的类型
+Device-dependent input events:mousedown, mousemove, mouseup, keydown, keypress, keyup, touchmove, gesturechange;
+Device-independent input events: click
+User interface events: focus, change
+State-change events: loadstart, progress, loadend
+API-specific events: dragstart, dragenter, dragover, drop, waiting, playing, seeking, volumechange etc
+Timers and error handlers;
+
+
+Handlers:
+Event Handler Attributes: onclick=&amp;quot;&amp;quot;,window.onload = f();
+addEventListener(event_name,function,[capturing event handler]): 添加事件, 最后的capturing通常为false;
+removeEventListener(): 和上面的add相反;
+stopPropagation(): js的事件触发是沿着DOM树向上传递的, 而通过stopPropagation()就能抑制这一环节;
+preventDefault(): 很多元素有其自身的事件属性, 比如a标签的跳转, form元素的提交, 当我们想要取消其默认事件的发生时, 可以使用此函数来阻止其发生;
+
+
+
+总的来说, 这一章内容其实很丰富, 但是其内容多数都是建立在之前的基本内容之上的. 着重需要知道的就是各种不同的事件, 其支持的元素, 类型以及触发的方式即可. 此类用法主要还是多用多练, 可以试试不同的event都包含那些属性~哈哈
+Chapter 18 - Scripted HTTP
+XMLHttpRequest:
+Ajax: 由js端发起, 通过http请求和服务端交互;
+Comet: 由服务端发起, js如果需要反应则使用Ajax回应, 通常由EventSource对象处理;
+标准流程:new XMLHttpRequest()=&amp;gt;open(&amp;#39;type of request&amp;#39;, url,[],[username],[userpassword])=&amp;gt;setRequestHeader()=&amp;gt;send([content_body])&amp;lt;=onreadystatechange&amp;lt;=customized handler
+通常GET类型的请求我们会通过encodeURIComponent来进行url拼接, 直接在url中体现, send()的时候就不用传值了;
+POST类型的请求通常以json格式传递, 我们需要在send()中传入JSON.stringify()的数据, 当然如果是XML的POST, 那么直接传入对应的doc即可, 而像file这类的文件实体, 也是直接传入对应的实体即可;
+起中Header部分我们只能自行设定部分, 而Content-Length,Date,Referer,User-Agent等等都由浏览器自动帮我们填上了;
+readyState: UNSENT 0(open()还没执行); OPENED 1(open()已经执行);HEADERS_RECEIVED 2(headers已被接收),LOADING 3(正在接受返回),DONE 4(完毕).
+XMLHttpRequest对象有一个onprogress的属性可以用来检测其执行进度, 它对应的属性值中包含了lengthComputable, loaded,total, 通过这三个就可以做一个简单的进度条跟踪请求的进度了;
+如果是上传行为, 其onprogress属性存在于XMLHttpRequest_Object.upload.onprogress之中;
+abort(): 用来取消请求;
+
+
+EventSource:
+标准流程: new EventSource(&amp;quot;url_to_server_file&amp;quot;) =&amp;gt; onmessage
+
+
+
+Chapter 19 - The jQuery LibraryjQuery流行度的一大证据之一! 哈哈 我计划抽时间好好读一下jQuery的源码, 所以这里只是大概扫了一遍, 基本也都是应用层面的, 多数我差不多都使用过~哈哈
+Chapter 20 - Client-Side Storage我在早先做chrome插件详见我的portfolio的时候, 写过一篇专门介绍web存储的文章. 恩, 当时写了不少patch系列, 哈哈, 改天写个脚本全部导出来转移过来.
+恩
+参考资料
+JavaScript the Definitive Guide 6th edition 我现在就去写导入工具… 今天就到这里吧, 明天算是最后一篇就能完结本书啦~
+
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (2)</title><link>http://taoalpha.me/blog/2015/06/18/read-javascript-the-definitive-guide-2/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-18T10:00:00.000Z</pubDate><description>概述作为JS中的一等公民, function(函数)始终是JS的核心中的核心. 所以这里单独用一篇笔记来记录JavaScript: the definitive Guide一书第八章的内容. 主要介绍了函数的定义, 作用域, 参数, 声明以及执行等基础知识, 另外也着重介绍了其高级用法中的closure. 我将自己觉得重要的, 值得记录的部分都作为心得摘抄如下:
+心得arguments对象对每一个function而言, 都自动会有一个内置的arguments对象, 用它就可以访问传入的参数了. 通常来说arguments对象我们只会用在不定长传参的函数上, 但arguments本身带有的一个函数却是可以在某些时刻发挥重要作用的~ 这个函数就是callee函数:
+12345678// 递归自我调用函数在解决一些问题的时候是很常用的, 而通常情况下我们都会在函数内调用本函数名即可, 但是如果我们需要实现自我调用的函数正好是一个无名函数呢?// arguments.callee 即调用当前执行的函数function(x)&amp;#123;return x*arguments.callee(x-1)&amp;#125;// 如上, 就实现了一个很简单的&amp;gt;2阶乘计算了
+需要特别注意的就是callee作为arguments对象的一个方法, 是可以跟随arguments作为参数传递的, 而且其作为参数的时候保持其所指代函数不变.
+既然说到arguments, 就多说两句喽. 首先arguments算是一个类array的object. 它本身具有array的一些特性, 比如可以直接调用length函数(通常的object是不能通过.length直接调用获取长度的, 需要使用Object.keys(object_name).length才能获得). 但是它本身和array.length有很大的差别, 其中最大的一个差别就是: 无法通过.length直接更改数组长度.
+123456var a = [1,3,4]a.length = 5console.log(a)// output: [1,3,4,undefined x 2](function(x)&amp;#123;arguments.length = 5;console.log(arguments)&amp;#125;)(10,1,2)// output: [10,1,2]
+可以看到通过对arguments.length直接赋值, 并不会影响其本身的长度, 这一点和array本身有很大的差别.
+PS. 上述示例是增加长度, 其实缩减长度也是一样的, 多余的元素会被自动删除. 所以, 通过直接向array.length赋值也算是一个修改array长度的方法喽~
+PSS. 通常如果一个函数接受参数比较多的时候, 为了预防因为参数顺序而产生的问题, 可以采取传json格式的object作为参数, 这样就能够通过key而不根据顺序获取参数了.
+Function的property请先看下述代码:
+1234567891011f.temp = &quot;test&quot;function f(x)&amp;#123;  console.log(arguments.length);  console.log(arguments.callee.length);  console.log(f.temp);&amp;#125;f(1,2)// output: 2 1 &quot;test&quot;
+首先, 我们看一下我们前两个输出值:
+  如上所述,arguments.length即代表传入参数的数量, 我们传入了两个参数, 所以这里输出2, 没有任何问题. 那么后面的arguments.callee.length又是什么呢? 为什么它输出的是1呢? 
+  根据之前的介绍, 我们当知道arguments.callee是代指当前的函数f(), 那么对应的arguments.callee.length即我们的函数f的length了. 对于Function这个对象而言, 它所拥有的length这一属性特指其声明的参数数量, 我们应该知道JavaScript作为一个很宽松的语言, 其函数定义后接受的参数是不定长的, 即便传入参数与函数声明的参数不相等也是不会抛出异常的, 那么有时候我们需要获取确保函数接受的参数和其声明的参数数量一致, 就可以使用函数自身的length属性来实现;
+其次, 我们自定义了一个f的属性temp, 但是我们实在函数定义之前赋予这个属性的, 为什么依然能够在函数运行中输出呢? 
+  这主要是因为js的执行顺序所致. js在载入执行过程中, 首先会将内部声明的函数都定义之后才会正式由上至下的逐次执行. 所以这里虽然我们把f.temp写在了函数定义之前, 但是js执行过程中, 还是首先定义了函数f, 接着才开始运行我们的f.temp赋值语句. 自然就不会报错说f没有定义了~
+PS. 其实不止是Function, 即便是普通的变量声明, 也是编译和执行分开进行的, 比如var a = 2;也是拆解为var a; a = 2两步执行的, 而声明都是发生在编译过程, 待编译过程全部结束后, 才会由上到下一次执行, 这也是为什么, 单纯的声明可以出现在代码的任意部位都不会影响其所在作用域的生效, 不会爆出not defined的错误;
+reserved word, identifier, keyword这三个作为基础知识, 可以说是每门语言都共通的概念,  但很多时候我们都不会用到或者不会特意去区分这三个名词, 而最近因为看原版书, 经常会出现三个词的交叉, 所以这里特别google了以下, 试图总结下三者的区别:
+
+identifier: 通常我们把我们定义的变量名, 函数名, 类名, 标签名,宏定义名, 类型名等称为identifier, 取其标识之意, 用以作为其名称以便代用;
+reserved word: 与identifier相对, reserved word则是指由语言规定而保留的一些词, 这些词有着特定的用途而不能被用作identifier;
+keyword: 作为语言语法的组成部分之一, keyword通常都会有着特定的含义, 绝大多数的keyword都是reserved word, 但也有少量语法中存在keyword不是reserved word的情况, 比如fortran就没有reserved word的概念, 它的所有keyword都可以用作identifier;
+
+reserved word和keyword确实在很大程度上是共同的, 除了上述说的类似fortran语言这种情况外, 也存在reserved word不是keyword的情况, 比如java中的goto就是一个reserved word, 但本身又不是一个keyword, 所以可以说goto这个词基本在java中是完全废弃的~ 那他们为啥要定义这个goto呢?? 有一种说法是这样情况通常是为未来版本预留的~ 还有一种说法是JVM作者James Gosling最初加了goto的支持, 但后来发现完全没必要, 就又去掉了, 但是为了兼容性问题,也一直没有把goto从reserved word此表中删去.
+PS. 很多时候也有人完全不区分reserved word和keyword的区别, 完全等同二者为”不能用来做identifier的词”.
+closure - 闭包在javascript中, 一个function由两部分组成: 函数执行的代码以及代码执行的环境. 而这两个组合到一起后也有个专属的名称, 即closure. 不过单独一个独立函数的closure并没有什么值得说的意义, 因为其执行的环境, 即我们称之为scope的东西, 随着函数的执行开始与结束会自动的被创建并清理掉, 所以通常情况下closure都单指在嵌套函数中. 当存在嵌套的函数时, 并且函数之外存在一个reference指向函数的话, 事情就变得好玩多了:
+12345678910111213141516171819202122232425262728function f()&amp;#123;  var id = 1;  return function()&amp;#123;console.log(id++)&amp;#125;&amp;#125;f()();f()();f()()// output: 1,1,1// 每次我们调用`f()`,都会自动创建一个包含了其局部变量`id`的对象, 而嵌套的函数`f()()`会自动继承母函数的作用域;// 但每次随着调用结束, 因为没有任何外部引用, 所以创建的对象都会自动的被回收, 如此就导致每次调用`f()()`都会输出1了;var k = f();k();k();k()// output: 1,2,3// 同样是调用`f()`, 但是我们首先引入了一个新的变量`k`引用`f()`函数; // 这样随着`f()`的调用和结束, 其创建的`call`对象(即包含了局部变量id的那个对象)就因为还存在外部引用而得以保留// 所以后面连续调用`k()`的过程中, 本身的嵌套函数就始终共享着`call`对象的作用域, 如此每次输出的时候都是先获取了局部变量id, 然后在执行`id++`,所以输出为1,2,3// 不喜欢`f()()`这种调用方式, 也不想单独创建新变量来增加引用? 当然可以, 只需要借助下`anonymous function`即可:var f = (function()&amp;#123;    var id = 1;    return function()&amp;#123;console.log(id++)&amp;#125;  &amp;#125;)();f();f();f()// output: 1,2,3// `anonymous function`是自执行的函数, 这里相当于把之前的`var k = f()`以及`f()`的声明定义合二为一了.
+可以说上述基本就是closure最基本的内容了, 而closure作为js的高级用法之一, 掌握了它, 你就能做很多有意思的操作了. 一个简单的例子就是: 你可以参照closure的原理来模拟实现浏览器探查元素(inspector)的breakpoint功能.
+因为原作trimpath上的文章已经无法访问, 所以转载了一个类似的如下, 略作了简单的修改(加了几句更友好的提示和显示每一步的运算结果):
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061// This function implements a breakpoint. It repeatedly prompts the user// for an expression, evaluates it with the supplied self-inspecting closure,// and displays the result.  It is the closure that provides access to the// scope to be inspected, so each function must supply its own closure.// // Inspired by Steve Yen's breakpoint() function at// http://trimpath.com/project/wiki/TrimBreakpoint//function inspect(inspector, title) &amp;#123;    var expression, result;    // You can use a breakpoint to turn off subsequent breakpoints by    // creating a property named &quot;ignore&quot; on this function.    if (&quot;ignore&quot; in arguments.callee) return;    while(true) &amp;#123;        // Figure out how to prompt the user        var message = &quot;&quot;;        // If we were given a title, display that first        if (title) message = title + &quot;\n&quot;;        // If we've already evaluated an expression, display it and its value        if (expression) message += &quot;\n&quot; + expression + &quot; ==&amp;gt; &quot; + result + &quot;\n&quot;;        else expression = &quot;&quot;;        // We always display at least a basic prompt:        message += &quot;Enter an expression to evaluate, or just click cancel to see the next step of current calculation.&quot;;        // Get the user's input, displaying our prompt and using the        // last expression as the default value this time.        expression = prompt(message, expression);        // If the user didn't enter anything (or clicked Cancel),        // they're done and so we return, ending the breakpoint.        if (!expression) return;        // Otherwise, use the supplied closure to evaluate the expression        // in the scope that is being inspected.         // The result will be displayed on the next iteration.        result = inspector(expression);    &amp;#125;&amp;#125;function factorial(n) &amp;#123;        var inspector = function(x) &amp;#123;                return eval(x);        &amp;#125;        inspect (inspector, &quot;Entering factorial()&quot;);        var result = 1;        while (n &amp;gt; 1)&amp;#123;                result = result * n;                n--;                inspect(inspector, &quot;factorial() loop with current result:&quot;+result);        &amp;#125;        inspect(inspector, &quot;Exiting factorial()&quot;);        return result;&amp;#125;inspect(function (x) &amp;#123;return eval(x);&amp;#125;, 'Hello')factorial(5)// 通过closure, 它就可以检测factorial执行的各个环节, 从而更容易的找到你在不同环节的问题.
+虽然closure让你可以写出更加复杂的js代码, 但是本身closure的使用还是要慎重的, 因为closure需要存储函数对象在内存中而不销毁, 所以如果函数主体庞大, 那么对于内存的压力和运行性能都是会有影响的~
+Function constructor类似Array, String等都有着一个对应的类, 可以允许你通过new来创建对象. Function也有自己对应的Function()类, 可以通过:new Function()来创建函数, 其接收不定长参数, 最后一个参数始终作为函数运行主体. 不过通常来说这种方法定义函数远没有我们常用的function关键词来的方便, 所以使用上倒是少了很多~ 不过有几点还是值得注意的:
+
+new ClassFunction() 是把function作为constructor的一种用法, 你可以简单的理解为: var cc = new ClassFunction(params) ==&amp;gt; var cc = new Object();ClassFunction.call(cc,params)
+new Function()不接收函数名参数, 即其创建的都是anonymous function;
+new Function()不继承作用域, 几遍其是在嵌套函数中定义, 也只继承global域, 不会继承上层函数的作用域;
+
+谜题12345678910111213var name = &quot;The Window&quot;;var object = &amp;#123;  name : &quot;My Object&quot;,  getNameFunc : function()&amp;#123;    console.log(this);    return function()&amp;#123;      return this.name;    &amp;#125;;  &amp;#125;&amp;#125;;console.log(object.getNameFunc()());// output: Object&amp;#123;name:&quot;My Object&quot;&amp;#125;; &quot;The Window&quot;
+上述定义中, 为什么嵌套函数没有继承上层函数的this呢? 反而继承了全局的this?
+猜测解答: this这个关键字是个比较特殊的关键字, 它具有一个很有趣的特点就是: 当一个函数作为函数而不是方法来调用的时候, this指向的是全局对象, 只有当它是方法的时候, 其指向的才是所属对象; 题目来源阮一峰博客. 
 </description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (4)</title><link>http://taoalpha.me/blog/2015/06/23/read-javascript-the-definitive-guide-4/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-23T07:00:00.000Z</pubDate><description>概述第六版和第五版的最大区别在于ECMAScript 5的引入, 这是目前发布的最新的js版本, 有着最新的属性和函数, 目前主流浏览器基本都已经完全支持. 本文为阅读5-9章内容的笔记总结, 主要是覆盖了JS中的语句和典型对象.
 阅读笔记Chapter 5 - Statements
 switch/case中使用的是===进行比较判断的, 而不是==;
@@ -1299,307 +1409,43 @@ JavaScript the Definitive Guide 6th edition
 Can I Use …
 host and hostname
 
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (7)</title><link>http://taoalpha.me/blog/2015/06/26/read-javascript-the-definitive-guide-7/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-26T06:00:00.000Z</pubDate><description>概述阅读笔记Chapter 15 - Scripting Documents
-Selecting:
-document.getElementById(id): 通过id, 一个id对应一个元素;
-document.getElementsByName(name): 通过name, 可多个;
-document.getElementsByTagName(tagname): 通过标签名;
-document.getElementsByClassName(class_name): 通过类名;
-querySelectorAll(css_selector): 通过css的选择器, 返回所有匹配;
-querySelector(css_selector): 返回首个匹配;
-
-
-Trees of Nodes:
-parentNode: 父节点;
-childNodes: 子节点;
-firstChild, lastChild: 首个或者最后一个子节点;
-nextSibling, previousSibling: 下一或者上一兄弟姐妹节点;
-nodeType: 节点类型, Document 节点返回9, 元素节点返回1, 文本节点返回3,注释节点返回8, DocumentFragment节点返回11;
-nodeValue: 当前节点的文本内容;
-nodeName: 标签名, 大写;
-
-
-Trees of Elements: 忽略所有的文本节点和注释节点;
-firstElementChild, lastElementChild: 返回首个或者最后一个元素节点;
-nextElementSibling, previousElementSibling
-childElementCount: 返回子元素节点的个数;
-
-
-Attributes of Elements:
-getAttribute()
-setAttribute()
-hasAttribute()
-removeAttribute()
-
-
-Dataset Attributes: 由HTML5引入, 所有带data-前缀的属性都算是合法的html元素属性.
-Element Content:
-innerHTML
-outerHTML: 包含匹配元素自身标签;
-insertAdjacentHTML(): 允许指定插入位置beforebegin, afterbegin, beforeend or afterend;
-textContent: IE不支持
-innerText: IE支持, 功能同上;
-
-
-Creating,Inserting, and Deleting Nodes
-document.createElement(tag_name)
-document.createTextNode(text): 创建文本节点;
-document.createComment(text): 创建注释节点;
-document.createDocumentFragment(): 创建孤立节点;
-node_name.cloneNode(): 复制当前节点;
-element_node.appendChild(element_node_2): 由后插入;
-element_node.insertBefore(element_node_2): 由前插入;
-removeChild(): 移除当前节点n.parentNode.removeChild(n);;
-replaceChild(): 替换
-
-
-DocumentFragment: 孤立节点, 其没有母节点(null), 当appendChild()等操作针对其时, 操作执行对象自动变为其所有子节点, 且操作完成后, 其自身为空;
-viewport: 表示实际展示内容的窗口, 在顶层网页中为去除浏览器菜单等等之外的部分, 而在iframe中则为iframe定义的frame大小;
-document: 表示页面内容的窗口, 通常都大于viewport;
-getBoundingClientRect(): 返回节点的长宽,上下左右边界属性width,height,top,left,bottom,right, 返回的结果是基于viewport的;
-document.elementFromPoint(): 返回x,y处的元素节点 - 根据z-index, 从外到内的返回;
-scroll(), scrollTo(), scrollBy(): 窗口滚动控制, 最后的scrollBy()传入的x,y表示在原有的基础上的增加值;
-scrollIntoView(): 滚动到某个节点;
-document.forms: 获取页面中所有form元素;
-其他document属性:
-cookie
-domain
-lastModified: 修改时间;
-location: 等同于window.location
-referrer
-title
-URL: 之前提到过, 其只保存打开时的当前链接, 不随页面内的动态变化而变化;
-
-
-
-Chapter 16 - Scripting CSS
-js可以通过node.style来访问元素样式属性, 可以获取, 赋予; 而通过更加复杂的函数变化, 就可以创造出一些很棒的动效来, 在css3之前, 所有的非gif或者flash动效基本都是通过js实现的.
-window.getComputedStyle(element,&amp;quot;null or :first-line etc&amp;quot;)则可以获取某个元素(或者某个元素的伪类)的所有样式属性, 同时获取的值都会自动转为标准的绝对值(比如设定的百分比也会自动计算出来返回),但是其不能赋予;
-disableStylesheet()可以禁止某个元素的所有样式, 如果传入的是数字, 那么会按照document.styleSheets的顺序查找, 如果是string, 则作为css selector查询对应的元素;
-insertRule(rules,insert_index), deleteRule(rules) 即插入整条的结构化的css语句, IE下对应的函数为addRule(),removeRule();
-document.createStyleSheet则可以创建一个新的样式表, 等价于在head里面创建一个style标签;
-
-Chapter 17 - Handling Events
-Events的类型
-Device-dependent input events:mousedown, mousemove, mouseup, keydown, keypress, keyup, touchmove, gesturechange;
-Device-independent input events: click
-User interface events: focus, change
-State-change events: loadstart, progress, loadend
-API-specific events: dragstart, dragenter, dragover, drop, waiting, playing, seeking, volumechange etc
-Timers and error handlers;
-
-
-Handlers:
-Event Handler Attributes: onclick=&amp;quot;&amp;quot;,window.onload = f();
-addEventListener(event_name,function,[capturing event handler]): 添加事件, 最后的capturing通常为false;
-removeEventListener(): 和上面的add相反;
-stopPropagation(): js的事件触发是沿着DOM树向上传递的, 而通过stopPropagation()就能抑制这一环节;
-preventDefault(): 很多元素有其自身的事件属性, 比如a标签的跳转, form元素的提交, 当我们想要取消其默认事件的发生时, 可以使用此函数来阻止其发生;
-
-
-
-总的来说, 这一章内容其实很丰富, 但是其内容多数都是建立在之前的基本内容之上的. 着重需要知道的就是各种不同的事件, 其支持的元素, 类型以及触发的方式即可. 此类用法主要还是多用多练, 可以试试不同的event都包含那些属性~哈哈
-Chapter 18 - Scripted HTTP
-XMLHttpRequest:
-Ajax: 由js端发起, 通过http请求和服务端交互;
-Comet: 由服务端发起, js如果需要反应则使用Ajax回应, 通常由EventSource对象处理;
-标准流程:new XMLHttpRequest()=&amp;gt;open(&amp;#39;type of request&amp;#39;, url,[],[username],[userpassword])=&amp;gt;setRequestHeader()=&amp;gt;send([content_body])&amp;lt;=onreadystatechange&amp;lt;=customized handler
-通常GET类型的请求我们会通过encodeURIComponent来进行url拼接, 直接在url中体现, send()的时候就不用传值了;
-POST类型的请求通常以json格式传递, 我们需要在send()中传入JSON.stringify()的数据, 当然如果是XML的POST, 那么直接传入对应的doc即可, 而像file这类的文件实体, 也是直接传入对应的实体即可;
-起中Header部分我们只能自行设定部分, 而Content-Length,Date,Referer,User-Agent等等都由浏览器自动帮我们填上了;
-readyState: UNSENT 0(open()还没执行); OPENED 1(open()已经执行);HEADERS_RECEIVED 2(headers已被接收),LOADING 3(正在接受返回),DONE 4(完毕).
-XMLHttpRequest对象有一个onprogress的属性可以用来检测其执行进度, 它对应的属性值中包含了lengthComputable, loaded,total, 通过这三个就可以做一个简单的进度条跟踪请求的进度了;
-如果是上传行为, 其onprogress属性存在于XMLHttpRequest_Object.upload.onprogress之中;
-abort(): 用来取消请求;
-
-
-EventSource:
-标准流程: new EventSource(&amp;quot;url_to_server_file&amp;quot;) =&amp;gt; onmessage
-
-
-
-Chapter 19 - The jQuery LibraryjQuery流行度的一大证据之一! 哈哈 我计划抽时间好好读一下jQuery的源码, 所以这里只是大概扫了一遍, 基本也都是应用层面的, 多数我差不多都使用过~哈哈
-Chapter 20 - Client-Side Storage我在早先做chrome插件详见我的portfolio的时候, 写过一篇专门介绍web存储的文章. 恩, 当时写了不少patch系列, 哈哈, 改天写个脚本全部导出来转移过来.
-恩
-参考资料
-JavaScript the Definitive Guide 6th edition 我现在就去写导入工具… 今天就到这里吧, 明天算是最后一篇就能完结本书啦~
-
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>像TED一样演讲</title><link>http://taoalpha.me/blog/2015/06/25/read-speaking-like-people-on-ted/</link><category>read</category><tag>reading notes,speaking</tag><pubDate>2015-06-25T09:00:00.000Z</pubDate><description>概要今天顺带读完了这本”像TED一样演讲”, 作者上一部和演讲相关的书是”乔布斯的魔力演讲”. 归纳了下书中的核心点, 记录分享给大家. 这一类的书干货其实能占到全书1/10就已经算不错了~ 所以一般看起来也比较快.
-阅读笔记情感共鸣
-释放你内心的热情 =&amp;gt; 热情可以传染;
-掌握讲故事的艺术 =&amp;gt; 故事可以刺激并吸引人脑的注意力, 拉近你与听众的距离;
-与演讲主题相关的个人故事;
-与演讲主题相关的他人故事;
-关于产品或者品牌的某个故事;
-
-
-让演讲好像好友交谈一样自然;
-
-制造新奇
-给人们一个看世界的新视角;
-设计让观众惊掉下巴的环节 =&amp;gt; 触发神经学家所说的讲情绪, 让记忆更加深刻;
-用幽默给你的演讲加分;
-
-令人难忘
-严格遵守18分钟的时间规则 =&amp;gt; 有约束才有创造力;
-抓住观众吸引力的魔法, 多感官体验 =&amp;gt; 让内容视觉化;
-表现最真实的自己;
-
-书中涉及到的TED(部分)
-Bryan Stevenson: We need to talk about an injustice
-Dan Ariely: Our buggy moral code
-Truly sustainable economic development
-Jennifer Granholm: A clean energy proposal – race to the top!
-Amy Cuddy: Your body language shapes who you are
-Robert Ballard: The astonishing hidden world of the deep ocean
-Hans Rosling: The best stats you’ve ever seen
-Mary Roach: 10 things you didn’t know about orgasm
-Bill Gates: Mosquitos, malaria and education
-Jill Bolte Taylor: My stroke of insight
-Stephen Hawking: Questioning the universe
-David Christian: The history of our world in 18 minutes
-
-</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (8)</title><link>http://taoalpha.me/blog/2015/06/27/read-javascript-the-definitive-guide-8/</link><category>read</category><tag>js,reding notes</tag><pubDate>2015-06-27T12:00:00.000Z</pubDate><description>概述先说题外话: 昨天读到中途转去忙把以前的旧文章移植过来, 昨夜就已完成, 主要通过python解析了导出来的xml文本, 然后获取对应的时间信息和url信息组成符合jekyll规则的文件名, 再利用文本拼接出每个文件中固有的头和主体, 本来计划用html2text来把每个博文转为markdown, 不过后来源码有些问题, 对部分博文识别不好, 我也没时间细改, 所以就干脆拼接了html到主体中去.
-主要导入了当初写的Patch系列和针对UX写的翻译系列. 分别归类到了Tech和DandP目录下. 有兴趣的可查看之~
-今天来继续完结JavaScript: the Definitive Guide一书.
-阅读笔记Chapter 20 - Client-side Storage
-application cache:
-为了丰富web app的功能, 或者说让web app更加的像native app, 就有了application cache这个机制, 从而让离线对于web app来说成为了可能;
-application cache存储所有的静态格式, 包含html,css,javascript,images等等, 所有和web运行相关的资源文件;
-application cache不作为常规cache而被轻易清理掉, 它会一直保持直到被要求删除或者用户手动删除;
-Manifest: 为了能够让浏览器将网页存储到application cache里, 我们需要一个manifest文件, 并将之引入到html的head中&amp;lt;html manifest=&amp;quot;myapp.appcache&amp;quot;&amp;gt;
-此文件必须以CACHE MANIFEST为起始行;
-列出所有需要加入application cache里的文件, 用相对路径, 相对与manifest文件而言;
-#表示注释, 空行自动忽略;
-此文件生效的前提是其MIME属性为text/cache-manifest, 即Content-Type这个header属性, 通常你需要自行在server中添加对应的规则;
-如果网页由多个html组成, 则每个html都需要使用&amp;lt;html manifest=&amp;quot;myapp.appcache&amp;quot;&amp;gt;声明, 指向同一个appcache文件即可;
-一旦缓存, 则所有资源文件都从缓存中获取, 未列出的资源不予加载;
-
-
-Complex Manifest:
-manifest支持复杂规则, 其支持多个section, 包含了NETWORK:,FALLBACK:这两类, 还要加上默认的CACHE:;
-NETWORK:: 所有不予cache必须要从网络获取的资源, 可以设定路径, 支持通配符*;
-FALLBACK:: 如其名, 优先从网络获取, 无法获取时从本地获取, 所以其每行指定两个url;
-
-
-Update:
-对于Application Cache而言, 其更新主要依照manifest, 浏览器会自动在情况允许时帮助你查看manifest是否更新, 如有, 则重新缓存所有文件;
-注意: 浏览器不会自动帮你查看缓存的文件是否更新, 只查看manifest;
-通常可以使用#加一行version的注释行来强制更新;
-applicationCache.onupdateready: application cache提供了状态函数来指示其更新的进度, 你可以针对其加以操作, 还包含onchecking,onnoupdate,ondownloading,onprogress,oncached,onerror,onobsolete;
-除了上述事件外, 还可以通过applicationCache.status来探测其状态: ApplicationCache.UNCACHED =&amp;gt; (0),ApplicationCache.IDLE =&amp;gt; (1),ApplicationCache.CHECKING =&amp;gt; (2),ApplicationCache.DOWNLOADING =&amp;gt; (3),ApplicationCache.UPDATEREADY =&amp;gt; (4),ApplicationCache.OBSOLETE =&amp;gt; (5);
-swapCache(): 清楚旧或者废弃的缓存;
-
-
-Delete:
-很简单, 删除manifest, 去掉html中的引用即可;
-
-
-
-
-
-12345678910111213CACHE MANIFEST# appVersion: 1CACHE:myapp.htmlmyapp.cssmyapp.jsFALLBACK:videos/ offline_help.htmlNETWORK:cgi/
-这就算是一个最基本的manifest了.
-Chapter 21 - Scripted Media and Graphics
-Images:
-onmouseover: 鼠标hover移入事件;
-onmouseout: 鼠标hover移出事件;
-new Image(): 通过创建一个Image对象, 可以赋予其src属性从而实现预加载的功能;
-
-
-Audio
-(new Audio()).canPlayType(type): 检测某种类型的文件是否能播放;
-play(): 播放;
-initialTime: 初始播放进度;
-duration: 文件总时长;
-currentTime: 当前播放进度;
-muted: boolean, 是否静音;
-volume: 音量值;
-controls: boolean, 是否显示控件;
-loop: boolean, 是否循环;
-preload: 是否预加载以及预加载类型, metadata表示加载时长,帧速等, auto表示尽可能预加载更多的内容, none什么都不预加载;
-autoplay: boolean, 是否自动播放;
-playbackRate: 播放速度(1.0 == normal speed);
-readyState: 加载情况(0,1,2,3,4)=&amp;gt;(尚未加载, 已加载但当前位置未加载, 当前位置已开始加载但是不足以开始播放(下一帧还没加载好),已加载且足够播放但是不足以播放到结尾,加载基本足够可以播放至结束)
-networkState: 当前媒体文件使用网络的情况(0,1,2,3)=&amp;gt;(还没开始, 没开始但可能已经加载完或者预加载设置为none, 正在使用中, 无法找到资源);
-error: 错误信息(1,2,3,4)=&amp;gt;(用户手动停止, 类型正确网络不通畅, encoding问题, 类型不支持)
-
-
-Video
-
-
-
-SVG: Scalable Vector Graphics
-
-SVG算是一种xml格式的矢量图类型;
-最新的主流浏览器基本都支持直接在img中嵌入svg, 部分老的浏览器依然只支持使用object标签: &amp;lt;object data=&amp;quot;sample.svg&amp;quot; type=&amp;quot;image/svg+xml&amp;quot; width=&amp;quot;100&amp;quot; height=&amp;quot;100&amp;quot;/&amp;gt;
-一定程度上SVG很像canvas, 不过它是通过XML的属性来实现的(比如通过&amp;lt;line x1=&amp;#39;50&amp;#39; y1=&amp;#39;5.000&amp;#39; x2=&amp;#39;50.00&amp;#39; y2=&amp;#39;10.00&amp;#39;/&amp;gt;来画线);
-
-
-Canvas
-
-作为HTML5引入的一个可谓是最重要的标签之一, canvas的存在极大的丰富了网络的表现形式;
-canvas和js的关系紧密, 因为其绘画的实现方式就是通过js;
-canvas.getContext(&amp;#39;2d&amp;#39;/&amp;#39;3d&amp;#39;): 通过它创建的对象就可以在画布上尽情挥洒了;
-很多canvas的函数本质都是数学坐标的公式运算!
-
-
-
-我会在后面阅读的HTML5 Canvas中更加详细的研究canvas的各种用法~ 敬请期待~
-  
-Chapter 22 - HTML5 APIs
-Geolocation:
-navigator.geolocation.getCurrentPosition()
-navigator.geolocation.watchPosition(): 在用户位置变化时唤醒;
-navigator.geolocation.clearWatch()
-实例 codepen
-
-
-History Management:
-pushState()
-replaceState()
-实例 codepen
-
-
-Cross-Origin Messaging:
-postMessage()
-onmessage()
-实例 codepen
-
-
-Web Workers:
-通常来说, js的执行是单线程的, 不支持多线程, 利用Worker可以稍稍的模拟下多线程;
-Worker开启的执行不能对window和Dom有任何的操作, 和主线程只能通过postMessage()来交互;
-Worker对象的工作域是WorkerGlobalScope, 完全和主线程工作域不同;
-Worker支持importScripts来引入其需要的js库;
-实例 codepen - 因为跨域问题, 所以这里不能执行, 不过代码很简单, 很好理解, 有兴趣的可以download到本地测试
-
-
-Typed Arrays and ArrayBuffers:
-HTML5 的数组类型变的更加强大, 开始出现类似Int8Array(),Uint8Array()等多种新形式;
-实例 codepen
-
-
-Blobs:
-算是存储的一种新形势, 浏览器通常可以存储Blobs到内存或者硬盘中, blobs本身更是可以代表任何数据, 以二进制的形式;
-实例 codepen
-
-
-The Filesystem API: 开启本地文件交互时代;
-实例 codepen
-
-
-Client-Side Databases: 主要为IndexedDB;
-实例 codepen
-
-
-Web Sockets: 一种相对http来说的新网络协议;
-实例 codepen
-
-
-
-上面针对HTML 5的各个API给出了一个对应的实例, 毕竟看着具体的代码和例子才有意思哈哈
-参考资料
-JavaScript the Definitive Guide 6th edition
-
+</description><source>TaoAlpha</source><author>TaoALpha</author></item><item> <title>JavaScript the Definitive Guide (1)</title><link>http://taoalpha.me/blog/2015/06/17/read-reading-javascript-the-definitive-guide-1/</link><category>read</category><tag>js,reading notes</tag><pubDate>2015-06-17T10:00:00.000Z</pubDate><description>概述“JavaScript: the definitive guide”可谓是JS入门必读数目之一了. 今天正好读到第7章, 做一简单总结. 前7章的内容都集中在JS中的基本知识上, 包含了:
+
+数据类型: 最简单的primitive datatypes: string, number, boolean , 两个空值类型: null, undefined(通常认为空值类型属于promitive的一种),以及稍微复杂点的: object类型;
+变量问题: 变量规则, 变量作用域问题;
+基础表达式和操作符: 操作符的优先级问题, 多操作数和单操作数以及执行顺序等;
+陈述语句: 包含了if/for/while/do/with/switch(case)/break/continue/return/var/identifiers/empty statement等等;
+Object: json格式object以及常规的array类型对象的分别介绍以及自身结构属性, 异同点等;
+
+心得break/continue 后接 label:  break/continue是通常用于for/white/do等循环语句中用以做状态判断的, 但本身其还有另一种用法, 就是通过后接标记语句的用法来是break或者continue能针对标记语句操作, 比如下面这个跳出多层嵌套的例子:
+12345678910test:&amp;#123;  for(var i = 0; i&amp;lt; 10; i++)&amp;#123;    for(var j = 0; j&amp;lt; i*5; j++)&amp;#123;      console.log(j);      if(j==3) break test;    &amp;#125;  &amp;#125;&amp;#125;// continue test; 也是同样的用法
+但需要注意的即使:
+
+continue 语句(带有或不带标签引用)只能用在循环中;
+break 语句(不带标签引用),只能用在循环或 switch 中;
+
+with 语句在js中经常涉及到变量作用域的问题, 而with语句的存在就是可以将某个object放入到其子语句的作用域链中, 什么意思呢? 首先通常来说, 在函数内, 其作用域链由全局作用域(全局对象)和本地作用域(local对象)组成, 我们在引用变量的时候就是在作用域链上逐个查询. 而with的作用就是把某个object插入到作用域链中去, 从而能够直接访问其子元素:
+1234567891011a = &amp;#123;&quot;nae&quot;:&quot;hhh&quot;,&quot;test&quot;:&quot;results&quot;&amp;#125;with(a)&amp;#123;  console.log(nae)&amp;#125;// output: &quot;hhh&quot;nae = &quot;sl&quot;with(a)&amp;#123;  console.log(nae)&amp;#125;// output: &quot;hhh&quot;// 证明with引入的作用域甚至还在global域之上
+不过呢, 通常很少人会去用with的, 因为它过于吃力不讨好了, 其对性能的影响是没有什么优化空间的, 与其使用with, 不如直接定义全局变量或者变量的简写(有一种with的用法是为了省略书写冗长的变量名)更为方便了.
+sort内嵌比较函数:sort()本身作为array类型内置的几个函数之一, 默认通常是按照字母表来排序的, 但是其本身也是支持自定义排序规则的, 只需要我们把规则传入即可:
+12345678910// 以数字序列为例var a = [12,3,5,8]a.sort()// output: [12,8,5,3]a.sort(function(a,b)&amp;#123;return a - b;// 返回&amp;lt;0, 则a排在b前面, &amp;gt;0 则b在前面, =0则表示相等;&amp;#125;)// output: [3,5,8,12]
+利用这一方法你就可以定制你的排序规则了, 甚至可以按照奇偶性排序都可以做到~ 比如 偶数在前: return a % 2-b % 2; 哈哈
+concat,slice,splice这三个函数分别都是对array类型的元素进行母串增减获取子串而出现的, 其中有几点需要注意的:
+
+concat()函数支持数字多参数分别传入, 也支持数组传入的形式, 效果都是一样的, 但是concat()不支持递归解套, 即如果你传入的是多层嵌套的数组, concat()只会解套一次; 此外, concat()的操作是不影响母串的;
+slice和splice都可以用于获取子数组使用的, 其区别主要有两点, slice()接受的两个参数都代表的是index, 分别是起始次序到终止元素次序, 取子串时计算首位参数的元素,不计算第二位参数所代表的元素, 而splice则传入的两个参数分别是起始元素次序和要截取元素个数,即同样都是(1,2), 后者代表截取第二个元素起始共计两个元素的子串, 前者则只获取第二个元素; 此外, slice()返回子串而不修改原数组, splice()则会在返回子串的同时修改原数组(原数组为去除子串的结果);
+splice()除了可以用获取子串外, 还能用于给母串添加元素. splice()可以接受超过2个参数, 从第三个参数起, 多出来的参数都是作为插入元素的, 执行的顺序则是删减完后当前位置插入, 即splice(2,2,1,3,4)表示的就是删掉第三个元素开始共计两个元素, 然后在同样的位置插入1,3,4三个元素, 同时, splice()也接受数组传入, 但是它不主动进行解套;
+
+除了splice(), 上面的sort()的操作也是针对a数组进行的操作, 其结果也是针对a生效的, 即a的值是会被改变的;
+pop,push,shift,unshift除了splice()之外, 我们通常用于直接操作母串增减的就是pop,push,shift,unshift四个了, 下面简单介绍下四者的区别:
+
+pop, push分别代表对母串最后一个元素的进出栈操作, pop是弹出最后一个元素, push则是在最后一个元素的后面继续压入新元素, 同样也支持数组元素压入, 但是不自动解套;
+shift, unshift和pop,push基本类似, 不同的地方在于操作的位置和后者相反, 是在栈头的位置, 即首位元素处; shift用于移出首位元素, unshift用于在首位增加元素, 接受数组, 也不自动解套, 同时多参数传入时, 作为整体一次性压入, 即unshift(2,3),压入后为[2,3,...].
+
+这里比较独特的就是unshift多参数的压入问题了, 按我的预期其实是逐个元素压入, 这样顺序就是和传参相反, 但结果确实整体压入, 顺序与传参一致了~
+谜题书中第七章介绍说在array中如果直接赋值的index是超限(&amp;gt;2^32-1), 负值或者对应表达式的结果是此类值时, 会自动转为string传入定义, 这就引发了一个问题: 一旦如此定义后, 此变量还是array吗?
+我在console中简单的测试了下:
+1234567891011121314151617181920var a = [1,2,3]// a.length == 3a[-1.2] = &quot;hehe&quot;a// output: [1,2,3]  where is a[-1.2] ?a[-1.2]// output: &quot;hehe&quot;  WTF???a.length// output: 3 ??console.log(a)// output: [1,2,3,-1.2:'hehe']console.log(a.length)// output: 3a instanceof Array// ouput: Truea[&quot;h&quot;] = &quot;hh&quot;a// output: [1,2,3]console.log(a)// output: [1,2,3,-1.2:&quot;hehe&quot;,h:&quot;hh&quot;]
+问题: a依然还是一个Array(亦或者不是?), 但用json定义的方式赋值的那几个值还是有效的, 可获取的, 但是为什么直接print出来的时候没有这些值呢, 甚至长度都不包含定义的这几个指? 为什么console.log()可以打出来呢?
+猜测解释: a最初被定义为array, 但是却被json方式传值, 存储到了其内存中, 但是调用a时依然按照array来打印, 所以会自动滤除掉不符合array的几个值(只会按照index来找值). 但是console.log()是打出来其存储内容, 所以就按照其内存存储形式打印出来了.
 </description><source>TaoAlpha</source><author>TaoALpha</author></item></channel></rss>
